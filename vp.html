@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VP Operations · Fibi Law</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#012D44;--teal:#3cbfba;
+  --amber:#e8a020;--amber-bg:rgba(232,160,32,0.1);--amber-border:rgba(232,160,32,0.25);
+  --dark-navy:#011d2e;--sidebar-dark:#01243a;
+  --white:#ffffff;
+  --gray-50:#f9fafc;--gray-100:#f0f2f5;--gray-200:#e4e8ed;--gray-300:#d0d6de;
+  --gray-400:#9aa5b4;--gray-500:#6b7585;--gray-600:#4a5568;--gray-700:#2d3748;--gray-900:#1a202c;
+  --teal-bg:rgba(60,191,186,0.1);--teal-border:rgba(60,191,186,0.25);
+  --rose:#e53e3e;--rose-bg:rgba(229,62,62,0.08);
+  --transition:0.18s ease;--sidebar-w:272px;--radius:12px;
+  --shadow-sm:0 1px 4px rgba(1,45,68,0.06);--shadow-md:0 4px 16px rgba(1,45,68,0.1);--shadow-lg:0 8px 32px rgba(1,45,68,0.14);
+}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-900);}
+
+/* ══ LOGIN ══ */
+#loginGate{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,var(--dark-navy) 0%,#013a56 50%,#011d2e 100%);display:flex;align-items:center;justify-content:center;}
+#loginGate.hidden{display:none;}
+.login-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:44px 40px;width:380px;max-width:94vw;backdrop-filter:blur(20px);text-align:center;}
+.login-logo{width:56px;height:56px;background:var(--amber);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:22px;font-weight:800;color:var(--dark-navy);}
+.login-title{font-size:22px;font-weight:700;color:#fff;margin-bottom:4px;}
+.login-sub{font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:28px;}
+.login-field{margin-bottom:14px;}
+.login-field input{width:100%;padding:13px 16px;border-radius:10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:14px;font-family:inherit;outline:none;transition:border-color var(--transition);}
+.login-field input:focus{border-color:var(--amber);}
+.login-field input::placeholder{color:rgba(255,255,255,0.35);}
+.login-err{color:#fc8181;font-size:12px;margin-bottom:10px;min-height:18px;}
+.login-remember{display:flex;align-items:center;gap:8px;margin-bottom:16px;text-align:left;}
+.login-remember input{width:auto;accent-color:var(--amber);}
+.login-remember label{font-size:12px;color:rgba(255,255,255,0.45);cursor:pointer;}
+.login-btn{width:100%;padding:13px;background:var(--amber);border:none;border-radius:10px;color:var(--dark-navy);font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity var(--transition),transform 0.1s;}
+.login-btn:hover{opacity:0.9;transform:translateY(-1px);}
+
+/* ══ APP SHELL ══ */
+#app{display:flex;height:100vh;overflow:hidden;}
+#app.hidden{display:none;}
+
+/* ══ SIDEBAR ══ */
+.sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--sidebar-dark);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;border-right:1px solid rgba(255,255,255,0.06);}
+.sidebar-top{padding:20px 18px 14px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.sidebar-logo{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.sidebar-logo-mark{width:36px;height:36px;background:var(--amber);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--dark-navy);flex-shrink:0;}
+.sidebar-logo-name{font-size:15px;font-weight:700;color:#fff;line-height:1.2;}
+.sidebar-logo-sub{font-size:10px;color:rgba(255,255,255,0.35);}
+.vp-badge{display:inline-flex;align-items:center;gap:5px;background:var(--amber-bg);border:1px solid var(--amber-border);color:var(--amber);padding:4px 10px;border-radius:20px;font-size:10.5px;font-weight:700;letter-spacing:0.3px;}
+.vp-badge svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2.5;}
+
+/* Clock */
+.sidebar-clock{padding:16px 18px 12px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.clock-time{font-size:38px;font-weight:300;color:#fff;letter-spacing:-1px;line-height:1;font-variant-numeric:tabular-nums;}
+.clock-time span{font-size:18px;font-weight:500;color:var(--amber);}
+.clock-date{font-size:11px;color:rgba(255,255,255,0.4);margin-top:5px;}
+
+/* Weather */
+.sidebar-weather{padding:12px 18px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:12px;}
+.weather-icon{font-size:28px;line-height:1;}
+.weather-temp{font-size:22px;font-weight:600;color:#fff;line-height:1;}
+.weather-desc{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;}
+.weather-loc{font-size:10px;color:rgba(255,255,255,0.25);margin-top:1px;}
+
+/* Nav */
+.sidebar-nav{padding:10px 10px;flex:1;}
+.nav-label{font-size:9px;font-weight:700;letter-spacing:1.3px;color:rgba(255,255,255,0.22);text-transform:uppercase;padding:8px 8px 4px;}
+.nav-link{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:8px;color:rgba(255,255,255,0.5);text-decoration:none;font-size:12.5px;font-weight:500;transition:all var(--transition);cursor:pointer;border:none;background:none;width:100%;text-align:left;}
+.nav-link:hover{background:rgba(255,255,255,0.07);color:#fff;}
+.nav-link .ni{width:27px;height:27px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(255,255,255,0.06);}
+.nav-link .ni svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.nav-link:hover .ni{background:rgba(255,255,255,0.1);}
+.nb{margin-left:auto;font-size:10px;font-weight:700;padding:1px 7px;border-radius:10px;}
+.nb-amber{background:var(--amber-bg);color:var(--amber);}
+.nb-teal{background:var(--teal-bg);color:var(--teal);}
+.nb-red{background:rgba(229,62,62,0.12);color:#fc8181;}
+.sidebar-footer{padding:10px;border-top:1px solid rgba(255,255,255,0.07);}
+.signout-btn{display:flex;align-items:center;gap:8px;width:100%;padding:9px 10px;border-radius:8px;border:none;background:rgba(229,62,62,0.08);color:#fc8181;font-size:12px;font-weight:500;font-family:inherit;cursor:pointer;transition:background var(--transition);}
+.signout-btn:hover{background:rgba(229,62,62,0.15);}
+.signout-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;}
+
+/* ══ MAIN ══ */
+.main{flex:1;overflow-y:auto;background:var(--gray-50);}
+.content{max-width:1080px;margin:0 auto;padding:0 26px 60px;}
+
+/* ══ HERO ══ */
+.hero{background:linear-gradient(135deg,var(--dark-navy) 0%,#013a56 55%,#01243a 100%);padding:30px 26px 26px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:rgba(232,160,32,0.05);pointer-events:none;}
+.hero::after{content:'';position:absolute;bottom:-30px;left:25%;width:140px;height:140px;border-radius:50%;background:rgba(60,191,186,0.04);pointer-events:none;}
+.hero-eyebrow{font-size:10.5px;color:var(--amber);font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:5px;}
+.hero-name{font-size:25px;font-weight:700;color:#fff;margin-bottom:3px;}
+.hero-sub{font-size:12.5px;color:rgba(255,255,255,0.42);}
+.hero-chips{display:flex;gap:7px;margin-top:14px;flex-wrap:wrap;}
+.hero-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid;}
+.hero-chip svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2.5;}
+.hc-a{background:rgba(232,160,32,0.12);border-color:rgba(232,160,32,0.3);color:var(--amber);}
+.hc-t{background:rgba(60,191,186,0.1);border-color:rgba(60,191,186,0.25);color:var(--teal);}
+.hc-w{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.14);color:rgba(255,255,255,0.6);}
+
+/* ══ ANNOUNCEMENT BAR ══ */
+.ann-bar{background:linear-gradient(90deg,rgba(232,160,32,0.07),rgba(60,191,186,0.05));border-bottom:1px solid rgba(232,160,32,0.14);padding:9px 26px;display:flex;align-items:center;gap:10px;}
+.ann-icon{color:var(--amber);flex-shrink:0;}
+.ann-icon svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.5;display:block;}
+.ann-text{flex:1;font-size:12.5px;color:var(--gray-700);font-weight:500;line-height:1.4;}
+.ann-edit-btn{padding:3px 9px;border:1px solid rgba(232,160,32,0.3);border-radius:6px;background:none;color:var(--amber);font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:all var(--transition);flex-shrink:0;}
+.ann-edit-btn:hover{background:var(--amber-bg);}
+.ann-edit-wrap{display:none;align-items:center;gap:8px;flex:1;}
+.ann-edit-wrap.show{display:flex;}
+.ann-edit-input{flex:1;padding:5px 10px;border-radius:6px;border:1px solid rgba(232,160,32,0.4);background:#fff;font-size:12.5px;font-family:inherit;outline:none;color:var(--gray-900);}
+.ann-save{padding:5px 12px;background:var(--amber);border:none;border-radius:6px;color:var(--dark-navy);font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;}
+.ann-cancel{padding:5px 10px;background:none;border:1px solid var(--gray-200);border-radius:6px;color:var(--gray-500);font-size:12px;cursor:pointer;font-family:inherit;}
+
+/* ══ SECTIONS ══ */
+.section{margin-top:26px;}
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.section-icon{width:31px;height:31px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.section-icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.si-a{background:var(--amber-bg);color:var(--amber);}
+.si-t{background:var(--teal-bg);color:var(--teal);}
+.si-n{background:rgba(1,45,68,0.08);color:var(--navy);}
+.si-g{background:rgba(46,125,50,0.1);color:#2e7d32;}
+.section-title{font-size:14.5px;font-weight:700;color:var(--navy);}
+.section-count{font-size:11px;color:var(--gray-400);background:var(--gray-100);padding:2px 8px;border-radius:10px;}
+.section-line{flex:1;height:1px;background:var(--gray-200);}
+.btn-add{display:flex;align-items:center;gap:5px;padding:6px 13px;border-radius:8px;border:none;background:var(--amber);color:var(--dark-navy);font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity var(--transition),transform 0.1s;flex-shrink:0;}
+.btn-add:hover{opacity:0.88;transform:translateY(-1px);}
+.btn-add svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;}
+.btn-add.teal{background:var(--teal);color:#fff;}
+.btn-add.outline{background:none;border:1.5px solid var(--gray-200);color:var(--gray-600);}
+.btn-add.outline:hover{border-color:var(--amber);color:var(--amber);background:var(--amber-bg);}
+
+/* ══ INLINE ADD FORM ══ */
+.add-form{background:#fff;border:1.5px solid var(--amber-border);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px;display:none;box-shadow:0 4px 20px rgba(232,160,32,0.07);}
+.add-form.show{display:block;}
+.add-form.teal-border{border-color:var(--teal-border);}
+.form-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+.form-group{display:flex;flex-direction:column;gap:4px;flex:1;min-width:130px;}
+.form-group.full{flex:100%;}
+.form-label{font-size:10.5px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.5px;}
+.form-input,.form-select,.form-textarea{padding:7px 10px;border:1.5px solid var(--gray-200);border-radius:8px;font-size:13px;font-family:inherit;color:var(--gray-900);background:var(--gray-50);outline:none;transition:border-color var(--transition);}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--amber);background:#fff;}
+.form-textarea{resize:vertical;min-height:68px;}
+.form-actions{display:flex;gap:7px;justify-content:flex-end;margin-top:4px;}
+.form-save{padding:7px 18px;background:var(--amber);border:none;border-radius:8px;color:var(--dark-navy);font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;}
+.form-save.teal{background:var(--teal);color:#fff;}
+.form-cancel-btn{padding:7px 13px;background:none;border:1.5px solid var(--gray-200);border-radius:8px;color:var(--gray-500);font-size:13px;font-family:inherit;cursor:pointer;}
+.check-group{display:flex;flex-wrap:wrap;gap:10px;}
+.check-item{display:flex;align-items:center;gap:5px;}
+.check-item input{width:auto;accent-color:var(--amber);}
+.check-item span{font-size:12px;color:var(--gray-600);}
+
+/* ══ TASK BOARD ══ */
+.task-filters{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
+.filter-pill{padding:4px 11px;border-radius:20px;border:1.5px solid var(--gray-200);background:#fff;color:var(--gray-500);font-size:11.5px;font-weight:500;cursor:pointer;transition:all var(--transition);font-family:inherit;}
+.filter-pill:hover{border-color:var(--amber);color:var(--amber);}
+.filter-pill.active{background:var(--amber);border-color:var(--amber);color:var(--dark-navy);font-weight:700;}
+.filter-sep{width:1px;height:16px;background:var(--gray-200);margin:0 1px;}
+.sort-sel{padding:4px 9px;border:1.5px solid var(--gray-200);border-radius:20px;background:#fff;color:var(--gray-500);font-size:11.5px;font-family:inherit;outline:none;cursor:pointer;margin-left:auto;}
+.tasks-list{display:flex;flex-direction:column;gap:7px;}
+.task-card{background:#fff;border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:12px 14px;display:flex;align-items:flex-start;gap:11px;transition:box-shadow var(--transition),border-color var(--transition);animation:fadeUp 0.2s ease;}
+.task-card:hover{box-shadow:var(--shadow-sm);border-color:var(--gray-300);}
+.task-card.high{border-left:3px solid #e53e3e;}
+.task-card.medium{border-left:3px solid var(--amber);}
+.task-card.low{border-left:3px solid #2e7d32;}
+.task-card.completed-card{opacity:0.6;}
+.task-check{width:19px;height:19px;border-radius:50%;border:2px solid var(--gray-300);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--transition);margin-top:2px;}
+.task-check:hover{border-color:var(--teal);background:var(--teal-bg);}
+.task-check svg{width:10px;height:10px;stroke:#fff;fill:none;stroke-width:3;opacity:0;}
+.task-check.done{background:var(--teal);border-color:var(--teal);}
+.task-check.done svg{opacity:1;}
+.task-body{flex:1;min-width:0;}
+.task-title{font-size:13px;font-weight:600;color:var(--gray-900);margin-bottom:4px;word-break:break-word;}
+.task-title.struck{text-decoration:line-through;color:var(--gray-400);}
+.task-meta{display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.task-pri{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;letter-spacing:0.3px;}
+.tp-high{background:rgba(229,62,62,0.1);color:#c53030;}
+.tp-medium{background:var(--amber-bg);color:#b7791f;}
+.tp-low{background:rgba(46,125,50,0.1);color:#2e7d32;}
+.task-cat{font-size:10px;color:var(--gray-500);background:var(--gray-100);padding:2px 7px;border-radius:8px;font-weight:500;}
+.task-due{font-size:10px;color:var(--gray-400);display:flex;align-items:center;gap:3px;}
+.task-due svg{width:9px;height:9px;stroke:currentColor;fill:none;stroke-width:2;}
+.task-due.overdue{color:#e53e3e;}
+.task-notes-text{font-size:11.5px;color:var(--gray-500);margin-top:4px;line-height:1.4;}
+.task-actions{display:flex;gap:3px;flex-shrink:0;}
+.task-btn{width:27px;height:27px;border-radius:7px;border:none;background:var(--gray-100);color:var(--gray-500);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--transition);}
+.task-btn:hover{background:var(--rose-bg);color:var(--rose);}
+.task-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;}
+.tasks-empty{text-align:center;padding:32px 20px;background:#fff;border:2px dashed var(--gray-200);border-radius:var(--radius);color:var(--gray-400);}
+.tasks-empty svg{width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:1.5;margin-bottom:7px;}
+.tasks-empty p{font-size:13px;}
+.completed-toggle{display:flex;align-items:center;gap:7px;margin-top:14px;padding:9px 13px;background:#fff;border:1.5px solid var(--gray-200);border-radius:var(--radius);cursor:pointer;font-size:12.5px;font-weight:600;color:var(--gray-600);width:100%;font-family:inherit;transition:all var(--transition);}
+.completed-toggle:hover{border-color:var(--gray-300);color:var(--gray-700);}
+.completed-toggle svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;transition:transform 0.2s;}
+.completed-toggle.open svg{transform:rotate(180deg);}
+.completed-list{display:none;flex-direction:column;gap:6px;margin-top:7px;}
+.completed-list.show{display:flex;}
+
+/* ══ MEMO LOG ══ */
+.memo-list{display:flex;flex-direction:column;gap:9px;}
+.memo-row{background:#fff;border:1.5px solid var(--gray-200);border-radius:var(--radius);overflow:hidden;transition:box-shadow var(--transition);}
+.memo-row:hover{box-shadow:var(--shadow-sm);}
+.memo-row-top{padding:13px 15px;display:flex;align-items:flex-start;gap:11px;cursor:pointer;}
+.memo-date-chip{background:var(--amber-bg);color:var(--amber);font-size:9.5px;font-weight:700;padding:3px 7px;border-radius:5px;white-space:nowrap;border:1px solid var(--amber-border);flex-shrink:0;margin-top:2px;}
+.memo-info{flex:1;min-width:0;}
+.memo-title-text{font-size:13px;font-weight:600;color:var(--gray-900);margin-bottom:4px;}
+.memo-locs{display:flex;gap:4px;flex-wrap:wrap;}
+.memo-loc-tag{font-size:9.5px;font-weight:600;padding:2px 6px;border-radius:5px;}
+.ml-emp{background:rgba(60,191,186,0.1);color:#0d9488;}
+.ml-att{background:rgba(1,45,68,0.07);color:var(--navy);}
+.ml-meet{background:rgba(46,125,50,0.08);color:#2e7d32;}
+.ml-email{background:rgba(101,60,163,0.08);color:#6d3fc7;}
+.ml-other{background:var(--gray-100);color:var(--gray-500);}
+.memo-row-btns{display:flex;gap:4px;flex-shrink:0;align-items:flex-start;}
+.push-btn{padding:3px 8px;border-radius:5px;border:1.5px solid;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit;transition:all var(--transition);display:flex;align-items:center;gap:3px;white-space:nowrap;}
+.push-btn svg{width:8px;height:8px;stroke:currentColor;fill:none;stroke-width:2.5;}
+.pb-emp{border-color:rgba(60,191,186,0.4);color:#0d9488;background:none;}
+.pb-emp:hover{background:rgba(60,191,186,0.1);}
+.pb-att{border-color:rgba(1,45,68,0.25);color:var(--navy);background:none;}
+.pb-att:hover{background:rgba(1,45,68,0.06);}
+.memo-del-btn{width:25px;height:25px;border-radius:6px;border:none;background:var(--gray-100);color:var(--gray-400);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--transition);}
+.memo-del-btn:hover{background:var(--rose-bg);color:var(--rose);}
+.memo-del-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;}
+.memo-expand-body{padding:11px 15px;border-top:1px solid var(--gray-100);display:none;background:var(--gray-50);}
+.memo-expand-body.show{display:block;}
+.memo-expand-content{font-size:12.5px;color:var(--gray-600);line-height:1.6;white-space:pre-wrap;}
+.memo-push-status{font-size:10px;color:var(--gray-400);margin-top:6px;}
+
+/* ══ HIRING TRACKER ══ */
+.hiring-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;}
+.role-card{background:#fff;border:1.5px solid var(--gray-200);border-radius:var(--radius);overflow:hidden;transition:box-shadow var(--transition);}
+.role-card:hover{box-shadow:var(--shadow-md);}
+.role-accent{height:4px;}
+.role-body{padding:15px;}
+.role-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:9px;}
+.role-name{font-size:13.5px;font-weight:700;color:var(--gray-900);}
+.role-dept-tag{font-size:11px;color:var(--gray-500);margin-top:2px;}
+.stage-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:9px;flex-shrink:0;white-space:nowrap;}
+.rs-sourcing{background:rgba(107,117,133,0.12);color:#4a5568;}
+.rs-screening{background:rgba(59,130,246,0.1);color:#2563eb;}
+.rs-interviewing{background:rgba(60,191,186,0.12);color:#0d9488;}
+.rs-offer{background:var(--amber-bg);color:#b7791f;}
+.rs-hold{background:rgba(229,62,62,0.1);color:#c53030;}
+.rs-filled{background:rgba(46,125,50,0.1);color:#2e7d32;}
+.role-dates{display:flex;gap:14px;margin-bottom:9px;flex-wrap:wrap;}
+.role-date-item{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--gray-500);}
+.role-date-item svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;}
+.role-date-lbl{font-size:9px;text-transform:uppercase;letter-spacing:0.5px;color:var(--gray-400);}
+.role-notes-box{font-size:11.5px;color:var(--gray-600);line-height:1.5;background:var(--gray-50);border-radius:7px;padding:7px 9px;border:1px solid var(--gray-100);margin-bottom:11px;white-space:pre-wrap;min-height:34px;}
+.role-footer{display:flex;gap:5px;justify-content:flex-end;}
+.role-btn{padding:4px 11px;border-radius:7px;border:1.5px solid var(--gray-200);background:none;color:var(--gray-600);font-size:11px;font-weight:600;font-family:inherit;cursor:pointer;transition:all var(--transition);display:flex;align-items:center;gap:4px;}
+.role-btn svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;}
+.role-btn:hover{border-color:var(--amber);color:var(--amber);background:var(--amber-bg);}
+.role-btn.del:hover{border-color:var(--rose);color:var(--rose);background:var(--rose-bg);}
+.hiring-empty{text-align:center;padding:36px;background:#fff;border:2px dashed var(--gray-200);border-radius:var(--radius);color:var(--gray-400);grid-column:1/-1;}
+.hiring-empty svg{width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:1.5;margin-bottom:7px;}
+
+/* ══ BULLETIN BOARD ══ */
+.board-frame{background:#2a3a4a;border-radius:14px;padding:13px 13px 0;position:relative;box-shadow:0 8px 32px rgba(1,45,68,0.18),inset 0 1px 0 rgba(255,255,255,0.06);}
+.board-screw{position:absolute;width:8px;height:8px;border-radius:50%;background:#1e2d3a;}
+.board-screw.tl{top:10px;left:14px;}
+.board-screw.tr{top:10px;right:14px;}
+.board-surface{background:#f9fafc;border-radius:6px;min-height:160px;position:relative;overflow:hidden;background-image:linear-gradient(rgba(60,191,186,0.055) 1px,transparent 1px),linear-gradient(90deg,rgba(60,191,186,0.055) 1px,transparent 1px);background-size:28px 28px;padding:16px 14px 14px;}
+.board-ledge{height:17px;background:#3a4d5c;border-radius:0 0 7px 7px;margin:0 -13px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.board-marker{width:22px;height:8px;border-radius:3px;}
+.board-notes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:13px;}
+.board-note{background:#fff9c4;border-radius:2px;padding:11px 11px 7px;box-shadow:2px 3px 7px rgba(0,0,0,0.11);position:relative;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;min-height:95px;}
+.board-note:hover{transform:translateY(-2px) rotate(0.4deg);box-shadow:4px 6px 14px rgba(0,0,0,0.15);}
+.board-note::before{content:'';position:absolute;top:-7px;left:50%;transform:translateX(-50%);width:18px;height:9px;background:rgba(232,160,32,0.65);border-radius:2px 2px 0 0;}
+.board-note-title{font-size:10.5px;font-weight:700;color:#5d4037;margin-bottom:4px;}
+.board-note-body{font-size:10px;color:#795548;line-height:1.4;}
+.board-note-del{position:absolute;top:3px;right:3px;width:15px;height:15px;border-radius:50%;background:rgba(0,0,0,0.07);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.15s;color:#795548;}
+.board-note-del svg{width:7px;height:7px;stroke:currentColor;fill:none;stroke-width:2.5;}
+.board-note:hover .board-note-del{opacity:1;}
+.board-add-btn{background:rgba(232,160,32,0.13);border:2px dashed rgba(232,160,32,0.38);border-radius:6px;padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;min-height:95px;transition:background var(--transition);}
+.board-add-btn:hover{background:rgba(232,160,32,0.2);}
+.board-add-btn svg{width:20px;height:20px;stroke:var(--amber);fill:none;stroke-width:2;}
+.board-add-btn span{font-size:10.5px;color:var(--amber);font-weight:700;}
+
+/* ══ MODALS ══ */
+.modal-backdrop{position:fixed;inset:0;z-index:900;background:rgba(0,0,0,0.52);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.22s;}
+.modal-backdrop.open{opacity:1;pointer-events:auto;}
+.modal-card{background:#fff;border-radius:16px;padding:24px 22px;width:92%;max-width:520px;box-shadow:0 24px 64px rgba(0,0,0,0.25);transform:scale(0.95) translateY(8px);transition:transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94);}
+.modal-backdrop.open .modal-card{transform:scale(1) translateY(0);}
+.modal-title{font-size:15.5px;font-weight:700;color:var(--navy);margin-bottom:16px;}
+.note-card{background:#fff9c4;border-radius:10px;padding:22px;width:92%;max-width:380px;box-shadow:0 16px 48px rgba(0,0,0,0.25);transform:scale(0.95);transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1);}
+.modal-backdrop.open .note-card{transform:scale(1);}
+.note-card-title{font-size:13px;font-weight:700;color:#4e342e;margin-bottom:12px;}
+
+/* Note detail overlay */
+.note-detail-overlay{position:fixed;inset:0;z-index:950;background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.22s;}
+.note-detail-overlay.open{opacity:1;pointer-events:auto;}
+.note-detail-card{background:#fff9c4;border-radius:6px;padding:26px 26px 20px;min-width:300px;max-width:460px;width:92%;box-shadow:8px 10px 32px rgba(0,0,0,0.3);position:relative;transform:scale(0.9);transition:transform 0.22s cubic-bezier(0.34,1.56,0.64,1);}
+.note-detail-overlay.open .note-detail-card{transform:scale(1);}
+.note-detail-title{font-size:14px;font-weight:800;color:#4e342e;margin-bottom:9px;}
+.note-detail-body{font-size:12.5px;color:#6d4c41;line-height:1.6;white-space:pre-wrap;}
+.note-close{position:absolute;top:9px;right:9px;width:22px;height:22px;border-radius:50%;border:none;background:rgba(0,0,0,0.07);cursor:pointer;display:flex;align-items:center;justify-content:center;color:#795548;}
+.note-close svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5;}
+
+/* ══ UTILS ══ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(-5px);}to{opacity:1;transform:translateY(0);}}
+.toast{position:fixed;bottom:22px;right:22px;z-index:9999;background:var(--gray-900);color:#fff;padding:9px 16px;border-radius:9px;font-size:12.5px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,0.28);opacity:0;transform:translateY(6px);transition:opacity 0.22s,transform 0.22s;pointer-events:none;}
+.toast.show{opacity:1;transform:translateY(0);}
+.toast.green{background:#2e7d32;}
+.toast.amber{background:var(--amber);color:var(--dark-navy);}
+@media(max-width:768px){.sidebar{display:none;}.content{padding:0 14px 40px;}.hero{padding:20px 14px 18px;}.ann-bar{padding:9px 14px;}.hiring-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ LOGIN ═══════════════ -->
+<div id="loginGate">
+  <div class="login-card">
+    <div class="login-logo">FL</div>
+    <div class="login-title">VP Operations Portal</div>
+    <div class="login-sub">Fibi Law · Restricted Access</div>
+    <div class="login-field">
+      <input type="password" id="loginPw" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="login-err" id="loginErr"></div>
+    <div class="login-remember">
+      <input type="checkbox" id="rememberMe">
+      <label for="rememberMe">Remember me for 30 days</label>
+    </div>
+    <button class="login-btn" onclick="doLogin()">Sign In</button>
+  </div>
+</div>
+
+<!-- ═══════════════ APP ═══════════════ -->
+<div id="app" class="hidden">
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-mark">FL</div>
+        <div>
+          <div class="sidebar-logo-name">Fibi Law</div>
+          <div class="sidebar-logo-sub">fibiimmigration.com</div>
+        </div>
+      </div>
+      <div class="vp-badge">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        VP of Operations
+      </div>
+    </div>
+    <div class="sidebar-clock">
+      <div class="clock-time" id="clockTime">12:00<span>AM</span></div>
+      <div class="clock-date" id="clockDate">—</div>
+    </div>
+    <div class="sidebar-weather">
+      <div class="weather-icon" id="wIcon">🌡️</div>
+      <div>
+        <div class="weather-temp" id="wTemp">--°F</div>
+        <div class="weather-desc" id="wDesc">Loading...</div>
+        <div class="weather-loc">Richmond, VA</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">My Dashboard</div>
+      <button class="nav-link" onclick="scrollSec('tasks')">
+        <span class="ni"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        Task Board
+        <span class="nb nb-amber" id="navTaskBadge">0</span>
+      </button>
+      <button class="nav-link" onclick="scrollSec('memos')">
+        <span class="ni"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+        Memo Log
+        <span class="nb nb-teal" id="navMemoBadge">0</span>
+      </button>
+      <button class="nav-link" onclick="scrollSec('hiring')">
+        <span class="ni"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        Hiring Pipeline
+        <span class="nb nb-red" id="navHireBadge">0</span>
+      </button>
+      <button class="nav-link" onclick="scrollSec('board')">
+        <span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="7" y1="17" x2="7" y2="21"/><line x1="17" y1="17" x2="17" y2="21"/></svg></span>
+        Quick Notes
+      </button>
+      <div class="nav-label" style="margin-top:6px;">Portals</div>
+      <a class="nav-link" href="./index.html" target="_blank">
+        <span class="ni"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+        Employee Portal
+      </a>
+      <a class="nav-link" href="./attorney.html" target="_blank">
+        <span class="ni"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+        Attorney Portal
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="signout-btn" onclick="signOut()">
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-eyebrow" id="heroGreeting">Good morning ✦</div>
+      <div class="hero-name">Kodwo Ewusi</div>
+      <div class="hero-sub">VP of Operations · HR · Recruiting</div>
+      <div class="hero-chips">
+        <span class="hero-chip hc-a">
+          <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span id="heroTasks">0 active tasks</span>
+        </span>
+        <span class="hero-chip hc-t">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          <span id="heroRoles">0 open roles</span>
+        </span>
+        <span class="hero-chip hc-w" id="heroDate"></span>
+      </div>
+    </div>
+
+    <!-- ANNOUNCEMENT BAR -->
+    <div class="ann-bar">
+      <span class="ann-icon"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></span>
+      <span class="ann-text" id="annText">Welcome to your VP Operations dashboard.</span>
+      <button class="ann-edit-btn" id="annEditBtn" onclick="startEditAnn()">Edit</button>
+      <div class="ann-edit-wrap" id="annEditWrap">
+        <input type="text" class="ann-edit-input" id="annInput" placeholder="Update announcement...">
+        <button class="ann-save" onclick="saveAnn()">Save</button>
+        <button class="ann-cancel" onclick="cancelAnn()">Cancel</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ════ TASK BOARD ════ -->
+      <div class="section" id="tasks">
+        <div class="section-head">
+          <div class="section-icon si-a"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <div class="section-title">Task Board</div>
+          <div class="section-count" id="taskCount">0 active</div>
+          <div class="section-line"></div>
+          <button class="btn-add" onclick="toggleTaskForm()">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Task
+          </button>
+        </div>
+        <div class="add-form" id="taskForm">
+          <div class="form-row">
+            <div class="form-group full">
+              <span class="form-label">Task *</span>
+              <input type="text" class="form-input" id="tTitle" placeholder="What needs to get done?">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <span class="form-label">Priority</span>
+              <select class="form-select" id="tPri">
+                <option value="high">🔴 High</option>
+                <option value="medium" selected>🟡 Medium</option>
+                <option value="low">🟢 Low</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <span class="form-label">Category</span>
+              <select class="form-select" id="tCat">
+                <option value="Operations">Operations</option>
+                <option value="HR">HR</option>
+                <option value="Recruiting">Recruiting</option>
+                <option value="Admin">Admin</option>
+                <option value="Legal">Legal</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <span class="form-label">Due Date</span>
+              <input type="date" class="form-input" id="tDue">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group full">
+              <span class="form-label">Notes (optional)</span>
+              <textarea class="form-textarea" id="tNotes" placeholder="Any context or details..."></textarea>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="form-cancel-btn" onclick="closeTaskForm()">Cancel</button>
+            <button class="form-save" onclick="saveTask()">Add Task</button>
+          </div>
+        </div>
+        <div class="task-filters">
+          <button class="filter-pill active" onclick="setFilter('all',this)">All</button>
+          <button class="filter-pill" onclick="setFilter('high',this)">🔴 High</button>
+          <button class="filter-pill" onclick="setFilter('Operations',this)">Ops</button>
+          <button class="filter-pill" onclick="setFilter('HR',this)">HR</button>
+          <button class="filter-pill" onclick="setFilter('Recruiting',this)">Recruiting</button>
+          <button class="filter-pill" onclick="setFilter('Admin',this)">Admin</button>
+          <div class="filter-sep"></div>
+          <select class="sort-sel" id="sortSel" onchange="renderTasks()">
+            <option value="newest">Newest</option>
+            <option value="priority">Priority</option>
+            <option value="due">Due soonest</option>
+          </select>
+        </div>
+        <div class="tasks-list" id="tasksList"></div>
+        <button class="completed-toggle" id="completedToggle" onclick="toggleCompleted()">
+          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          Completed Tasks
+          <span style="margin-left:auto;font-size:11px;color:var(--gray-400)" id="completedCount">(0)</span>
+        </button>
+        <div class="completed-list" id="completedList"></div>
+      </div>
+
+      <!-- ════ MEMO LOG ════ -->
+      <div class="section" id="memos">
+        <div class="section-head">
+          <div class="section-icon si-t"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <div class="section-title">Memo &amp; Announcement Log</div>
+          <div class="section-count" id="memoCount">0 memos</div>
+          <div class="section-line"></div>
+          <button class="btn-add teal" onclick="toggleMemoForm()">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Memo
+          </button>
+        </div>
+        <div class="add-form teal-border" id="memoForm">
+          <div class="form-row">
+            <div class="form-group full">
+              <span class="form-label">Title *</span>
+              <input type="text" class="form-input" id="mTitle" placeholder="e.g. New intake process update">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <span class="form-label">Date Announced</span>
+              <input type="date" class="form-input" id="mDate">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group full">
+              <span class="form-label">Content / Body</span>
+              <textarea class="form-textarea" id="mContent" placeholder="Full memo content..." style="min-height:80px;"></textarea>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group full">
+              <span class="form-label">Where Announced</span>
+              <div class="check-group">
+                <label class="check-item"><input type="checkbox" value="Employee Portal" class="mLoc"><span>Employee Portal</span></label>
+                <label class="check-item"><input type="checkbox" value="Attorney Portal" class="mLoc"><span>Attorney Portal</span></label>
+                <label class="check-item"><input type="checkbox" value="Staff Meeting" class="mLoc"><span>Staff Meeting</span></label>
+                <label class="check-item"><input type="checkbox" value="Email" class="mLoc"><span>Email</span></label>
+                <label class="check-item"><input type="checkbox" value="Other" class="mLoc"><span>Other</span></label>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="form-cancel-btn" onclick="closeMemoForm()">Cancel</button>
+            <button class="form-save teal" onclick="saveMemo()">Save Memo</button>
+          </div>
+        </div>
+        <div class="memo-list" id="memoList"></div>
+      </div>
+
+      <!-- ════ HIRING PIPELINE ════ -->
+      <div class="section" id="hiring">
+        <div class="section-head">
+          <div class="section-icon si-n"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="section-title">Hiring Pipeline</div>
+          <div class="section-count" id="hiringCount">0 open</div>
+          <div class="section-line"></div>
+          <button class="btn-add outline" onclick="openRoleModal(null)">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Role
+          </button>
+        </div>
+        <div class="hiring-grid" id="hiringGrid"></div>
+      </div>
+
+      <!-- ════ QUICK NOTES BOARD ════ -->
+      <div class="section" id="board">
+        <div class="section-head">
+          <div class="section-icon si-a"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="7" y1="17" x2="7" y2="21"/><line x1="17" y1="17" x2="17" y2="21"/></svg></div>
+          <div class="section-title">Quick Notes Board</div>
+          <div class="section-line"></div>
+        </div>
+        <div class="board-frame">
+          <div class="board-screw tl"></div>
+          <div class="board-screw tr"></div>
+          <div class="board-surface">
+            <div class="board-notes-grid" id="boardGrid"></div>
+          </div>
+          <div class="board-ledge">
+            <div class="board-marker" style="background:#3cbfba;"></div>
+            <div class="board-marker" style="background:#e8a020;"></div>
+            <div class="board-marker" style="background:#e53e3e;"></div>
+            <div class="board-marker" style="background:#2d3748;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </main>
+</div><!-- /app -->
+
+<!-- NOTE DETAIL OVERLAY -->
+<div class="note-detail-overlay" id="noteOverlay" onclick="closeNoteOverlay(event)">
+  <div class="note-detail-card">
+    <button class="note-close" onclick="closeNoteOverlay()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="note-detail-title" id="noteOverlayTitle"></div>
+    <div class="note-detail-body" id="noteOverlayBody"></div>
+  </div>
+</div>
+
+<!-- ADD BOARD NOTE MODAL -->
+<div class="modal-backdrop" id="boardModal" onclick="closeBoardModal(event)">
+  <div class="note-card" onclick="event.stopPropagation()">
+    <div class="note-card-title">Add Quick Note</div>
+    <div style="margin-bottom:9px;">
+      <div class="form-label" style="margin-bottom:4px;">Title</div>
+      <input type="text" class="form-input" id="bnTitle" placeholder="Note title..." style="width:100%;background:#fff;">
+    </div>
+    <div style="margin-bottom:13px;">
+      <div class="form-label" style="margin-bottom:4px;">Content</div>
+      <textarea class="form-textarea" id="bnBody" placeholder="Note content..." style="width:100%;background:#fff;"></textarea>
+    </div>
+    <div class="form-actions">
+      <button class="form-cancel-btn" onclick="closeBoardModal()">Cancel</button>
+      <button class="form-save" style="background:var(--amber);color:var(--dark-navy);" onclick="saveBoardNote()">Add Note</button>
+    </div>
+  </div>
+</div>
+
+<!-- ROLE MODAL -->
+<div class="modal-backdrop" id="roleModal" onclick="closeRoleModal(event)">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-title" id="roleModalTitle">Add Open Role</div>
+    <div class="form-row">
+      <div class="form-group full">
+        <span class="form-label">Job Title *</span>
+        <input type="text" class="form-input" id="rTitle" placeholder="e.g. Paralegal — Woodland Office">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <span class="form-label">Department</span>
+        <input type="text" class="form-input" id="rDept" placeholder="e.g. Operations">
+      </div>
+      <div class="form-group">
+        <span class="form-label">Stage</span>
+        <select class="form-select" id="rStage">
+          <option value="Sourcing">Sourcing</option>
+          <option value="Screening">Screening</option>
+          <option value="Interviewing">Interviewing</option>
+          <option value="Offer Sent">Offer Sent</option>
+          <option value="On Hold">On Hold</option>
+          <option value="Filled">Filled</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <span class="form-label">Date Posted</span>
+        <input type="date" class="form-input" id="rPosted">
+      </div>
+      <div class="form-group">
+        <span class="form-label">Target Hire Date</span>
+        <input type="date" class="form-input" id="rTarget">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <span class="form-label">Status Notes</span>
+        <textarea class="form-textarea" id="rNotes" placeholder="Where are we? Candidate notes, next steps, blockers..."></textarea>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="form-cancel-btn" onclick="closeRoleModal()">Cancel</button>
+      <button class="form-save" id="roleSaveBtn" onclick="saveRole()">Add Role</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════
+// KEYS & PASSWORDS
+// ═══════════════════════════════
+var VP_PW      = 'FibiVP2026';
+var ADMIN_PW   = 'FibiAdmin2026';
+var AUTH_KEY   = 'fibi_vp_auth';
+var ANN_KEY    = 'fibi_vp_ann';
+var TASKS_KEY  = 'fibi_vp_tasks';
+var MEMOS_KEY  = 'fibi_vp_memos';
+var HIRING_KEY = 'fibi_vp_hiring';
+var BOARD_KEY  = 'fibi_vp_board';
+// Shared keys — same origin as employee + attorney portals
+var EMP_ANN    = 'fibi_announcement';
+var ATT_ANN    = 'fibi_attorney_ann';
+
+// ═══════════════════════════════
+// AUTH
+// ═══════════════════════════════
+function checkAuth(){
+  try{var d=JSON.parse(atob(localStorage.getItem(AUTH_KEY)||''));return (d.pw===VP_PW||d.pw===ADMIN_PW)&&new Date(d.exp)>new Date();}catch(e){return false;}
+}
+function doLogin(){
+  var pw=document.getElementById('loginPw').value;
+  var err=document.getElementById('loginErr');
+  if(pw!==VP_PW&&pw!==ADMIN_PW){err.textContent='Incorrect password. Please try again.';return;}
+  err.textContent='';
+  var exp=new Date();
+  exp.setDate(exp.getDate()+(document.getElementById('rememberMe').checked?30:1));
+  localStorage.setItem(AUTH_KEY,btoa(JSON.stringify({pw:pw,exp:exp.toISOString()})));
+  launchApp();
+}
+function signOut(){
+  localStorage.removeItem(AUTH_KEY);
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('loginGate').classList.remove('hidden');
+  document.getElementById('loginPw').value='';
+}
+function launchApp(){
+  document.getElementById('loginGate').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  initApp();
+}
+
+// ═══════════════════════════════
+// INIT
+// ═══════════════════════════════
+function initApp(){
+  startClock();fetchWeather();loadAnn();
+  renderTasks();renderMemos();renderHiring();renderBoard();updateCounts();
+}
+
+// ═══════════════════════════════
+// CLOCK
+// ═══════════════════════════════
+function startClock(){
+  function tick(){
+    var now=new Date();
+    var h=now.getHours(),m=now.getMinutes();
+    var ap=h>=12?'PM':'AM';h=h%12||12;
+    var p=function(n){return n<10?'0'+n:''+n;};
+    document.getElementById('clockTime').innerHTML=h+':'+p(m)+'<span>'+ap+'</span>';
+    var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    document.getElementById('clockDate').textContent=days[now.getDay()]+', '+months[now.getMonth()]+' '+now.getDate();
+    var g=h>=5&&h<12?'Good morning':h<17?'Good afternoon':'Good evening';
+    document.getElementById('heroGreeting').textContent=g+' ✦';
+    document.getElementById('heroDate').textContent=days[now.getDay()]+', '+months[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear();
+  }
+  tick();setInterval(tick,10000);
+}
+
+// ═══════════════════════════════
+// WEATHER — Richmond VA
+// ═══════════════════════════════
+function fetchWeather(){
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=37.5407&longitude=-77.4360&current_weather=true&temperature_unit=fahrenheit')
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var cw=d.current_weather;
+      document.getElementById('wIcon').textContent=wIcon(cw.weathercode);
+      document.getElementById('wTemp').textContent=Math.round(cw.temperature)+'°F';
+      document.getElementById('wDesc').textContent=wDesc(cw.weathercode);
+    }).catch(function(){document.getElementById('wDesc').textContent='Unavailable';});
+}
+function wIcon(c){if(c===0)return'☀️';if(c<=3)return'⛅';if(c<=48)return'🌫️';if(c<=57)return'🌦️';if(c<=67)return'🌧️';if(c<=77)return'🌨️';if(c<=82)return'🌦️';if(c>=95)return'⛈️';return'🌡️';}
+function wDesc(c){if(c===0)return'Clear sky';if(c<=2)return'Partly cloudy';if(c===3)return'Overcast';if(c<=48)return'Foggy';if(c<=57)return'Drizzle';if(c<=67)return'Rain';if(c<=77)return'Snow';if(c<=82)return'Rain showers';if(c>=95)return'Thunderstorm';return'Unknown';}
+
+// ═══════════════════════════════
+// ANNOUNCEMENT
+// ═══════════════════════════════
+var DEFAULT_ANN='Welcome to your VP Operations dashboard.';
+function loadAnn(){document.getElementById('annText').textContent=localStorage.getItem(ANN_KEY)||DEFAULT_ANN;}
+function startEditAnn(){
+  document.getElementById('annInput').value=document.getElementById('annText').textContent;
+  document.getElementById('annText').style.display='none';
+  document.getElementById('annEditBtn').style.display='none';
+  document.getElementById('annEditWrap').classList.add('show');
+  document.getElementById('annInput').focus();
+}
+function saveAnn(){
+  var v=document.getElementById('annInput').value.trim()||DEFAULT_ANN;
+  localStorage.setItem(ANN_KEY,v);document.getElementById('annText').textContent=v;cancelAnn();
+}
+function cancelAnn(){
+  document.getElementById('annText').style.display='';
+  document.getElementById('annEditBtn').style.display='';
+  document.getElementById('annEditWrap').classList.remove('show');
+}
+
+// ═══════════════════════════════
+// SCROLL NAV
+// ═══════════════════════════════
+function scrollSec(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+
+// ═══════════════════════════════
+// TASK BOARD
+// ═══════════════════════════════
+var _filt='all';
+function getTasks(){try{return JSON.parse(localStorage.getItem(TASKS_KEY))||[];}catch(e){return[];}}
+function saveTasks(t){localStorage.setItem(TASKS_KEY,JSON.stringify(t));}
+
+function toggleTaskForm(){var f=document.getElementById('taskForm');f.classList.toggle('show');if(f.classList.contains('show'))document.getElementById('tTitle').focus();}
+function closeTaskForm(){document.getElementById('taskForm').classList.remove('show');}
+
+function saveTask(){
+  var title=document.getElementById('tTitle').value.trim();
+  if(!title){showToast('Please enter a task title.');return;}
+  var t=getTasks();
+  t.unshift({id:Date.now(),title:title,priority:document.getElementById('tPri').value,category:document.getElementById('tCat').value,due:document.getElementById('tDue').value,notes:document.getElementById('tNotes').value.trim(),done:false,created:new Date().toISOString()});
+  saveTasks(t);closeTaskForm();
+  document.getElementById('tTitle').value='';document.getElementById('tNotes').value='';document.getElementById('tDue').value='';
+  renderTasks();updateCounts();showToast('Task added!','green');
+}
+
+function setFilter(f,btn){
+  _filt=f;
+  document.querySelectorAll('.filter-pill').forEach(function(p){p.classList.remove('active');});
+  btn.classList.add('active');renderTasks();
+}
+function deleteTask(id){saveTasks(getTasks().filter(function(t){return t.id!==id;}));renderTasks();updateCounts();}
+function toggleDone(id){
+  saveTasks(getTasks().map(function(t){if(t.id===id)t.done=!t.done;return t;}));
+  renderTasks();updateCounts();
+}
+
+function renderTasks(){
+  var all=getTasks();
+  var sort=document.getElementById('sortSel')?document.getElementById('sortSel').value:'newest';
+  var active=all.filter(function(t){return!t.done;});
+  var done=all.filter(function(t){return t.done;});
+  if(_filt!=='all'){
+    active=active.filter(function(t){return t.priority===_filt||t.category===_filt;});
+  }
+  if(sort==='priority'){var po={high:0,medium:1,low:2};active.sort(function(a,b){return po[a.priority]-po[b.priority];});}
+  else if(sort==='due'){active.sort(function(a,b){if(!a.due)return 1;if(!b.due)return-1;return new Date(a.due)-new Date(b.due);});}
+
+  document.getElementById('taskCount').textContent=active.length+' active';
+  var list=document.getElementById('tasksList');
+  list.innerHTML=active.length===0?'<div class="tasks-empty"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><p>No active tasks. Hit Add Task to get started!</p></div>':active.map(taskHTML).join('');
+  document.getElementById('completedCount').textContent='('+done.length+')';
+  document.getElementById('completedList').innerHTML=done.map(taskHTML).join('');
+}
+
+function taskHTML(t){
+  var today=new Date();today.setHours(0,0,0,0);
+  var dueStr='';
+  if(t.due){
+    var d=new Date(t.due+'T00:00:00');
+    var ov=!t.done&&d<today;
+    var days=Math.round((d-today)/86400000);
+    var lbl=ov?'Overdue '+Math.abs(days)+'d':days===0?'Due today':'Due in '+days+'d';
+    dueStr='<span class="task-due'+(ov?' overdue':'')+'"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'+lbl+'</span>';
+  }
+  return '<div class="task-card '+t.priority+(t.done?' completed-card':'')+'">' +
+    '<div class="task-check '+(t.done?'done':'')+'" onclick="toggleDone('+t.id+')"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>' +
+    '<div class="task-body"><div class="task-title'+(t.done?' struck':'')+'">'+esc(t.title)+'</div>' +
+    '<div class="task-meta"><span class="task-pri tp-'+t.priority+'">'+t.priority.charAt(0).toUpperCase()+t.priority.slice(1)+'</span><span class="task-cat">'+esc(t.category)+'</span>'+dueStr+'</div>' +
+    (t.notes?'<div class="task-notes-text">'+esc(t.notes)+'</div>':'')+
+    '</div><div class="task-actions"><button class="task-btn" onclick="deleteTask('+t.id+')" title="Delete"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button></div>' +
+    '</div>';
+}
+var _compOpen=false;
+function toggleCompleted(){
+  _compOpen=!_compOpen;
+  document.getElementById('completedList').classList.toggle('show',_compOpen);
+  document.getElementById('completedToggle').classList.toggle('open',_compOpen);
+}
+
+// ═══════════════════════════════
+// MEMO LOG
+// ═══════════════════════════════
+function getMemos(){try{return JSON.parse(localStorage.getItem(MEMOS_KEY))||[];}catch(e){return[];}}
+function saveMemos(m){localStorage.setItem(MEMOS_KEY,JSON.stringify(m));}
+
+function toggleMemoForm(){
+  var f=document.getElementById('memoForm');f.classList.toggle('show');
+  if(f.classList.contains('show')){document.getElementById('mDate').value=new Date().toISOString().split('T')[0];document.getElementById('mTitle').focus();}
+}
+function closeMemoForm(){document.getElementById('memoForm').classList.remove('show');}
+
+function saveMemo(){
+  var title=document.getElementById('mTitle').value.trim();
+  if(!title){showToast('Please enter a title.');return;}
+  var locs=[];document.querySelectorAll('.mLoc:checked').forEach(function(c){locs.push(c.value);});
+  var m=getMemos();
+  m.unshift({id:Date.now(),title:title,date:document.getElementById('mDate').value,content:document.getElementById('mContent').value.trim(),locations:locs,pushedEmp:null,pushedAtt:null,created:new Date().toISOString()});
+  saveMemos(m);closeMemoForm();
+  document.getElementById('mTitle').value='';document.getElementById('mContent').value='';
+  document.querySelectorAll('.mLoc').forEach(function(c){c.checked=false;});
+  renderMemos();updateCounts();showToast('Memo saved!','green');
+}
+function deleteMemo(id){saveMemos(getMemos().filter(function(m){return m.id!==id;}));renderMemos();updateCounts();}
+
+function pushToPortal(id,which){
+  var memos=getMemos();
+  var memo=memos.find(function(m){return m.id===id;});
+  if(!memo)return;
+  var text=memo.title+(memo.content?': '+memo.content.substring(0,140)+(memo.content.length>140?'…':''):'');
+  if(which==='emp'){localStorage.setItem(EMP_ANN,text);memo.pushedEmp=new Date().toLocaleDateString();showToast('Pushed to Employee Portal ✓','green');}
+  else{localStorage.setItem(ATT_ANN,text);memo.pushedAtt=new Date().toLocaleDateString();showToast('Pushed to Attorney Portal ✓','green');}
+  saveMemos(memos);renderMemos();
+}
+
+var _memoEx={};
+function toggleMemoExpand(id){_memoEx[id]=!_memoEx[id];renderMemos();}
+
+function renderMemos(){
+  var memos=getMemos();
+  document.getElementById('memoCount').textContent=memos.length+' memo'+(memos.length!==1?'s':'');
+  var locMap={'Employee Portal':'<span class="memo-loc-tag ml-emp">Employee Portal</span>','Attorney Portal':'<span class="memo-loc-tag ml-att">Attorney Portal</span>','Staff Meeting':'<span class="memo-loc-tag ml-meet">Staff Meeting</span>','Email':'<span class="memo-loc-tag ml-email">Email</span>','Other':'<span class="memo-loc-tag ml-other">Other</span>'};
+  var list=document.getElementById('memoList');
+  if(memos.length===0){list.innerHTML='<div class="tasks-empty"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p>No memos yet — log your first announcement above.</p></div>';return;}
+  list.innerHTML=memos.map(function(m){
+    var ds=m.date?new Date(m.date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—';
+    var locs=(m.locations||[]).map(function(l){return locMap[l]||'';}).join('');
+    var ex=_memoEx[m.id];
+    var ps='';if(m.pushedEmp)ps+='<span>→ Employee Portal pushed '+m.pushedEmp+'</span> ';if(m.pushedAtt)ps+='<span>→ Attorney Portal pushed '+m.pushedAtt+'</span>';
+    return '<div class="memo-row"><div class="memo-row-top" onclick="toggleMemoExpand('+m.id+')">'+
+      '<div class="memo-date-chip">'+ds+'</div>'+
+      '<div class="memo-info"><div class="memo-title-text">'+esc(m.title)+'</div><div class="memo-locs">'+locs+'</div></div>'+
+      '<div class="memo-row-btns" onclick="event.stopPropagation()">'+
+      '<button class="push-btn pb-emp" onclick="pushToPortal('+m.id+',\'emp\')" title="Push announcement to Employee Portal"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Emp</button>'+
+      '<button class="push-btn pb-att" onclick="pushToPortal('+m.id+',\'att\')" title="Push announcement to Attorney Portal"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Atty</button>'+
+      '<button class="memo-del-btn" onclick="deleteMemo('+m.id+')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>'+
+      '</div></div>'+
+      '<div class="memo-expand-body'+(ex?' show':'')+'"><div class="memo-expand-content">'+esc(m.content||'(No content)')+'</div>'+(ps?'<div class="memo-push-status">'+ps+'</div>':'')+
+      '</div></div>';
+  }).join('');
+}
+
+// ═══════════════════════════════
+// HIRING TRACKER
+// ═══════════════════════════════
+var _editRoleId=null;
+function getRoles(){try{return JSON.parse(localStorage.getItem(HIRING_KEY))||[];}catch(e){return[];}}
+function saveRoles(r){localStorage.setItem(HIRING_KEY,JSON.stringify(r));}
+
+function openRoleModal(id){
+  _editRoleId=id;
+  var m=document.getElementById('roleModal');
+  if(id){
+    var r=getRoles().find(function(x){return x.id===id;});
+    document.getElementById('roleModalTitle').textContent='Edit Role';
+    document.getElementById('roleSaveBtn').textContent='Save Changes';
+    document.getElementById('rTitle').value=r.title||'';
+    document.getElementById('rDept').value=r.dept||'';
+    document.getElementById('rStage').value=r.stage||'Sourcing';
+    document.getElementById('rPosted').value=r.posted||'';
+    document.getElementById('rTarget').value=r.target||'';
+    document.getElementById('rNotes').value=r.notes||'';
+  } else {
+    document.getElementById('roleModalTitle').textContent='Add Open Role';
+    document.getElementById('roleSaveBtn').textContent='Add Role';
+    document.getElementById('rTitle').value='';document.getElementById('rDept').value='';
+    document.getElementById('rStage').value='Sourcing';
+    document.getElementById('rPosted').value=new Date().toISOString().split('T')[0];
+    document.getElementById('rTarget').value='';document.getElementById('rNotes').value='';
+  }
+  m.classList.add('open');
+}
+function closeRoleModal(e){if(e&&e.target!==document.getElementById('roleModal'))return;document.getElementById('roleModal').classList.remove('open');}
+function saveRole(){
+  var title=document.getElementById('rTitle').value.trim();
+  if(!title){showToast('Please enter a job title.');return;}
+  var roles=getRoles();
+  var data={title:title,dept:document.getElementById('rDept').value.trim(),stage:document.getElementById('rStage').value,posted:document.getElementById('rPosted').value,target:document.getElementById('rTarget').value,notes:document.getElementById('rNotes').value.trim()};
+  if(_editRoleId){roles=roles.map(function(r){return r.id===_editRoleId?Object.assign({},r,data):r;});}
+  else{data.id=Date.now();roles.unshift(data);}
+  saveRoles(roles);document.getElementById('roleModal').classList.remove('open');
+  renderHiring();updateCounts();showToast(_editRoleId?'Role updated!':'Role added!','green');
+}
+function deleteRole(id){saveRoles(getRoles().filter(function(r){return r.id!==id;}));renderHiring();updateCounts();}
+
+function renderHiring(){
+  var roles=getRoles();
+  var open=roles.filter(function(r){return r.stage!=='Filled';}).length;
+  document.getElementById('hiringCount').textContent=open+' open';
+  var sc={'Sourcing':'rs-sourcing','Screening':'rs-screening','Interviewing':'rs-interviewing','Offer Sent':'rs-offer','On Hold':'rs-hold','Filled':'rs-filled'};
+  var stgColor={'Sourcing':'#9aa5b4','Screening':'#2563eb','Interviewing':'#0d9488','Offer Sent':'#b7791f','On Hold':'#c53030','Filled':'#2e7d32'};
+  var grid=document.getElementById('hiringGrid');
+  if(roles.length===0){grid.innerHTML='<div class="hiring-empty"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><p>No roles yet — add your first open position.</p></div>';return;}
+  grid.innerHTML=roles.map(function(r){
+    var ps=r.posted?new Date(r.posted+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—';
+    var ts=r.target?new Date(r.target+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—';
+    return '<div class="role-card"><div class="role-accent" style="background:'+(stgColor[r.stage]||'#9aa5b4')+'"></div><div class="role-body">'+
+      '<div class="role-top"><div><div class="role-name">'+esc(r.title)+'</div>'+(r.dept?'<div class="role-dept-tag">'+esc(r.dept)+'</div>':'')+
+      '</div><span class="stage-badge '+(sc[r.stage]||'rs-sourcing')+'">'+r.stage+'</span></div>'+
+      '<div class="role-dates"><div class="role-date-item"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><div><div class="role-date-lbl">Posted</div><div>'+ps+'</div></div></div>'+
+      '<div class="role-date-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><div><div class="role-date-lbl">Target</div><div>'+ts+'</div></div></div></div>'+
+      '<div class="role-notes-box">'+esc(r.notes||'No notes yet.')+'</div>'+
+      '<div class="role-footer"><button class="role-btn" onclick="openRoleModal('+r.id+')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Edit</button>'+
+      '<button class="role-btn del" onclick="deleteRole('+r.id+')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>Remove</button>'+
+      '</div></div></div>';
+  }).join('');
+}
+
+// ═══════════════════════════════
+// BULLETIN BOARD
+// ═══════════════════════════════
+function getBoardNotes(){try{return JSON.parse(localStorage.getItem(BOARD_KEY))||[];}catch(e){return[];}}
+function saveBoardNotes(n){localStorage.setItem(BOARD_KEY,JSON.stringify(n));}
+
+function openBoardModal(){
+  document.getElementById('bnTitle').value='';document.getElementById('bnBody').value='';
+  document.getElementById('boardModal').classList.add('open');
+  setTimeout(function(){document.getElementById('bnTitle').focus();},80);
+}
+function closeBoardModal(e){if(e&&e.target!==document.getElementById('boardModal'))return;document.getElementById('boardModal').classList.remove('open');}
+function saveBoardNote(){
+  var t=document.getElementById('bnTitle').value.trim(),b=document.getElementById('bnBody').value.trim();
+  if(!t&&!b){showToast('Please add some content.');return;}
+  var notes=getBoardNotes();notes.push({id:Date.now(),title:t,body:b});
+  saveBoardNotes(notes);document.getElementById('boardModal').classList.remove('open');renderBoard();showToast('Note added!','amber');
+}
+function deleteBoardNote(id){saveBoardNotes(getBoardNotes().filter(function(n){return n.id!==id;}));renderBoard();}
+function openNoteOverlay(id){
+  var n=getBoardNotes().find(function(x){return x.id===id;});if(!n)return;
+  document.getElementById('noteOverlayTitle').textContent=n.title||'Note';
+  document.getElementById('noteOverlayBody').textContent=n.body;
+  document.getElementById('noteOverlay').classList.add('open');
+}
+function closeNoteOverlay(e){if(e&&e.target!==document.getElementById('noteOverlay'))return;document.getElementById('noteOverlay').classList.remove('open');}
+function renderBoard(){
+  var notes=getBoardNotes();
+  var html=notes.map(function(n){
+    return '<div class="board-note" onclick="openNoteOverlay('+n.id+')">'+
+      '<button class="board-note-del" onclick="event.stopPropagation();deleteBoardNote('+n.id+')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'+
+      '<div class="board-note-title">'+esc(n.title||'Note')+'</div>'+
+      '<div class="board-note-body">'+esc((n.body||'').substring(0,80))+(n.body&&n.body.length>80?'…':'')+'</div>'+
+      '</div>';
+  }).join('');
+  html+='<div class="board-add-btn" onclick="openBoardModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>Add Note</span></div>';
+  document.getElementById('boardGrid').innerHTML=html;
+}
+
+// ═══════════════════════════════
+// COUNTS
+// ═══════════════════════════════
+function updateCounts(){
+  var active=getTasks().filter(function(t){return!t.done;}).length;
+  var memos=getMemos().length;
+  var open=getRoles().filter(function(r){return r.stage!=='Filled';}).length;
+  document.getElementById('navTaskBadge').textContent=active;
+  document.getElementById('navMemoBadge').textContent=memos;
+  document.getElementById('navHireBadge').textContent=open;
+  document.getElementById('heroTasks').textContent=active+' active task'+(active!==1?'s':'');
+  document.getElementById('heroRoles').textContent=open+' open role'+(open!==1?'s':'');
+}
+
+// ═══════════════════════════════
+// UTILITIES
+// ═══════════════════════════════
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function showToast(msg,type){
+  var t=document.getElementById('toast');t.textContent=msg;
+  t.className='toast show'+(type?' '+type:'');
+  clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show');},2800);
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    document.getElementById('noteOverlay').classList.remove('open');
+    document.getElementById('roleModal').classList.remove('open');
+    document.getElementById('boardModal').classList.remove('open');
+    cancelAnn();
+  }
+});
+
+// ═══════════════════════════════
+// BOOT
+// ═══════════════════════════════
+if(checkAuth())launchApp();
+</script>
+</body>
+</html>
