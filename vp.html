@@ -279,9 +279,13 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 .board-note::before{content:'';position:absolute;top:-7px;left:50%;transform:translateX(-50%);width:18px;height:9px;background:rgba(232,160,32,0.65);border-radius:2px 2px 0 0;}
 .board-note-title{font-size:10.5px;font-weight:700;color:#5d4037;margin-bottom:4px;}
 .board-note-body{font-size:10px;color:#795548;line-height:1.4;}
-.board-note-del{position:absolute;top:3px;right:3px;width:15px;height:15px;border-radius:50%;background:rgba(0,0,0,0.07);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.15s;color:#795548;}
-.board-note-del svg{width:7px;height:7px;stroke:currentColor;fill:none;stroke-width:2.5;}
-.board-note:hover .board-note-del{opacity:1;}
+.board-note-del,.board-note-edit{position:absolute;top:3px;width:15px;height:15px;border-radius:50%;background:rgba(0,0,0,0.07);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.15s;color:#795548;}
+.board-note-del{right:3px;}
+.board-note-edit{right:21px;}
+.board-note-del svg,.board-note-edit svg{width:7px;height:7px;stroke:currentColor;fill:none;stroke-width:2.5;}
+.board-note:hover .board-note-del,.board-note:hover .board-note-edit{opacity:1;}
+.board-note-edit:hover{background:rgba(232,160,32,0.3);color:#5d4037;}
+.board-note-del:hover{background:rgba(229,62,62,0.2);color:#c53030;}
 .board-add-btn{background:rgba(232,160,32,0.13);border:2px dashed rgba(232,160,32,0.38);border-radius:6px;padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;min-height:95px;transition:background var(--transition);}
 .board-add-btn:hover{background:rgba(232,160,32,0.2);}
 .board-add-btn svg{width:20px;height:20px;stroke:var(--amber);fill:none;stroke-width:2;}
@@ -618,7 +622,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 <!-- ADD BOARD NOTE MODAL -->
 <div class="modal-backdrop" id="boardModal" onclick="closeBoardModal(event)">
   <div class="note-card" onclick="event.stopPropagation()">
-    <div class="note-card-title">Add Quick Note</div>
+    <div class="note-card-title" id="boardModalTitle">Add Quick Note</div>
     <div style="margin-bottom:9px;">
       <div class="form-label" style="margin-bottom:4px;">Title</div>
       <input type="text" class="form-input" id="bnTitle" placeholder="Note title..." style="width:100%;background:#fff;">
@@ -629,7 +633,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
     </div>
     <div class="form-actions">
       <button class="form-cancel-btn" onclick="closeBoardModal()">Cancel</button>
-      <button class="form-save" style="background:var(--amber);color:var(--dark-navy);" onclick="saveBoardNote()">Add Note</button>
+      <button class="form-save" style="background:var(--amber);color:var(--dark-navy);" id="boardSaveBtn" onclick="saveBoardNote()">Add Note</button>
     </div>
   </div>
 </div>
@@ -1034,8 +1038,21 @@ function renderHiring(){
 function getBoardNotes(){try{return JSON.parse(localStorage.getItem(BOARD_KEY))||[];}catch(e){return[];}}
 function saveBoardNotes(n){localStorage.setItem(BOARD_KEY,JSON.stringify(n));}
 
-function openBoardModal(){
-  document.getElementById('bnTitle').value='';document.getElementById('bnBody').value='';
+var _editNoteId=null;
+function openBoardModal(editId){
+  _editNoteId=editId||null;
+  if(editId){
+    var n=getBoardNotes().find(function(x){return x.id===editId;});
+    document.getElementById('bnTitle').value=n?n.title:'';
+    document.getElementById('bnBody').value=n?n.body:'';
+    document.getElementById('boardModalTitle').textContent='Edit Note';
+    document.getElementById('boardSaveBtn').textContent='Save Changes';
+  } else {
+    document.getElementById('bnTitle').value='';
+    document.getElementById('bnBody').value='';
+    document.getElementById('boardModalTitle').textContent='Add Quick Note';
+    document.getElementById('boardSaveBtn').textContent='Add Note';
+  }
   document.getElementById('boardModal').classList.add('open');
   setTimeout(function(){document.getElementById('bnTitle').focus();},80);
 }
@@ -1043,8 +1060,15 @@ function closeBoardModal(e){if(e&&e.target!==document.getElementById('boardModal
 function saveBoardNote(){
   var t=document.getElementById('bnTitle').value.trim(),b=document.getElementById('bnBody').value.trim();
   if(!t&&!b){showToast('Please add some content.');return;}
-  var notes=getBoardNotes();notes.push({id:Date.now(),title:t,body:b});
-  saveBoardNotes(notes);document.getElementById('boardModal').classList.remove('open');renderBoard();showToast('Note added!','amber');
+  var notes=getBoardNotes();
+  if(_editNoteId){
+    notes=notes.map(function(n){return n.id===_editNoteId?{id:n.id,title:t,body:b}:n;});
+    showToast('Note updated!','amber');
+  } else {
+    notes.push({id:Date.now(),title:t,body:b});
+    showToast('Note added!','amber');
+  }
+  saveBoardNotes(notes);document.getElementById('boardModal').classList.remove('open');renderBoard();
 }
 function deleteBoardNote(id){saveBoardNotes(getBoardNotes().filter(function(n){return n.id!==id;}));renderBoard();}
 function openNoteOverlay(id){
@@ -1058,7 +1082,8 @@ function renderBoard(){
   var notes=getBoardNotes();
   var html=notes.map(function(n){
     return '<div class="board-note" onclick="openNoteOverlay('+n.id+')">'+
-      '<button class="board-note-del" onclick="event.stopPropagation();deleteBoardNote('+n.id+')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'+
+      '<button class="board-note-edit" onclick="event.stopPropagation();openBoardModal('+n.id+')" title="Edit"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>'+
+      '<button class="board-note-del" onclick="event.stopPropagation();deleteBoardNote('+n.id+')" title="Delete"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'+
       '<div class="board-note-title">'+esc(n.title||'Note')+'</div>'+
       '<div class="board-note-body">'+esc((n.body||'').substring(0,80))+(n.body&&n.body.length>80?'…':'')+'</div>'+
       '</div>';
