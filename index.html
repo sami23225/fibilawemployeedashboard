@@ -1,0 +1,3148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fibi Law Firm -- Employee Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy: #012D44;
+    --navy-deep: #011e2f;
+    --navy-mid: #013a58;
+    --teal: #3cbfba;
+    --teal-dim: rgba(60, 191, 186, 0.08);
+    --teal-soft: rgba(60, 191, 186, 0.12);
+    --teal-mid: rgba(60, 191, 186, 0.20);
+    --teal-glow: rgba(60, 191, 186, 0.35);
+    --white: #ffffff;
+    --off-white: #f8fafb;
+    --gray-50: #f4f6f8;
+    --gray-100: #ebeef1;
+    --gray-200: #dde1e6;
+    --gray-300: #c4c9d0;
+    --gray-400: #9aa1ab;
+    --gray-500: #6e7681;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --amber: #f59e0b;
+    --amber-bg: rgba(245, 158, 11, 0.08);
+    --rose: #e11d48;
+    --rose-bg: rgba(225, 29, 72, 0.07);
+    --indigo: #6366f1;
+    --indigo-bg: rgba(99, 102, 241, 0.08);
+    --emerald: #059669;
+    --emerald-bg: rgba(5, 150, 105, 0.08);
+    --sidebar-w: 264px;
+    --topbar-h: 60px;
+    --radius: 10px;
+    --radius-lg: 14px;
+    --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.07);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.09);
+    --transition: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--off-white);
+    color: var(--gray-800);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== SIDEBAR ===== */
+  .sidebar {
+    width: var(--sidebar-w);
+    background: var(--navy-deep);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 200;
+    overflow: hidden;
+  }
+
+  .sidebar-head {
+    padding: 24px 20px 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    flex-shrink: 0;
+  }
+
+  .sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sidebar-brand img {
+    width: 40px; height: 40px;
+    border-radius: 9px;
+    object-fit: contain;
+    background: var(--white);
+    padding: 3px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  .brand-info {}
+  .brand-name { font-size: 17px; font-weight: 700; letter-spacing: -0.4px; }
+  .brand-sub {
+    font-size: 10px;
+    color: var(--teal);
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* Sidebar clock widget */
+  .sidebar-clock {
+    margin: 18px 20px 0;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: var(--radius);
+  }
+
+  .clock-time {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  .clock-date {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 6px;
+    font-weight: 450;
+  }
+
+  /* Sidebar nav */
+  .sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 10px 20px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+  }
+
+  .sidebar-nav::-webkit-scrollbar { width: 4px; }
+  .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+  .nav-group { margin-bottom: 6px; }
+
+  .nav-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.9px;
+    color: rgba(255,255,255,0.25);
+    padding: 14px 12px 7px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all var(--transition);
+    text-decoration: none;
+    color: rgba(255,255,255,0.58);
+    font-size: 13px;
+    font-weight: 450;
+    position: relative;
+  }
+
+  .nav-link:hover {
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.9);
+  }
+
+  .nav-link.active {
+    background: var(--teal);
+    color: var(--white);
+    font-weight: 550;
+    box-shadow: 0 2px 8px rgba(60, 191, 186, 0.3);
+  }
+
+  .nav-link .icon {
+    width: 18px; height: 18px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .nav-link .icon svg {
+    width: 17px; height: 17px;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.7;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .nav-link .badge {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 600;
+    background: rgba(255,255,255,0.1);
+    padding: 1px 7px;
+    border-radius: 10px;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .nav-link.active .badge {
+    background: rgba(255,255,255,0.2);
+    color: var(--white);
+  }
+
+  /* Sidebar footer */
+  .sidebar-foot {
+    padding: 14px 16px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    flex-shrink: 0;
+  }
+
+  .user-row {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 6px;
+    border-radius: 8px;
+    transition: background var(--transition);
+    cursor: pointer;
+  }
+
+  .user-row:hover { background: rgba(255,255,255,0.05); }
+
+  .avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal), #2a9d99);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px; color: var(--white);
+    flex-shrink: 0;
+  }
+
+  .user-meta {}
+  .user-name { font-size: 13px; font-weight: 600; }
+  .user-role { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 1px; }
+
+  /* ===== MAIN ===== */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Topbar */
+  .topbar {
+    height: var(--topbar-h);
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 36px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .topbar-title {
+    font-size: 16px;
+    font-weight: 650;
+    color: var(--navy);
+    letter-spacing: -0.2px;
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .search-wrap {
+    position: relative;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 8px 12px;
+    width: 300px;
+    transition: all var(--transition);
+  }
+
+  .search-box:focus-within {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px var(--teal-dim);
+    background: var(--white);
+  }
+
+  .search-box svg {
+    width: 15px; height: 15px;
+    stroke: var(--gray-400); fill: none;
+    stroke-width: 2; flex-shrink: 0;
+  }
+
+  .search-box input {
+    border: none; outline: none; background: transparent;
+    font-size: 13px; color: var(--gray-800);
+    width: 100%; font-family: inherit;
+  }
+
+  .search-box input::placeholder { color: var(--gray-400); }
+
+  .kbd {
+    font-size: 10px;
+    color: var(--gray-400);
+    border: 1px solid var(--gray-200);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-family: inherit;
+    line-height: 1.6;
+  }
+
+  /* Content area */
+  .content {
+    flex: 1;
+    padding: 28px 36px 56px;
+    max-width: 1200px;
+  }
+
+  /* Hero banner */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #025a80 100%);
+    border-radius: var(--radius-lg);
+    padding: 32px 36px;
+    color: var(--white);
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -30px;
+    width: 240px; height: 240px;
+    background: var(--teal);
+    opacity: 0.07;
+    border-radius: 50%;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -70px; right: 120px;
+    width: 180px; height: 180px;
+    background: var(--teal);
+    opacity: 0.04;
+    border-radius: 50%;
+  }
+
+  .hero-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .hero h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    margin-bottom: 6px;
+  }
+
+  .hero p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+    max-width: 500px;
+  }
+
+  .hero-badge {
+    background: rgba(60, 191, 186, 0.15);
+    border: 1px solid rgba(60, 191, 186, 0.2);
+    color: var(--teal);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Stats row */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 30px;
+  }
+
+  .stat {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: box-shadow var(--transition);
+  }
+
+  .stat:hover { box-shadow: var(--shadow-sm); }
+
+  .stat-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .stat-icon svg {
+    width: 19px; height: 19px;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .stat-icon.teal { background: var(--teal-dim); color: var(--teal); }
+  .stat-icon.navy { background: rgba(1,45,68,0.06); color: var(--navy); }
+  .stat-icon.amber { background: var(--amber-bg); color: var(--amber); }
+  .stat-icon.indigo { background: var(--indigo-bg); color: var(--indigo); }
+
+  .stat-val { font-size: 22px; font-weight: 700; color: var(--navy); letter-spacing: -0.5px; line-height: 1; }
+  .stat-lbl { font-size: 12px; color: var(--gray-400); margin-top: 3px; }
+
+  /* Announcements */
+  .announcements {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .ann-indicator {
+    width: 4px;
+    height: 36px;
+    border-radius: 4px;
+    background: var(--teal);
+    flex-shrink: 0;
+  }
+
+  .ann-content { flex: 1; }
+
+  .ann-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--teal);
+    margin-bottom: 4px;
+  }
+
+  .ann-text {
+    font-size: 13.5px;
+    color: var(--gray-700);
+    line-height: 1.5;
+  }
+
+  .ann-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .ann-btn {
+    color: var(--gray-300);
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 6px;
+    transition: all var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ann-btn:hover { color: var(--gray-600); background: var(--gray-50); }
+
+  .ann-edit-btn:hover { color: var(--teal); }
+  .ann-save-btn { color: var(--emerald); }
+  .ann-save-btn:hover { color: var(--emerald); background: var(--emerald-bg); }
+  .ann-cancel-btn:hover { color: var(--rose); background: var(--rose-bg); }
+
+  .ann-btn svg {
+    width: 15px; height: 15px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2;
+  }
+
+  .ann-edit-input {
+    width: 100%;
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13.5px;
+    font-family: inherit;
+    color: var(--gray-700);
+    outline: none;
+    margin-top: 6px;
+    transition: border-color var(--transition);
+  }
+
+  .ann-edit-input:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px var(--teal-dim);
+  }
+
+  /* Password Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .modal {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    width: 360px;
+    padding: 28px 28px 24px;
+    transform: translateY(8px) scale(0.97);
+    transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .modal-overlay.open .modal {
+    transform: translateY(0) scale(1);
+  }
+
+  .modal-title {
+    font-size: 16px;
+    font-weight: 650;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .modal-subtitle {
+    font-size: 13px;
+    color: var(--gray-400);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .modal-input-wrap {
+    position: relative;
+    margin-bottom: 8px;
+  }
+
+  .modal-input {
+    width: 100%;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 10px 40px 10px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--gray-800);
+    outline: none;
+    transition: border-color var(--transition);
+  }
+
+  .modal-input:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px var(--teal-dim);
+  }
+
+  .modal-input.error {
+    border-color: var(--rose);
+    box-shadow: 0 0 0 3px var(--rose-bg);
+  }
+
+  .modal-toggle-pw {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--gray-400);
+    padding: 2px;
+  }
+
+  .modal-toggle-pw:hover { color: var(--gray-600); }
+
+  .modal-toggle-pw svg {
+    width: 18px; height: 18px;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.8;
+  }
+
+  .modal-error {
+    font-size: 12px;
+    color: var(--rose);
+    margin-bottom: 12px;
+    min-height: 18px;
+  }
+
+  .modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  .modal-btn {
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    transition: all var(--transition);
+  }
+
+  .modal-btn-cancel {
+    background: var(--gray-50);
+    color: var(--gray-600);
+    border: 1px solid var(--gray-200);
+  }
+
+  .modal-btn-cancel:hover { background: var(--gray-100); }
+
+  .modal-btn-confirm {
+    background: var(--teal);
+    color: var(--white);
+  }
+
+  .modal-btn-confirm:hover { background: #35aca7; }
+
+  /* Section */
+  .section {
+    margin-bottom: 32px;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .section-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .section-icon svg {
+    width: 16px; height: 16px;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .section-icon.teal { background: var(--teal-dim); color: var(--teal); }
+  .section-icon.navy { background: rgba(1,45,68,0.06); color: var(--navy); }
+  .section-icon.amber { background: var(--amber-bg); color: var(--amber); }
+  .section-icon.rose { background: var(--rose-bg); color: var(--rose); }
+  .section-icon.indigo { background: var(--indigo-bg); color: var(--indigo); }
+  .section-icon.emerald { background: var(--emerald-bg); color: var(--emerald); }
+
+  .section-title {
+    font-size: 14px;
+    font-weight: 650;
+    color: var(--navy);
+  }
+
+  .section-count {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gray-400);
+    background: var(--gray-50);
+    border: 1px solid var(--gray-100);
+    padding: 1px 9px;
+    border-radius: 20px;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--gray-200);
+  }
+
+  /* Card grid */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    transition: all var(--transition);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: transparent;
+    transition: background var(--transition);
+  }
+
+  .card:hover {
+    border-color: var(--teal);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .card:hover::before { background: var(--teal); }
+
+  .card-icon {
+    width: 40px; height: 40px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: transform var(--transition);
+  }
+
+  .card:hover .card-icon { transform: scale(1.05); }
+
+  .card-icon svg {
+    width: 19px; height: 19px;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.7;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .card-icon.teal { background: var(--teal-dim); color: var(--teal); }
+  .card-icon.navy { background: rgba(1,45,68,0.06); color: var(--navy); }
+  .card-icon.amber { background: var(--amber-bg); color: var(--amber); }
+  .card-icon.rose { background: var(--rose-bg); color: var(--rose); }
+  .card-icon.indigo { background: var(--indigo-bg); color: var(--indigo); }
+  .card-icon.emerald { background: var(--emerald-bg); color: var(--emerald); }
+
+  .card-body { flex: 1; min-width: 0; }
+
+  .card-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .card-desc {
+    font-size: 12px;
+    color: var(--gray-400);
+    line-height: 1.5;
+  }
+
+  .card-go {
+    margin-top: 3px;
+    color: var(--gray-300);
+    transition: all var(--transition);
+    flex-shrink: 0;
+  }
+
+  .card:hover .card-go {
+    color: var(--teal);
+    transform: translateX(3px);
+  }
+
+  .card-go svg {
+    width: 16px; height: 16px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2;
+  }
+
+  /* Office payment grid */
+  .office-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+  }
+
+  .office-btn {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 16px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .office-btn:hover {
+    border-color: var(--teal);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-1px);
+  }
+
+  .office-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+    margin: 0 auto 8px;
+  }
+
+  .office-name {
+    font-size: 13px;
+    font-weight: 550;
+    color: var(--gray-700);
+  }
+
+  .office-sub {
+    font-size: 10px;
+    color: var(--gray-400);
+    margin-top: 2px;
+  }
+
+  /* Pinned panel (floating) */
+  .pinned-float {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 150;
+  }
+
+  .pinned-toggle {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--navy);
+    border: 2px solid var(--teal);
+    color: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition);
+  }
+
+  .pinned-toggle:hover {
+    background: var(--teal);
+    color: var(--white);
+    transform: scale(1.05);
+  }
+
+  .pinned-toggle svg {
+    width: 20px; height: 20px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2;
+  }
+
+  .pinned-panel {
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+    width: 280px;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .pinned-panel.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .pinned-header {
+    padding: 14px 18px;
+    font-size: 13px;
+    font-weight: 650;
+    color: var(--navy);
+    border-bottom: 1px solid var(--gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .pinned-header span {
+    font-size: 10px;
+    color: var(--gray-400);
+    font-weight: 500;
+  }
+
+  .pinned-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--gray-50);
+    transition: background var(--transition);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .pinned-item:last-child { border-bottom: none; }
+  .pinned-item:hover { background: var(--gray-50); }
+
+  .pinned-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .pinned-dot.t { background: var(--teal); }
+  .pinned-dot.a { background: var(--amber); }
+  .pinned-dot.i { background: var(--indigo); }
+  .pinned-dot.r { background: var(--rose); }
+
+  .pinned-label {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-700);
+  }
+
+  .pinned-item:hover .pinned-label { color: var(--navy); }
+
+  .pinned-arrow {
+    color: var(--gray-300);
+  }
+
+  .pinned-item:hover .pinned-arrow { color: var(--teal); }
+
+  .pinned-arrow svg {
+    width: 14px; height: 14px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .office-row { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .content { padding: 20px 16px 48px; }
+    .topbar { padding: 0 16px; }
+    .search-box { width: 180px; }
+    .stats { grid-template-columns: 1fr; }
+    .office-row { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-in {
+    animation: fadeUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    opacity: 0;
+  }
+
+  .delay-1 { animation-delay: 0.05s; }
+  .delay-2 { animation-delay: 0.1s; }
+  .delay-3 { animation-delay: 0.15s; }
+  .delay-4 { animation-delay: 0.2s; }
+  .delay-5 { animation-delay: 0.25s; }
+  .delay-6 { animation-delay: 0.3s; }
+  .delay-7 { animation-delay: 0.35s; }
+
+  /* ===== LOGIN GATE ===== */
+  .login-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--navy-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+
+  .login-gate.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .login-card {
+    width: 400px;
+    background: var(--white);
+    border-radius: 18px;
+    padding: 44px 40px 40px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    text-align: center;
+    animation: fadeUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  .login-logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    object-fit: contain;
+    margin: 0 auto 20px;
+    display: block;
+  }
+
+  .login-firm {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.4px;
+    margin-bottom: 4px;
+  }
+
+  .login-tagline {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+
+  .login-subtitle {
+    font-size: 14px;
+    color: var(--gray-400);
+    margin-bottom: 28px;
+  }
+
+  .login-input-wrap {
+    position: relative;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+
+  .login-input-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-600);
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .login-input {
+    width: 100%;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 12px 44px 12px 16px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--gray-800);
+    outline: none;
+    transition: all var(--transition);
+    background: var(--gray-50);
+  }
+
+  .login-input:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px var(--teal-dim);
+    background: var(--white);
+  }
+
+  .login-input.error {
+    border-color: var(--rose);
+    box-shadow: 0 0 0 3px var(--rose-bg);
+  }
+
+  .login-eye {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    cursor: pointer;
+    color: var(--gray-400);
+    padding: 2px;
+    display: flex;
+  }
+
+  .login-eye:hover { color: var(--gray-600); }
+
+  .login-eye svg {
+    width: 18px; height: 18px;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.8;
+  }
+
+  .login-error {
+    font-size: 12px;
+    color: var(--rose);
+    min-height: 20px;
+    margin-bottom: 6px;
+    text-align: left;
+  }
+
+  .login-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: var(--teal);
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all var(--transition);
+    letter-spacing: 0.2px;
+  }
+
+  .login-btn:hover {
+    background: #35aca7;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(60, 191, 186, 0.3);
+  }
+
+  .login-btn:active { transform: translateY(0); }
+
+  .login-remember {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 14px 0 20px;
+    cursor: pointer;
+  }
+
+  .login-remember input[type="checkbox"] {
+    width: 16px; height: 16px;
+    accent-color: var(--teal);
+    cursor: pointer;
+  }
+
+  .login-remember span {
+    font-size: 13px;
+    color: var(--gray-500);
+  }
+
+  .login-footer {
+    margin-top: 24px;
+    font-size: 11px;
+    color: var(--gray-400);
+  }
+
+  /* ===== BULLETIN BOARD ===== */
+  .bulletin-wrap { margin-bottom: 30px; }
+
+  .bulletin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .bulletin-title-row { display: flex; align-items: center; gap: 12px; }
+
+  .bulletin-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: rgba(180, 83, 9, 0.08);
+    color: #b45309;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .bulletin-icon svg {
+    width: 16px; height: 16px;
+    stroke: currentColor; fill: none;
+    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .bulletin-label { font-size: 14px; font-weight: 650; color: var(--navy); }
+
+  .bulletin-count {
+    font-size: 11px; font-weight: 500; color: var(--gray-400);
+    background: var(--gray-50); border: 1px solid var(--gray-100);
+    padding: 1px 9px; border-radius: 20px;
+  }
+
+  .bulletin-actions { display: flex; align-items: center; gap: 8px; }
+
+  .bulletin-expand-btn, .bulletin-add-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px; border-radius: 8px; font-size: 12px;
+    font-weight: 600; font-family: inherit; cursor: pointer;
+    border: none; transition: all var(--transition);
+  }
+
+  .bulletin-expand-btn {
+    background: var(--gray-50); color: var(--gray-600);
+    border: 1px solid var(--gray-200);
+  }
+  .bulletin-expand-btn:hover { background: var(--gray-100); }
+
+  .bulletin-add-btn {
+    background: var(--teal-dim); color: var(--teal);
+    border: 1px dashed var(--teal);
+  }
+  .bulletin-add-btn:hover { background: var(--teal-soft); border-style: solid; }
+
+  .bulletin-expand-btn svg, .bulletin-add-btn svg {
+    width: 14px; height: 14px; stroke: currentColor; fill: none;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  /* Whiteboard */
+  .bulletin-board {
+    background: #f9fafc;
+    border-radius: var(--radius-lg);
+    padding: 28px 28px 36px;
+    border: 10px solid #2a3a4a;
+    box-shadow:
+      0 0 0 2px #1a2a3a,
+      0 8px 32px rgba(0,0,0,0.18),
+      inset 0 1px 0 rgba(255,255,255,0.9),
+      inset 0 0 60px rgba(240,242,248,0.4);
+    min-height: 160px;
+    position: relative;
+    overflow: visible;
+    transition: max-height 0.4s ease;
+  }
+
+  /* Subtle grid lines */
+  .bulletin-board::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(180, 190, 210, 0.13) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(180, 190, 210, 0.13) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    border-radius: 6px;
+  }
+
+  /* Ledge / tray at bottom */
+  .bulletin-board::after {
+    content: '';
+    position: absolute;
+    bottom: -22px; left: -10px; right: -10px;
+    height: 22px;
+    background: linear-gradient(to bottom, #233040, #1a2530);
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 3;
+  }
+
+  .bulletin-board { margin-bottom: 30px; } /* room for ledge */
+  .bulletin-board.collapsed { max-height: 320px; overflow: hidden; margin-bottom: 8px; }
+
+  /* Collapsed fade — white surface */
+  .bulletin-fade {
+    display: none; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 60px; background: linear-gradient(to top, #f9fafc, transparent);
+    pointer-events: none; z-index: 2;
+  }
+  .bulletin-board.collapsed .bulletin-fade { display: block; }
+
+  /* Marker tray */
+  .marker-tray {
+    position: absolute;
+    bottom: -18px; left: 44px;
+    display: flex; gap: 10px; z-index: 5;
+  }
+  .marker {
+    width: 36px; height: 10px; border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+  .marker.red   { background: linear-gradient(to right, #dc2626, #ef4444); }
+  .marker.blue  { background: linear-gradient(to right, #1d4ed8, #3b82f6); }
+  .marker.black { background: linear-gradient(to right, #111827, #374151); }
+  .marker.green { background: linear-gradient(to right, #15803d, #22c55e); }
+
+  .wb-eraser {
+    position: absolute;
+    bottom: -16px; right: 64px;
+    width: 48px; height: 14px;
+    background: linear-gradient(to bottom, #f8e4c0, #e8c990);
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    z-index: 5;
+  }
+
+  /* Corner screws */
+  .wb-screw {
+    position: absolute; width: 10px; height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #4a5a6a, #1a2a3a);
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.2); z-index: 5;
+  }
+  .wb-screw::after {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%) rotate(45deg);
+    width: 5px; height: 1px; background: rgba(255,255,255,0.3);
+  }
+  .wb-screw.tl { top: 4px; left: 4px; }
+  .wb-screw.tr { top: 4px; right: 4px; }
+  .wb-screw.bl { bottom: 4px; left: 4px; }
+  .wb-screw.br { bottom: 4px; right: 4px; }
+
+  .memo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 18px; position: relative; z-index: 1;
+  }
+
+  .memo-empty {
+    grid-column: 1 / -1; text-align: center;
+    padding: 28px 20px; color: rgba(1,45,68,0.35);
+    font-size: 14px; font-weight: 500; position: relative; z-index: 1;
+  }
+  .memo-empty-sub { font-size: 12px; color: rgba(1,45,68,0.25); margin-top: 4px; }
+
+  /* Memo card */
+  .memo {
+    border-radius: 4px;
+    padding: 22px 18px 16px; position: relative;
+    transition: all var(--transition);
+    cursor: default; min-height: 90px;
+  }
+
+  .memo:nth-child(odd)  { transform: rotate(-0.7deg); }
+  .memo:nth-child(even) { transform: rotate(0.5deg); }
+  .memo:nth-child(3n)   { transform: rotate(-0.2deg); }
+  .memo:hover { transform: rotate(0deg) translateY(-3px) !important; box-shadow: 0 6px 20px rgba(0,0,0,0.14) !important; }
+
+  /* Tape strip (replaces pushpin) */
+  .memo-tape {
+    position: absolute;
+    top: -8px; left: 50%;
+    transform: translateX(-50%);
+    width: 48px; height: 18px;
+    background: rgba(200, 220, 255, 0.55);
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    backdrop-filter: blur(2px);
+  }
+
+  /* Vivid pastel sticky note colors */
+  .memo.yellow { background: #fff59d; box-shadow: 2px 3px 10px rgba(0,0,0,0.1); }
+  .memo.blue   { background: #b3e5fc; box-shadow: 2px 3px 10px rgba(0,0,0,0.1); }
+  .memo.green  { background: #c8e6c9; box-shadow: 2px 3px 10px rgba(0,0,0,0.1); }
+  .memo.pink   { background: #f8bbd0; box-shadow: 2px 3px 10px rgba(0,0,0,0.1); }
+  .memo.white  { background: #ffffff; box-shadow: 2px 3px 10px rgba(0,0,0,0.12); border: 1px solid rgba(0,0,0,0.05); }
+  .memo.orange { background: #ffe0b2; box-shadow: 2px 3px 10px rgba(0,0,0,0.1); }
+
+  /* Folded corner effect */
+  .memo::after {
+    content: '';
+    position: absolute; bottom: 0; right: 0;
+    width: 20px; height: 20px;
+    background: linear-gradient(225deg, rgba(0,0,0,0.06) 50%, transparent 50%);
+    border-radius: 0 0 4px 0;
+  }
+
+  .memo-date { font-size: 10px; color: rgba(0,0,0,0.3); margin-bottom: 8px; font-weight: 500; }
+  .memo-title { font-size: 13px; font-weight: 700; color: rgba(0,0,0,0.75); margin-bottom: 6px; line-height: 1.35; }
+  .memo-body { font-size: 12px; color: rgba(0,0,0,0.55); line-height: 1.55; word-wrap: break-word; }
+
+  .memo-delete {
+    position: absolute; top: 6px; right: 6px;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: rgba(0,0,0,0.06); color: rgba(0,0,0,0.3);
+    display: none; align-items: center; justify-content: center;
+    cursor: pointer; transition: all var(--transition); z-index: 5;
+  }
+  .memo-delete:hover { background: rgba(225,29,72,0.1); color: var(--rose); }
+  .memo:hover .memo-delete { display: flex; }
+  .memo-delete svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+  /* Make cards look clickable */
+  .memo { cursor: pointer; }
+
+  /* Memo detail overlay (zoom view) */
+  .memo-detail-overlay {
+    position: fixed; inset: 0; z-index: 950;
+    background: rgba(10, 20, 30, 0.55);
+    backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.22s ease;
+  }
+  .memo-detail-overlay.open { opacity: 1; pointer-events: auto; }
+
+  .memo-detail-card {
+    width: 440px; max-width: 92vw;
+    border-radius: 6px;
+    padding: 52px 36px 36px;
+    position: relative;
+    transform: scale(0.88) translateY(16px);
+    transition: transform 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25), 0 4px 16px rgba(0,0,0,0.12);
+    max-height: 80vh; overflow-y: auto;
+  }
+  .memo-detail-overlay.open .memo-detail-card { transform: scale(1) translateY(0); }
+
+  /* Tape strip on detail card */
+  .memo-detail-tape {
+    position: absolute;
+    top: -10px; left: 50%;
+    transform: translateX(-50%);
+    width: 64px; height: 22px;
+    background: rgba(200, 220, 255, 0.55);
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    backdrop-filter: blur(2px);
+  }
+
+  /* Folded corner on detail card */
+  .memo-detail-card::after {
+    content: '';
+    position: absolute; bottom: 0; right: 0;
+    width: 28px; height: 28px;
+    background: linear-gradient(225deg, rgba(0,0,0,0.08) 50%, transparent 50%);
+    border-radius: 0 0 6px 0;
+    pointer-events: none;
+  }
+
+  /* Color variants for detail card */
+  .memo-detail-card.yellow { background: #fff59d; }
+  .memo-detail-card.blue   { background: #b3e5fc; }
+  .memo-detail-card.green  { background: #c8e6c9; }
+  .memo-detail-card.pink   { background: #f8bbd0; }
+  .memo-detail-card.white  { background: #ffffff; border: 1px solid rgba(0,0,0,0.06); }
+  .memo-detail-card.orange { background: #ffe0b2; }
+
+  .memo-detail-close {
+    position: absolute; top: 12px; right: 12px;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(0,0,0,0.08); color: rgba(0,0,0,0.45);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; border: none; transition: all 0.18s ease; z-index: 5;
+    font-family: inherit;
+  }
+  .memo-detail-close:hover { background: rgba(225,29,72,0.12); color: var(--rose); }
+  .memo-detail-close svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+  .memo-detail-date {
+    font-size: 11px; font-weight: 500; color: rgba(0,0,0,0.32);
+    margin-bottom: 10px; letter-spacing: 0.3px;
+  }
+  .memo-detail-title {
+    font-size: 20px; font-weight: 800; color: rgba(0,0,0,0.78);
+    line-height: 1.25; margin-bottom: 14px;
+  }
+  .memo-detail-body {
+    font-size: 14px; color: rgba(0,0,0,0.6); line-height: 1.7;
+    white-space: pre-wrap; word-break: break-word;
+  }
+  .memo-detail-footer {
+    margin-top: 24px; padding-top: 16px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    display: flex; justify-content: flex-end;
+  }
+  .memo-detail-delete {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px; border-radius: 8px; font-size: 12px;
+    font-weight: 600; font-family: inherit; cursor: pointer;
+    border: 1px solid rgba(225,29,72,0.25);
+    background: rgba(225,29,72,0.06); color: var(--rose);
+    transition: all 0.18s ease;
+  }
+  .memo-detail-delete:hover { background: rgba(225,29,72,0.14); }
+  .memo-detail-delete svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  /* Expanded bulletin fullscreen */
+  .bulletin-fullscreen {
+    position: fixed; inset: 0; z-index: 900;
+    background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+  }
+  .bulletin-fullscreen.open { opacity: 1; pointer-events: auto; }
+
+  .bulletin-fs-inner {
+    width: 92%; max-width: 1100px; max-height: 85vh; overflow-y: auto;
+    background: #f9fafc;
+    border-radius: 16px; border: 10px solid #2a3a4a;
+    padding: 32px;
+    box-shadow:
+      0 0 0 2px #1a2a3a,
+      0 20px 60px rgba(0,0,0,0.3),
+      inset 0 1px 0 rgba(255,255,255,0.9);
+    position: relative;
+    transform: scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    background-image:
+      linear-gradient(rgba(180, 190, 210, 0.13) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(180, 190, 210, 0.13) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .bulletin-fullscreen.open .bulletin-fs-inner { transform: scale(1); }
+
+  .bulletin-fs-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px; position: relative; z-index: 1;
+  }
+
+  .bulletin-fs-title { font-size: 20px; font-weight: 700; color: var(--navy); }
+
+  .bulletin-fs-actions { display: flex; align-items: center; gap: 10px; }
+
+  .bulletin-fs-close {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(1,45,68,0.08); color: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; border: none; transition: all var(--transition);
+  }
+  .bulletin-fs-close:hover { background: rgba(1,45,68,0.15); }
+  .bulletin-fs-close svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+  .bulletin-fs-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 22px; position: relative; z-index: 1;
+  }
+
+  /* Memo form modal */
+  .memo-modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px); z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+  }
+  .memo-modal-overlay.open { opacity: 1; pointer-events: auto; }
+
+  .memo-modal {
+    background: var(--white); border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg); width: 440px; padding: 32px 32px 28px;
+    transform: translateY(8px) scale(0.97);
+    transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .memo-modal-overlay.open .memo-modal { transform: translateY(0) scale(1); }
+
+  .memo-color-picker { display: flex; gap: 8px; margin-top: 8px; }
+
+  .memo-color-opt {
+    width: 32px; height: 32px; border-radius: 8px; cursor: pointer;
+    border: 2.5px solid transparent; transition: all var(--transition);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .memo-color-opt:hover { transform: scale(1.1); }
+  .memo-color-opt.selected { border-color: var(--navy); box-shadow: 0 0 0 2px var(--white), 0 0 0 4px var(--navy); }
+  .memo-color-opt svg { width: 14px; height: 14px; stroke: rgba(0,0,0,0.5); fill: none; stroke-width: 2.5; opacity: 0; }
+  .memo-color-opt.selected svg { opacity: 1; }
+
+  /* Add Tool Button */
+  .add-tool-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 28px;
+    gap: 10px;
+  }
+
+  .add-tool-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: 1.5px dashed var(--teal);
+    border-radius: var(--radius);
+    background: var(--teal-dim);
+    color: var(--teal);
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+
+  .add-tool-btn:hover {
+    background: var(--teal-soft);
+    border-style: solid;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .add-tool-btn svg {
+    width: 16px; height: 16px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Add Tool Modal */
+  .add-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .add-modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .add-modal {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    width: 460px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 32px 32px 28px;
+    transform: translateY(8px) scale(0.97);
+    transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .add-modal-overlay.open .add-modal {
+    transform: translateY(0) scale(1);
+  }
+
+  .add-modal-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .add-modal-subtitle {
+    font-size: 13px;
+    color: var(--gray-400);
+    margin-bottom: 24px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-600);
+    margin-bottom: 6px;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    width: 100%;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--gray-800);
+    outline: none;
+    transition: all var(--transition);
+    background: var(--gray-50);
+  }
+
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px var(--teal-dim);
+    background: var(--white);
+  }
+
+  .form-textarea { resize: vertical; min-height: 60px; }
+
+  .form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 6 8 10 12 6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .form-error {
+    font-size: 12px;
+    color: var(--rose);
+    min-height: 18px;
+    margin-bottom: 4px;
+  }
+
+  .form-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--gray-100);
+  }
+
+  .form-btn {
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    transition: all var(--transition);
+  }
+
+  .form-btn-cancel {
+    background: var(--gray-50);
+    color: var(--gray-600);
+    border: 1px solid var(--gray-200);
+  }
+
+  .form-btn-cancel:hover { background: var(--gray-100); }
+
+  .form-btn-add {
+    background: var(--teal);
+    color: var(--white);
+  }
+
+  .form-btn-add:hover { background: #35aca7; }
+
+  /* Color preview swatch */
+  .color-preview {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .color-dot {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .color-dot:hover { transform: scale(1.1); }
+  .color-dot.selected { border-color: var(--navy); box-shadow: 0 0 0 2px var(--white), 0 0 0 4px var(--navy); }
+
+  .color-dot svg {
+    width: 14px; height: 14px;
+    stroke: var(--white); fill: none;
+    stroke-width: 2.5;
+    opacity: 0;
+  }
+
+  .color-dot.selected svg { opacity: 1; }
+
+  /* Custom card delete button */
+  .card-delete {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--rose-bg);
+    color: var(--rose);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition);
+    z-index: 5;
+  }
+
+  .card-delete:hover { background: var(--rose); color: var(--white); }
+
+  .card-delete svg {
+    width: 12px; height: 12px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.5;
+  }
+
+  .card.custom-card:hover .card-delete { display: flex; }
+
+  .custom-badge {
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--teal);
+    background: var(--teal-dim);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
+  }
+
+  /* Hide dashboard content when not authenticated */
+  .app-content { display: none; }
+  .app-content.visible { display: flex; min-height: 100vh; }
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN GATE ===== -->
+<div class="login-gate" id="loginGate">
+  <div class="login-card">
+    <img src="https://framerusercontent.com/images/7MqXsKyjGWvLQn25G3nNRe5KAM.webp?width=186&height=186" alt="Fibi Law" class="login-logo">
+    <div class="login-firm">Fibi Law Firm</div>
+    <div class="login-tagline">For Immigrants, By Immigrants</div>
+    <div class="login-subtitle">Employee Portal -- Authorized Access Only</div>
+
+    <div class="login-input-wrap">
+      <label class="login-input-label">Password</label>
+      <input type="password" class="login-input" id="loginPwInput" placeholder="Enter team password" autocomplete="off">
+      <div class="login-eye" onclick="toggleLoginPw()">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" id="loginEyeIcon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+    </div>
+    <div class="login-error" id="loginError"></div>
+
+    <label class="login-remember">
+      <input type="checkbox" id="loginRemember" checked>
+      <span>Remember me for 30 days</span>
+    </label>
+
+    <button class="login-btn" onclick="attemptLogin()">Sign In</button>
+
+    <div class="login-footer">Contact your administrator if you need access.</div>
+  </div>
+</div>
+
+<!-- ===== DASHBOARD (hidden until authenticated) ===== -->
+<div class="app-content" id="appContent">
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar">
+  <div class="sidebar-head">
+    <div class="sidebar-brand">
+      <img src="https://framerusercontent.com/images/7MqXsKyjGWvLQn25G3nNRe5KAM.webp?width=186&height=186" alt="Fibi Law">
+      <div class="brand-info">
+        <div class="brand-name">Fibi Law</div>
+        <div class="brand-sub">For Immigrants, By Immigrants</div>
+      </div>
+    </div>
+
+    <div class="sidebar-clock">
+      <div class="clock-time" id="clockTime">--:--</div>
+      <div class="clock-date" id="clockDate">Loading...</div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-label">Overview</div>
+      <a href="#" class="nav-link active" onclick="scrollSection(event,'top')">
+        <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+        Dashboard
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Sales &amp; Outreach</div>
+      <a href="https://airtable.com/appVKOmxf2xCvVwqX/pagGJeVIzwKDZZ0ci/form" class="nav-link" target="_blank">
+        <span class="icon"><svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></span>
+        Sales Reports
+        <span class="badge">Daily</span>
+      </a>
+      <a href="https://airtable.com/appPZJLZxNCNAARzR/pagx0UB7Sz6WgZIAm/form" class="nav-link" target="_blank">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        10 A Day Clients
+      </a>
+      <a href="https://airtable.com/appH1PtzAuRezzDlF/pag2tyj3xVL3rzjTb/form" class="nav-link" target="_blank">
+        <span class="icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
+        Referrals
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Client Management</div>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScjSxWR2AezmxXZLdc5eyAvOiIBTFHFJuOTQc6bGzfBjtmfxg/viewform" class="nav-link" target="_blank">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg></span>
+        Client Intake
+      </a>
+      <a href="https://airtable.com/appqqwcCHCqt0052s/pagtOWuVRwIvEBBa4/form" class="nav-link" target="_blank">
+        <span class="icon"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></span>
+        Refund Request
+      </a>
+      <a href="https://airtable.com/appWmZqCIERu2UxEV/pagOb07l5KrDkA6Cv/form" class="nav-link" target="_blank">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+        Translator Auth
+      </a>
+      <a href="https://airtable.com/appNxijmzI3sbFw1E/pagWjmW6DnDjIrGZj/form" class="nav-link" target="_blank">
+        <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+        Pre-Hearing Balance
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Legal Processing</div>
+      <a href="https://airtable.com/appeUvC8eggzVvNyG/pagyqqsLkumYREGK1/form" class="nav-link" target="_blank">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+        E-28 / Appeals
+      </a>
+      <a href="https://airtable.com/appVKOmxf2xCvVwqX/pagf6AqOo9XVpa2mw/form" class="nav-link" target="_blank">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        ICE Visit Logs
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Finance &amp; Ops</div>
+      <a href="https://app.gusto.com/login" class="nav-link" target="_blank">
+        <span class="icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>
+        Gusto Payroll
+      </a>
+      <a href="https://airtable.com/appvZV3TgtVXnikLY/pag1QdDF2v3kbHLdN/form" class="nav-link" target="_blank">
+        <span class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span>
+        Expense Receipts
+      </a>
+      <a href="https://airtable.com/appe6kXr6n28GRALW/pagKFvjjIfmqEnykE/form" class="nav-link" target="_blank">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>
+        Office Supplies
+      </a>
+      <a href="https://airtable.com/appr8xKktge6G7VVH/pagMjqQgKAbqBzH0Q/form" class="nav-link" target="_blank">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+        Daily Rewards
+      </a>
+      <a href="https://airtable.com/applwDw8Cu5HWkANo/pagYxszMLSwWLswIc/form" class="nav-link" target="_blank">
+        <span class="icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+        Cash Override
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Training</div>
+      <a href="https://fibilaw.talentlms.com/" class="nav-link" target="_blank">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+        Training Portal
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Portals</div>
+      <a href="https://app.fibilaw.com/attorney.html" class="nav-link" target="_blank">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+        Attorney Portal
+        <span class="badge" style="background:rgba(60,191,186,0.15);color:var(--teal);">New</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="sidebar-foot">
+    <div class="user-row">
+      <div class="avatar">FL</div>
+      <div class="user-meta">
+        <div class="user-name">Fibi Law Team</div>
+        <div class="user-role">Employee Portal</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ===== MAIN ===== -->
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-title">Employee Portal</div>
+    <div class="topbar-right">
+      <div class="search-wrap">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="Search tools and forms..." id="searchInput" oninput="filterCards()">
+          <span class="kbd">Ctrl K</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content" id="top">
+
+    <!-- Hero -->
+    <div class="hero animate-in delay-1">
+      <div class="hero-top">
+        <div>
+          <h2 id="heroGreeting">Welcome to the Employee Portal</h2>
+          <p>Your centralized hub for every Fibi Law tool and resource. Stay organized, stay productive.</p>
+        </div>
+        <div class="hero-badge">Employee Portal v2.0</div>
+      </div>
+    </div>
+
+    <!-- Admin: Add Tool -->
+    <div class="add-tool-bar animate-in delay-2">
+      <button class="add-tool-btn" onclick="requestAddTool()">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add New Tool
+      </button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats animate-in delay-2">
+      <div class="stat">
+        <div class="stat-icon teal">
+          <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        <div>
+          <div class="stat-val">20</div>
+          <div class="stat-lbl">Total Tools</div>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon navy">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        </div>
+        <div>
+          <div class="stat-val">6</div>
+          <div class="stat-lbl">Categories</div>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon amber">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </div>
+        <div>
+          <div class="stat-val" id="statGreeting">--</div>
+          <div class="stat-lbl">Time of Day</div>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon indigo">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div>
+          <div class="stat-val" id="statDay">--</div>
+          <div class="stat-lbl" id="statDate">Loading...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bulletin Board -->
+    <div class="bulletin-wrap animate-in delay-3">
+      <div class="bulletin-header">
+        <div class="bulletin-title-row">
+          <div class="bulletin-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <div class="bulletin-label">Office Bulletin Board</div>
+          <div class="bulletin-count" id="memoCount">0 memos</div>
+        </div>
+        <div class="bulletin-actions">
+          <button class="bulletin-add-btn" onclick="requestAddMemo()">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Post Memo
+          </button>
+          <button class="bulletin-expand-btn" onclick="openBulletinFullscreen()">
+            <svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+            Expand
+          </button>
+        </div>
+      </div>
+      <div class="bulletin-board collapsed" id="bulletinBoard">
+        <!-- Corner screws -->
+        <div class="wb-screw tl"></div>
+        <div class="wb-screw tr"></div>
+        <div class="wb-screw bl"></div>
+        <div class="wb-screw br"></div>
+        <!-- Marker tray -->
+        <div class="marker-tray">
+          <div class="marker red"></div>
+          <div class="marker blue"></div>
+          <div class="marker black"></div>
+          <div class="marker green"></div>
+        </div>
+        <div class="wb-eraser"></div>
+        <!-- Collapsed fade -->
+        <div class="bulletin-fade"></div>
+        <div class="memo-grid" id="memoGrid"></div>
+      </div>
+    </div>
+
+    <!-- Announcement -->
+    <div class="announcements animate-in delay-3" id="announcement">
+      <div class="ann-indicator"></div>
+      <div class="ann-content">
+        <div class="ann-label">Announcement</div>
+        <div class="ann-text" id="annText">Remember to submit your daily sales report before end of business.</div>
+        <input type="text" id="annEditInput" class="ann-edit-input" style="display:none;" placeholder="Type your announcement here...">
+      </div>
+      <div class="ann-actions">
+        <div class="ann-btn ann-edit-btn" onclick="editAnnouncement()" title="Edit announcement">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </div>
+        <div class="ann-btn ann-save-btn" onclick="saveAnnouncement()" title="Save announcement" style="display:none;">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="ann-btn ann-cancel-btn" onclick="cancelEditAnnouncement()" title="Cancel edit" style="display:none;">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </div>
+        <div class="ann-btn ann-dismiss-btn" onclick="document.getElementById('announcement').style.display='none'" title="Dismiss">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Tools (dynamically added) -->
+    <div class="section" id="customToolsSection" data-section style="display:none;">
+      <div class="section-head">
+        <div class="section-icon teal"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        <div class="section-title">Custom Tools</div>
+        <div class="section-count" id="customToolCount">0</div>
+        <div class="section-line"></div>
+      </div>
+      <div class="cards" id="customCardsGrid"></div>
+    </div>
+
+    <!-- Sales & Outreach -->
+    <div class="section animate-in delay-4" data-section>
+      <div class="section-head">
+        <div class="section-icon navy"><svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+        <div class="section-title">Sales and Outreach</div>
+        <div class="section-count">3</div>
+        <div class="section-line"></div>
+      </div>
+      <div class="cards">
+        <a href="https://airtable.com/appVKOmxf2xCvVwqX/pagGJeVIzwKDZZ0ci/form" class="card" target="_blank" data-search="daily sales report logs performance">
+          <div class="card-icon navy"><svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+          <div class="card-body">
+            <div class="card-title">Daily Sales Report Logs</div>
+            <div class="card-desc">Log daily sales activities and track your performance</div>
+          </div>
+          <div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </a>
+        <a href="https://airtable.com/appPZJLZxNCNAARzR/pagx0UB7Sz6WgZIAm/form" class="card" target="_blank" data-search="10 a day client form outreach leads">
+          <div class="card-icon teal"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="card-body">
+            <div class="card-title">10 A Day Client Form</div>
+            <div class="card-desc">Document daily outreach efforts and track potential leads</div>
+          </div>
+          <div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </a>
+        <a href="https://airtable.com/appH1PtzAuRezzDlF/pag2tyj3xVL3rzjTb/form" class="card" target="_blank" data-search="referral submission form prospective clients">
+          <div class="card-icon emerald"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+          <div class="card-body">
+            <div class="card-title">Referral Submission Form</div>
+            <div class="card-desc">Submit prospective clients referred by supporters</div>
+          </div>
+          <div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Client Management -->
+    <div class="section animate-in delay-5" data-section>
+      <div class="section-head">
+        <div class="section-icon teal"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="section-title">Client Management</div>
+        <div class="section-count">4</div>
+        <div class="section-line"></div>
+      </div>
+      <div class="cards">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScjSxWR2AezmxXZLdc5eyAvOiIBTFHFJuOTQc6bGzfBjtmfxg/viewform" class="card" target="_blank" data-search="client intake form new">
+          <div class="card-icon teal"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg></div>
+          <div class="card-body">
+            <div class="card-title">Client Intake Form</div>
+            <div class="card-desc">Input new client information to get started</div>
+          </div>
+          <div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </a>
+        <a href="https://airtable.com/appqqwcCHCqt0052s/pagtOWuVRwIvEBBa4/form" class="card" target="_blank" data-search="client refund request">
+          <div class="card-icon rose"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></div>
+          <div class="card-body">
+            <div class="card-title">Client Refund Request</div>
+            <div class="card-desc">Submit refund requests with all necessary details</div>
+          </div>
+          <div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </a>
+        <a href="https://airtable.com/appWmZqCIERu2UxEV/pagOb07l5KrDkA6Cv/form" class="card" target="_blank" data-search="translator authorization form digital">
+          <div class="card-icon indigo"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="card-body">
+            <div class="card-title">Translator Authorization</div>
+            <div class="card-desc">Send a digital Translator Authorization Form to client</div>
+          </div>
+          <div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </a>
+        <a href="https://airtable.com/appNxijmzI3sbFw1E/pagWjmW6DnDjIrGZj/form" class="card" target="_blank" data-search="pre-hearing outstanding balance form">
+          <div class="card-icon amber"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="card-body">
+            <div class="card-title">Pre-Hearing Outstanding Balance</div>
+            <div class="card-desc">Fill out all required fields with accurate information</div>
+          </div>
+          <div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Legal Processing -->
+    <div class="section animate-in delay-5" data-section>
+      <div class="section-head">
+        <div class="section-icon rose"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <div class="section-title">Legal Processing</div>
+        <div class="section-count">2</div>
+        <div class="section-line"></div>
+      </div>
+      <div class="cards">
+        <a href="https://airtable.com/appeUvC8eggzVvNyG/pagyqqsLkumYREGK1/form" class="card" target="_blank" data-search="e-28 e-27 appeals submission request">
+          <div class="card-icon navy"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="card-body">
+            <div class="card-title">E-28 / E-27 / Appeals Submission</div>
+            <div class="card-desc">Submit requests for E-28 submissions for processing</div>
+          </div>
+          <div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </a>
+        <a href="https://airtable.com/appVKOmxf2xCvVwqX/pagf6AqOo9XVpa2mw/form" class="card" target="_blank" data-search="ice visit call logs">
+          <div class="card-icon rose"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div class="card-body">
+            <div class="card-title">ICE Visit Call Logs</div>
+            <div class="card-desc">Submit ICE Visit Call Logs</div>
+          </div>
+          <div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Finance & Ops -->
+    <div class="section animate-in delay-6" data-section>
+      <div class="section-head">
+        <div class="section-icon amber"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div class="section-title">Finance and Operations</div>
+        <div class="section-count">5</div>
+        <div class="section-line"></div>
+      </div>
+      <div class="cards">
+        <a href="https://app.gusto.com/login" class="card" target="_blank" data-search="gusto payroll login pay stubs">
+          <div class="card-icon emerald"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+          <div class="card-body">
+            <div class="card-title">Gusto Payroll Login</div>
+            <div class="card-desc">View pay stubs and manage your payroll account</div>
+          </div>
+          <div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </a>
+        <a href="https://airtable.com/appvZV3TgtVXnikLY/pag1QdDF2v3kbHLdN/form" class="card" target="_blank" data-search="expense receipt form reimbursement">
+          <div class="card-icon amber"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+          <div class="card-body">
+            <div class="card-title">Expense Receipt Form</div>
+            <div class="card-desc">Upload and submit receipts for reimbursement</div>
+          </div>
+          <div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </a>
+        <a href="https://airtable.com/appe6kXr6n28GRALW/pagKFvjjIfmqEnykE/form" class="card" target="_blank" data-search="office supplies order request">
+          <div class="card-icon indigo"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+          <div class="card-body">
+            <div class="card-title">Office Supplies Order</div>
+            <div class="card-desc">Submit requests for office supplies</div>
+          </div>
+          <div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </a>
+        <a href="https://airtable.com/appr8xKktge6G7VVH/pagMjqQgKAbqBzH0Q/form" class="card" target="_blank" data-search="daily reward order form lunch breakfast">
+          <div class="card-icon teal"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="card-body">
+            <div class="card-title">Daily Reward Order</div>
+            <div class="card-desc">Submit next-day reward orders after hitting daily target</div>
+          </div>
+          <div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </a>
+        <a href="https://airtable.com/applwDw8Cu5HWkANo/pagYxszMLSwWLswIc/form" class="card" target="_blank" data-search="cash payment override request">
+          <div class="card-icon rose"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="card-body">
+            <div class="card-title">Cash Payment Override</div>
+            <div class="card-desc">Request a cash payment override</div>
+          </div>
+          <div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- HR & Training -->
+    <div class="section animate-in delay-6" data-section>
+      <div class="section-head">
+        <div class="section-icon indigo"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <div class="section-title">HR and Training</div>
+        <div class="section-count">1</div>
+        <div class="section-line"></div>
+      </div>
+      <div class="cards">
+        <a href="https://fibilaw.talentlms.com/" class="card" target="_blank" data-search="employee training portal talentlms">
+          <div class="card-icon indigo"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+          <div class="card-body">
+            <div class="card-title">Employee Training Portal</div>
+            <div class="card-desc">Access Fibi Law Firm training resources on TalentLMS</div>
+          </div>
+          <div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Affirm Pay Later -->
+    <div class="section animate-in delay-7" data-section>
+      <div class="section-head">
+        <div class="section-icon emerald"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+        <div class="section-title">Affirm Pay Later -- By Office</div>
+        <div class="section-count">5</div>
+        <div class="section-line"></div>
+      </div>
+      <div class="office-row">
+        <a href="https://secure.lawpay.com/pages/fibilaw/woodlandsop" class="office-btn" target="_blank" data-search="affirm pay later woodland office">
+          <div class="office-dot"></div>
+          <div class="office-name">Woodland</div>
+          <div class="office-sub">Affirm Pay Later</div>
+        </a>
+        <a href="https://secure.lawpay.com/pages/fibilaw/bronxop" class="office-btn" target="_blank" data-search="affirm pay later bronx office">
+          <div class="office-dot"></div>
+          <div class="office-name">Bronx</div>
+          <div class="office-sub">Affirm Pay Later</div>
+        </a>
+        <a href="https://secure.lawpay.com/pages/fibilaw/harlemop" class="office-btn" target="_blank" data-search="affirm pay later harlem office">
+          <div class="office-dot"></div>
+          <div class="office-name">Harlem</div>
+          <div class="office-sub">Affirm Pay Later</div>
+        </a>
+        <a href="https://secure.lawpay.com/pages/fibilaw/mountainop" class="office-btn" target="_blank" data-search="affirm pay later stone mountain office">
+          <div class="office-dot"></div>
+          <div class="office-name">Stone Mountain</div>
+          <div class="office-sub">Affirm Pay Later</div>
+        </a>
+        <a href="https://secure.lawpay.com/pages/fibilaw/mountainop" class="office-btn" target="_blank" data-search="affirm pay later college park office">
+          <div class="office-dot"></div>
+          <div class="office-name">College Park</div>
+          <div class="office-sub">Affirm Pay Later</div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Floating Pinned Tools -->
+<div class="pinned-float">
+  <div class="pinned-panel" id="pinnedPanel">
+    <div class="pinned-header">
+      Pinned Tools
+      <span>Quick access</span>
+    </div>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLScjSxWR2AezmxXZLdc5eyAvOiIBTFHFJuOTQc6bGzfBjtmfxg/viewform" class="pinned-item" target="_blank">
+      <div class="pinned-dot t"></div>
+      <span class="pinned-label">Client Intake Form</span>
+      <div class="pinned-arrow"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </a>
+    <a href="https://airtable.com/appVKOmxf2xCvVwqX/pagGJeVIzwKDZZ0ci/form" class="pinned-item" target="_blank">
+      <div class="pinned-dot a"></div>
+      <span class="pinned-label">Daily Sales Report</span>
+      <div class="pinned-arrow"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </a>
+    <a href="https://app.gusto.com/login" class="pinned-item" target="_blank">
+      <div class="pinned-dot i"></div>
+      <span class="pinned-label">Gusto Payroll</span>
+      <div class="pinned-arrow"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </a>
+    <a href="https://fibilaw.talentlms.com/" class="pinned-item" target="_blank">
+      <div class="pinned-dot r"></div>
+      <span class="pinned-label">Training Portal</span>
+      <div class="pinned-arrow"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </a>
+    <a href="https://airtable.com/appPZJLZxNCNAARzR/pagx0UB7Sz6WgZIAm/form" class="pinned-item" target="_blank">
+      <div class="pinned-dot t"></div>
+      <span class="pinned-label">10 A Day Clients</span>
+      <div class="pinned-arrow"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </a>
+  </div>
+  <div class="pinned-toggle" onclick="togglePinned()" title="Quick access to pinned tools">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+  </div>
+</div>
+
+<!-- Memo Detail (zoom view) -->
+<div class="memo-detail-overlay" id="memoDetailOverlay" onclick="closeMemoDetail(event)">
+  <div class="memo-detail-card" id="memoDetailCard" onclick="event.stopPropagation()">
+    <div class="memo-detail-tape"></div>
+    <button class="memo-detail-close" onclick="closeMemoDetail()" title="Close">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="memo-detail-date" id="memoDetailDate"></div>
+    <div class="memo-detail-title" id="memoDetailTitle"></div>
+    <div class="memo-detail-body" id="memoDetailBody"></div>
+    <div class="memo-detail-footer" id="memoDetailFooter" style="display:none;">
+      <button class="memo-detail-delete" id="memoDetailDeleteBtn">
+        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        Remove Memo
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Bulletin Fullscreen -->
+<div class="bulletin-fullscreen" id="bulletinFullscreen">
+  <div class="bulletin-fs-inner">
+    <div class="bulletin-fs-header">
+      <div class="bulletin-fs-title">Office Bulletin Board</div>
+      <div class="bulletin-fs-actions">
+        <button class="bulletin-add-btn" onclick="requestAddMemo()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Post Memo
+        </button>
+        <button class="bulletin-fs-close" onclick="closeBulletinFullscreen()">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="bulletin-fs-grid" id="memoGridFS"></div>
+  </div>
+</div>
+
+<!-- Memo Modal -->
+<div class="memo-modal-overlay" id="memoModal">
+  <div class="memo-modal">
+    <div class="add-modal-title">Post a Memo</div>
+    <div class="add-modal-subtitle">Pin a new note to the office bulletin board.</div>
+
+    <div class="form-group">
+      <label class="form-label">Title</label>
+      <input type="text" class="form-input" id="memoTitle" placeholder="e.g. Office Hours Update">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Message</label>
+      <textarea class="form-textarea" id="memoBody" placeholder="Write your memo here..." rows="4"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Note Color</label>
+      <div class="memo-color-picker" id="memoColorPicker">
+        <div class="memo-color-opt selected" data-mcolor="yellow" style="background:#fff59d;" onclick="pickMemoColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="memo-color-opt" data-mcolor="blue" style="background:#b3e5fc;" onclick="pickMemoColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="memo-color-opt" data-mcolor="green" style="background:#c8e6c9;" onclick="pickMemoColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="memo-color-opt" data-mcolor="pink" style="background:#f8bbd0;" onclick="pickMemoColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="memo-color-opt" data-mcolor="orange" style="background:#ffe0b2;" onclick="pickMemoColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="memo-color-opt" data-mcolor="white" style="background:#ffffff;border-color:var(--gray-200);" onclick="pickMemoColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      </div>
+    </div>
+
+    <div class="form-error" id="memoError"></div>
+
+    <div class="form-buttons">
+      <button class="form-btn form-btn-cancel" onclick="closeMemoModal()">Cancel</button>
+      <button class="form-btn form-btn-add" onclick="submitMemo()">Pin to Board</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Tool Modal -->
+<div class="add-modal-overlay" id="addToolModal">
+  <div class="add-modal">
+    <div class="add-modal-title">Add New Tool</div>
+    <div class="add-modal-subtitle">Create a new link card for the employee portal.</div>
+
+    <div class="form-group">
+      <label class="form-label">Tool Name</label>
+      <input type="text" class="form-input" id="addToolName" placeholder="e.g. Case Status Tracker">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <textarea class="form-textarea" id="addToolDesc" placeholder="Brief description of what this tool does" rows="2"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Link URL</label>
+      <input type="url" class="form-input" id="addToolUrl" placeholder="https://...">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Card Color</label>
+      <div class="color-preview" id="colorPicker">
+        <div class="color-dot selected" data-color="teal" style="background:var(--teal);" onclick="pickColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="color-dot" data-color="navy" style="background:var(--navy);" onclick="pickColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="color-dot" data-color="amber" style="background:var(--amber);" onclick="pickColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="color-dot" data-color="rose" style="background:var(--rose);" onclick="pickColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="color-dot" data-color="indigo" style="background:var(--indigo);" onclick="pickColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="color-dot" data-color="emerald" style="background:var(--emerald);" onclick="pickColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      </div>
+    </div>
+
+    <div class="form-error" id="addToolError"></div>
+
+    <div class="form-buttons">
+      <button class="form-btn form-btn-cancel" onclick="closeAddToolModal()">Cancel</button>
+      <button class="form-btn form-btn-add" onclick="submitNewTool()">Add Tool</button>
+    </div>
+  </div>
+</div>
+
+<!-- Password Modal -->
+<div class="modal-overlay" id="pwModal">
+  <div class="modal">
+    <div class="modal-title">Admin Authentication</div>
+    <div class="modal-subtitle">Enter the admin password to edit the announcement.</div>
+    <div class="modal-input-wrap">
+      <input type="password" class="modal-input" id="pwInput" placeholder="Enter password" autocomplete="off">
+      <div class="modal-toggle-pw" onclick="togglePwVisibility()">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" id="pwEyeIcon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+    </div>
+    <div class="modal-error" id="pwError"></div>
+    <div class="modal-buttons">
+      <button class="modal-btn modal-btn-cancel" onclick="closePwModal()">Cancel</button>
+      <button class="modal-btn modal-btn-confirm" onclick="verifyPassword()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /app-content -->
+
+<script>
+// ===== LOGIN GATE =====
+const TEAM_PW = 'FibiTeam2026';
+const AUTH_KEY = 'fibi_portal_auth';
+const AUTH_DAYS = 30;
+
+function checkAuth() {
+  const stored = localStorage.getItem(AUTH_KEY);
+  if (stored) {
+    try {
+      const data = JSON.parse(stored);
+      const expires = new Date(data.expires);
+      if (expires > new Date() && data.token === btoa(TEAM_PW)) {
+        grantAccess();
+        return;
+      }
+    } catch(e) {}
+    localStorage.removeItem(AUTH_KEY);
+  }
+}
+
+function grantAccess() {
+  document.getElementById('loginGate').classList.add('hidden');
+  document.getElementById('appContent').classList.add('visible');
+}
+
+function attemptLogin() {
+  const entered = document.getElementById('loginPwInput').value;
+  if (entered === TEAM_PW) {
+    const remember = document.getElementById('loginRemember').checked;
+    if (remember) {
+      const expires = new Date();
+      expires.setDate(expires.getDate() + AUTH_DAYS);
+      localStorage.setItem(AUTH_KEY, JSON.stringify({
+        token: btoa(TEAM_PW),
+        expires: expires.toISOString()
+      }));
+    }
+    grantAccess();
+  } else {
+    document.getElementById('loginError').textContent = 'Incorrect password. Please try again.';
+    document.getElementById('loginPwInput').classList.add('error');
+    document.getElementById('loginPwInput').select();
+  }
+}
+
+function toggleLoginPw() {
+  const inp = document.getElementById('loginPwInput');
+  const isPassword = inp.type === 'password';
+  inp.type = isPassword ? 'text' : 'password';
+  document.getElementById('loginEyeIcon').innerHTML = isPassword
+    ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+    : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+}
+
+// Login on Enter key
+document.getElementById('loginPwInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') attemptLogin();
+});
+
+// Clear error on input
+document.getElementById('loginPwInput').addEventListener('input', function() {
+  this.classList.remove('error');
+  document.getElementById('loginError').textContent = '';
+});
+
+// Check auth on page load
+checkAuth();
+
+// Clock
+function updateClock() {
+  const now = new Date();
+  const h = now.getHours();
+  const m = String(now.getMinutes()).padStart(2, '0');
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const h12 = h % 12 || 12;
+  document.getElementById('clockTime').textContent = h12 + ':' + m + ' ' + ampm;
+  document.getElementById('clockDate').textContent = now.toLocaleDateString('en-US', {
+    weekday: 'long', month: 'long', day: 'numeric'
+  });
+}
+updateClock();
+setInterval(updateClock, 10000);
+
+// Day stat + greeting
+const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const now = new Date();
+const h = now.getHours();
+document.getElementById('statDay').textContent = days[now.getDay()];
+document.getElementById('statDate').textContent = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+// Time-of-day greeting
+const greeting = h < 12 ? 'Morning' : h < 17 ? 'Afternoon' : 'Evening';
+document.getElementById('statGreeting').textContent = greeting;
+document.getElementById('heroGreeting').textContent = 'Good ' + greeting;
+
+// Announcement system (password-protected editing)
+const ADMIN_PW = 'FibiAdmin2026';
+const savedAnn = localStorage.getItem('fibi_announcement');
+if (savedAnn) document.getElementById('annText').textContent = savedAnn;
+
+// Password modal
+function editAnnouncement() {
+  document.getElementById('pwModal').classList.add('open');
+  document.getElementById('pwInput').value = '';
+  document.getElementById('pwError').textContent = '';
+  document.getElementById('pwInput').classList.remove('error');
+  setTimeout(() => document.getElementById('pwInput').focus(), 150);
+}
+
+function closePwModal() {
+  document.getElementById('pwModal').classList.remove('open');
+  document.getElementById('pwInput').value = '';
+  document.getElementById('pwError').textContent = '';
+  document.getElementById('pwInput').classList.remove('error');
+}
+
+function togglePwVisibility() {
+  const inp = document.getElementById('pwInput');
+  const isPassword = inp.type === 'password';
+  inp.type = isPassword ? 'text' : 'password';
+  document.getElementById('pwEyeIcon').innerHTML = isPassword
+    ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+    : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+}
+
+function verifyPassword() {
+  const entered = document.getElementById('pwInput').value;
+  if (entered === ADMIN_PW) {
+    adminUnlocked = true;
+    closePwModal();
+    const action = window._afterAdminAuth || 'editAnn';
+    window._afterAdminAuth = null;
+    if (action === 'addTool') {
+      openAddToolModal();
+    } else if (action === 'addMemo') {
+      openMemoModal();
+    } else if (action && action.startsWith('deleteMemo_')) {
+      const idx = parseInt(action.split('_')[1]);
+      performDeleteMemo(idx);
+    } else if (action && action.startsWith('delete_')) {
+      const idx = parseInt(action.split('_')[1]);
+      performDelete(idx);
+    } else {
+      openEditMode();
+    }
+  } else {
+    document.getElementById('pwError').textContent = 'Incorrect password. Please try again.';
+    document.getElementById('pwInput').classList.add('error');
+    document.getElementById('pwInput').select();
+  }
+}
+
+// Password modal keyboard shortcuts
+document.getElementById('pwInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') verifyPassword();
+  if (e.key === 'Escape') closePwModal();
+});
+
+// Close modal on overlay click
+document.getElementById('pwModal').addEventListener('click', function(e) {
+  if (e.target === this) closePwModal();
+});
+
+// Edit mode (only accessible after password verification)
+function openEditMode() {
+  const textEl = document.getElementById('annText');
+  const inputEl = document.getElementById('annEditInput');
+  inputEl.value = textEl.textContent;
+  textEl.style.display = 'none';
+  inputEl.style.display = 'block';
+  inputEl.focus();
+  document.querySelector('.ann-edit-btn').style.display = 'none';
+  document.querySelector('.ann-dismiss-btn').style.display = 'none';
+  document.querySelector('.ann-save-btn').style.display = 'flex';
+  document.querySelector('.ann-cancel-btn').style.display = 'flex';
+}
+
+function saveAnnouncement() {
+  const inputEl = document.getElementById('annEditInput');
+  const textEl = document.getElementById('annText');
+  const val = inputEl.value.trim();
+  if (val) {
+    textEl.textContent = val;
+    localStorage.setItem('fibi_announcement', val);
+  }
+  cancelEditAnnouncement();
+}
+
+function cancelEditAnnouncement() {
+  document.getElementById('annText').style.display = 'block';
+  document.getElementById('annEditInput').style.display = 'none';
+  document.querySelector('.ann-edit-btn').style.display = 'flex';
+  document.querySelector('.ann-dismiss-btn').style.display = 'flex';
+  document.querySelector('.ann-save-btn').style.display = 'none';
+  document.querySelector('.ann-cancel-btn').style.display = 'none';
+}
+
+// Save/cancel on Enter/Escape in edit field
+document.getElementById('annEditInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') saveAnnouncement();
+  if (e.key === 'Escape') cancelEditAnnouncement();
+});
+
+// ===== BULLETIN BOARD =====
+const MEMOS_KEY = 'fibi_memos';
+let selectedMemoColor = 'yellow';
+
+function getMemos() {
+  try { return JSON.parse(localStorage.getItem(MEMOS_KEY)) || []; }
+  catch(e) { return []; }
+}
+
+function saveMemos(memos) {
+  localStorage.setItem(MEMOS_KEY, JSON.stringify(memos));
+}
+
+function buildMemoHTML(memo, idx, allowDelete) {
+  const d = memo.date ? new Date(memo.date) : new Date();
+  const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  let delBtn = '';
+  if (allowDelete) {
+    delBtn = '<div class="memo-delete" onclick="event.stopPropagation();deleteMemo(' + idx + ')" title="Remove memo (admin only)">' +
+      '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>';
+  }
+  return '<div class="memo ' + (memo.color || 'yellow') + '" onclick="openMemoDetail(' + idx + ')" title="Click to read full memo">' +
+    '<div class="memo-tape"></div>' +
+    delBtn +
+    '<div class="memo-date">' + dateStr + '</div>' +
+    '<div class="memo-title">' + escapeHtml(memo.title) + '</div>' +
+    '<div class="memo-body">' + escapeHtml(memo.body).replace(/\n/g, '<br>') + '</div>' +
+  '</div>';
+}
+
+function renderMemos() {
+  const memos = getMemos();
+  const grid = document.getElementById('memoGrid');
+  const countEl = document.getElementById('memoCount');
+
+  countEl.textContent = memos.length + (memos.length === 1 ? ' memo' : ' memos');
+
+  if (memos.length === 0) {
+    grid.innerHTML = '<div class="memo-empty">No memos pinned yet.<div class="memo-empty-sub">Click "Post Memo" to add the first one.</div></div>';
+    return;
+  }
+
+  grid.innerHTML = memos.map(function(m, i) { return buildMemoHTML(m, i, true); }).join('');
+}
+
+function renderMemosFS() {
+  const memos = getMemos();
+  const grid = document.getElementById('memoGridFS');
+  if (memos.length === 0) {
+    grid.innerHTML = '<div class="memo-empty">No memos pinned yet.</div>';
+    return;
+  }
+  grid.innerHTML = memos.map(function(m, i) { return buildMemoHTML(m, i, true); }).join('');
+}
+
+// Open/close fullscreen
+function openBulletinFullscreen() {
+  document.getElementById('bulletinFullscreen').classList.add('open');
+  renderMemosFS();
+  document.body.style.overflow = 'hidden';
+}
+
+function closeBulletinFullscreen() {
+  document.getElementById('bulletinFullscreen').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('bulletinFullscreen').addEventListener('click', function(e) {
+  if (e.target === this) closeBulletinFullscreen();
+});
+
+// ── Memo detail (zoom) view ──────────────────────────────────────────
+function openMemoDetail(idx) {
+  var memos = getMemos();
+  var memo = memos[idx];
+  if (!memo) return;
+
+  var d = memo.date ? new Date(memo.date) : new Date();
+  var dateStr = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  var color = memo.color || 'yellow';
+
+  var card = document.getElementById('memoDetailCard');
+  card.className = 'memo-detail-card ' + color;
+  document.getElementById('memoDetailDate').textContent = dateStr;
+  document.getElementById('memoDetailTitle').textContent = memo.title;
+  document.getElementById('memoDetailBody').textContent = memo.body;
+
+  // Show delete button (admin only — check if session is unlocked, otherwise offer to unlock)
+  var footer = document.getElementById('memoDetailFooter');
+  var delBtn = document.getElementById('memoDetailDeleteBtn');
+  footer.style.display = 'flex';
+  delBtn.onclick = function() {
+    closeMemoDetail();
+    deleteMemo(idx);
+  };
+
+  document.getElementById('memoDetailOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMemoDetail(e) {
+  // If called with a click event, only close if the backdrop itself was clicked
+  if (e && e.type === 'click' && e.target !== document.getElementById('memoDetailOverlay')) return;
+  document.getElementById('memoDetailOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && document.getElementById('memoDetailOverlay').classList.contains('open')) {
+    document.getElementById('memoDetailOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+});
+
+// Add memo - admin protected
+function requestAddMemo() {
+  if (adminUnlocked) {
+    openMemoModal();
+    return;
+  }
+  window._afterAdminAuth = 'addMemo';
+  document.getElementById('pwModal').classList.add('open');
+  document.getElementById('pwInput').value = '';
+  document.getElementById('pwError').textContent = '';
+  document.getElementById('pwInput').classList.remove('error');
+  setTimeout(function() { document.getElementById('pwInput').focus(); }, 150);
+}
+
+function openMemoModal() {
+  document.getElementById('memoModal').classList.add('open');
+  document.getElementById('memoTitle').value = '';
+  document.getElementById('memoBody').value = '';
+  document.getElementById('memoError').textContent = '';
+  selectedMemoColor = 'yellow';
+  document.querySelectorAll('.memo-color-opt').forEach(function(d) { d.classList.remove('selected'); });
+  document.querySelector('.memo-color-opt[data-mcolor="yellow"]').classList.add('selected');
+  setTimeout(function() { document.getElementById('memoTitle').focus(); }, 150);
+}
+
+function closeMemoModal() {
+  document.getElementById('memoModal').classList.remove('open');
+}
+
+document.getElementById('memoModal').addEventListener('click', function(e) {
+  if (e.target === this) closeMemoModal();
+});
+
+function pickMemoColor(el) {
+  document.querySelectorAll('.memo-color-opt').forEach(function(d) { d.classList.remove('selected'); });
+  el.classList.add('selected');
+  selectedMemoColor = el.getAttribute('data-mcolor');
+}
+
+function submitMemo() {
+  var title = document.getElementById('memoTitle').value.trim();
+  var body = document.getElementById('memoBody').value.trim();
+  var errEl = document.getElementById('memoError');
+
+  if (!title) { errEl.textContent = 'Please enter a memo title.'; return; }
+  if (!body) { errEl.textContent = 'Please enter a message.'; return; }
+
+  var memos = getMemos();
+  memos.unshift({ title: title, body: body, color: selectedMemoColor, date: new Date().toISOString() });
+  saveMemos(memos);
+  renderMemos();
+  renderMemosFS();
+  closeMemoModal();
+}
+
+function deleteMemo(idx) {
+  if (!adminUnlocked) {
+    window._afterAdminAuth = 'deleteMemo_' + idx;
+    document.getElementById('pwModal').classList.add('open');
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwError').textContent = '';
+    document.getElementById('pwInput').classList.remove('error');
+    setTimeout(function() { document.getElementById('pwInput').focus(); }, 150);
+    return;
+  }
+  performDeleteMemo(idx);
+}
+
+function performDeleteMemo(idx) {
+  var memos = getMemos();
+  if (idx >= 0 && idx < memos.length) {
+    if (confirm('Remove this memo from the bulletin board?')) {
+      memos.splice(idx, 1);
+      saveMemos(memos);
+      renderMemos();
+      renderMemosFS();
+    }
+  }
+}
+
+// Init bulletin
+renderMemos();
+
+// ===== CUSTOM TOOLS (Add / Delete) =====
+let adminUnlocked = false;
+const CUSTOM_TOOLS_KEY = 'fibi_custom_tools';
+let selectedColor = 'teal';
+
+// SVG icons for custom cards (generic set)
+const cardIcons = {
+  teal: '<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  navy: '<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+  amber: '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+  rose: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>',
+  indigo: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>',
+  emerald: '<svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>'
+};
+
+function getCustomTools() {
+  try { return JSON.parse(localStorage.getItem(CUSTOM_TOOLS_KEY)) || []; }
+  catch(e) { return []; }
+}
+
+function saveCustomTools(tools) {
+  localStorage.setItem(CUSTOM_TOOLS_KEY, JSON.stringify(tools));
+}
+
+function renderCustomTools() {
+  const tools = getCustomTools();
+  const grid = document.getElementById('customCardsGrid');
+  const section = document.getElementById('customToolsSection');
+  const count = document.getElementById('customToolCount');
+
+  if (tools.length === 0) {
+    section.style.display = 'none';
+    return;
+  }
+
+  section.style.display = '';
+  count.textContent = tools.length;
+  grid.innerHTML = '';
+
+  tools.forEach((tool, i) => {
+    const card = document.createElement('a');
+    card.href = tool.url;
+    card.target = '_blank';
+    card.className = 'card custom-card';
+    card.setAttribute('data-search', tool.name.toLowerCase() + ' ' + tool.desc.toLowerCase());
+    card.innerHTML =
+      '<div class="card-delete" onclick="event.preventDefault();event.stopPropagation();deleteCustomTool(' + i + ')" title="Delete (admin only)">' +
+        '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+      '</div>' +
+      '<div class="card-icon ' + tool.color + '">' + (cardIcons[tool.color] || cardIcons.teal) + '</div>' +
+      '<div class="card-body">' +
+        '<div class="card-title">' + escapeHtml(tool.name) + '<span class="custom-badge">Custom</span></div>' +
+        '<div class="card-desc">' + escapeHtml(tool.desc) + '</div>' +
+      '</div>' +
+      '<div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>';
+    grid.appendChild(card);
+  });
+
+  // Update total tools stat
+  updateToolCount();
+}
+
+function escapeHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+function updateToolCount() {
+  const base = 20;
+  const custom = getCustomTools().length;
+  const el = document.querySelector('.stat-val');
+  if (el) el.textContent = base + custom;
+}
+
+// Admin gate for adding tools
+function requestAddTool() {
+  if (adminUnlocked) {
+    openAddToolModal();
+    return;
+  }
+  // Reuse the password modal but redirect to add-tool flow after success
+  window._afterAdminAuth = 'addTool';
+  document.getElementById('pwModal').classList.add('open');
+  document.getElementById('pwInput').value = '';
+  document.getElementById('pwError').textContent = '';
+  document.getElementById('pwInput').classList.remove('error');
+  setTimeout(() => document.getElementById('pwInput').focus(), 150);
+}
+
+function openAddToolModal() {
+  document.getElementById('addToolModal').classList.add('open');
+  document.getElementById('addToolName').value = '';
+  document.getElementById('addToolDesc').value = '';
+  document.getElementById('addToolUrl').value = '';
+  document.getElementById('addToolError').textContent = '';
+  selectedColor = 'teal';
+  document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('selected'));
+  document.querySelector('.color-dot[data-color="teal"]').classList.add('selected');
+  setTimeout(() => document.getElementById('addToolName').focus(), 150);
+}
+
+function closeAddToolModal() {
+  document.getElementById('addToolModal').classList.remove('open');
+}
+
+function pickColor(el) {
+  document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedColor = el.getAttribute('data-color');
+}
+
+function submitNewTool() {
+  const name = document.getElementById('addToolName').value.trim();
+  const desc = document.getElementById('addToolDesc').value.trim();
+  const url = document.getElementById('addToolUrl').value.trim();
+  const errEl = document.getElementById('addToolError');
+
+  if (!name) { errEl.textContent = 'Please enter a tool name.'; return; }
+  if (!url) { errEl.textContent = 'Please enter a URL.'; return; }
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    errEl.textContent = 'URL must start with http:// or https://'; return;
+  }
+
+  const tools = getCustomTools();
+  tools.push({ name, desc: desc || 'Custom tool', url, color: selectedColor });
+  saveCustomTools(tools);
+  renderCustomTools();
+  closeAddToolModal();
+}
+
+function deleteCustomTool(index) {
+  if (!adminUnlocked) {
+    window._afterAdminAuth = 'delete_' + index;
+    document.getElementById('pwModal').classList.add('open');
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwError').textContent = '';
+    document.getElementById('pwInput').classList.remove('error');
+    setTimeout(() => document.getElementById('pwInput').focus(), 150);
+    return;
+  }
+  performDelete(index);
+}
+
+function performDelete(index) {
+  const tools = getCustomTools();
+  if (index >= 0 && index < tools.length) {
+    const name = tools[index].name;
+    if (confirm('Remove "' + name + '" from the portal?')) {
+      tools.splice(index, 1);
+      saveCustomTools(tools);
+      renderCustomTools();
+    }
+  }
+}
+
+// Close add-tool modal on overlay click
+document.getElementById('addToolModal').addEventListener('click', function(e) {
+  if (e.target === this) closeAddToolModal();
+});
+
+// Load custom tools on page ready
+renderCustomTools();
+
+// Search
+function filterCards() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  document.querySelectorAll('[data-section]').forEach(sec => {
+    const items = sec.querySelectorAll('.card, .office-btn');
+    let vis = 0;
+    items.forEach(c => {
+      const text = (c.getAttribute('data-search') || '') + ' ' + c.textContent.toLowerCase();
+      const show = !q || text.includes(q);
+      c.style.display = show ? '' : 'none';
+      if (show) vis++;
+    });
+    sec.style.display = (!q || vis > 0) ? '' : 'none';
+  });
+}
+
+// Ctrl+K
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    document.getElementById('searchInput').focus();
+  }
+});
+
+// Sidebar nav scroll
+function scrollSection(e, id) {
+  e.preventDefault();
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+// Pinned panel
+function togglePinned() {
+  document.getElementById('pinnedPanel').classList.toggle('open');
+}
+
+// Close pinned when clicking outside
+document.addEventListener('click', e => {
+  const pf = document.querySelector('.pinned-float');
+  if (!pf.contains(e.target)) {
+    document.getElementById('pinnedPanel').classList.remove('open');
+  }
+});
+</script>
+
+</body>
+</html>

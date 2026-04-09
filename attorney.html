@@ -1,0 +1,2239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fibi Law — Attorney Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --navy: #012D44;
+  --navy-80: rgba(1,45,68,0.8);
+  --navy-10: rgba(1,45,68,0.08);
+  --teal: #3cbfba;
+  --teal-dim: rgba(60,191,186,0.08);
+  --teal-soft: rgba(60,191,186,0.14);
+  --white: #ffffff;
+  --gray-50: #f7f8fa;
+  --gray-100: #ebeef1;
+  --gray-200: #dde1e6;
+  --gray-400: #9aa1ab;
+  --gray-600: #4b5563;
+  --gray-800: #1f2937;
+  --rose: #e11d48;
+  --rose-bg: rgba(225,29,72,0.07);
+  --sidebar-w: 240px;
+  --topbar-h: 60px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --shadow: 0 1px 4px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05);
+  --shadow-lg: 0 4px 20px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06);
+  --transition: 0.18s ease;
+  /* Office colors */
+  --woodland: #2e7d32;
+  --harlem: #7b1fa2;
+  --stone: #5d4037;
+  --college: #1565c0;
+  --bronx: #c62828;
+}
+
+html, body { height: 100%; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; background: var(--gray-50); }
+
+/* ══════════════════════════════════════
+   LOGIN GATE
+══════════════════════════════════════ */
+#loginGate {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+}
+#loginGate.hidden { display: none; }
+
+.login-box {
+  background: var(--white); border-radius: 20px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+  padding: 48px 44px 40px;
+  width: 400px; max-width: 92vw;
+  text-align: center; position: relative;
+}
+
+.login-logo {
+  width: 72px; height: 72px; border-radius: 18px;
+  background: var(--navy); display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; overflow: hidden;
+}
+.login-logo img { width: 52px; height: 52px; object-fit: contain; }
+
+.login-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(60,191,186,0.1); color: var(--teal);
+  border: 1px solid rgba(60,191,186,0.25); border-radius: 20px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
+  text-transform: uppercase; padding: 4px 12px; margin-bottom: 14px;
+}
+.login-badge svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+.login-title { font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+.login-sub { font-size: 13px; color: var(--gray-600); margin-bottom: 28px; line-height: 1.5; }
+
+.login-field { position: relative; margin-bottom: 14px; }
+.login-field input {
+  width: 100%; padding: 13px 44px 13px 16px;
+  border: 1.5px solid var(--gray-200); border-radius: var(--radius);
+  font-size: 14px; font-family: inherit; color: var(--gray-800);
+  background: var(--gray-50); transition: border-color var(--transition);
+  outline: none;
+}
+.login-field input:focus { border-color: var(--teal); background: var(--white); }
+.login-field input.error { border-color: var(--rose); }
+.login-eye {
+  position: absolute; right: 13px; top: 50%; transform: translateY(-50%);
+  cursor: pointer; color: var(--gray-400); background: none; border: none;
+  display: flex; align-items: center; padding: 4px;
+}
+.login-eye svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+.login-eye:hover { color: var(--gray-600); }
+
+.login-error { font-size: 12px; color: var(--rose); margin-bottom: 12px; min-height: 18px; text-align: left; }
+
+.login-btn {
+  width: 100%; padding: 14px; border-radius: var(--radius);
+  background: var(--navy); color: var(--white);
+  font-size: 14px; font-weight: 700; font-family: inherit;
+  border: none; cursor: pointer; transition: all var(--transition);
+}
+.login-btn:hover { background: #023a56; box-shadow: 0 4px 16px rgba(1,45,68,0.3); }
+
+.login-remember {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 16px; font-size: 12px; color: var(--gray-600); cursor: pointer;
+  justify-content: center;
+}
+.login-remember input[type=checkbox] { accent-color: var(--teal); width: 14px; height: 14px; cursor: pointer; }
+
+/* ══════════════════════════════════════
+   APP SHELL
+══════════════════════════════════════ */
+.app-content { display: none; min-height: 100vh; }
+.app-content.visible { display: flex; min-height: 100vh; }
+
+/* ══════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════ */
+.sidebar {
+  width: var(--sidebar-w); background: var(--navy);
+  display: flex; flex-direction: column;
+  position: fixed; top: 0; left: 0; bottom: 0;
+  z-index: 100; overflow-y: auto; overflow-x: hidden;
+}
+.sidebar::-webkit-scrollbar { width: 0; }
+
+.sidebar-logo {
+  padding: 24px 20px 16px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.sidebar-logo-img {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: rgba(255,255,255,0.08);
+  overflow: hidden; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.sidebar-logo-img img { width: 30px; height: 30px; object-fit: contain; }
+.sidebar-logo-text { font-size: 13px; font-weight: 700; color: var(--white); line-height: 1.3; }
+.sidebar-logo-sub { font-size: 10px; color: rgba(255,255,255,0.4); font-weight: 500; }
+
+/* Attorney badge in sidebar */
+.sidebar-atty-badge {
+  margin: 12px 16px;
+  background: rgba(60,191,186,0.12);
+  border: 1px solid rgba(60,191,186,0.2);
+  border-radius: 8px; padding: 8px 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.sidebar-atty-badge svg { width: 13px; height: 13px; stroke: var(--teal); fill: none; stroke-width: 2; flex-shrink: 0; }
+.sidebar-atty-badge-text { font-size: 11px; font-weight: 600; color: var(--teal); line-height: 1.3; }
+.sidebar-atty-badge-sub { font-size: 10px; color: rgba(60,191,186,0.6); }
+
+/* Office submission progress */
+.sidebar-progress {
+  margin: 4px 16px 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px; padding: 10px 12px;
+}
+.sidebar-progress-label {
+  font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.4);
+  text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px;
+}
+.sidebar-progress-row {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 2px;
+}
+.sidebar-progress-count { font-size: 20px; font-weight: 800; color: var(--white); }
+.sidebar-progress-text { font-size: 10px; color: rgba(255,255,255,0.35); line-height: 1.4; text-align: right; }
+.sidebar-progress-bar-wrap {
+  background: rgba(255,255,255,0.08); border-radius: 4px;
+  height: 5px; margin-top: 8px; overflow: hidden;
+}
+.sidebar-progress-bar {
+  height: 100%; background: var(--teal); border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.sidebar-nav { padding: 8px 0; flex: 1; }
+.nav-group-label {
+  font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.3);
+  letter-spacing: 1.2px; text-transform: uppercase;
+  padding: 14px 20px 6px;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 11px;
+  padding: 9px 20px; font-size: 13px; font-weight: 500;
+  color: rgba(255,255,255,0.6); text-decoration: none;
+  border-radius: 0; transition: all var(--transition);
+  cursor: pointer; position: relative;
+}
+.nav-item:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+.nav-item.active { color: var(--white); background: rgba(60,191,186,0.12); }
+.nav-item.active::before {
+  content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 60%; background: var(--teal); border-radius: 0 2px 2px 0;
+}
+.nav-item svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.8; flex-shrink: 0; }
+.nav-badge {
+  margin-left: auto; font-size: 10px; font-weight: 600;
+  background: rgba(60,191,186,0.15); color: var(--teal);
+  padding: 1px 7px; border-radius: 10px; min-width: 20px; text-align: center;
+}
+
+.sidebar-clock {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.sidebar-time {
+  font-size: 22px; font-weight: 700; color: var(--white);
+  letter-spacing: -0.5px; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.sidebar-date { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 4px; }
+
+.sidebar-footer {
+  padding: 14px 20px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.sidebar-footer-link {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; color: rgba(255,255,255,0.3);
+  text-decoration: none; transition: color var(--transition);
+  cursor: pointer; background: none; border: none; font-family: inherit; width: 100%;
+  padding: 0;
+}
+.sidebar-footer-link:hover { color: rgba(255,255,255,0.55); }
+.sidebar-footer-link svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+/* ══════════════════════════════════════
+   MAIN CONTENT AREA
+══════════════════════════════════════ */
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1; display: flex; flex-direction: column; min-height: 100vh;
+}
+
+.topbar {
+  height: var(--topbar-h); background: var(--white);
+  border-bottom: 1px solid var(--gray-100);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; position: sticky; top: 0; z-index: 50;
+}
+.topbar-search {
+  display: flex; align-items: center; gap: 9px;
+  background: var(--gray-50); border: 1px solid var(--gray-100);
+  border-radius: 10px; padding: 8px 14px; cursor: pointer;
+  transition: all var(--transition); width: 280px;
+}
+.topbar-search:hover { border-color: var(--gray-200); background: var(--white); }
+.topbar-search svg { width: 14px; height: 14px; stroke: var(--gray-400); fill: none; stroke-width: 2; flex-shrink: 0; }
+.topbar-search span { font-size: 13px; color: var(--gray-400); flex: 1; }
+.topbar-search kbd {
+  font-size: 10px; color: var(--gray-400); background: var(--gray-100);
+  border-radius: 5px; padding: 2px 6px; font-family: inherit; font-weight: 600;
+}
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.topbar-chip {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--teal-dim); border: 1px solid rgba(60,191,186,0.15);
+  border-radius: 8px; padding: 5px 10px;
+  font-size: 11px; font-weight: 600; color: var(--teal);
+}
+.topbar-chip svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
+.topbar-logout {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--gray-400); cursor: pointer;
+  background: none; border: none; font-family: inherit;
+  padding: 6px 10px; border-radius: 8px; transition: all var(--transition);
+}
+.topbar-logout:hover { background: var(--rose-bg); color: var(--rose); }
+.topbar-logout svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+.content { padding: 28px 32px 60px; max-width: 1200px; }
+
+/* ══════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-in { animation: fadeUp 0.4s ease both; }
+.delay-1 { animation-delay: 0.05s; }
+.delay-2 { animation-delay: 0.1s; }
+.delay-3 { animation-delay: 0.15s; }
+.delay-4 { animation-delay: 0.2s; }
+.delay-5 { animation-delay: 0.25s; }
+.delay-6 { animation-delay: 0.3s; }
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, #023a56 60%, #015470 100%);
+  border-radius: var(--radius-lg); padding: 32px 36px;
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px; position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; right: -60px; top: -60px;
+  width: 280px; height: 280px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(60,191,186,0.12) 0%, transparent 70%);
+}
+.hero::after {
+  content: ''; position: absolute; right: 80px; bottom: -40px;
+  width: 160px; height: 160px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(60,191,186,0.07) 0%, transparent 70%);
+}
+.hero-left { position: relative; z-index: 1; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(60,191,186,0.15); color: var(--teal);
+  border: 1px solid rgba(60,191,186,0.25); border-radius: 20px;
+  font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; padding: 4px 12px; margin-bottom: 12px;
+}
+.hero-eyebrow svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+.hero-greeting { font-size: 28px; font-weight: 800; color: var(--white); line-height: 1.2; }
+.hero-sub { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 6px; }
+.hero-right { position: relative; z-index: 1; text-align: right; }
+.hero-date { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+.hero-time-large { font-size: 32px; font-weight: 700; color: rgba(255,255,255,0.9); letter-spacing: -1px; font-variant-numeric: tabular-nums; }
+
+/* ══════════════════════════════════════
+   STATS BAR
+══════════════════════════════════════ */
+.stats {
+  display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;
+}
+.stat-pill {
+  display: flex; align-items: center; gap: 7px;
+  background: var(--white); border: 1px solid var(--gray-100);
+  border-radius: 24px; padding: 7px 14px;
+  font-size: 12px; font-weight: 600; color: var(--gray-600);
+  box-shadow: var(--shadow);
+}
+.stat-pill svg { width: 13px; height: 13px; stroke: var(--teal); fill: none; stroke-width: 2; }
+.stat-pill strong { color: var(--navy); }
+
+/* ══════════════════════════════════════
+   ANNOUNCEMENT BAR
+══════════════════════════════════════ */
+.announcements {
+  background: var(--white); border: 1px solid var(--gray-100);
+  border-left: 4px solid var(--teal); border-radius: var(--radius);
+  padding: 12px 16px; display: flex; align-items: center; gap: 12px;
+  margin-bottom: 20px; box-shadow: var(--shadow);
+}
+.ann-indicator {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--teal); flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(60,191,186,0.15);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(60,191,186,0.15); }
+  50% { box-shadow: 0 0 0 6px rgba(60,191,186,0.06); }
+}
+.ann-content { flex: 1; min-width: 0; }
+.ann-label { font-size: 10px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.8px; }
+.ann-text { font-size: 13px; color: var(--gray-800); margin-top: 1px; }
+.ann-edit-input {
+  font-size: 13px; color: var(--gray-800); border: none; outline: none;
+  width: 100%; background: transparent; font-family: inherit;
+  border-bottom: 1px dashed var(--teal); padding: 2px 0;
+}
+.ann-actions { display: flex; gap: 4px; }
+.ann-btn {
+  width: 28px; height: 28px; border-radius: 7px;
+  background: var(--gray-50); border: 1px solid var(--gray-100);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all var(--transition); color: var(--gray-400);
+}
+.ann-btn:hover { background: var(--gray-100); color: var(--gray-600); }
+.ann-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
+.ann-save-btn:hover { background: rgba(60,191,186,0.1); color: var(--teal); border-color: rgba(60,191,186,0.2); }
+
+/* ══════════════════════════════════════
+   BULLETIN BOARD (whiteboard)
+══════════════════════════════════════ */
+.bulletin-wrap { margin-bottom: 28px; }
+.bulletin-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.bulletin-title-row { display: flex; align-items: center; gap: 10px; }
+.bulletin-icon {
+  width: 30px; height: 30px; border-radius: 8px;
+  background: var(--navy-10); color: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+}
+.bulletin-icon svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+.bulletin-label { font-size: 14px; font-weight: 650; color: var(--navy); }
+.bulletin-count {
+  font-size: 11px; font-weight: 500; color: var(--gray-400);
+  background: var(--gray-50); border: 1px solid var(--gray-100);
+  padding: 1px 9px; border-radius: 20px;
+}
+.bulletin-actions { display: flex; gap: 8px; }
+.bulletin-add-btn, .bulletin-expand-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 8px; font-size: 12px;
+  font-weight: 600; font-family: inherit; cursor: pointer;
+  border: none; transition: all 0.2s ease;
+}
+.bulletin-add-btn {
+  background: var(--teal-dim); color: var(--teal);
+  border: 1px dashed var(--teal);
+}
+.bulletin-add-btn:hover { background: var(--teal-soft); border-style: solid; }
+.bulletin-expand-btn {
+  background: var(--white); color: var(--gray-600);
+  border: 1px solid var(--gray-200);
+}
+.bulletin-expand-btn:hover { background: var(--gray-50); }
+.bulletin-add-btn svg, .bulletin-expand-btn svg {
+  width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2;
+}
+
+/* Whiteboard */
+.bulletin-board {
+  background: #f9fafc;
+  border-radius: var(--radius-lg);
+  padding: 28px 28px 36px;
+  border: 10px solid #2a3a4a;
+  box-shadow: 0 0 0 2px #1a2a3a, 0 8px 32px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.9);
+  min-height: 160px; position: relative; overflow: visible;
+  transition: max-height 0.4s ease;
+}
+.bulletin-board::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(180,190,210,0.13) 1px, transparent 1px), linear-gradient(90deg, rgba(180,190,210,0.13) 1px, transparent 1px);
+  background-size: 40px 40px; pointer-events: none; border-radius: 6px;
+}
+.bulletin-board::after {
+  content: ''; position: absolute;
+  bottom: -22px; left: -10px; right: -10px; height: 22px;
+  background: linear-gradient(to bottom, #233040, #1a2530);
+  border-radius: 0 0 8px 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 3;
+}
+.bulletin-board { margin-bottom: 30px; }
+.bulletin-board.collapsed { max-height: 320px; overflow: hidden; margin-bottom: 8px; }
+.bulletin-fade {
+  display: none; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 60px; background: linear-gradient(to top, #f9fafc, transparent);
+  pointer-events: none; z-index: 2;
+}
+.bulletin-board.collapsed .bulletin-fade { display: block; }
+.marker-tray { position: absolute; bottom: -18px; left: 44px; display: flex; gap: 10px; z-index: 5; }
+.marker { width: 36px; height: 10px; border-radius: 3px; box-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+.marker.red   { background: linear-gradient(to right, #dc2626, #ef4444); }
+.marker.blue  { background: linear-gradient(to right, #1d4ed8, #3b82f6); }
+.marker.black { background: linear-gradient(to right, #111827, #374151); }
+.marker.green { background: linear-gradient(to right, #15803d, #22c55e); }
+.wb-eraser {
+  position: absolute; bottom: -16px; right: 64px;
+  width: 48px; height: 14px;
+  background: linear-gradient(to bottom, #f8e4c0, #e8c990);
+  border-radius: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.25); z-index: 5;
+}
+.wb-screw {
+  position: absolute; width: 10px; height: 10px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #4a5a6a, #1a2a3a);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.2); z-index: 5;
+}
+.wb-screw::after {
+  content: ''; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%) rotate(45deg); width: 5px; height: 1px; background: rgba(255,255,255,0.3);
+}
+.wb-screw.tl { top: 4px; left: 4px; }
+.wb-screw.tr { top: 4px; right: 4px; }
+.wb-screw.bl { bottom: 4px; left: 4px; }
+.wb-screw.br { bottom: 4px; right: 4px; }
+
+.memo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 18px; position: relative; z-index: 1; }
+.memo-empty {
+  grid-column: 1/-1; text-align: center; padding: 28px 20px;
+  color: rgba(1,45,68,0.3); font-size: 14px; font-weight: 500; position: relative; z-index: 1;
+}
+.memo-empty-sub { font-size: 12px; color: rgba(1,45,68,0.2); margin-top: 4px; }
+.memo {
+  border-radius: 4px; padding: 22px 18px 16px; position: relative;
+  transition: all var(--transition); cursor: pointer; min-height: 90px;
+}
+.memo:nth-child(odd)  { transform: rotate(-0.7deg); }
+.memo:nth-child(even) { transform: rotate(0.5deg); }
+.memo:nth-child(3n)   { transform: rotate(-0.2deg); }
+.memo:hover { transform: rotate(0deg) translateY(-3px) !important; box-shadow: 0 6px 20px rgba(0,0,0,0.14) !important; }
+.memo-tape {
+  position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+  width: 48px; height: 18px; background: rgba(200,220,255,0.55);
+  border-radius: 3px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); backdrop-filter: blur(2px);
+}
+.memo.yellow { background: #fff59d; box-shadow: 2px 3px 10px rgba(0,0,0,0.1); }
+.memo.blue   { background: #b3e5fc; box-shadow: 2px 3px 10px rgba(0,0,0,0.1); }
+.memo.green  { background: #c8e6c9; box-shadow: 2px 3px 10px rgba(0,0,0,0.1); }
+.memo.pink   { background: #f8bbd0; box-shadow: 2px 3px 10px rgba(0,0,0,0.1); }
+.memo.white  { background: #ffffff; box-shadow: 2px 3px 10px rgba(0,0,0,0.12); border: 1px solid rgba(0,0,0,0.05); }
+.memo.orange { background: #ffe0b2; box-shadow: 2px 3px 10px rgba(0,0,0,0.1); }
+.memo::after {
+  content: ''; position: absolute; bottom: 0; right: 0;
+  width: 20px; height: 20px;
+  background: linear-gradient(225deg, rgba(0,0,0,0.06) 50%, transparent 50%);
+  border-radius: 0 0 4px 0;
+}
+.memo-date { font-size: 10px; color: rgba(0,0,0,0.3); margin-bottom: 8px; font-weight: 500; }
+.memo-title { font-size: 13px; font-weight: 700; color: rgba(0,0,0,0.75); margin-bottom: 6px; line-height: 1.35; }
+.memo-body { font-size: 12px; color: rgba(0,0,0,0.55); line-height: 1.55; word-wrap: break-word; }
+.memo-delete {
+  position: absolute; top: 6px; right: 6px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: rgba(0,0,0,0.06); color: rgba(0,0,0,0.3);
+  display: none; align-items: center; justify-content: center;
+  cursor: pointer; transition: all var(--transition); z-index: 5;
+}
+.memo-delete:hover { background: rgba(225,29,72,0.1); color: var(--rose); }
+.memo:hover .memo-delete { display: flex; }
+.memo-delete svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+/* Memo detail overlay */
+.memo-detail-overlay {
+  position: fixed; inset: 0; z-index: 950;
+  background: rgba(10,20,30,0.55); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.22s ease;
+}
+.memo-detail-overlay.open { opacity: 1; pointer-events: auto; }
+.memo-detail-card {
+  width: 440px; max-width: 92vw; border-radius: 6px;
+  padding: 52px 36px 36px; position: relative;
+  transform: scale(0.88) translateY(16px);
+  transition: transform 0.28s cubic-bezier(0.25,0.46,0.45,0.94);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25); max-height: 80vh; overflow-y: auto;
+}
+.memo-detail-overlay.open .memo-detail-card { transform: scale(1) translateY(0); }
+.memo-detail-tape {
+  position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+  width: 64px; height: 22px; background: rgba(200,220,255,0.55);
+  border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); backdrop-filter: blur(2px);
+}
+.memo-detail-card::after {
+  content: ''; position: absolute; bottom: 0; right: 0;
+  width: 28px; height: 28px;
+  background: linear-gradient(225deg, rgba(0,0,0,0.08) 50%, transparent 50%);
+  border-radius: 0 0 6px 0; pointer-events: none;
+}
+.memo-detail-card.yellow { background: #fff59d; }
+.memo-detail-card.blue   { background: #b3e5fc; }
+.memo-detail-card.green  { background: #c8e6c9; }
+.memo-detail-card.pink   { background: #f8bbd0; }
+.memo-detail-card.white  { background: #ffffff; border: 1px solid rgba(0,0,0,0.06); }
+.memo-detail-card.orange { background: #ffe0b2; }
+.memo-detail-close {
+  position: absolute; top: 12px; right: 12px;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(0,0,0,0.08); color: rgba(0,0,0,0.45);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border: none; transition: all 0.18s ease; z-index: 5; font-family: inherit;
+}
+.memo-detail-close:hover { background: rgba(225,29,72,0.12); color: var(--rose); }
+.memo-detail-close svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+.memo-detail-date { font-size: 11px; font-weight: 500; color: rgba(0,0,0,0.32); margin-bottom: 10px; }
+.memo-detail-title { font-size: 20px; font-weight: 800; color: rgba(0,0,0,0.78); line-height: 1.25; margin-bottom: 14px; }
+.memo-detail-body { font-size: 14px; color: rgba(0,0,0,0.6); line-height: 1.7; white-space: pre-wrap; word-break: break-word; }
+.memo-detail-footer {
+  margin-top: 24px; padding-top: 16px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  display: flex; justify-content: flex-end;
+}
+.memo-detail-delete {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 600;
+  font-family: inherit; cursor: pointer;
+  border: 1px solid rgba(225,29,72,0.25); background: rgba(225,29,72,0.06); color: var(--rose);
+  transition: all 0.18s ease;
+}
+.memo-detail-delete:hover { background: rgba(225,29,72,0.14); }
+.memo-detail-delete svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+/* Fullscreen bulletin */
+.bulletin-fullscreen {
+  position: fixed; inset: 0; z-index: 900;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+}
+.bulletin-fullscreen.open { opacity: 1; pointer-events: auto; }
+.bulletin-fs-inner {
+  width: 92%; max-width: 1100px; max-height: 85vh; overflow-y: auto;
+  background: #f9fafc; border-radius: 16px; border: 10px solid #2a3a4a;
+  padding: 32px;
+  box-shadow: 0 0 0 2px #1a2a3a, 0 20px 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.9);
+  position: relative; transform: scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94);
+  background-image: linear-gradient(rgba(180,190,210,0.13) 1px, transparent 1px), linear-gradient(90deg, rgba(180,190,210,0.13) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.bulletin-fullscreen.open .bulletin-fs-inner { transform: scale(1); }
+.bulletin-fs-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px; position: relative; z-index: 1;
+}
+.bulletin-fs-title { font-size: 20px; font-weight: 700; color: var(--navy); }
+.bulletin-fs-actions { display: flex; align-items: center; gap: 10px; }
+.bulletin-fs-close {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(1,45,68,0.08); color: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border: none; transition: all var(--transition);
+}
+.bulletin-fs-close:hover { background: rgba(1,45,68,0.15); }
+.bulletin-fs-close svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; }
+.bulletin-fs-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 22px; position: relative; z-index: 1;
+}
+
+/* ══════════════════════════════════════
+   SECTION HEADERS
+══════════════════════════════════════ */
+.section { margin-bottom: 32px; }
+.section-head {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+}
+.section-icon {
+  width: 28px; height: 28px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.section-icon svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+.section-icon.navy { background: var(--navy-10); color: var(--navy); }
+.section-icon.teal { background: var(--teal-dim); color: var(--teal); }
+.section-title { font-size: 14px; font-weight: 700; color: var(--navy); }
+.section-count {
+  font-size: 11px; color: var(--gray-400); font-weight: 500;
+  background: var(--gray-50); border: 1px solid var(--gray-100);
+  padding: 1px 8px; border-radius: 12px;
+}
+.section-line { flex: 1; height: 1px; background: var(--gray-100); }
+
+/* ══════════════════════════════════════
+   OFFICE NOTE CARDS
+══════════════════════════════════════ */
+.office-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+}
+
+.office-card {
+  background: var(--white); border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-100);
+  box-shadow: var(--shadow);
+  overflow: hidden; position: relative;
+  transition: all 0.22s ease;
+  display: flex; flex-direction: column;
+}
+.office-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+.office-card-accent {
+  height: 5px; width: 100%;
+}
+
+.office-card-body { padding: 20px 20px 16px; flex: 1; display: flex; flex-direction: column; }
+
+.office-card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
+
+.office-card-location {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.8px;
+  text-transform: uppercase; padding: 3px 9px; border-radius: 6px;
+  opacity: 0.85;
+}
+.office-card-location svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+/* Submitted today badge */
+.submitted-badge {
+  display: none; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 700; color: #2e7d32;
+  background: rgba(46,125,50,0.08); border: 1px solid rgba(46,125,50,0.2);
+  padding: 3px 9px; border-radius: 6px;
+}
+.submitted-badge.show { display: inline-flex; }
+.submitted-badge svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+.office-card-name { font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+.office-card-desc { font-size: 12px; color: var(--gray-600); line-height: 1.5; flex: 1; }
+
+.office-card-footer { padding: 0 20px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+.office-last-submit {
+  font-size: 11px; color: var(--gray-400);
+  display: flex; align-items: center; gap: 5px;
+}
+.office-last-submit svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+.office-submit-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 18px; border-radius: 9px;
+  font-size: 12px; font-weight: 700; font-family: inherit;
+  cursor: pointer; border: none;
+  text-decoration: none; transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.office-submit-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+.office-submit-btn:hover { filter: brightness(1.1); transform: scale(1.02); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+/* Color variants */
+.office-card[data-office="woodland"] .office-card-accent { background: var(--woodland); }
+.office-card[data-office="woodland"] .office-card-location { background: rgba(46,125,50,0.08); color: var(--woodland); }
+.office-card[data-office="woodland"] .office-submit-btn { background: var(--woodland); color: white; }
+
+.office-card[data-office="harlem"] .office-card-accent { background: var(--harlem); }
+.office-card[data-office="harlem"] .office-card-location { background: rgba(123,31,162,0.08); color: var(--harlem); }
+.office-card[data-office="harlem"] .office-submit-btn { background: var(--harlem); color: white; }
+
+.office-card[data-office="stone-mountain"] .office-card-accent { background: var(--stone); }
+.office-card[data-office="stone-mountain"] .office-card-location { background: rgba(93,64,55,0.08); color: var(--stone); }
+.office-card[data-office="stone-mountain"] .office-submit-btn { background: var(--stone); color: white; }
+
+.office-card[data-office="college-park"] .office-card-accent { background: var(--college); }
+.office-card[data-office="college-park"] .office-card-location { background: rgba(21,101,192,0.08); color: var(--college); }
+.office-card[data-office="college-park"] .office-submit-btn { background: var(--college); color: white; }
+
+.office-card[data-office="bronx"] .office-card-accent { background: var(--bronx); }
+.office-card[data-office="bronx"] .office-card-location { background: rgba(198,40,40,0.08); color: var(--bronx); }
+.office-card[data-office="bronx"] .office-submit-btn { background: var(--bronx); color: white; }
+
+/* ══════════════════════════════════════
+   RESOURCE CARDS
+══════════════════════════════════════ */
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+.resource-card {
+  background: var(--white); border: 1px solid var(--gray-100);
+  border-radius: var(--radius-lg); padding: 20px;
+  box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 14px;
+  transition: all 0.2s ease; text-decoration: none;
+}
+.resource-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: var(--gray-200); }
+.resource-card-top { display: flex; align-items: flex-start; gap: 12px; }
+.resource-card-icon {
+  width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.resource-card-icon svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+.resource-card-icon.navy { background: var(--navy-10); color: var(--navy); }
+.resource-card-icon.teal { background: var(--teal-dim); color: var(--teal); }
+.resource-card-icon.purple { background: rgba(123,31,162,0.08); color: #7b1fa2; }
+.resource-card-icon.amber { background: rgba(245,158,11,0.1); color: #d97706; }
+.resource-card-title { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.3; margin-bottom: 4px; }
+.resource-card-desc { font-size: 11px; color: var(--gray-600); line-height: 1.5; }
+.resource-card-action {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; color: var(--navy);
+  padding: 7px 14px; border-radius: 8px;
+  background: var(--navy-10); border: 1px solid rgba(1,45,68,0.1);
+  align-self: flex-start; text-decoration: none;
+  transition: all 0.18s ease;
+}
+.resource-card-action:hover { background: var(--navy); color: var(--white); }
+.resource-card-action svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+/* ══════════════════════════════════════
+   QUICK LEGAL ACCESS
+══════════════════════════════════════ */
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+.quick-link {
+  background: var(--white); border: 1px solid var(--gray-100);
+  border-radius: var(--radius); padding: 14px 16px;
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none; transition: all 0.18s ease;
+  box-shadow: var(--shadow);
+}
+.quick-link:hover { border-color: var(--teal); background: rgba(60,191,186,0.03); transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+.quick-link-icon {
+  width: 34px; height: 34px; border-radius: 9px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.quick-link-icon svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+.quick-link-icon.navy { background: var(--navy-10); color: var(--navy); }
+.quick-link-icon.teal { background: var(--teal-dim); color: var(--teal); }
+.quick-link-icon.purple { background: rgba(123,31,162,0.07); color: #7b1fa2; }
+.quick-link-icon.blue { background: rgba(21,101,192,0.08); color: #1565c0; }
+.quick-link-icon.green { background: rgba(46,125,50,0.08); color: #2e7d32; }
+.quick-link-icon.amber { background: rgba(245,158,11,0.08); color: #d97706; }
+.quick-link-icon.red { background: rgba(198,40,40,0.07); color: #c62828; }
+.quick-link-text { min-width: 0; }
+.quick-link-name { font-size: 12px; font-weight: 700; color: var(--navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.quick-link-detail { font-size: 10px; color: var(--gray-400); margin-top: 1px; }
+.quick-link-ext { margin-left: auto; flex-shrink: 0; color: var(--gray-400); }
+.quick-link-ext svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+/* ══════════════════════════════════════
+   AIRTABLE FORM MODAL
+══════════════════════════════════════ */
+.airtable-modal {
+  position: fixed; inset: 0; z-index: 800;
+  background: rgba(0,0,0,0.55); backdrop-filter: blur(5px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+}
+.airtable-modal.open { opacity: 1; pointer-events: auto; }
+
+.airtable-modal-inner {
+  width: 92%; max-width: 880px; height: 88vh;
+  background: var(--white); border-radius: 18px;
+  overflow: hidden; display: flex; flex-direction: column;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.3);
+  transform: scale(0.95) translateY(12px);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.airtable-modal.open .airtable-modal-inner { transform: scale(1) translateY(0); }
+
+.airtable-modal-header {
+  padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--gray-100); flex-shrink: 0;
+}
+.airtable-modal-title {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; font-weight: 700; color: var(--navy);
+}
+.airtable-office-dot {
+  width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0;
+}
+.airtable-modal-sub { font-size: 11px; color: var(--gray-400); margin-top: 1px; }
+.airtable-modal-close {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--gray-100); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray-600); transition: all var(--transition); flex-shrink: 0;
+}
+.airtable-modal-close:hover { background: var(--rose-bg); color: var(--rose); }
+.airtable-modal-close svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+.airtable-iframe { flex: 1; border: none; width: 100%; }
+.airtable-modal-loading {
+  position: absolute; inset: 0; display: flex; align-items: center;
+  justify-content: center; background: var(--gray-50); z-index: 1;
+  font-size: 13px; color: var(--gray-400); gap: 10px;
+  transition: opacity 0.3s ease;
+}
+.airtable-iframe-wrap { flex: 1; position: relative; }
+
+/* ══════════════════════════════════════
+   CASE NOTES TEMPLATE MODAL
+══════════════════════════════════════ */
+.template-modal {
+  position: fixed; inset: 0; z-index: 810;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(5px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.22s ease;
+}
+.template-modal.open { opacity: 1; pointer-events: auto; }
+
+.template-modal-inner {
+  width: 92%; max-width: 560px; max-height: 88vh; overflow-y: auto;
+  background: var(--white); border-radius: 18px;
+  padding: 32px 32px 28px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+  transform: scale(0.95) translateY(10px);
+  transition: transform 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.template-modal.open .template-modal-inner { transform: scale(1) translateY(0); }
+
+.template-modal-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.template-modal-title { font-size: 17px; font-weight: 800; color: var(--navy); }
+.template-modal-sub { font-size: 12px; color: var(--gray-400); margin-top: 3px; }
+.template-modal-close {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--gray-100); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray-600); transition: all var(--transition); flex-shrink: 0;
+}
+.template-modal-close:hover { background: var(--rose-bg); color: var(--rose); }
+.template-modal-close svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+.template-body {
+  background: var(--gray-50); border: 1px solid var(--gray-100);
+  border-radius: 10px; padding: 20px 22px; margin-bottom: 16px;
+}
+.template-heading {
+  font-size: 13px; font-weight: 800; color: var(--navy);
+  text-transform: uppercase; letter-spacing: 0.8px;
+  margin-bottom: 16px; padding-bottom: 10px;
+  border-bottom: 2px solid var(--navy-10);
+}
+.template-row {
+  display: flex; align-items: flex-end; gap: 8px;
+  margin-bottom: 13px; padding-bottom: 13px;
+  border-bottom: 1px solid var(--gray-100);
+}
+.template-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.template-row-label {
+  font-size: 11px; font-weight: 700; color: var(--navy);
+  white-space: nowrap; flex-shrink: 0; min-width: 120px;
+}
+.template-row-line {
+  flex: 1; border-bottom: 1px solid var(--gray-300);
+  height: 18px; margin-bottom: 1px;
+}
+
+.template-actions {
+  display: flex; gap: 8px; align-items: center;
+}
+.template-copy-btn {
+  flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 11px; border-radius: 10px;
+  background: var(--navy); color: var(--white);
+  font-size: 13px; font-weight: 700; font-family: inherit;
+  border: none; cursor: pointer; transition: all var(--transition);
+}
+.template-copy-btn:hover { background: #023a56; }
+.template-copy-btn.copied { background: var(--woodland); }
+.template-copy-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+.template-cancel-btn {
+  padding: 11px 18px; border-radius: 10px;
+  background: var(--gray-50); color: var(--gray-600);
+  font-size: 13px; font-weight: 600; font-family: inherit;
+  border: 1px solid var(--gray-200); cursor: pointer; transition: all var(--transition);
+}
+.template-cancel-btn:hover { background: var(--gray-100); }
+
+/* ══════════════════════════════════════
+   MODALS (shared)
+══════════════════════════════════════ */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px); z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+}
+.modal-overlay.open { opacity: 1; pointer-events: auto; }
+.modal-box {
+  background: var(--white); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg); width: 420px; max-width: 92vw;
+  padding: 32px 32px 28px;
+  transform: translateY(8px) scale(0.97);
+  transition: transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.modal-overlay.open .modal-box { transform: translateY(0) scale(1); }
+
+/* Password modal */
+.pw-modal-title { font-size: 17px; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+.pw-modal-sub { font-size: 13px; color: var(--gray-600); margin-bottom: 20px; }
+.pw-field { position: relative; margin-bottom: 8px; }
+.pw-field input {
+  width: 100%; padding: 12px 44px 12px 14px;
+  border: 1.5px solid var(--gray-200); border-radius: var(--radius);
+  font-size: 14px; font-family: inherit; color: var(--gray-800);
+  background: var(--gray-50); outline: none; transition: border-color var(--transition);
+}
+.pw-field input:focus { border-color: var(--teal); background: var(--white); }
+.pw-field input.error { border-color: var(--rose); }
+.pw-eye {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  cursor: pointer; color: var(--gray-400); background: none; border: none;
+  display: flex; align-items: center;
+}
+.pw-eye svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; }
+.pw-error { font-size: 12px; color: var(--rose); min-height: 18px; margin-bottom: 14px; }
+.pw-actions { display: flex; gap: 8px; }
+.btn-primary {
+  flex: 1; padding: 11px; border-radius: var(--radius);
+  background: var(--navy); color: var(--white);
+  font-size: 13px; font-weight: 700; font-family: inherit;
+  border: none; cursor: pointer; transition: all var(--transition);
+}
+.btn-primary:hover { background: #023a56; }
+.btn-secondary {
+  padding: 11px 18px; border-radius: var(--radius);
+  background: var(--gray-50); color: var(--gray-600);
+  font-size: 13px; font-weight: 600; font-family: inherit;
+  border: 1px solid var(--gray-200); cursor: pointer; transition: all var(--transition);
+}
+.btn-secondary:hover { background: var(--gray-100); }
+
+/* Memo modal */
+.modal-title { font-size: 17px; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+.modal-sub { font-size: 13px; color: var(--gray-600); margin-bottom: 20px; }
+.form-group { margin-bottom: 16px; }
+.form-label { display: block; font-size: 11px; font-weight: 700; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 7px; }
+.form-input, .form-textarea {
+  width: 100%; padding: 10px 14px;
+  border: 1.5px solid var(--gray-200); border-radius: var(--radius);
+  font-size: 13px; font-family: inherit; color: var(--gray-800);
+  background: var(--gray-50); outline: none;
+  transition: border-color var(--transition);
+}
+.form-input:focus, .form-textarea:focus { border-color: var(--teal); background: var(--white); }
+.form-textarea { resize: vertical; min-height: 90px; }
+.memo-color-picker { display: flex; gap: 8px; margin-top: 8px; }
+.memo-color-opt {
+  width: 32px; height: 32px; border-radius: 8px; cursor: pointer;
+  border: 2.5px solid transparent; transition: all var(--transition);
+  display: flex; align-items: center; justify-content: center;
+}
+.memo-color-opt:hover { transform: scale(1.1); }
+.memo-color-opt.selected { border-color: var(--navy); box-shadow: 0 0 0 2px var(--white), 0 0 0 4px var(--navy); }
+.memo-color-opt svg { width: 14px; height: 14px; stroke: rgba(0,0,0,0.5); fill: none; stroke-width: 2.5; opacity: 0; }
+.memo-color-opt.selected svg { opacity: 1; }
+.modal-actions { display: flex; gap: 8px; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     LOGIN GATE
+══════════════════════════════════════ -->
+<div id="loginGate">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="https://framerusercontent.com/images/7MqXsKyjGWvLQn25G3nNRe5KAM.webp?width=186&height=186" alt="Fibi Law">
+    </div>
+    <div class="login-badge">
+      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Attorney Access Only
+    </div>
+    <div class="login-title">Attorney Portal</div>
+    <div class="login-sub">Secure access for Fibi Law attorneys.<br>Enter your portal password to continue.</div>
+    <div class="login-field">
+      <input type="password" id="loginPw" placeholder="Portal password" autocomplete="current-password">
+      <button class="login-eye" onclick="toggleLoginEye()" type="button" id="loginEyeBtn">
+        <svg id="loginEyeIcon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <div class="login-error" id="loginError"></div>
+    <button class="login-btn" onclick="attemptLogin()">Sign In</button>
+    <label class="login-remember">
+      <input type="checkbox" id="rememberMe" checked> Keep me signed in for 30 days
+    </label>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     APP CONTENT
+══════════════════════════════════════ -->
+<div class="app-content" id="appContent">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-img">
+        <img src="https://framerusercontent.com/images/7MqXsKyjGWvLQn25G3nNRe5KAM.webp?width=186&height=186" alt="Fibi Law">
+      </div>
+      <div>
+        <div class="sidebar-logo-text">Fibi Law Firm</div>
+        <div class="sidebar-logo-sub">Attorney Portal</div>
+      </div>
+    </div>
+
+    <div class="sidebar-atty-badge">
+      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <div>
+        <div class="sidebar-atty-badge-text">Attorney Access</div>
+        <div class="sidebar-atty-badge-sub">Secure Session</div>
+      </div>
+    </div>
+
+    <!-- Daily submissions progress -->
+    <div class="sidebar-progress">
+      <div class="sidebar-progress-label">Today's Submissions</div>
+      <div class="sidebar-progress-row">
+        <div class="sidebar-progress-count" id="sidebarSubCount">0/5</div>
+        <div class="sidebar-progress-text" id="sidebarSubText">offices<br>pending</div>
+      </div>
+      <div class="sidebar-progress-bar-wrap">
+        <div class="sidebar-progress-bar" id="sidebarSubBar" style="width:0%"></div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-group-label">Navigation</div>
+      <a class="nav-item active" href="#caseNotes" onclick="scrollTo('caseNotes')">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Case Notes
+        <span class="nav-badge">5</span>
+      </a>
+      <a class="nav-item" href="#resources" onclick="scrollTo('resources')">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Legal Resources
+        <span class="nav-badge">3</span>
+      </a>
+      <a class="nav-item" href="#quickAccess" onclick="scrollTo('quickAccess')">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Quick Legal Access
+        <span class="nav-badge">8</span>
+      </a>
+      <a class="nav-item" href="#bulletinAnchor" onclick="scrollTo('bulletinAnchor')">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        Bulletin Board
+      </a>
+
+      <div class="nav-group-label" style="margin-top:8px;">Quick Links</div>
+      <a class="nav-item" href="https://app.fibilaw.com" target="_blank">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Employee Portal
+      </a>
+    </nav>
+
+    <div class="sidebar-clock">
+      <div class="sidebar-time" id="sidebarTime">--:--</div>
+      <div class="sidebar-date" id="sidebarDate"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <button class="sidebar-footer-link" onclick="logout()">
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span>Search tools &amp; resources...</span>
+        <kbd>Ctrl K</kbd>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-chip">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Attorney Portal
+        </div>
+        <button class="topbar-logout" onclick="logout()">
+          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Sign Out
+        </button>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- HERO -->
+      <div class="hero animate-in delay-1">
+        <div class="hero-left">
+          <div class="hero-eyebrow">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Fibi Law Firm
+          </div>
+          <div class="hero-greeting" id="heroGreeting">Good morning, Counsel</div>
+          <div class="hero-sub">Attorney Portal — your case tools and resources in one place</div>
+        </div>
+        <div class="hero-right">
+          <div class="hero-date" id="heroDate"></div>
+          <div class="hero-time-large" id="heroTime">--:--</div>
+        </div>
+      </div>
+
+      <!-- STATS BAR -->
+      <div class="stats animate-in delay-2">
+        <div class="stat-pill">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <strong>16</strong> tools &amp; resources
+        </div>
+        <div class="stat-pill">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <strong>5</strong> offices
+        </div>
+        <div class="stat-pill" id="statTimeOfDay">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <strong id="statPeriod">Morning</strong>
+        </div>
+        <div class="stat-pill" id="statDay">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <strong id="statDayText"></strong>
+        </div>
+      </div>
+
+      <!-- ANNOUNCEMENT -->
+      <div class="announcements animate-in delay-2" id="announcement">
+        <div class="ann-indicator"></div>
+        <div class="ann-content">
+          <div class="ann-label">Notice</div>
+          <div class="ann-text" id="annText">Case notes are required after all client representations or interactions with a client.</div>
+          <input type="text" id="annEditInput" class="ann-edit-input" style="display:none;" placeholder="Type your notice here...">
+        </div>
+        <div class="ann-actions">
+          <div class="ann-btn ann-edit-btn" onclick="editAnnouncement()" title="Edit notice">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </div>
+          <div class="ann-btn ann-save-btn" onclick="saveAnnouncement()" title="Save" style="display:none;">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="ann-btn ann-cancel-btn" onclick="cancelEditAnnouncement()" title="Cancel" style="display:none;">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+          <div class="ann-btn" onclick="document.getElementById('announcement').style.display='none'" title="Dismiss">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- BULLETIN BOARD -->
+      <div id="bulletinAnchor" class="bulletin-wrap animate-in delay-3">
+        <div class="bulletin-header">
+          <div class="bulletin-title-row">
+            <div class="bulletin-icon">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            </div>
+            <div class="bulletin-label">Attorney Bulletin Board</div>
+            <div class="bulletin-count" id="memoCount">0 memos</div>
+          </div>
+          <div class="bulletin-actions">
+            <button class="bulletin-add-btn" onclick="requestAddMemo()">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Post Memo
+            </button>
+            <button class="bulletin-expand-btn" onclick="openBulletinFullscreen()">
+              <svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+              Expand
+            </button>
+          </div>
+        </div>
+        <div class="bulletin-board collapsed" id="bulletinBoard">
+          <div class="wb-screw tl"></div><div class="wb-screw tr"></div>
+          <div class="wb-screw bl"></div><div class="wb-screw br"></div>
+          <div class="marker-tray">
+            <div class="marker red"></div><div class="marker blue"></div>
+            <div class="marker black"></div><div class="marker green"></div>
+          </div>
+          <div class="wb-eraser"></div>
+          <div class="bulletin-fade"></div>
+          <div class="memo-grid" id="memoGrid"></div>
+        </div>
+      </div>
+
+      <!-- CASE NOTES SECTION -->
+      <div class="section animate-in delay-3" id="caseNotes">
+        <div class="section-head">
+          <div class="section-icon navy">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div class="section-title">Case Notes by Office</div>
+          <div class="section-count">5 offices</div>
+          <div class="section-line"></div>
+        </div>
+        <div class="office-grid">
+
+          <!-- Woodland -->
+          <div class="office-card animate-in delay-3" data-office="woodland">
+            <div class="office-card-accent"></div>
+            <div class="office-card-body">
+              <div class="office-card-header">
+                <div class="office-card-location">
+                  <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  Woodland
+                </div>
+                <div class="submitted-badge" id="badge-woodland">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  Submitted Today
+                </div>
+              </div>
+              <div class="office-card-name">Woodland Office</div>
+              <div class="office-card-desc">Submit client notes for the Woodland office. Include key facts and recommended next steps.</div>
+            </div>
+            <div class="office-card-footer">
+              <div class="office-last-submit" id="last-woodland">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>No submission today</span>
+              </div>
+              <button class="office-submit-btn" onclick="openAirtableForm('woodland','Woodland Office','https://airtable.com/appCFrrBWJle2TE3S/pagU7SNvIQHZLdLKs/form','#2e7d32')">
+                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Submit Notes
+              </button>
+            </div>
+          </div>
+
+          <!-- Harlem -->
+          <div class="office-card animate-in delay-3" data-office="harlem">
+            <div class="office-card-accent"></div>
+            <div class="office-card-body">
+              <div class="office-card-header">
+                <div class="office-card-location">
+                  <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  Harlem
+                </div>
+                <div class="submitted-badge" id="badge-harlem">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  Submitted Today
+                </div>
+              </div>
+              <div class="office-card-name">Harlem Office</div>
+              <div class="office-card-desc">Submit client notes for the Harlem office. Include key facts and recommended next steps.</div>
+            </div>
+            <div class="office-card-footer">
+              <div class="office-last-submit" id="last-harlem">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>No submission today</span>
+              </div>
+              <button class="office-submit-btn" onclick="openAirtableForm('harlem','Harlem Office','https://airtable.com/appmRIsWBthV1ybwY/pagU7SNvIQHZLdLKs/form','#7b1fa2')">
+                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Submit Notes
+              </button>
+            </div>
+          </div>
+
+          <!-- Stone Mountain -->
+          <div class="office-card animate-in delay-4" data-office="stone-mountain">
+            <div class="office-card-accent"></div>
+            <div class="office-card-body">
+              <div class="office-card-header">
+                <div class="office-card-location">
+                  <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  Stone Mountain
+                </div>
+                <div class="submitted-badge" id="badge-stone-mountain">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  Submitted Today
+                </div>
+              </div>
+              <div class="office-card-name">Stone Mountain Office</div>
+              <div class="office-card-desc">Submit client notes for the Stone Mountain office. Include key facts and recommended next steps.</div>
+            </div>
+            <div class="office-card-footer">
+              <div class="office-last-submit" id="last-stone-mountain">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>No submission today</span>
+              </div>
+              <button class="office-submit-btn" onclick="openAirtableForm('stone-mountain','Stone Mountain Office','https://airtable.com/appKkHFU2tH5hkArB/pagU7SNvIQHZLdLKs/form','#5d4037')">
+                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Submit Notes
+              </button>
+            </div>
+          </div>
+
+          <!-- College Park -->
+          <div class="office-card animate-in delay-4" data-office="college-park">
+            <div class="office-card-accent"></div>
+            <div class="office-card-body">
+              <div class="office-card-header">
+                <div class="office-card-location">
+                  <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  College Park
+                </div>
+                <div class="submitted-badge" id="badge-college-park">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  Submitted Today
+                </div>
+              </div>
+              <div class="office-card-name">College Park Office</div>
+              <div class="office-card-desc">Submit client notes for the College Park office. Include key facts and recommended next steps.</div>
+            </div>
+            <div class="office-card-footer">
+              <div class="office-last-submit" id="last-college-park">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>No submission today</span>
+              </div>
+              <button class="office-submit-btn" onclick="openAirtableForm('college-park','College Park Office','https://airtable.com/appZDWnhWcaCRPjAm/pagU7SNvIQHZLdLKs/form','#1565c0')">
+                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Submit Notes
+              </button>
+            </div>
+          </div>
+
+          <!-- Bronx -->
+          <div class="office-card animate-in delay-5" data-office="bronx">
+            <div class="office-card-accent"></div>
+            <div class="office-card-body">
+              <div class="office-card-header">
+                <div class="office-card-location">
+                  <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  Bronx
+                </div>
+                <div class="submitted-badge" id="badge-bronx">
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  Submitted Today
+                </div>
+              </div>
+              <div class="office-card-name">Bronx Office</div>
+              <div class="office-card-desc">Submit client notes for the Bronx office. Include key facts and recommended next steps.</div>
+            </div>
+            <div class="office-card-footer">
+              <div class="office-last-submit" id="last-bronx">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>No submission today</span>
+              </div>
+              <button class="office-submit-btn" onclick="openAirtableForm('bronx','Bronx Office','https://airtable.com/app6RPeZDscKTejWB/pagU7SNvIQHZLdLKs/form','#c62828')">
+                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Submit Notes
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- LEGAL RESOURCES -->
+      <div class="section animate-in delay-4" id="resources">
+        <div class="section-head">
+          <div class="section-icon teal">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <div class="section-title">Legal Resources</div>
+          <div class="section-count">3 documents</div>
+          <div class="section-line"></div>
+        </div>
+        <div class="resource-grid">
+
+          <div class="resource-card">
+            <div class="resource-card-top">
+              <div class="resource-card-icon navy">
+                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div>
+                <div class="resource-card-title">Habeas Corpus Petition &amp; TRO Guide</div>
+                <div class="resource-card-desc">Step-by-step guide for filing Habeas Corpus petitions and Temporary Restraining Orders.</div>
+              </div>
+            </div>
+            <a class="resource-card-action" href="https://sami23225.github.io/habeas-training-3/" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              Review Guide
+            </a>
+          </div>
+
+          <div class="resource-card" style="cursor:pointer;" onclick="openTemplateModal()">
+            <div class="resource-card-top">
+              <div class="resource-card-icon teal">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              </div>
+              <div>
+                <div class="resource-card-title">Representation Case Notes Template</div>
+                <div class="resource-card-desc">Standardized template for documenting representation case notes. Click to open and copy.</div>
+              </div>
+            </div>
+            <button class="resource-card-action" onclick="event.stopPropagation();openTemplateModal()">
+              <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy Template
+            </button>
+          </div>
+
+          <div class="resource-card">
+            <div class="resource-card-top">
+              <div class="resource-card-icon purple">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              </div>
+              <div>
+                <div class="resource-card-title">Know Your Rights — Client Handout</div>
+                <div class="resource-card-desc">Immigration rights overview for clients — available in English and Spanish.</div>
+              </div>
+            </div>
+            <a class="resource-card-action" href="https://www.ilrc.org/know-your-rights" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Open Resource
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- QUICK LEGAL ACCESS -->
+      <div class="section animate-in delay-5" id="quickAccess">
+        <div class="section-head">
+          <div class="section-icon navy">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div class="section-title">Quick Legal Access</div>
+          <div class="section-count">8 links</div>
+          <div class="section-line"></div>
+        </div>
+        <div class="quick-grid">
+
+          <a class="quick-link" href="https://www.uscis.gov/" target="_blank">
+            <div class="quick-link-icon navy">
+              <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="quick-link-text">
+              <div class="quick-link-name">USCIS</div>
+              <div class="quick-link-detail">uscis.gov</div>
+            </div>
+            <div class="quick-link-ext"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+          </a>
+
+          <a class="quick-link" href="https://www.justice.gov/eoir" target="_blank">
+            <div class="quick-link-icon blue">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            </div>
+            <div class="quick-link-text">
+              <div class="quick-link-name">Immigration Court (EOIR)</div>
+              <div class="quick-link-detail">justice.gov/eoir</div>
+            </div>
+            <div class="quick-link-ext"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+          </a>
+
+          <a class="quick-link" href="https://pacer.uscourts.gov/" target="_blank">
+            <div class="quick-link-icon teal">
+              <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="quick-link-text">
+              <div class="quick-link-name">PACER</div>
+              <div class="quick-link-detail">Federal court records</div>
+            </div>
+            <div class="quick-link-ext"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+          </a>
+
+          <a class="quick-link" href="https://www.justice.gov/eoir/board-of-immigration-appeals" target="_blank">
+            <div class="quick-link-icon purple">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="quick-link-text">
+              <div class="quick-link-name">BIA</div>
+              <div class="quick-link-detail">Board of Immigration Appeals</div>
+            </div>
+            <div class="quick-link-ext"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+          </a>
+
+          <a class="quick-link" href="https://locator.ice.gov/odls/#/index" target="_blank">
+            <div class="quick-link-icon red">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="quick-link-text">
+              <div class="quick-link-name">ICE Detainee Locator</div>
+              <div class="quick-link-detail">locator.ice.gov</div>
+            </div>
+            <div class="quick-link-ext"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+          </a>
+
+          <a class="quick-link" href="https://egov.uscis.gov/casestatus/landing.do" target="_blank">
+            <div class="quick-link-icon green">
+              <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="quick-link-text">
+              <div class="quick-link-name">USCIS Case Status</div>
+              <div class="quick-link-detail">Case tracker</div>
+            </div>
+            <div class="quick-link-ext"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+          </a>
+
+          <a class="quick-link" href="https://travel.state.gov/content/travel/en/us-visas/immigrate/the-immigrant-visa-process/step-1-submit-a-petition/step-2-begin-nvc-processing.html" target="_blank">
+            <div class="quick-link-icon amber">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div class="quick-link-text">
+              <div class="quick-link-name">NVC</div>
+              <div class="quick-link-detail">National Visa Center</div>
+            </div>
+            <div class="quick-link-ext"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+          </a>
+
+          <a class="quick-link" href="https://www.aila.org/" target="_blank">
+            <div class="quick-link-icon navy">
+              <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </div>
+            <div class="quick-link-text">
+              <div class="quick-link-name">AILA</div>
+              <div class="quick-link-detail">Immigration attorneys assoc.</div>
+            </div>
+            <div class="quick-link-ext"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+          </a>
+
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </main>
+</div><!-- /app-content -->
+
+<!-- ══════════════════════════════════════
+     MEMO DETAIL OVERLAY
+══════════════════════════════════════ -->
+<div class="memo-detail-overlay" id="memoDetailOverlay" onclick="closeMemoDetail(event)">
+  <div class="memo-detail-card" id="memoDetailCard" onclick="event.stopPropagation()">
+    <div class="memo-detail-tape"></div>
+    <button class="memo-detail-close" onclick="closeMemoDetail()" title="Close">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="memo-detail-date" id="memoDetailDate"></div>
+    <div class="memo-detail-title" id="memoDetailTitle"></div>
+    <div class="memo-detail-body" id="memoDetailBody"></div>
+    <div class="memo-detail-footer" id="memoDetailFooter" style="display:none;">
+      <button class="memo-detail-delete" id="memoDetailDeleteBtn">
+        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        Remove Memo
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- BULLETIN FULLSCREEN -->
+<div class="bulletin-fullscreen" id="bulletinFullscreen">
+  <div class="bulletin-fs-inner">
+    <div class="bulletin-fs-header">
+      <div class="bulletin-fs-title">Attorney Bulletin Board</div>
+      <div class="bulletin-fs-actions">
+        <button class="bulletin-add-btn" onclick="requestAddMemo()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Post Memo
+        </button>
+        <button class="bulletin-fs-close" onclick="closeBulletinFullscreen()">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="bulletin-fs-grid" id="memoGridFS"></div>
+  </div>
+</div>
+
+<!-- AIRTABLE FORM MODAL -->
+<div class="airtable-modal" id="airtableModal" onclick="closeAirtableModal(event)">
+  <div class="airtable-modal-inner">
+    <div class="airtable-modal-header">
+      <div class="airtable-modal-title">
+        <div class="airtable-office-dot" id="airtableOfficeDot"></div>
+        <div>
+          <div id="airtableModalTitle">Submit Notes</div>
+          <div class="airtable-modal-sub">Fill out and submit the form below</div>
+        </div>
+      </div>
+      <button class="airtable-modal-close" onclick="closeAirtableModal()">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="airtable-iframe-wrap">
+      <div class="airtable-modal-loading" id="airtableLoading">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+        Loading form...
+      </div>
+      <iframe class="airtable-iframe" id="airtableIframe" src="" title="Case Notes Form" onload="document.getElementById('airtableLoading').style.opacity='0';setTimeout(function(){document.getElementById('airtableLoading').style.display='none'},300)"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- CASE NOTES TEMPLATE MODAL -->
+<div class="template-modal" id="templateModal" onclick="closeTemplateModal(event)">
+  <div class="template-modal-inner" onclick="event.stopPropagation()">
+    <div class="template-modal-header">
+      <div>
+        <div class="template-modal-title">Attorney Case Note</div>
+        <div class="template-modal-sub">Click "Copy Template" to copy the blank template to your clipboard</div>
+      </div>
+      <button class="template-modal-close" onclick="closeTemplateModal()">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="template-body">
+      <div class="template-heading">Attorney Case Note</div>
+      <div class="template-row"><span class="template-row-label">Client:</span><div class="template-row-line"></div></div>
+      <div class="template-row"><span class="template-row-label">Petitioner:</span><div class="template-row-line"></div></div>
+      <div class="template-row"><span class="template-row-label">Relevant Applications:</span><div class="template-row-line"></div></div>
+      <div class="template-row"><span class="template-row-label">Date of Interview / Court:</span><div class="template-row-line"></div></div>
+      <div class="template-row"><span class="template-row-label">Location:</span><div class="template-row-line"></div></div>
+      <div class="template-row"><span class="template-row-label">Officer / Judge:</span><div class="template-row-line"></div></div>
+      <div class="template-row" style="align-items:flex-start;padding-bottom:22px;"><span class="template-row-label" style="padding-top:2px;">Note:</span><div class="template-row-line" style="height:60px;border-bottom:none;border-left:none;border-right:none;border-top:none;background:repeating-linear-gradient(transparent,transparent 21px,var(--gray-200) 21px,var(--gray-200) 22px);"></div></div>
+      <div class="template-row" style="align-items:flex-start;padding-bottom:22px;"><span class="template-row-label" style="padding-top:2px;">Next Steps:</span><div class="template-row-line" style="height:40px;border-bottom:none;background:repeating-linear-gradient(transparent,transparent 21px,var(--gray-200) 21px,var(--gray-200) 22px);"></div></div>
+      <div class="template-row"><span class="template-row-label">Prepared by:</span><div class="template-row-line"></div></div>
+      <div class="template-row"><span class="template-row-label">Date:</span><div class="template-row-line"></div></div>
+    </div>
+    <div class="template-actions">
+      <button class="template-copy-btn" id="templateCopyBtn" onclick="copyTemplate()">
+        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy Template
+      </button>
+      <button class="template-cancel-btn" onclick="closeTemplateModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- PASSWORD MODAL -->
+<div class="modal-overlay" id="pwModal">
+  <div class="modal-box">
+    <div class="pw-modal-title">Admin Verification</div>
+    <div class="pw-modal-sub" id="pwModalSub">Enter the admin password to continue.</div>
+    <div class="pw-field">
+      <input type="password" id="pwInput" placeholder="Admin password" autocomplete="off">
+      <button class="pw-eye" onclick="togglePwVisibility()" type="button">
+        <svg id="pwEyeIcon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <div class="pw-error" id="pwError"></div>
+    <div class="pw-actions">
+      <button class="btn-secondary" onclick="closePwModal()">Cancel</button>
+      <button class="btn-primary" onclick="verifyPassword()">Verify</button>
+    </div>
+  </div>
+</div>
+
+<!-- MEMO MODAL -->
+<div class="modal-overlay" id="memoModal">
+  <div class="modal-box">
+    <div class="modal-title">Post a Memo</div>
+    <div class="modal-sub">Pin a new note to the attorney bulletin board.</div>
+    <div class="form-group">
+      <label class="form-label">Title</label>
+      <input type="text" class="form-input" id="memoTitle" placeholder="e.g. Court date reminder">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Message</label>
+      <textarea class="form-textarea" id="memoBody" placeholder="Write your memo here..." rows="4"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Color</label>
+      <div class="memo-color-picker" id="memoColorPicker">
+        <div class="memo-color-opt selected" data-mcolor="yellow" style="background:#fff59d;" onclick="pickMemoColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="memo-color-opt" data-mcolor="blue" style="background:#b3e5fc;" onclick="pickMemoColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="memo-color-opt" data-mcolor="green" style="background:#c8e6c9;" onclick="pickMemoColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="memo-color-opt" data-mcolor="pink" style="background:#f8bbd0;" onclick="pickMemoColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="memo-color-opt" data-mcolor="orange" style="background:#ffe0b2;" onclick="pickMemoColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="memo-color-opt" data-mcolor="white" style="background:#ffffff;border-color:#dde1e6;" onclick="pickMemoColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeMemoModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveMemo()">Post Memo</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════
+// CONSTANTS
+// ══════════════════════════════════════
+var TEAM_PW   = 'FibiLaw2026';
+var ADMIN_PW  = 'FibiAdmin2026';
+var AUTH_KEY  = 'fibi_attorney_auth';
+var ANN_KEY   = 'fibi_attorney_ann';
+var MEMOS_KEY = 'fibi_attorney_memos';
+var SUBS_KEY  = 'fibi_attorney_subs';
+
+var adminUnlocked = false;
+var OFFICES = ['woodland','harlem','stone-mountain','college-park','bronx'];
+
+// ══════════════════════════════════════
+// AUTH
+// ══════════════════════════════════════
+function checkAuth() {
+  var stored = localStorage.getItem(AUTH_KEY);
+  if (!stored) return false;
+  try {
+    var data = JSON.parse(atob(stored));
+    if (data.pw === TEAM_PW && new Date(data.exp) > new Date()) return true;
+  } catch(e) {}
+  return false;
+}
+
+function grantAccess() {
+  document.getElementById('loginGate').classList.add('hidden');
+  document.getElementById('appContent').classList.add('visible');
+  startClock();
+  renderAnnouncement();
+  renderMemos();
+  updateSubmissions();
+}
+
+function attemptLogin() {
+  var pw = document.getElementById('loginPw').value;
+  var errEl = document.getElementById('loginError');
+  if (pw === TEAM_PW) {
+    if (document.getElementById('rememberMe').checked) {
+      var exp = new Date();
+      exp.setDate(exp.getDate() + 30);
+      localStorage.setItem(AUTH_KEY, btoa(JSON.stringify({ pw: TEAM_PW, exp: exp.toISOString() })));
+    }
+    grantAccess();
+  } else {
+    errEl.textContent = 'Incorrect password. Please try again.';
+    document.getElementById('loginPw').classList.add('error');
+    document.getElementById('loginPw').select();
+  }
+}
+
+function logout() {
+  localStorage.removeItem(AUTH_KEY);
+  location.reload();
+}
+
+document.getElementById('loginPw').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') attemptLogin();
+  document.getElementById('loginError').textContent = '';
+  this.classList.remove('error');
+});
+
+function toggleLoginEye() {
+  var inp = document.getElementById('loginPw');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  document.getElementById('loginEyeIcon').innerHTML = inp.type === 'text'
+    ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+    : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+}
+
+// ══════════════════════════════════════
+// CLOCK & GREETING
+// ══════════════════════════════════════
+function startClock() {
+  tick(); setInterval(tick, 1000);
+}
+
+function tick() {
+  var now = new Date();
+  var h = now.getHours(), m = now.getMinutes(), s = now.getSeconds();
+  var ampm = h >= 12 ? 'PM' : 'AM';
+  var h12 = h % 12 || 12;
+  var timeStr = h12 + ':' + pad(m) + ':' + pad(s) + ' ' + ampm;
+  var timeShort = h12 + ':' + pad(m) + ' ' + ampm;
+
+  document.getElementById('sidebarTime').textContent = timeShort;
+  document.getElementById('heroTime').textContent = timeShort;
+
+  var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var dateStr = days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+  var shortDate = months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+
+  document.getElementById('sidebarDate').textContent = shortDate;
+  document.getElementById('heroDate').textContent = dateStr;
+  document.getElementById('statDayText').textContent = days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
+
+  var period = h < 12 ? 'Morning' : h < 17 ? 'Afternoon' : 'Evening';
+  var greeting = 'Good ' + period.toLowerCase() + ', Counsel';
+  document.getElementById('heroGreeting').textContent = greeting;
+  document.getElementById('statPeriod').textContent = period;
+}
+
+function pad(n) { return n < 10 ? '0' + n : n; }
+
+function scrollTo(id) {
+  var el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.nav-item').forEach(function(i) { i.classList.remove('active'); });
+  event.currentTarget.classList.add('active');
+}
+
+// ══════════════════════════════════════
+// SUBMISSION TRACKING
+// ══════════════════════════════════════
+function getTodayStr() {
+  var d = new Date();
+  return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate());
+}
+
+function getSubs() {
+  try { return JSON.parse(localStorage.getItem(SUBS_KEY)) || {}; } catch(e) { return {}; }
+}
+
+function markSubmitted(office) {
+  var subs = getSubs();
+  var now = new Date();
+  subs[office] = { date: getTodayStr(), time: now.getHours() + ':' + pad(now.getMinutes()) };
+  localStorage.setItem(SUBS_KEY, JSON.stringify(subs));
+  setTimeout(function() { updateSubmissions(); }, 500);
+}
+
+function updateSubmissions() {
+  var subs = getSubs();
+  var today = getTodayStr();
+  var count = 0;
+
+  OFFICES.forEach(function(office) {
+    var sub = subs[office];
+    var badge = document.getElementById('badge-' + office);
+    var lastEl = document.getElementById('last-' + office);
+    if (sub && sub.date === today) {
+      count++;
+      if (badge) badge.classList.add('show');
+      if (lastEl) lastEl.querySelector('span').textContent = 'Submitted at ' + sub.time;
+    } else {
+      if (badge) badge.classList.remove('show');
+      if (lastEl) lastEl.querySelector('span').textContent = 'No submission today';
+    }
+  });
+
+  var pct = Math.round((count / 5) * 100);
+  document.getElementById('sidebarSubCount').textContent = count + '/5';
+  document.getElementById('sidebarSubBar').style.width = pct + '%';
+  var pending = 5 - count;
+  document.getElementById('sidebarSubText').textContent = pending > 0 ? 'offices\npending' : 'offices\ncomplete';
+  if (pending === 0) {
+    document.getElementById('sidebarSubText').style.color = 'rgba(60,191,186,0.7)';
+    document.getElementById('sidebarSubCount').style.color = '#3cbfba';
+  }
+}
+
+// ══════════════════════════════════════
+// ANNOUNCEMENT
+// ══════════════════════════════════════
+function renderAnnouncement() {
+  var stored = localStorage.getItem(ANN_KEY);
+  if (stored) document.getElementById('annText').textContent = stored;
+}
+
+function editAnnouncement() {
+  if (!adminUnlocked) {
+    window._afterAdminAuth = 'editAnn';
+    openPwModal('Edit the notice for all attorneys.');
+    return;
+  }
+  openEditMode();
+}
+
+function openEditMode() {
+  var textEl = document.getElementById('annText');
+  var inputEl = document.getElementById('annEditInput');
+  inputEl.value = textEl.textContent;
+  textEl.style.display = 'none';
+  inputEl.style.display = 'block';
+  document.querySelector('.ann-edit-btn').style.display = 'none';
+  document.querySelector('.ann-save-btn').style.display = 'flex';
+  document.querySelector('.ann-cancel-btn').style.display = 'flex';
+  inputEl.focus();
+}
+
+function saveAnnouncement() {
+  var val = document.getElementById('annEditInput').value.trim();
+  if (!val) return;
+  document.getElementById('annText').textContent = val;
+  localStorage.setItem(ANN_KEY, val);
+  cancelEditAnnouncement();
+}
+
+function cancelEditAnnouncement() {
+  document.getElementById('annText').style.display = 'block';
+  document.getElementById('annEditInput').style.display = 'none';
+  document.querySelector('.ann-edit-btn').style.display = 'flex';
+  document.querySelector('.ann-save-btn').style.display = 'none';
+  document.querySelector('.ann-cancel-btn').style.display = 'none';
+}
+
+// ══════════════════════════════════════
+// PASSWORD MODAL
+// ══════════════════════════════════════
+function openPwModal(sub) {
+  document.getElementById('pwModalSub').textContent = sub || 'Enter the admin password to continue.';
+  document.getElementById('pwModal').classList.add('open');
+  document.getElementById('pwInput').value = '';
+  document.getElementById('pwError').textContent = '';
+  document.getElementById('pwInput').classList.remove('error');
+  setTimeout(function() { document.getElementById('pwInput').focus(); }, 150);
+}
+
+function closePwModal() {
+  document.getElementById('pwModal').classList.remove('open');
+  document.getElementById('pwInput').value = '';
+  document.getElementById('pwError').textContent = '';
+  document.getElementById('pwInput').classList.remove('error');
+}
+
+function togglePwVisibility() {
+  var inp = document.getElementById('pwInput');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  document.getElementById('pwEyeIcon').innerHTML = inp.type === 'text'
+    ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+    : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+}
+
+function verifyPassword() {
+  var entered = document.getElementById('pwInput').value;
+  if (entered === ADMIN_PW) {
+    adminUnlocked = true;
+    closePwModal();
+    var action = window._afterAdminAuth || 'editAnn';
+    window._afterAdminAuth = null;
+    if (action === 'addMemo') { openMemoModal(); }
+    else if (action && action.startsWith('deleteMemo_')) { performDeleteMemo(parseInt(action.split('_')[1])); }
+    else { openEditMode(); }
+  } else {
+    document.getElementById('pwError').textContent = 'Incorrect password. Please try again.';
+    document.getElementById('pwInput').classList.add('error');
+    document.getElementById('pwInput').select();
+  }
+}
+
+document.getElementById('pwInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') verifyPassword();
+  if (e.key === 'Escape') closePwModal();
+});
+document.getElementById('pwModal').addEventListener('click', function(e) { if (e.target === this) closePwModal(); });
+
+// ══════════════════════════════════════
+// BULLETIN BOARD — MEMOS
+// ══════════════════════════════════════
+function getMemos() { try { return JSON.parse(localStorage.getItem(MEMOS_KEY)) || []; } catch(e) { return []; } }
+function saveMemos(m) { localStorage.setItem(MEMOS_KEY, JSON.stringify(m)); }
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function buildMemoHTML(memo, idx) {
+  var d = memo.date ? new Date(memo.date) : new Date();
+  var ds = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  return '<div class="memo ' + (memo.color||'yellow') + '" onclick="openMemoDetail(' + idx + ')" title="Click to read full memo">' +
+    '<div class="memo-tape"></div>' +
+    '<div class="memo-delete" onclick="event.stopPropagation();deleteMemo(' + idx + ')" title="Remove memo">' +
+    '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>' +
+    '<div class="memo-date">' + ds + '</div>' +
+    '<div class="memo-title">' + escapeHtml(memo.title) + '</div>' +
+    '<div class="memo-body">' + escapeHtml(memo.body).replace(/\n/g,'<br>') + '</div>' +
+  '</div>';
+}
+
+function renderMemos() {
+  var memos = getMemos();
+  var grid = document.getElementById('memoGrid');
+  document.getElementById('memoCount').textContent = memos.length + (memos.length === 1 ? ' memo' : ' memos');
+  if (memos.length === 0) {
+    grid.innerHTML = '<div class="memo-empty">No memos posted yet.<div class="memo-empty-sub">Post the first memo for the attorney team.</div></div>';
+    return;
+  }
+  grid.innerHTML = memos.map(function(m,i) { return buildMemoHTML(m,i); }).join('');
+}
+
+function renderMemosFS() {
+  var memos = getMemos();
+  var grid = document.getElementById('memoGridFS');
+  if (memos.length === 0) {
+    grid.innerHTML = '<div class="memo-empty">No memos posted yet.</div>';
+    return;
+  }
+  grid.innerHTML = memos.map(function(m,i) { return buildMemoHTML(m,i); }).join('');
+}
+
+// Memo detail (zoom)
+function openMemoDetail(idx) {
+  var memo = getMemos()[idx];
+  if (!memo) return;
+  var d = memo.date ? new Date(memo.date) : new Date();
+  var ds = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  var card = document.getElementById('memoDetailCard');
+  card.className = 'memo-detail-card ' + (memo.color || 'yellow');
+  document.getElementById('memoDetailDate').textContent = ds;
+  document.getElementById('memoDetailTitle').textContent = memo.title;
+  document.getElementById('memoDetailBody').textContent = memo.body;
+  var footer = document.getElementById('memoDetailFooter');
+  footer.style.display = 'flex';
+  document.getElementById('memoDetailDeleteBtn').onclick = function() { closeMemoDetail(); deleteMemo(idx); };
+  document.getElementById('memoDetailOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMemoDetail(e) {
+  if (e && e.type === 'click' && e.target !== document.getElementById('memoDetailOverlay')) return;
+  document.getElementById('memoDetailOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && document.getElementById('memoDetailOverlay').classList.contains('open')) {
+    document.getElementById('memoDetailOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+});
+
+// Bulletin fullscreen
+function openBulletinFullscreen() {
+  document.getElementById('bulletinFullscreen').classList.add('open');
+  renderMemosFS();
+  document.body.style.overflow = 'hidden';
+}
+function closeBulletinFullscreen() {
+  document.getElementById('bulletinFullscreen').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('bulletinFullscreen').addEventListener('click', function(e) { if (e.target === this) closeBulletinFullscreen(); });
+
+// Add memo
+function requestAddMemo() {
+  if (adminUnlocked) { openMemoModal(); return; }
+  window._afterAdminAuth = 'addMemo';
+  openPwModal('Enter admin password to post a memo.');
+}
+
+function openMemoModal() {
+  document.getElementById('memoModal').classList.add('open');
+  document.getElementById('memoTitle').value = '';
+  document.getElementById('memoBody').value = '';
+  document.querySelectorAll('.memo-color-opt').forEach(function(d) { d.classList.remove('selected'); });
+  document.querySelector('.memo-color-opt[data-mcolor="yellow"]').classList.add('selected');
+  setTimeout(function() { document.getElementById('memoTitle').focus(); }, 150);
+}
+
+function closeMemoModal() { document.getElementById('memoModal').classList.remove('open'); }
+document.getElementById('memoModal').addEventListener('click', function(e) { if (e.target === this) closeMemoModal(); });
+
+function pickMemoColor(el) {
+  document.querySelectorAll('.memo-color-opt').forEach(function(d) { d.classList.remove('selected'); });
+  el.classList.add('selected');
+}
+
+function saveMemo() {
+  var title = document.getElementById('memoTitle').value.trim();
+  var body = document.getElementById('memoBody').value.trim();
+  if (!title || !body) { alert('Please fill in both the title and message.'); return; }
+  var color = (document.querySelector('.memo-color-opt.selected') || {}).dataset.mcolor || 'yellow';
+  var memos = getMemos();
+  memos.unshift({ title: title, body: body, color: color, date: new Date().toISOString() });
+  saveMemos(memos);
+  closeMemoModal();
+  renderMemos();
+  renderMemosFS();
+}
+
+function deleteMemo(idx) {
+  if (!adminUnlocked) {
+    window._afterAdminAuth = 'deleteMemo_' + idx;
+    openPwModal('Enter admin password to remove this memo.');
+    return;
+  }
+  performDeleteMemo(idx);
+}
+
+function performDeleteMemo(idx) {
+  var memos = getMemos();
+  memos.splice(idx, 1);
+  saveMemos(memos);
+  renderMemos();
+  renderMemosFS();
+}
+
+// ══════════════════════════════════════
+// AIRTABLE FORM MODAL
+// ══════════════════════════════════════
+function openAirtableForm(office, officeName, url, color) {
+  markSubmitted(office);
+  document.getElementById('airtableModalTitle').textContent = officeName + ' — Case Notes';
+  document.getElementById('airtableOfficeDot').style.background = color;
+  var iframe = document.getElementById('airtableIframe');
+  var loading = document.getElementById('airtableLoading');
+  loading.style.display = 'flex';
+  loading.style.opacity = '1';
+  iframe.src = url;
+  document.getElementById('airtableModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAirtableModal(e) {
+  if (e && e.target !== document.getElementById('airtableModal')) return;
+  document.getElementById('airtableModal').classList.remove('open');
+  document.body.style.overflow = '';
+  setTimeout(function() { document.getElementById('airtableIframe').src = ''; }, 300);
+}
+
+document.getElementById('airtableModal').addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeAirtableModal();
+});
+
+// ══════════════════════════════════════
+// CASE NOTES TEMPLATE MODAL
+// ══════════════════════════════════════
+var TEMPLATE_TEXT =
+'ATTORNEY CASE NOTE\n' +
+'─────────────────────────────────\n' +
+'Client:                          \n' +
+'Petitioner:                      \n' +
+'Relevant Applications:           \n' +
+'Date of Interview / Court:       \n' +
+'Location:                        \n' +
+'Officer / Judge:                 \n' +
+'\n' +
+'Note:\n\n\n' +
+'Next Steps:\n\n\n' +
+'─────────────────────────────────\n' +
+'Prepared by: [Attorney]          \n' +
+'Date: [                        ]\n';
+
+function openTemplateModal() {
+  document.getElementById('templateModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  var btn = document.getElementById('templateCopyBtn');
+  btn.classList.remove('copied');
+  btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Template';
+}
+
+function closeTemplateModal(e) {
+  if (e && e.target !== document.getElementById('templateModal')) return;
+  document.getElementById('templateModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function copyTemplate() {
+  navigator.clipboard.writeText(TEMPLATE_TEXT).then(function() {
+    var btn = document.getElementById('templateCopyBtn');
+    btn.classList.add('copied');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><polyline points="20 6 9 17 4 12"/></svg> Copied to clipboard!';
+    setTimeout(function() {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Template';
+    }, 2500);
+  }).catch(function() {
+    // Fallback for browsers that block clipboard
+    var ta = document.createElement('textarea');
+    ta.value = TEMPLATE_TEXT;
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    var btn = document.getElementById('templateCopyBtn');
+    btn.classList.add('copied');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+    setTimeout(function() {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Template';
+    }, 2500);
+  });
+}
+
+// Also close modals on Escape
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    if (document.getElementById('airtableModal').classList.contains('open')) closeAirtableModal();
+    if (document.getElementById('templateModal').classList.contains('open')) closeTemplateModal();
+    if (document.getElementById('memoDetailOverlay').classList.contains('open')) {
+      document.getElementById('memoDetailOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+});
+
+// Add spin animation for loader
+var styleEl = document.createElement('style');
+styleEl.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }';
+document.head.appendChild(styleEl);
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+if (checkAuth()) {
+  grantAccess();
+} else {
+  setTimeout(function() { document.getElementById('loginPw').focus(); }, 200);
+}
+</script>
+</body>
+</html>
