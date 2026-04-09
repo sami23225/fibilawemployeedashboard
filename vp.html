@@ -192,6 +192,8 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 .task-btn{width:27px;height:27px;border-radius:7px;border:none;background:var(--gray-100);color:var(--gray-500);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--transition);}
 .task-btn:hover{background:var(--rose-bg);color:var(--rose);}
 .task-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;}
+.done-btn:hover{background:rgba(46,125,50,0.1)!important;color:#2e7d32!important;}
+.undo-btn:hover{background:var(--amber-bg)!important;color:var(--amber)!important;}
 .tasks-empty{text-align:center;padding:32px 20px;background:#fff;border:2px dashed var(--gray-200);border-radius:var(--radius);color:var(--gray-400);}
 .tasks-empty svg{width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:1.5;margin-bottom:7px;}
 .tasks-empty p{font-size:13px;}
@@ -224,6 +226,8 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 .pb-emp:hover{background:rgba(60,191,186,0.1);}
 .pb-att{border-color:rgba(1,45,68,0.25);color:var(--navy);background:none;}
 .pb-att:hover{background:rgba(1,45,68,0.06);}
+.pb-board{border-color:rgba(232,160,32,0.4);color:#b7791f;background:none;}
+.pb-board:hover{background:var(--amber-bg);}
 .memo-del-btn{width:25px;height:25px;border-radius:6px;border:none;background:var(--gray-100);color:var(--gray-400);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--transition);}
 .memo-del-btn:hover{background:var(--rose-bg);color:var(--rose);}
 .memo-del-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;}
@@ -698,6 +702,7 @@ var BOARD_KEY  = 'fibi_vp_board';
 // Shared keys — same origin as employee + attorney portals
 var EMP_ANN    = 'fibi_announcement';
 var ATT_ANN    = 'fibi_attorney_ann';
+var EMP_BOARD  = 'fibi_memos';
 
 // ═══════════════════════════════
 // AUTH
@@ -862,7 +867,12 @@ function taskHTML(t){
     '<div class="task-body"><div class="task-title'+(t.done?' struck':'')+'">'+esc(t.title)+'</div>' +
     '<div class="task-meta"><span class="task-pri tp-'+t.priority+'">'+t.priority.charAt(0).toUpperCase()+t.priority.slice(1)+'</span><span class="task-cat">'+esc(t.category)+'</span>'+dueStr+'</div>' +
     (t.notes?'<div class="task-notes-text">'+esc(t.notes)+'</div>':'')+
-    '</div><div class="task-actions"><button class="task-btn" onclick="deleteTask('+t.id+')" title="Delete"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button></div>' +
+    '</div><div class="task-actions">'+
+    (t.done
+      ? '<button class="task-btn undo-btn" onclick="toggleDone('+t.id+')" title="Undo"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>'
+      : '<button class="task-btn done-btn" onclick="toggleDone('+t.id+')" title="Mark done"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></button>')+
+    '<button class="task-btn" onclick="deleteTask('+t.id+')" title="Delete"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>'+
+    '</div>' +
     '</div>';
 }
 var _compOpen=false;
@@ -902,8 +912,22 @@ function pushToPortal(id,which){
   var memo=memos.find(function(m){return m.id===id;});
   if(!memo)return;
   var text=memo.title+(memo.content?': '+memo.content.substring(0,140)+(memo.content.length>140?'…':''):'');
-  if(which==='emp'){localStorage.setItem(EMP_ANN,text);memo.pushedEmp=new Date().toLocaleDateString();showToast('Pushed to Employee Portal ✓','green');}
-  else{localStorage.setItem(ATT_ANN,text);memo.pushedAtt=new Date().toLocaleDateString();showToast('Pushed to Attorney Portal ✓','green');}
+  if(which==='emp'){
+    localStorage.setItem(EMP_ANN,text);
+    memo.pushedEmp=new Date().toLocaleDateString();
+    showToast('Pushed to Employee announcement bar ✓','green');
+  } else if(which==='att'){
+    localStorage.setItem(ATT_ANN,text);
+    memo.pushedAtt=new Date().toLocaleDateString();
+    showToast('Pushed to Attorney announcement bar ✓','green');
+  } else if(which==='board'){
+    var boardNotes=[];
+    try{boardNotes=JSON.parse(localStorage.getItem(EMP_BOARD))||[];}catch(e){}
+    boardNotes.unshift({title:memo.title,body:memo.content||'',color:'yellow',date:new Date().toISOString()});
+    localStorage.setItem(EMP_BOARD,JSON.stringify(boardNotes));
+    memo.pushedBoard=new Date().toLocaleDateString();
+    showToast('Added to Employee bulletin board ✓','amber');
+  }
   saveMemos(memos);renderMemos();
 }
 
@@ -920,13 +944,17 @@ function renderMemos(){
     var ds=m.date?new Date(m.date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—';
     var locs=(m.locations||[]).map(function(l){return locMap[l]||'';}).join('');
     var ex=_memoEx[m.id];
-    var ps='';if(m.pushedEmp)ps+='<span>→ Employee Portal pushed '+m.pushedEmp+'</span> ';if(m.pushedAtt)ps+='<span>→ Attorney Portal pushed '+m.pushedAtt+'</span>';
+    var ps='';
+    if(m.pushedEmp)ps+='<span>→ Emp bar pushed '+m.pushedEmp+'</span> ';
+    if(m.pushedBoard)ps+='<span>→ Emp board posted '+m.pushedBoard+'</span> ';
+    if(m.pushedAtt)ps+='<span>→ Atty bar pushed '+m.pushedAtt+'</span>';
     return '<div class="memo-row"><div class="memo-row-top" onclick="toggleMemoExpand('+m.id+')">'+
       '<div class="memo-date-chip">'+ds+'</div>'+
       '<div class="memo-info"><div class="memo-title-text">'+esc(m.title)+'</div><div class="memo-locs">'+locs+'</div></div>'+
       '<div class="memo-row-btns" onclick="event.stopPropagation()">'+
-      '<button class="push-btn pb-emp" onclick="pushToPortal('+m.id+',\'emp\')" title="Push announcement to Employee Portal"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Emp</button>'+
-      '<button class="push-btn pb-att" onclick="pushToPortal('+m.id+',\'att\')" title="Push announcement to Attorney Portal"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Atty</button>'+
+      '<button class="push-btn pb-emp" onclick="pushToPortal('+m.id+',\'emp\')" title="Push to Employee announcement bar"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Emp Bar</button>'+
+      '<button class="push-btn pb-board" onclick="pushToPortal('+m.id+',\'board\')" title="Post as sticky note on Employee board"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="7" y1="17" x2="7" y2="21"/><line x1="17" y1="17" x2="17" y2="21"/></svg>Emp Board</button>'+
+      '<button class="push-btn pb-att" onclick="pushToPortal('+m.id+',\'att\')" title="Push to Attorney announcement bar"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Atty</button>'+
       '<button class="memo-del-btn" onclick="deleteMemo('+m.id+')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>'+
       '</div></div>'+
       '<div class="memo-expand-body'+(ex?' show':'')+'"><div class="memo-expand-content">'+esc(m.content||'(No content)')+'</div>'+(ps?'<div class="memo-push-status">'+ps+'</div>':'')+
