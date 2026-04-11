@@ -1621,7 +1621,7 @@ function loadSlackFeed(forceRefresh){
   var el=document.getElementById('slackContent');if(!el)return;
   var token=localStorage.getItem(SLACK_KEY);
   if(!token){
-    el.innerHTML='<div class="token-setup-box"><p>Connect Slack to see recent messages from your channels and DMs.</p><div class="token-setup-row"><input type="text" class="token-setup-input" id="slackTokenInput" placeholder="Paste Slack user token (xoxp-...)"><button class="token-setup-btn" onclick="connectSlack()">Connect</button></div><div style="font-size:11px;color:var(--gray-400);margin-top:6px;">api.slack.com → Your Apps → OAuth & Permissions → User OAuth Token</div></div>';
+    el.innerHTML='<div class="token-setup-box"><p>Connect Slack to see recent messages from your workspace.</p><div class="token-setup-row"><input type="text" class="token-setup-input" id="slackTokenInput" placeholder="Paste Bot Token (xoxb-...) or User Token (xoxp-...)"><button class="token-setup-btn" onclick="connectSlack()">Connect</button></div><div style="font-size:11px;color:var(--gray-400);margin-top:8px;line-height:1.6;">1. Go to <a href="https://api.slack.com/apps" target="_blank" style="color:var(--teal);">api.slack.com/apps</a> → your app<br>2. OAuth &amp; Permissions → add scopes: <code style="background:var(--gray-100);padding:1px 4px;border-radius:3px;">channels:read channels:history groups:read groups:history im:read im:history users:read</code><br>3. Reinstall app → copy <strong>Bot User OAuth Token</strong></div></div>';
     return;
   }
   if(!forceRefresh){
@@ -1638,7 +1638,10 @@ function fetchSlackData(token){
     fetch('https://slack.com/api/conversations.list?types=im,private_channel,public_channel&exclude_archived=true&limit=30',{headers:{Authorization:'Bearer '+token}}).then(function(r){return r.json();})
   ]).then(function(results){
     var usersData=results[0];var convsData=results[1];
-    if(!convsData.ok){throw new Error(convsData.error||'Slack API error');}
+    if(!convsData.ok){
+      if(convsData.error==='missing_scope'){throw new Error('missing_scope — your token is missing required scopes');}
+      throw new Error(convsData.error||'Slack API error');
+    }
     var userMap={};
     if(usersData.ok&&usersData.members)usersData.members.forEach(function(u){userMap[u.id]=u.real_name||u.name||u.id;});
     var channels=(convsData.channels||[]).filter(function(c){return !c.is_archived;});
@@ -1672,7 +1675,10 @@ function fetchSlackData(token){
     });
   }).catch(function(e){
     var el2=document.getElementById('slackContent');
-    if(el2)el2.innerHTML='<div class="token-setup-box"><p style="color:#e53e3e;">Error: '+esc(e.message)+'<br><small>Check that your token has channels:read, channels:history, im:read, im:history, users:read scopes.</small></p><button class="token-setup-btn" onclick="localStorage.removeItem(\''+SLACK_KEY+'\');loadSlackFeed();">Reset Token</button></div>';
+    var scopeHelp=e.message.indexOf('missing_scope')!==-1
+      ?'<br><br><strong>Fix:</strong> Go to <a href="https://api.slack.com/apps" target="_blank" style="color:var(--teal);">api.slack.com/apps</a> → OAuth &amp; Permissions → add these Bot Token Scopes:<br><code style="background:rgba(0,0,0,0.08);padding:2px 6px;border-radius:4px;font-size:10px;">channels:read  channels:history  groups:read  groups:history  im:read  im:history  users:read</code><br>Then click <strong>Reinstall to Workspace</strong> and paste the new token.'
+      :'';
+    if(el2)el2.innerHTML='<div class="token-setup-box"><p style="color:#e53e3e;margin-bottom:8px;">⚠ '+esc(e.message)+scopeHelp+'</p><button class="token-setup-btn" onclick="localStorage.removeItem(\''+SLACK_KEY+'\');localStorage.removeItem(\''+SLACK_CACHE_KEY+'\');loadSlackFeed();">Reset Token</button></div>';
   });
 }
 function renderSlackHtml(html){
