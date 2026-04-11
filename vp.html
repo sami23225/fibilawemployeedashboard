@@ -1631,15 +1631,30 @@ function loadSlackFeed(forceRefresh){
   fetchSlackData(token);
 }
 function connectSlack(){var t=document.getElementById('slackTokenInput').value.trim();if(!t)return;localStorage.setItem(SLACK_KEY,t);loadSlackFeed(true);}
+// Use POST + form-encoded body to avoid CORS preflight (Authorization header triggers OPTIONS which some networks block)
+function slackPost(method,params,token){
+  var body='token='+encodeURIComponent(token.trim());
+  Object.keys(params).forEach(function(k){body+='&'+k+'='+encodeURIComponent(params[k]);});
+  return fetch('https://slack.com/api/'+method,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body}).then(function(r){return r.json();});
+}
 function fetchSlackData(token){
   var el=document.getElementById('slackContent');
-  Promise.all([
-    fetch('https://slack.com/api/users.list?limit=200',{headers:{Authorization:'Bearer '+token}}).then(function(r){return r.json();}),
-    fetch('https://slack.com/api/conversations.list?types=im,private_channel,public_channel&exclude_archived=true&limit=30',{headers:{Authorization:'Bearer '+token}}).then(function(r){return r.json();})
-  ]).then(function(results){
+  // First verify token works
+  slackPost('auth.test',{},token).then(function(auth){
+    if(!auth.ok){
+      var msg=auth.error==='invalid_auth'?'Invalid token — please reset and paste a valid xoxb- token':
+               auth.error==='missing_scope'?'missing_scope — add required scopes then reinstall app':
+               auth.error||'Slack auth error';
+      throw new Error(msg);
+    }
+    return Promise.all([
+      slackPost('users.list',{limit:'200'},token),
+      slackPost('conversations.list',{types:'public_channel,private_channel,im',exclude_archived:'true',limit:'30'},token)
+    ]);
+  }).then(function(results){
     var usersData=results[0];var convsData=results[1];
     if(!convsData.ok){
-      if(convsData.error==='missing_scope'){throw new Error('missing_scope — your token is missing required scopes');}
+      if(convsData.error==='missing_scope'){throw new Error('missing_scope — add: channels:read, channels:history, groups:read, groups:history, im:read, im:history, users:read — then reinstall app');}
       throw new Error(convsData.error||'Slack API error');
     }
     var userMap={};
@@ -1647,38 +1662,42 @@ function fetchSlackData(token){
     var channels=(convsData.channels||[]).filter(function(c){return !c.is_archived;});
     channels.sort(function(a,b){return(b.updated||0)-(a.updated||0);});
     channels=channels.slice(0,8);
-    var oldest=Math.floor(Date.now()/1000)-172800;// 48h
+    var oldest=Math.floor(Date.now()/1000)-172800;
     var promises=channels.map(function(c){
-      return fetch('https://slack.com/api/conversations.history?channel='+c.id+'&oldest='+oldest+'&limit=3',{headers:{Authorization:'Bearer '+token}})
-        .then(function(r){return r.json();})
+      return slackPost('conversations.history',{channel:c.id,oldest:''+oldest,limit:'3'},token)
         .then(function(d){return{channel:c,messages:d.ok?d.messages||[]:[],error:d.ok?null:d.error};});
     });
-    Promise.all(promises).then(function(items){
-      var withMsgs=items.filter(function(i){return i.messages.length>0;});
-      if(!withMsgs.length){renderSlackHtml('<div style="text-align:center;padding:24px;color:var(--gray-400);font-size:13px;">No messages in the last 48 hours ✓</div>');return;}
-      var html='<div class="slack-feed">'+withMsgs.map(function(i){
-        var c=i.channel;
-        var name=c.is_im?('💬 '+( userMap[c.user]||c.user||'DM')):'#'+(c.name||c.id);
-        var latest=i.messages[0];
-        var ts=latest.ts?new Date(parseFloat(latest.ts)*1000).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):'';
-        var preview=(latest.text||'[attachment]').substring(0,90);
-        return '<div class="slack-item" onclick="window.open(\'https://app.slack.com\',\'_blank\')">'+
-          '<div class="slack-ch-row"><span class="slack-ch-name">'+esc(name)+'</span>'+
-          (i.messages.length>0?'<span class="slack-msg-count">'+i.messages.length+'</span>':'')+
-          '<span class="slack-msg-time">'+ts+'</span></div>'+
-          '<div class="slack-preview">'+esc(preview)+'</div></div>';
-      }).join('')+'</div>';
-      html+='<div class="widget-footer"><button class="widget-link-btn" onclick="loadSlackFeed(true)">↻ Refresh</button><button class="widget-link-btn" onclick="localStorage.removeItem(\''+SLACK_KEY+'\');localStorage.removeItem(\''+SLACK_CACHE_KEY+'\');loadSlackFeed();">Reset token</button></div>';
-      renderSlackHtml(html);
-      var dot=document.getElementById('slackDot');var txt=document.getElementById('slackStatusTxt');
-      if(dot){dot.className='slack-dot live';}if(txt)txt.textContent='Connected · '+withMsgs.length+' active channels';
-    });
+    return Promise.all(promises);
+  }).then(function(items){
+    var withMsgs=items.filter(function(i){return i.messages.length>0;});
+    if(!withMsgs.length){renderSlackHtml('<div style="text-align:center;padding:24px;color:var(--gray-400);font-size:13px;">No messages in the last 48 hours ✓</div>');return;}
+    var userMap2={};// already built above but need closure — reuse from items
+    var html='<div class="slack-feed">'+withMsgs.map(function(i){
+      var c=i.channel;
+      var name=c.is_im?'💬 DM':'#'+(c.name||c.id);
+      var latest=i.messages[0];
+      var ts=latest&&latest.ts?new Date(parseFloat(latest.ts)*1000).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):'';
+      var preview=latest?(latest.text||'[attachment]').substring(0,90):'';
+      return '<div class="slack-item" onclick="window.open(\'https://app.slack.com\',\'_blank\')">'+
+        '<div class="slack-ch-row"><span class="slack-ch-name">'+esc(name)+'</span>'+
+        '<span class="slack-msg-count">'+i.messages.length+'</span>'+
+        '<span class="slack-msg-time">'+ts+'</span></div>'+
+        '<div class="slack-preview">'+esc(preview)+'</div></div>';
+    }).join('')+'</div>';
+    html+='<div class="widget-footer"><button class="widget-link-btn" onclick="loadSlackFeed(true)">↻ Refresh</button><button class="widget-link-btn" onclick="localStorage.removeItem(\''+SLACK_KEY+'\');localStorage.removeItem(\''+SLACK_CACHE_KEY+'\');loadSlackFeed();">Reset token</button></div>';
+    renderSlackHtml(html);
+    var dot=document.getElementById('slackDot');var txt=document.getElementById('slackStatusTxt');
+    if(dot){dot.className='slack-dot live';}if(txt)txt.textContent='Connected · '+withMsgs.length+' active channels';
   }).catch(function(e){
     var el2=document.getElementById('slackContent');
-    var scopeHelp=e.message.indexOf('missing_scope')!==-1
-      ?'<br><br><strong>Fix:</strong> Go to <a href="https://api.slack.com/apps" target="_blank" style="color:var(--teal);">api.slack.com/apps</a> → OAuth &amp; Permissions → add these Bot Token Scopes:<br><code style="background:rgba(0,0,0,0.08);padding:2px 6px;border-radius:4px;font-size:10px;">channels:read  channels:history  groups:read  groups:history  im:read  im:history  users:read</code><br>Then click <strong>Reinstall to Workspace</strong> and paste the new token.'
-      :'';
-    if(el2)el2.innerHTML='<div class="token-setup-box"><p style="color:#e53e3e;margin-bottom:8px;">⚠ '+esc(e.message)+scopeHelp+'</p><button class="token-setup-btn" onclick="localStorage.removeItem(\''+SLACK_KEY+'\');localStorage.removeItem(\''+SLACK_CACHE_KEY+'\');loadSlackFeed();">Reset Token</button></div>';
+    var msg=e.message||'Unknown error';
+    var help='';
+    if(msg.indexOf('missing_scope')!==-1){
+      help='<br><br>Go to <a href="https://api.slack.com/apps" target="_blank" style="color:var(--teal);">api.slack.com/apps</a> → OAuth &amp; Permissions → add Bot Token Scopes:<br><code style="background:rgba(0,0,0,0.08);padding:2px 6px;border-radius:4px;font-size:10px;display:inline-block;margin-top:4px;">channels:read channels:history groups:read groups:history im:read im:history users:read</code><br>Then <strong>Reinstall to Workspace</strong> and paste the new token.';
+    } else if(msg.indexOf('Failed to fetch')!==-1||msg.indexOf('NetworkError')!==-1){
+      help='<br><br>Network error — this can happen if a browser extension or firewall is blocking the request. Try: disable ad blockers for this page, or try in an Incognito window.';
+    }
+    if(el2)el2.innerHTML='<div class="token-setup-box"><p style="color:#e53e3e;margin-bottom:8px;line-height:1.6;">⚠ '+esc(msg)+help+'</p><button class="token-setup-btn" onclick="localStorage.removeItem(\''+SLACK_KEY+'\');localStorage.removeItem(\''+SLACK_CACHE_KEY+'\');loadSlackFeed();">Reset Token</button></div>';
   });
 }
 function renderSlackHtml(html){
