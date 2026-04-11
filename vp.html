@@ -1584,10 +1584,16 @@ function moveAtSupply(recordId,newStatus){
     body:JSON.stringify({fields:{Status:newStatus}})
   }).then(function(r){return r.json();})
   .then(function(d){
-    if(d.error){throw new Error(d.error.message||d.error.type||JSON.stringify(d.error));}
+    if(d.error){
+      var t=d.error.type||'';var msg=d.error.message||t;
+      if(t==='INVALID_PERMISSIONS'||t==='INSUFFICIENT_SCOPE'||msg.toLowerCase().indexOf('scope')!==-1||msg.toLowerCase().indexOf('permission')!==-1){
+        throw new Error('Token missing write permission — go to airtable.com/create/tokens, edit your token and add the scope: data.records:write');
+      }
+      throw new Error(msg||JSON.stringify(d.error));
+    }
     showToast('Moved to '+newStatus+' ✓','green');
     renderSupplies();
-  }).catch(function(e){showToast('Error: '+e.message,'');console.error('moveAtSupply',e);});
+  }).catch(function(e){showToast('⚠ '+e.message,'');console.error('moveAtSupply',e);});
 }
 
 function receiveSupply(recordId,name){
