@@ -785,8 +785,12 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
         <div class="section-head">
           <div class="section-icon si-a"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
           <div class="section-title">Sales Report</div>
-          <div class="section-count" id="salesDateLabel">Yesterday</div>
           <div class="section-line"></div>
+          <div style="display:flex;align-items:center;gap:6px;margin-right:6px;">
+            <button class="filter-pill active" id="salesPillToday" onclick="setSalesDay(0)">Today</button>
+            <button class="filter-pill" id="salesPillYest" onclick="setSalesDay(-1)">Yesterday</button>
+            <input type="date" id="salesDatePicker" class="form-input" style="padding:4px 8px;font-size:11.5px;height:30px;width:130px;" onchange="setSalesDay(null,this.value)">
+          </div>
           <button class="btn-add outline" onclick="loadSalesWidget(true)">
             <svg viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
             Refresh
@@ -1469,19 +1473,49 @@ function checkDueToday(){
 // SALES WIDGET
 // ═══════════════════════════════
 var AT_KEY='fibi_at_token';
+var _salesDayOffset=0;// 0=today, -1=yesterday
+var _salesCustomDate=null;// YYYY-MM-DD string if manually picked
+
+function localDateStr(d){
+  // Format date in LOCAL time (not UTC) to avoid timezone shift
+  var y=d.getFullYear();
+  var m=String(d.getMonth()+1).padStart(2,'0');
+  var day=String(d.getDate()).padStart(2,'0');
+  return y+'-'+m+'-'+day;
+}
+
+function setSalesDay(offset,customDate){
+  if(customDate){
+    _salesCustomDate=customDate;_salesDayOffset=null;
+    document.getElementById('salesPillToday').classList.remove('active');
+    document.getElementById('salesPillYest').classList.remove('active');
+  } else {
+    _salesCustomDate=null;_salesDayOffset=offset;
+    document.getElementById('salesPillToday').classList.toggle('active',offset===0);
+    document.getElementById('salesPillYest').classList.toggle('active',offset===-1);
+    document.getElementById('salesDatePicker').value='';
+  }
+  loadSalesWidget(true);
+}
+
 function loadSalesWidget(forceRefresh){
   var token=localStorage.getItem(AT_KEY);
   var el=document.getElementById('salesContent');if(!el)return;
   if(!token){
-    el.innerHTML='<div class="token-setup-box"><p>Connect Airtable to see yesterday\'s sales per office.</p><div class="token-setup-row"><input type="text" class="token-setup-input" id="atTokenInput" placeholder="Paste Airtable Personal Access Token (pat...)"><button class="token-setup-btn" onclick="connectAirtable()">Connect</button></div><div style="font-size:11px;color:var(--gray-400);margin-top:6px;">airtable.com → Account → Developer Hub → Personal Access Tokens</div></div>';
+    el.innerHTML='<div class="token-setup-box"><p>Connect Airtable to see sales per office.</p><div class="token-setup-row"><input type="text" class="token-setup-input" id="atTokenInput" placeholder="Paste Airtable Personal Access Token (pat...)"><button class="token-setup-btn" onclick="connectAirtable()">Connect</button></div><div style="font-size:11px;color:var(--gray-400);margin-top:6px;">airtable.com → Account → Developer Hub → Personal Access Tokens</div></div>';
     return;
   }
   el.innerHTML='<div style="text-align:center;padding:24px;color:var(--gray-400);font-size:13px;">Loading sales data...</div>';
-  var yesterday=new Date();yesterday.setDate(yesterday.getDate()-1);
-  var yStr=yesterday.toISOString().split('T')[0];
-  var dateLabel=yesterday.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-  var lbl=document.getElementById('salesDateLabel');if(lbl)lbl.textContent=dateLabel;
-  fetch('https://api.airtable.com/v0/appVKOmxf2xCvVwqX/tblpsxvI6HSYo3OWl?filterByFormula=({Date}="'+yStr+'")&fields[]=Office&fields[]=Date&fields[]=Total&pageSize=50',{headers:{Authorization:'Bearer '+token}})
+  var targetDate;
+  if(_salesCustomDate){
+    targetDate=new Date(_salesCustomDate+'T12:00:00');// noon to avoid DST issues
+  } else {
+    targetDate=new Date();
+    if(_salesDayOffset){targetDate.setDate(targetDate.getDate()+_salesDayOffset);}
+  }
+  var yStr=localDateStr(targetDate);// use LOCAL date, not UTC
+  var dateLabel=targetDate.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+  fetch('https://api.airtable.com/v0/appVKOmxf2xCvVwqX/tblpsxvI6HSYo3OWl?filterByFormula=({Date}="'+yStr+'")&fields[]=Office&fields[]=Date&fields[]=Total&pageSize=100',{headers:{Authorization:'Bearer '+token}})
     .then(function(r){return r.json();})
     .then(function(data){
       if(data.error){throw new Error(data.error.message||data.error.type||'API Error');}
@@ -1489,8 +1523,13 @@ function loadSalesWidget(forceRefresh){
       (data.records||[]).forEach(function(r){var o=r.fields.Office||'Unknown';var v=parseFloat(r.fields.Total)||0;offices[o]=(offices[o]||0)+v;});
       var order=['College Park Office','Harlem Office','Stone Mountain Office','Woodland Office','Bronx Office'];
       var total=Object.values(offices).reduce(function(a,b){return a+b;},0);
+      if(data.records&&data.records.length===0){
+        // No records — show the date queried to help debug
+        el.innerHTML='<div style="text-align:center;padding:24px;color:var(--gray-500);font-size:13px;">No records found for <strong>'+yStr+'</strong><br><span style="font-size:11px;color:var(--gray-400);">Check the date filter or try a different day</span></div><div class="widget-footer"><button class="widget-link-btn" onclick="loadSalesWidget(true)">↻ Refresh</button></div>';
+        return;
+      }
       var cards=order.map(function(name){var v=offices[name]||0;return '<div class="sales-card"><div class="sales-office">'+esc(name.replace(' Office',''))+'</div><div class="sales-total">$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'</div><div class="sales-date-lbl">'+dateLabel+'</div></div>';}).join('');
-      Object.keys(offices).forEach(function(n){if(!order.includes(n))cards+='<div class="sales-card"><div class="sales-office">'+esc(n.replace(' Office',''))+'</div><div class="sales-total">$'+(offices[n]||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'</div></div>';});
+      Object.keys(offices).forEach(function(n){if(order.indexOf(n)===-1)cards+='<div class="sales-card"><div class="sales-office">'+esc(n.replace(' Office',''))+'</div><div class="sales-total">$'+(offices[n]||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'</div><div class="sales-date-lbl">'+dateLabel+'</div></div>';});
       el.innerHTML='<div class="sales-grid">'+cards+'</div><div class="sales-summary"><span class="sales-summary-lbl">Total · '+dateLabel+'</span><span class="sales-summary-val">$'+total.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'</span></div><div class="widget-footer"><button class="widget-link-btn" onclick="loadSalesWidget(true)">↻ Refresh</button><button class="widget-link-btn" onclick="localStorage.removeItem(\''+AT_KEY+'\');loadSalesWidget();">Reset token</button></div>';
     })
     .catch(function(e){el.innerHTML='<div class="token-setup-box"><p style="color:#e53e3e;">Error: '+esc(e.message)+'</p><button class="token-setup-btn" onclick="localStorage.removeItem(\''+AT_KEY+'\');loadSalesWidget();">Reset Token</button></div>';});
