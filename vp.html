@@ -1726,34 +1726,51 @@ function fetchSlackData(token){
     var userMap={};
     if(usersData.ok&&usersData.members)usersData.members.forEach(function(u){userMap[u.id]=u.real_name||u.name||u.id;});
     var channels=(convsData.channels||[]).filter(function(c){return !c.is_archived;});
+    // Sort by most recently updated
     channels.sort(function(a,b){return(b.updated||0)-(a.updated||0);});
-    channels=channels.slice(0,8);
-    var oldest=Math.floor(Date.now()/1000)-172800;
+    channels=channels.slice(0,12);// check top 12
+    // Fetch last 5 messages per channel (no time filter — just latest activity)
     var promises=channels.map(function(c){
-      return slackPost('conversations.history',{channel:c.id,oldest:''+oldest,limit:'3'},token)
+      return slackPost('conversations.history',{channel:c.id,limit:'5'},token)
         .then(function(d){return{channel:c,messages:d.ok?d.messages||[]:[],error:d.ok?null:d.error};});
     });
-    return Promise.all(promises);
-  }).then(function(items){
-    var withMsgs=items.filter(function(i){return i.messages.length>0;});
-    if(!withMsgs.length){renderSlackHtml('<div style="text-align:center;padding:24px;color:var(--gray-400);font-size:13px;">No messages in the last 48 hours ✓</div>');return;}
-    var userMap2={};// already built above but need closure — reuse from items
+    return Promise.all(promises).then(function(items){return{items:items,userMap:userMap};});
+  }).then(function(result){
+    var items=result.items;var userMap=result.userMap;
+    var notInChannel=items.filter(function(i){return i.error==='not_in_channel';});
+    var withMsgs=items.filter(function(i){return i.messages&&i.messages.length>0;});
+
+    // If bot isn't in ANY channel, show a helpful fix message
+    if(withMsgs.length===0&&notInChannel.length>0){
+      var names=notInChannel.slice(0,4).map(function(i){return '#'+(i.channel.name||i.channel.id);}).join(', ');
+      renderSlackHtml('<div class="token-setup-box"><p style="color:#b7791f;line-height:1.7;"><strong>Bot not added to channels</strong><br>Your bot token is valid but the bot hasn\'t been added to channels like '+esc(names)+'.<br><br>To fix: in Slack, open each channel and type <code style="background:rgba(0,0,0,0.07);padding:1px 5px;border-radius:4px;">/invite @YourBotName</code><br><br><em>Alternatively, use a <strong>User OAuth Token</strong> (xoxp-) instead of a bot token — user tokens can read any channel you\'re a member of without needing to be invited.</em></p><button class="token-setup-btn" onclick="slackResetToken()">Change Token</button></div>');
+      return;
+    }
+    if(!withMsgs.length){
+      renderSlackHtml('<div style="text-align:center;padding:24px;color:var(--gray-400);font-size:13px;">No recent messages found in accessible channels.</div>');
+      return;
+    }
     var html='<div class="slack-feed">'+withMsgs.map(function(i){
       var c=i.channel;
-      var name=c.is_im?'💬 DM':'#'+(c.name||c.id);
+      var name=c.is_im?('💬 '+(userMap[c.user]||'DM')):'#'+(c.name||c.id);
       var latest=i.messages[0];
-      var ts=latest&&latest.ts?new Date(parseFloat(latest.ts)*1000).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):'';
-      var preview=latest?(latest.text||'[attachment]').substring(0,90):'';
+      var ts=latest&&latest.ts?new Date(parseFloat(latest.ts)*1000).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true}):'';
+      var who=latest&&latest.user&&userMap[latest.user]?userMap[latest.user]:'';
+      var preview=latest?(latest.text||'[attachment]').substring(0,100):'';
       return '<div class="slack-item" onclick="window.open(\'https://app.slack.com\',\'_blank\')">'+
-        '<div class="slack-ch-row"><span class="slack-ch-name">'+esc(name)+'</span>'+
-        '<span class="slack-msg-count">'+i.messages.length+'</span>'+
-        '<span class="slack-msg-time">'+ts+'</span></div>'+
-        '<div class="slack-preview">'+esc(preview)+'</div></div>';
+        '<div class="slack-ch-row">'+
+          '<span class="slack-ch-name">'+esc(name)+'</span>'+
+          '<span class="slack-msg-count">'+i.messages.length+'</span>'+
+          '<span class="slack-msg-time">'+ts+'</span>'+
+        '</div>'+
+        (who?'<div style="font-size:10px;color:var(--teal);font-weight:600;margin-bottom:2px;">'+esc(who)+'</div>':'')+
+        '<div class="slack-preview">'+esc(preview)+'</div>'+
+      '</div>';
     }).join('')+'</div>';
-    html+='<div class="widget-footer"><button class="widget-link-btn" onclick="loadSlackFeed(true)">↻ Refresh</button><button class="widget-link-btn" onclick="localStorage.removeItem(\''+SLACK_KEY+'\');localStorage.removeItem(\''+SLACK_CACHE_KEY+'\');loadSlackFeed();">Reset token</button></div>';
+    html+='<div class="widget-footer"><button class="widget-link-btn" onclick="loadSlackFeed(true)">↻ Refresh</button><button class="widget-link-btn" onclick="slackResetToken()">⚙ Token</button></div>';
     renderSlackHtml(html);
     var dot=document.getElementById('slackDot');var txt=document.getElementById('slackStatusTxt');
-    if(dot){dot.className='slack-dot live';}if(txt)txt.textContent='Connected · '+withMsgs.length+' active channels';
+    if(dot){dot.className='slack-dot live';}if(txt)txt.textContent='Connected · '+withMsgs.length+' channels';
   }).catch(function(e){
     var el2=document.getElementById('slackContent');
     var msg=e.message||'Unknown error';
