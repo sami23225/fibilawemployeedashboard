@@ -118,8 +118,8 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 .ann-cancel{padding:5px 10px;background:none;border:1px solid var(--gray-200);border-radius:6px;color:var(--gray-500);font-size:12px;cursor:pointer;font-family:inherit;}
 
 /* ══ SECTIONS ══ */
-.section{margin-top:26px;}
-.section-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.section{margin-top:22px;background:#fff;border:1.5px solid var(--gray-200);border-radius:16px;padding:20px 22px 22px;box-shadow:0 2px 10px rgba(1,45,68,0.05);}
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:14px;border-bottom:1.5px solid var(--gray-100);}
 .section-icon{width:31px;height:31px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
 .section-icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 .si-a{background:var(--amber-bg);color:var(--amber);}
@@ -1481,36 +1481,107 @@ function loadSalesWidget(forceRefresh){
 function connectAirtable(){var t=document.getElementById('atTokenInput').value.trim();if(!t)return;localStorage.setItem(AT_KEY,t);loadSalesWidget();}
 
 // ═══════════════════════════════
-// SUPPLIES BOARD
+// SUPPLIES BOARD (Airtable-connected)
 // ═══════════════════════════════
-var SUPPLY_KEY='fibi_vp_supplies';
+var SUPPLY_KEY='fibi_vp_supplies';// local received items
+var SUPPLY_AT_BASE='appe6kXr6n28GRALW';
+var SUPPLY_AT_TABLE='tbl8LV9flOVWbKBlm';
 var SUPPLY_COLS=['Pending','Ordered','Received'];
 var SUPPLY_COLORS={'Pending':'#e8a020','Ordered':'#2563eb','Received':'#2e7d32'};
-function getSupplies(){try{return JSON.parse(localStorage.getItem(SUPPLY_KEY))||[];}catch(e){return[];}}
-function saveSupplies(s){localStorage.setItem(SUPPLY_KEY,JSON.stringify(s));}
-function addSupplyItem(){
-  var name=prompt('Item name:');if(!name||!name.trim())return;
-  var qty=prompt('Quantity / Description:','1');
-  var office=prompt('Office (optional, press OK to skip):','');
-  var s=getSupplies();
-  s.unshift({id:Date.now(),name:name.trim(),qty:qty||'1',office:(office||'').trim(),status:'Pending',created:new Date().toISOString()});
-  saveSupplies(s);renderSupplies();showToast('Supply item added!','green');
-}
-function moveSupply(id,status){saveSupplies(getSupplies().map(function(s){return s.id===id?Object.assign({},s,{status:status}):s;}));renderSupplies();}
-function deleteSupply(id){archiveItem('supply',getSupplies().find(function(s){return s.id===id;}));saveSupplies(getSupplies().filter(function(s){return s.id!==id;}));renderSupplies();}
+
+function getLocalReceived(){try{return JSON.parse(localStorage.getItem(SUPPLY_KEY))||[];}catch(e){return[];}}
+function saveLocalReceived(r){localStorage.setItem(SUPPLY_KEY,JSON.stringify(r));}
+
 function renderSupplies(){
-  var all=getSupplies();
   var el=document.getElementById('supplyKanban');if(!el)return;
-  var total=all.length;var cnt=document.getElementById('supplyCount');if(cnt)cnt.textContent=total+' item'+(total!==1?'s':'');
-  el.innerHTML=SUPPLY_COLS.map(function(col){
-    var items=all.filter(function(s){return s.status===col;});
-    var nextCol=col==='Pending'?'Ordered':col==='Ordered'?'Received':null;
-    return '<div class="supply-col">'+
-      '<div class="supply-col-head"><span class="supply-col-label"><span class="supply-dot" style="background:'+SUPPLY_COLORS[col]+'"></span>'+col+'</span><span class="supply-count">'+items.length+'</span></div>'+
-      items.map(function(s){return '<div class="supply-item"><div class="supply-item-name">'+esc(s.name)+'</div><div class="supply-item-sub">Qty: '+esc(s.qty)+(s.office?' · '+esc(s.office):'')+'</div><div class="supply-item-btns">'+(nextCol?'<button class="supply-move-btn" onclick="moveSupply('+s.id+',\''+nextCol+'\')">→ '+nextCol+'</button>':'')+'<button class="supply-del-btn" onclick="deleteSupply('+s.id+')" title="Archive">✕</button></div></div>';}).join('')+
-      '<button class="supply-add-row" onclick="addSupplyItem()">+ Add item</button>'+
-    '</div>';
-  }).join('');
+  var token=localStorage.getItem('fibi_at_token');
+  if(!token){
+    el.innerHTML='<div class="token-setup-box" style="grid-column:1/-1"><p>Connect Airtable (via Sales Report widget) to load supply orders automatically.</p></div>';
+    return;
+  }
+  el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--gray-400);font-size:13px;">Loading supply orders...</div>';
+  fetch('https://api.airtable.com/v0/'+SUPPLY_AT_BASE+'/'+SUPPLY_AT_TABLE+'?fields[]=Item+Name&fields[]=Office&fields[]=Quantity+Requested&fields[]=Priority+Level&fields[]=Status&fields[]=Employee+Name&fields[]=Date+of+Request&fields[]=Comments%2FNotes&pageSize=100',
+    {headers:{Authorization:'Bearer '+token}})
+  .then(function(r){return r.json();})
+  .then(function(data){
+    if(data.error)throw new Error(data.error.message||data.error.type);
+    var records=data.records||[];
+    var pending=records.filter(function(r){return !r.fields.Status||r.fields.Status==='Pending';});
+    var ordered=records.filter(function(r){return r.fields.Status==='Ordered';});
+    var received=getLocalReceived();
+    var total=records.length+received.length;
+    var cnt=document.getElementById('supplyCount');if(cnt)cnt.textContent=total+' item'+(total!==1?'s':'');
+    var priColor={'High':'#e53e3e','Medium':'#e8a020','Low':'#2e7d32'};
+    function atCard(r,nextStatus){
+      var f=r.fields;
+      var pri=f['Priority Level']||'';
+      return '<div class="supply-item">'+
+        '<div class="supply-item-name">'+esc(f['Item Name']||'—')+(pri?'<span style="margin-left:6px;font-size:9px;font-weight:700;color:'+(priColor[pri]||'#999')+';">'+esc(pri)+'</span>':'')+'</div>'+
+        '<div class="supply-item-sub">'+(f['Office']?esc(f['Office'])+' · ':'')+'Qty: '+esc(String(f['Quantity Requested']||'?'))+(f['Employee Name']?' · '+esc(f['Employee Name']):'')+'</div>'+
+        (f['Comments/Notes']?'<div style="font-size:10px;color:var(--gray-500);margin-top:3px;font-style:italic;">'+esc(f['Comments/Notes'].substring(0,60))+'</div>':'')+
+        '<div class="supply-item-btns">'+
+          (nextStatus?'<button class="supply-move-btn" onclick="moveAtSupply(\''+r.id+'\',\''+nextStatus+'\')">→ '+nextStatus+'</button>':'')+
+          (nextStatus==='Received'||!nextStatus?'<button class="supply-move-btn" onclick="receiveSupply(\''+r.id+'\',\''+esc(f['Item Name']||'Item')+'\')" style="color:#2e7d32;border-color:#2e7d32;">✓ Received</button>':'')+
+        '</div>'+
+      '</div>';
+    }
+    function localCard(r){
+      return '<div class="supply-item" style="opacity:0.75;">'+
+        '<div class="supply-item-name">'+esc(r.name)+'</div>'+
+        '<div class="supply-item-sub">'+(r.office?esc(r.office)+' · ':'')+esc(r.date||'')+'</div>'+
+        '<div class="supply-item-btns"><button class="supply-del-btn" onclick="removeReceived(\''+r.id+'\')">✕ Remove</button></div>'+
+      '</div>';
+    }
+    el.innerHTML=
+      '<div class="supply-col">'+
+        '<div class="supply-col-head"><span class="supply-col-label"><span class="supply-dot" style="background:#e8a020"></span>Pending</span><span class="supply-count">'+pending.length+'</span></div>'+
+        pending.map(function(r){return atCard(r,'Ordered');}).join('')+
+        (pending.length===0?'<div style="text-align:center;padding:14px;font-size:12px;color:var(--gray-400);">No pending orders</div>':'')+
+      '</div>'+
+      '<div class="supply-col">'+
+        '<div class="supply-col-head"><span class="supply-col-label"><span class="supply-dot" style="background:#2563eb"></span>Ordered</span><span class="supply-count">'+ordered.length+'</span></div>'+
+        ordered.map(function(r){return atCard(r,null);}).join('')+
+        (ordered.length===0?'<div style="text-align:center;padding:14px;font-size:12px;color:var(--gray-400);">No ordered items</div>':'')+
+      '</div>'+
+      '<div class="supply-col">'+
+        '<div class="supply-col-head"><span class="supply-col-label"><span class="supply-dot" style="background:#2e7d32"></span>Received</span><span class="supply-count">'+received.length+'</span></div>'+
+        received.map(localCard).join('')+
+        (received.length===0?'<div style="text-align:center;padding:14px;font-size:12px;color:var(--gray-400);">Nothing received yet</div>':'')+
+      '</div>';
+  })
+  .catch(function(e){
+    var el2=document.getElementById('supplyKanban');
+    if(el2)el2.innerHTML='<div class="token-setup-box" style="grid-column:1/-1"><p style="color:#e53e3e;">Error loading supplies: '+esc(e.message)+'</p><button class="token-setup-btn" onclick="renderSupplies()">Retry</button></div>';
+  });
+}
+
+function moveAtSupply(recordId,newStatus){
+  var token=localStorage.getItem('fibi_at_token');if(!token)return;
+  showToast('Updating status...','');
+  fetch('https://api.airtable.com/v0/'+SUPPLY_AT_BASE+'/'+SUPPLY_AT_TABLE+'/'+recordId,{
+    method:'PATCH',
+    headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},
+    body:JSON.stringify({fields:{Status:newStatus}})
+  }).then(function(r){return r.json();})
+  .then(function(d){
+    if(d.error)throw new Error(d.error.message);
+    showToast('Moved to '+newStatus+' ✓','green');
+    renderSupplies();
+  }).catch(function(e){showToast('Error: '+e.message,'');});
+}
+
+function receiveSupply(recordId,name){
+  var received=getLocalReceived();
+  received.unshift({id:recordId,name:name,date:new Date().toLocaleDateString(),office:''});
+  saveLocalReceived(received);
+  // Also update Airtable status to Ordered if not already (optional - mark as processed)
+  showToast(name+' marked as received ✓','green');
+  renderSupplies();
+}
+
+function removeReceived(id){
+  saveLocalReceived(getLocalReceived().filter(function(r){return r.id!==id;}));
+  renderSupplies();
 }
 
 // ═══════════════════════════════
