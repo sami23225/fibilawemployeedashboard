@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Archive · VP Operations · Fibi Law</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#012D44;--teal:#3cbfba;--amber:#e8a020;
+  --amber-bg:rgba(232,160,32,0.1);--amber-border:rgba(232,160,32,0.25);
+  --dark-navy:#011d2e;--sidebar-dark:#01243a;
+  --white:#ffffff;--gray-50:#f9fafc;--gray-100:#f0f2f5;
+  --gray-200:#e4e8ed;--gray-300:#d0d6de;--gray-400:#9aa5b4;
+  --gray-500:#6b7585;--gray-600:#4a5568;--gray-700:#2d3748;--gray-900:#1a202c;
+  --teal-bg:rgba(60,191,186,0.1);--teal-border:rgba(60,191,186,0.25);
+  --rose:#e53e3e;--rose-bg:rgba(229,62,62,0.08);
+  --transition:0.18s ease;--sidebar-w:260px;--radius:12px;
+  --shadow-sm:0 1px 4px rgba(1,45,68,0.06);--shadow-md:0 4px 16px rgba(1,45,68,0.1);
+}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-900);}
+
+/* LOGIN */
+#loginGate{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,var(--dark-navy) 0%,#013a56 50%,#011d2e 100%);display:flex;align-items:center;justify-content:center;}
+#loginGate.hidden{display:none;}
+.login-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:44px 40px;width:380px;max-width:94vw;backdrop-filter:blur(20px);text-align:center;}
+.login-logo{width:64px;height:64px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;overflow:hidden;background:var(--dark-navy);}
+.login-logo img{width:100%;height:100%;object-fit:contain;}
+.login-title{font-size:20px;font-weight:700;color:#fff;margin-bottom:4px;}
+.login-sub{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:24px;}
+.login-field input{width:100%;padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:14px;font-family:inherit;outline:none;transition:border-color var(--transition);}
+.login-field input:focus{border-color:var(--amber);}
+.login-field input::placeholder{color:rgba(255,255,255,0.35);}
+.login-err{color:#fc8181;font-size:12px;margin:8px 0;min-height:18px;}
+.login-btn{width:100%;margin-top:4px;padding:12px;background:var(--amber);border:none;border-radius:10px;color:var(--dark-navy);font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;}
+.login-btn:hover{opacity:0.9;}
+
+/* APP */
+#app{display:flex;height:100vh;overflow:hidden;}
+#app.hidden{display:none;}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--sidebar-dark);display:flex;flex-direction:column;border-right:1px solid rgba(255,255,255,0.06);}
+.sidebar-top{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.sidebar-logo{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.sidebar-logo-mark{width:34px;height:34px;border-radius:8px;overflow:hidden;background:var(--dark-navy);display:flex;align-items:center;justify-content:center;}
+.sidebar-logo-mark img{width:100%;height:100%;object-fit:contain;}
+.sidebar-logo-name{font-size:14px;font-weight:700;color:#fff;}
+.sidebar-logo-sub{font-size:10px;color:rgba(255,255,255,0.3);}
+.archive-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(107,117,133,0.15);border:1px solid rgba(107,117,133,0.3);color:var(--gray-400);padding:4px 10px;border-radius:20px;font-size:10.5px;font-weight:700;}
+.sidebar-nav{padding:10px;flex:1;}
+.nav-label{font-size:9px;font-weight:700;letter-spacing:1.3px;color:rgba(255,255,255,0.22);text-transform:uppercase;padding:8px 8px 4px;}
+.nav-link{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:8px;color:rgba(255,255,255,0.5);text-decoration:none;font-size:12.5px;font-weight:500;transition:all var(--transition);cursor:pointer;border:none;background:none;width:100%;text-align:left;}
+.nav-link:hover,.nav-link.active{background:rgba(255,255,255,0.07);color:#fff;}
+.nav-link .ni{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(255,255,255,0.06);}
+.nav-link .ni svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.sidebar-footer{padding:10px;border-top:1px solid rgba(255,255,255,0.07);}
+.back-btn{display:flex;align-items:center;gap:8px;width:100%;padding:9px 10px;border-radius:8px;border:none;background:rgba(60,191,186,0.1);color:var(--teal);font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;text-decoration:none;}
+.back-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;}
+
+/* MAIN */
+.main{flex:1;overflow-y:auto;background:var(--gray-50);}
+.hero{background:linear-gradient(135deg,var(--dark-navy) 0%,#013a56 55%,#01243a 100%);padding:26px 26px 22px;}
+.hero-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:3px;display:flex;align-items:center;gap:10px;}
+.hero-sub{font-size:12px;color:rgba(255,255,255,0.4);}
+.hero-stats{display:flex;gap:16px;margin-top:12px;flex-wrap:wrap;}
+.hero-stat{font-size:11px;color:rgba(255,255,255,0.5);display:flex;align-items:center;gap:5px;}
+.hero-stat strong{color:rgba(255,255,255,0.85);font-weight:700;}
+
+.content{max-width:1000px;margin:0 auto;padding:24px 26px 60px;}
+
+/* FILTER BAR */
+.filter-bar{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.type-pill{padding:5px 14px;border-radius:20px;border:1.5px solid var(--gray-200);background:#fff;color:var(--gray-500);font-size:12px;font-weight:500;cursor:pointer;transition:all var(--transition);font-family:inherit;}
+.type-pill:hover{border-color:var(--amber);color:var(--amber);}
+.type-pill.active{background:var(--amber);border-color:var(--amber);color:var(--dark-navy);font-weight:700;}
+.search-box{flex:1;max-width:280px;padding:6px 12px;border:1.5px solid var(--gray-200);border-radius:20px;font-size:12.5px;font-family:inherit;color:var(--gray-900);background:#fff;outline:none;transition:border-color var(--transition);}
+.search-box:focus{border-color:var(--amber);}
+.clear-all-btn{padding:5px 14px;border-radius:20px;border:1.5px solid rgba(229,62,62,0.3);background:none;color:#e53e3e;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all var(--transition);margin-left:auto;}
+.clear-all-btn:hover{background:var(--rose-bg);}
+
+/* ARCHIVE ITEMS */
+.archive-section{margin-bottom:28px;}
+.section-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:8px;border-bottom:1.5px solid var(--gray-200);}
+.section-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.section-icon svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.si-tasks{background:rgba(232,160,32,0.1);color:var(--amber);}
+.si-memos{background:rgba(60,191,186,0.1);color:var(--teal);}
+.si-roles{background:rgba(1,45,68,0.08);color:var(--navy);}
+.si-notes{background:rgba(232,160,32,0.08);color:#b7791f;}
+.si-supplies{background:rgba(46,125,50,0.08);color:#2e7d32;}
+.section-title{font-size:13.5px;font-weight:700;color:var(--navy);}
+.section-count{font-size:11px;color:var(--gray-400);background:var(--gray-100);padding:2px 8px;border-radius:10px;}
+
+.archive-list{display:flex;flex-direction:column;gap:8px;}
+.archive-item{background:#fff;border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:13px 15px;display:flex;align-items:flex-start;gap:12px;transition:box-shadow var(--transition);}
+.archive-item:hover{box-shadow:var(--shadow-sm);}
+.archive-item-body{flex:1;min-width:0;}
+.archive-item-title{font-size:13px;font-weight:600;color:var(--gray-900);margin-bottom:4px;}
+.archive-item-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.archive-tag{font-size:10px;font-weight:600;padding:2px 7px;border-radius:6px;}
+.tag-task{background:rgba(232,160,32,0.1);color:#b7791f;}
+.tag-memo{background:rgba(60,191,186,0.1);color:#0d9488;}
+.tag-role{background:rgba(1,45,68,0.08);color:var(--navy);}
+.tag-note{background:#fff9c4;color:#5d4037;}
+.tag-supply{background:rgba(46,125,50,0.08);color:#2e7d32;}
+.archive-date{font-size:10.5px;color:var(--gray-400);}
+.archive-detail{font-size:11.5px;color:var(--gray-500);margin-top:4px;line-height:1.4;}
+.archive-actions{display:flex;gap:5px;flex-shrink:0;align-items:flex-start;}
+.arch-btn{padding:4px 10px;border-radius:7px;border:1.5px solid;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:all var(--transition);display:flex;align-items:center;gap:3px;}
+.arch-btn svg{width:9px;height:9px;stroke:currentColor;fill:none;stroke-width:2.5;}
+.arch-restore{border-color:rgba(60,191,186,0.4);color:#0d9488;background:none;}
+.arch-restore:hover{background:rgba(60,191,186,0.1);}
+.arch-delete{border-color:rgba(229,62,62,0.3);color:#e53e3e;background:none;}
+.arch-delete:hover{background:var(--rose-bg);}
+
+/* EMPTY */
+.archive-empty{text-align:center;padding:48px 20px;color:var(--gray-400);}
+.archive-empty svg{width:40px;height:40px;stroke:currentColor;fill:none;stroke-width:1.2;margin-bottom:12px;opacity:0.5;}
+.archive-empty h3{font-size:15px;font-weight:600;color:var(--gray-500);margin-bottom:6px;}
+.archive-empty p{font-size:13px;}
+
+/* CONFIRM MODAL */
+.confirm-backdrop{position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.2s;}
+.confirm-backdrop.open{opacity:1;pointer-events:auto;}
+.confirm-card{background:#fff;border-radius:14px;padding:24px;width:340px;box-shadow:0 20px 60px rgba(0,0,0,0.2);border-top:3px solid #e53e3e;}
+.confirm-title{font-size:15px;font-weight:700;color:var(--gray-900);margin-bottom:8px;}
+.confirm-body{font-size:13px;color:var(--gray-600);margin-bottom:18px;line-height:1.5;}
+.confirm-actions{display:flex;gap:8px;justify-content:flex-end;}
+.confirm-cancel{padding:8px 16px;border:1.5px solid var(--gray-200);border-radius:8px;background:none;color:var(--gray-600);font-size:13px;cursor:pointer;font-family:inherit;}
+.confirm-ok{padding:8px 16px;background:#e53e3e;border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;right:22px;z-index:9999;background:var(--gray-900);color:#fff;padding:9px 16px;border-radius:9px;font-size:12.5px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,0.28);opacity:0;transform:translateY(6px);transition:opacity 0.22s,transform 0.22s;pointer-events:none;}
+.toast.show{opacity:1;transform:translateY(0);}
+.toast.green{background:#2e7d32;}
+.toast.red{background:#e53e3e;}
+
+@media(max-width:768px){.sidebar{display:none;}.content{padding:16px 14px 40px;}.hero{padding:20px 14px;}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginGate">
+  <div class="login-card">
+    <div class="login-logo"><img src="https://framerusercontent.com/images/7MqXsKyjGWvLQn25G3nNRe5KAM.webp" alt="Fibi Law"></div>
+    <div class="login-title">Archive · VP Operations</div>
+    <div class="login-sub">Fibi Law · Restricted Access</div>
+    <div class="login-field" style="margin-bottom:10px;">
+      <input type="password" id="loginPw" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="login-err" id="loginErr"></div>
+    <button class="login-btn" onclick="doLogin()">Sign In</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="hidden">
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-mark"><img src="https://framerusercontent.com/images/7MqXsKyjGWvLQn25G3nNRe5KAM.webp" alt="Fibi Law"></div>
+        <div>
+          <div class="sidebar-logo-name">Fibi Law</div>
+          <div class="sidebar-logo-sub">fibilaw.com</div>
+        </div>
+      </div>
+      <div class="archive-badge">
+        <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+        Archive &amp; History
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">Filter by Type</div>
+      <button class="nav-link active" id="navAll" onclick="setType('all',this)">
+        <span class="ni"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></span>
+        All Items
+        <span id="navCountAll" style="margin-left:auto;font-size:10px;background:rgba(255,255,255,0.1);padding:1px 7px;border-radius:8px;color:rgba(255,255,255,0.5);">0</span>
+      </button>
+      <button class="nav-link" id="navTasks" onclick="setType('task',this)">
+        <span class="ni"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        Tasks
+        <span id="navCountTask" style="margin-left:auto;font-size:10px;background:rgba(255,255,255,0.1);padding:1px 7px;border-radius:8px;color:rgba(255,255,255,0.5);">0</span>
+      </button>
+      <button class="nav-link" id="navMemos" onclick="setType('memo',this)">
+        <span class="ni"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+        Memos
+        <span id="navCountMemo" style="margin-left:auto;font-size:10px;background:rgba(255,255,255,0.1);padding:1px 7px;border-radius:8px;color:rgba(255,255,255,0.5);">0</span>
+      </button>
+      <button class="nav-link" id="navRoles" onclick="setType('role',this)">
+        <span class="ni"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span>
+        Roles
+        <span id="navCountRole" style="margin-left:auto;font-size:10px;background:rgba(255,255,255,0.1);padding:1px 7px;border-radius:8px;color:rgba(255,255,255,0.5);">0</span>
+      </button>
+      <button class="nav-link" id="navNotes" onclick="setType('note',this)">
+        <span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="3" y1="21" x2="21" y2="21"/></svg></span>
+        Notes
+        <span id="navCountNote" style="margin-left:auto;font-size:10px;background:rgba(255,255,255,0.1);padding:1px 7px;border-radius:8px;color:rgba(255,255,255,0.5);">0</span>
+      </button>
+      <button class="nav-link" id="navSupplies" onclick="setType('supply',this)">
+        <span class="ni"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>
+        Supplies
+        <span id="navCountSupply" style="margin-left:auto;font-size:10px;background:rgba(255,255,255,0.1);padding:1px 7px;border-radius:8px;color:rgba(255,255,255,0.5);">0</span>
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="back-btn" href="./vp.html">
+        <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back to Dashboard
+      </a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="hero">
+      <div class="hero-title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+        Archive &amp; History
+      </div>
+      <div class="hero-sub">Soft-deleted items from your VP dashboard — restore or permanently remove</div>
+      <div class="hero-stats">
+        <div class="hero-stat"><strong id="statTotal">0</strong> total items archived</div>
+        <div class="hero-stat"><strong id="statToday">0</strong> archived today</div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="filter-bar">
+        <input type="text" class="search-box" id="searchBox" placeholder="Search archived items..." oninput="renderArchive()">
+        <button class="clear-all-btn" onclick="confirmClearAll()">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+          Clear All Archive
+        </button>
+      </div>
+      <div id="archiveContainer"></div>
+    </div>
+  </main>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="confirm-backdrop" id="confirmModal">
+  <div class="confirm-card">
+    <div class="confirm-title" id="confirmTitle">Permanently Delete?</div>
+    <div class="confirm-body" id="confirmBody">This cannot be undone.</div>
+    <div class="confirm-actions">
+      <button class="confirm-cancel" onclick="closeConfirm()">Cancel</button>
+      <button class="confirm-ok" id="confirmOk">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var VP_PW='FibiVP2026';var ADMIN_PW='FibiAdmin2026';
+var AUTH_KEY='fibi_vp_auth';var ARCHIVE_KEY='fibi_vp_archive';
+var TASKS_KEY='fibi_vp_tasks';
+
+// AUTH
+function checkAuth(){try{var d=JSON.parse(atob(localStorage.getItem(AUTH_KEY)||''));return(d.pw===VP_PW||d.pw===ADMIN_PW)&&new Date(d.exp)>new Date();}catch(e){return false;}}
+function doLogin(){
+  var pw=document.getElementById('loginPw').value;
+  var err=document.getElementById('loginErr');
+  if(pw!==VP_PW&&pw!==ADMIN_PW){err.textContent='Incorrect password.';return;}
+  err.textContent='';
+  var exp=new Date();exp.setDate(exp.getDate()+1);
+  localStorage.setItem(AUTH_KEY,btoa(JSON.stringify({pw:pw,exp:exp.toISOString()})));
+  launchApp();
+}
+function launchApp(){
+  document.getElementById('loginGate').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  initApp();
+}
+
+// INIT
+var _type='all';
+function initApp(){updateCounts();renderArchive();}
+
+// DATA
+function getArchive(){try{return JSON.parse(localStorage.getItem(ARCHIVE_KEY))||[];}catch(e){return[];}}
+function saveArchive(a){localStorage.setItem(ARCHIVE_KEY,JSON.stringify(a));}
+
+// COUNTS & STATS
+function updateCounts(){
+  var all=getArchive();
+  var counts={task:0,memo:0,role:0,note:0,supply:0};
+  var today=new Date().toISOString().split('T')[0];
+  var todayCount=0;
+  all.forEach(function(a){
+    if(counts[a.type]!==undefined)counts[a.type]++;
+    if(a.archivedAt&&a.archivedAt.startsWith(today))todayCount++;
+  });
+  document.getElementById('statTotal').textContent=all.length;
+  document.getElementById('statToday').textContent=todayCount;
+  document.getElementById('navCountAll').textContent=all.length;
+  document.getElementById('navCountTask').textContent=counts.task;
+  document.getElementById('navCountMemo').textContent=counts.memo;
+  document.getElementById('navCountRole').textContent=counts.role;
+  document.getElementById('navCountNote').textContent=counts.note;
+  document.getElementById('navCountSupply').textContent=counts.supply;
+}
+
+function setType(t,btn){
+  _type=t;
+  document.querySelectorAll('.nav-link').forEach(function(l){l.classList.remove('active');});
+  btn.classList.add('active');
+  renderArchive();
+}
+
+// RESTORE
+function restoreItem(idx){
+  var all=getArchive();
+  var item=all[idx];
+  if(!item)return;
+  var type=item.type;var data=item.data;
+  // Restore to appropriate localStorage
+  if(type==='task'){
+    var tasks=[];try{tasks=JSON.parse(localStorage.getItem(TASKS_KEY))||[];}catch(e){}
+    data.done=false;tasks.unshift(data);
+    localStorage.setItem(TASKS_KEY,JSON.stringify(tasks));
+  } else if(type==='memo'){
+    var memos=[];try{memos=JSON.parse(localStorage.getItem('fibi_vp_memos'))||[];}catch(e){}
+    memos.unshift(data);localStorage.setItem('fibi_vp_memos',JSON.stringify(memos));
+  } else if(type==='role'){
+    var roles=[];try{roles=JSON.parse(localStorage.getItem('fibi_vp_hiring'))||[];}catch(e){}
+    roles.unshift(data);localStorage.setItem('fibi_vp_hiring',JSON.stringify(roles));
+  } else if(type==='note'){
+    var notes=[];try{notes=JSON.parse(localStorage.getItem('fibi_vp_board'))||[];}catch(e){}
+    notes.unshift(data);localStorage.setItem('fibi_vp_board',JSON.stringify(notes));
+  } else if(type==='supply'){
+    var supplies=[];try{supplies=JSON.parse(localStorage.getItem('fibi_vp_supplies'))||[];}catch(e){}
+    data.status='Pending';supplies.unshift(data);
+    localStorage.setItem('fibi_vp_supplies',JSON.stringify(supplies));
+  }
+  all.splice(idx,1);
+  saveArchive(all);
+  renderArchive();updateCounts();
+  showToast('Item restored to dashboard ✓','green');
+}
+
+// PERMANENT DELETE
+var _pendingDeleteIdx=null;
+function deleteItem(idx){
+  _pendingDeleteIdx=idx;
+  var item=getArchive()[idx];
+  var label=getItemTitle(item);
+  document.getElementById('confirmTitle').textContent='Permanently Delete?';
+  document.getElementById('confirmBody').textContent='"'+label+'" will be permanently deleted and cannot be recovered.';
+  document.getElementById('confirmOk').onclick=function(){
+    var all=getArchive();all.splice(_pendingDeleteIdx,1);
+    saveArchive(all);closeConfirm();renderArchive();updateCounts();
+    showToast('Permanently deleted.','red');
+  };
+  document.getElementById('confirmModal').classList.add('open');
+}
+function closeConfirm(){document.getElementById('confirmModal').classList.remove('open');}
+
+function confirmClearAll(){
+  var all=getArchive();
+  if(all.length===0){showToast('Archive is already empty.');return;}
+  document.getElementById('confirmTitle').textContent='Clear Entire Archive?';
+  document.getElementById('confirmBody').textContent='All '+all.length+' archived items will be permanently deleted. This cannot be undone.';
+  document.getElementById('confirmOk').onclick=function(){
+    saveArchive([]);closeConfirm();renderArchive();updateCounts();
+    showToast('Archive cleared.','red');
+  };
+  document.getElementById('confirmModal').classList.add('open');
+}
+
+// LABELS
+function getItemTitle(item){
+  var d=item.data||{};
+  if(item.type==='task')return d.title||'Untitled Task';
+  if(item.type==='memo')return d.title||'Untitled Memo';
+  if(item.type==='role')return d.title||'Untitled Role';
+  if(item.type==='note')return d.title||d.body||'Untitled Note';
+  if(item.type==='supply')return d.name||'Untitled Item';
+  return 'Unknown Item';
+}
+function getItemDetail(item){
+  var d=item.data||{};
+  if(item.type==='task')return(d.category||'')+(d.priority?' · '+d.priority:'')+( d.due?' · Due '+d.due:'');
+  if(item.type==='memo')return(d.date||'')+(d.content?' — '+d.content.substring(0,60)+'…':'');
+  if(item.type==='role')return(d.dept||'')+(d.stage?' · '+d.stage:'');
+  if(item.type==='note')return(d.body||'').substring(0,80);
+  if(item.type==='supply')return'Qty: '+(d.qty||'?')+(d.office?' · '+d.office:'')+(d.status?' · was '+d.status:'');
+  return '';
+}
+function getTypeTag(type){
+  var map={task:'<span class="archive-tag tag-task">Task</span>',memo:'<span class="archive-tag tag-memo">Memo</span>',role:'<span class="archive-tag tag-role">Role</span>',note:'<span class="archive-tag tag-note">Note</span>',supply:'<span class="archive-tag tag-supply">Supply</span>'};
+  return map[type]||'';
+}
+function getSectionIcon(type){
+  var icons={task:'<svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',memo:'<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',role:'<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>',note:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="3" y1="21" x2="21" y2="21"/></svg>',supply:'<svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>'};
+  return icons[type]||'';
+}
+var sectionColors={task:'si-tasks',memo:'si-memos',role:'si-roles',note:'si-notes',supply:'si-supplies'};
+var sectionLabels={task:'Tasks',memo:'Memos',role:'Roles',note:'Quick Notes',supply:'Supplies'};
+
+// RENDER
+function renderArchive(){
+  var all=getArchive();
+  var q=(document.getElementById('searchBox').value||'').toLowerCase();
+  // Filter by type
+  if(_type!=='all')all=all.filter(function(a){return a.type===_type;});
+  // Filter by search
+  if(q)all=all.filter(function(a){
+    return getItemTitle(a).toLowerCase().includes(q)||getItemDetail(a).toLowerCase().includes(q);
+  });
+
+  var container=document.getElementById('archiveContainer');
+  if(all.length===0){
+    container.innerHTML='<div class="archive-empty"><svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg><h3>Nothing archived yet</h3><p>When you delete items from the VP dashboard, they appear here for safekeeping.</p></div>';
+    return;
+  }
+
+  // Group by type if showing all
+  if(_type==='all'){
+    var groups={};
+    all.forEach(function(a,i){
+      // find real index in full archive
+      var fullArchive=getArchive();
+      var realIdx=fullArchive.findIndex(function(x,xi){return x===fullArchive[xi]&&getItemTitle(x)===getItemTitle(a)&&x.archivedAt===a.archivedAt;});
+      if(!groups[a.type])groups[a.type]=[];
+      groups[a.type].push({item:a,idx:findRealIndex(a)});
+    });
+    var html='';
+    ['task','memo','role','note','supply'].forEach(function(type){
+      if(!groups[type]||groups[type].length===0)return;
+      html+='<div class="archive-section">'+
+        '<div class="section-header">'+
+          '<div class="section-icon '+sectionColors[type]+'">'+getSectionIcon(type)+'</div>'+
+          '<div class="section-title">'+sectionLabels[type]+'</div>'+
+          '<div class="section-count">'+groups[type].length+'</div>'+
+        '</div>'+
+        '<div class="archive-list">'+groups[type].map(function(g){return itemHTML(g.item,g.idx);}).join('')+'</div>'+
+      '</div>';
+    });
+    container.innerHTML=html;
+  } else {
+    var html='<div class="archive-list">'+all.map(function(a){return itemHTML(a,findRealIndex(a));}).join('')+'</div>';
+    container.innerHTML=html;
+  }
+}
+
+function findRealIndex(item){
+  var all=getArchive();
+  for(var i=0;i<all.length;i++){
+    if(all[i].archivedAt===item.archivedAt&&getItemTitle(all[i])===getItemTitle(item))return i;
+  }
+  return -1;
+}
+
+function itemHTML(item,idx){
+  var title=getItemTitle(item);
+  var detail=getItemDetail(item);
+  var archDate=item.archivedAt?new Date(item.archivedAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
+  return '<div class="archive-item">'+
+    '<div class="archive-item-body">'+
+      '<div class="archive-item-title">'+esc(title)+'</div>'+
+      '<div class="archive-item-meta">'+getTypeTag(item.type)+'<span class="archive-date">Archived '+archDate+'</span></div>'+
+      (detail?'<div class="archive-detail">'+esc(detail)+'</div>':'')+
+    '</div>'+
+    '<div class="archive-actions">'+
+      (idx>=0?'<button class="arch-btn arch-restore" onclick="restoreItem('+idx+')"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>Restore</button>':'') +
+      (idx>=0?'<button class="arch-btn arch-delete" onclick="deleteItem('+idx+')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>Delete</button>':'') +
+    '</div>'+
+  '</div>';
+}
+
+// UTILS
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function showToast(msg,type){
+  var t=document.getElementById('toast');t.textContent=msg;
+  t.className='toast show'+(type?' '+type:'');
+  clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show');},2800);
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeConfirm();});
+
+// BOOT
+if(checkAuth())launchApp();
+</script>
+</body>
+</html>
