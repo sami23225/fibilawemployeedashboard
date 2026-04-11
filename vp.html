@@ -205,23 +205,26 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 .completed-list.show{display:flex;}
 
 /* ══ MEMO LOG ══ */
-.memo-list{display:flex;flex-direction:column;gap:9px;}
-.memo-row{background:#fff;border:1.5px solid var(--gray-200);border-left:3px solid var(--amber);border-radius:var(--radius);overflow:hidden;transition:box-shadow var(--transition),transform var(--transition);}
-.memo-row:hover{box-shadow:var(--shadow-md);transform:translateY(-1px);}
-.memo-row:hover{box-shadow:var(--shadow-sm);}
-.memo-row-top{padding:13px 15px;display:flex;align-items:flex-start;gap:11px;cursor:pointer;}
-.memo-date-chip{background:var(--amber-bg);color:var(--amber);font-size:9.5px;font-weight:700;padding:3px 7px;border-radius:5px;white-space:nowrap;border:1px solid var(--amber-border);flex-shrink:0;margin-top:2px;}
+.memo-list{display:flex;flex-direction:column;gap:10px;}
+.memo-row{background:#fff;border:1.5px solid var(--gray-200);border-left:4px solid var(--amber);border-radius:14px;overflow:hidden;transition:box-shadow var(--transition),transform var(--transition);box-shadow:0 1px 4px rgba(1,45,68,0.04);}
+.memo-row:hover{box-shadow:0 4px 18px rgba(1,45,68,0.10);transform:translateY(-2px);}
+.memo-row-top{padding:14px 16px 13px;display:flex;align-items:flex-start;gap:12px;cursor:pointer;}
+.memo-icon-col{width:34px;height:34px;border-radius:9px;background:var(--amber-bg);border:1px solid var(--amber-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.memo-icon-col svg{width:15px;height:15px;stroke:var(--amber);fill:none;stroke-width:2;}
 .memo-info{flex:1;min-width:0;}
-.memo-title-text{font-size:13px;font-weight:600;color:var(--gray-900);margin-bottom:4px;}
-.memo-locs{display:flex;gap:4px;flex-wrap:wrap;}
-.memo-loc-tag{font-size:9.5px;font-weight:600;padding:2px 6px;border-radius:5px;}
+.memo-meta-row{display:flex;align-items:center;gap:7px;margin-bottom:5px;flex-wrap:wrap;}
+.memo-date-chip{background:var(--amber-bg);color:var(--amber);font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:5px;white-space:nowrap;border:1px solid var(--amber-border);}
+.memo-title-text{font-size:14px;font-weight:700;color:var(--gray-900);margin-bottom:5px;line-height:1.3;}
+.memo-preview-text{font-size:12px;color:var(--gray-500);line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.memo-locs{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px;}
+.memo-loc-tag{font-size:9.5px;font-weight:600;padding:2px 7px;border-radius:5px;}
 .ml-emp{background:rgba(60,191,186,0.1);color:#0d9488;}
 .ml-att{background:rgba(1,45,68,0.07);color:var(--navy);}
 .ml-meet{background:rgba(46,125,50,0.08);color:#2e7d32;}
 .ml-email{background:rgba(101,60,163,0.08);color:#6d3fc7;}
 .ml-other{background:var(--gray-100);color:var(--gray-500);}
-.memo-row-btns{display:flex;gap:4px;flex-shrink:0;align-items:flex-start;}
-.push-btn{padding:3px 8px;border-radius:5px;border:1.5px solid;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit;transition:all var(--transition);display:flex;align-items:center;gap:3px;white-space:nowrap;}
+.memo-row-btns{display:flex;gap:4px;flex-shrink:0;align-items:flex-start;flex-wrap:wrap;justify-content:flex-end;max-width:160px;}
+.push-btn{padding:4px 9px;border-radius:6px;border:1.5px solid;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit;transition:all var(--transition);display:flex;align-items:center;gap:3px;white-space:nowrap;}
 .push-btn svg{width:8px;height:8px;stroke:currentColor;fill:none;stroke-width:2.5;}
 .pb-emp{border-color:rgba(60,191,186,0.4);color:#0d9488;background:none;}
 .pb-emp:hover{background:rgba(60,191,186,0.1);}
@@ -229,13 +232,13 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 .pb-att:hover{background:rgba(1,45,68,0.06);}
 .pb-board{border-color:rgba(232,160,32,0.4);color:#b7791f;background:none;}
 .pb-board:hover{background:var(--amber-bg);}
-.memo-del-btn{width:25px;height:25px;border-radius:6px;border:none;background:var(--gray-100);color:var(--gray-400);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--transition);}
+.memo-del-btn{width:27px;height:27px;border-radius:7px;border:none;background:var(--gray-100);color:var(--gray-400);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--transition);}
 .memo-del-btn:hover{background:var(--rose-bg);color:var(--rose);}
 .memo-del-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;}
-.memo-expand-body{padding:11px 15px;border-top:1px solid var(--gray-100);display:none;background:var(--gray-50);}
+.memo-expand-body{padding:12px 16px;border-top:1.5px solid var(--gray-100);display:none;background:var(--gray-50);}
 .memo-expand-body.show{display:block;}
-.memo-expand-content{font-size:12.5px;color:var(--gray-600);line-height:1.6;white-space:pre-wrap;}
-.memo-push-status{font-size:10px;color:var(--gray-400);margin-top:6px;}
+.memo-expand-content{font-size:12.5px;color:var(--gray-700);line-height:1.7;white-space:pre-wrap;}
+.memo-push-status{font-size:10px;color:var(--gray-400);margin-top:8px;display:flex;gap:10px;flex-wrap:wrap;}
 
 /* ══ HIRING TRACKER ══ */
 .hiring-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;}
@@ -360,8 +363,9 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 .widget-link-btn:hover{color:var(--gray-600);}
 
 /* ══ SUPPLIES KANBAN ══ */
-.supply-kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;}
-.supply-col{background:var(--gray-50);border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:11px;}
+.supply-kanban{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.supply-col{background:var(--gray-50);border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:11px;max-height:340px;display:flex;flex-direction:column;}
+.supply-col-body{flex:1;overflow-y:auto;overflow-x:hidden;}
 .supply-col-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
 .supply-col-label{font-size:11.5px;font-weight:700;color:var(--gray-700);display:flex;align-items:center;gap:6px;}
 .supply-dot{width:7px;height:7px;border-radius:50%;}
@@ -574,6 +578,28 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 
     <div class="content">
 
+      <!-- ════ QUICK NOTES BOARD ════ -->
+      <div class="section" id="board">
+        <div class="section-head">
+          <div class="section-icon si-a"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="7" y1="17" x2="7" y2="21"/><line x1="17" y1="17" x2="17" y2="21"/></svg></div>
+          <div class="section-title">Quick Notes Board</div>
+          <div class="section-line"></div>
+        </div>
+        <div class="board-frame">
+          <div class="board-screw tl"></div>
+          <div class="board-screw tr"></div>
+          <div class="board-surface">
+            <div class="board-notes-grid" id="boardGrid"></div>
+          </div>
+          <div class="board-ledge">
+            <div class="board-marker" style="background:#3cbfba;"></div>
+            <div class="board-marker" style="background:#e8a020;"></div>
+            <div class="board-marker" style="background:#e53e3e;"></div>
+            <div class="board-marker" style="background:#2d3748;"></div>
+          </div>
+        </div>
+      </div>
+
       <!-- ════ TASK BOARD ════ -->
       <div class="section" id="tasks">
         <div class="section-head">
@@ -727,28 +753,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
         <div class="hiring-grid" id="hiringGrid"></div>
       </div>
 
-      <!-- ════ QUICK NOTES BOARD ════ -->
-      <div class="section" id="board">
-        <div class="section-head">
-          <div class="section-icon si-a"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="7" y1="17" x2="7" y2="21"/><line x1="17" y1="17" x2="17" y2="21"/></svg></div>
-          <div class="section-title">Quick Notes Board</div>
-          <div class="section-line"></div>
-        </div>
-        <div class="board-frame">
-          <div class="board-screw tl"></div>
-          <div class="board-screw tr"></div>
-          <div class="board-surface">
-            <div class="board-notes-grid" id="boardGrid"></div>
-          </div>
-          <div class="board-ledge">
-            <div class="board-marker" style="background:#3cbfba;"></div>
-            <div class="board-marker" style="background:#e8a020;"></div>
-            <div class="board-marker" style="background:#e53e3e;"></div>
-            <div class="board-marker" style="background:#2d3748;"></div>
-          </div>
-        </div>
-      </div>
-
       <!-- ════ CALENDAR ════ -->
       <div class="section" id="calendar">
         <div class="section-head">
@@ -835,6 +839,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
             <div class="slack-status-txt" id="slackStatusTxt">Not connected</div>
           </div>
           <div class="section-line"></div>
+          <button class="btn-add outline" style="margin-right:5px;" onclick="slackResetToken()">⚙ Token</button>
           <button class="btn-add outline" onclick="loadSlackFeed(true)">
             <svg viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
             Refresh
@@ -992,6 +997,9 @@ function initApp(){
   renderCalendar();renderSupplies();renderMeeting();
   loadSalesWidget();loadSlackFeed(false);
   setTimeout(checkDueToday,1200);
+  // Auto-refresh Slack and Supplies every 5 minutes
+  setInterval(function(){loadSlackFeed(true);},5*60*1000);
+  setInterval(function(){renderSupplies();loadSalesWidget();},5*60*1000);
 }
 
 // ═══════════════════════════════
@@ -1216,20 +1224,29 @@ function renderMemos(){
     var locs=(m.locations||[]).map(function(l){return locMap[l]||'';}).join('');
     var ex=_memoEx[m.id];
     var ps='';
-    if(m.pushedEmp)ps+='<span>→ Emp bar pushed '+m.pushedEmp+'</span> ';
-    if(m.pushedBoard)ps+='<span>→ Emp board posted '+m.pushedBoard+'</span> ';
-    if(m.pushedAtt)ps+='<span>→ Atty bar pushed '+m.pushedAtt+'</span>';
-    return '<div class="memo-row"><div class="memo-row-top" onclick="toggleMemoExpand('+m.id+')">'+
-      '<div class="memo-date-chip">'+ds+'</div>'+
-      '<div class="memo-info"><div class="memo-title-text">'+esc(m.title)+'</div><div class="memo-locs">'+locs+'</div></div>'+
-      '<div class="memo-row-btns" onclick="event.stopPropagation()">'+
-      '<button class="push-btn pb-emp" onclick="pushToPortal('+m.id+',\'emp\')" title="Push to Employee announcement bar"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Emp Bar</button>'+
-      '<button class="push-btn pb-board" onclick="pushToPortal('+m.id+',\'board\')" title="Post as sticky note on Employee board"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="7" y1="17" x2="7" y2="21"/><line x1="17" y1="17" x2="17" y2="21"/></svg>Emp Board</button>'+
-      '<button class="push-btn pb-att" onclick="pushToPortal('+m.id+',\'att\')" title="Push to Attorney announcement bar"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Atty</button>'+
-      '<button class="memo-del-btn" onclick="deleteMemo('+m.id+')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>'+
-      '</div></div>'+
-      '<div class="memo-expand-body'+(ex?' show':'')+'"><div class="memo-expand-content">'+esc(m.content||'(No content)')+'</div>'+(ps?'<div class="memo-push-status">'+ps+'</div>':'')+
-      '</div></div>';
+    if(m.pushedEmp)ps+='<span>✓ Emp bar '+m.pushedEmp+'</span>';
+    if(m.pushedBoard)ps+='<span>✓ Emp board '+m.pushedBoard+'</span>';
+    if(m.pushedAtt)ps+='<span>✓ Atty bar '+m.pushedAtt+'</span>';
+    var preview=m.content?m.content.substring(0,110)+(m.content.length>110?'…':''):'';
+    var hasMore=m.content&&m.content.length>0;
+    return '<div class="memo-row">'+
+      '<div class="memo-row-top" onclick="toggleMemoExpand('+m.id+')">'+
+        '<div class="memo-icon-col"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>'+
+        '<div class="memo-info">'+
+          '<div class="memo-meta-row"><span class="memo-date-chip">'+ds+'</span>'+locs+'</div>'+
+          '<div class="memo-title-text">'+esc(m.title)+'</div>'+
+          (preview?'<div class="memo-preview-text">'+esc(preview)+'</div>':'')+
+          (ps?'<div class="memo-push-status">'+ps+'</div>':'')+
+        '</div>'+
+        '<div class="memo-row-btns" onclick="event.stopPropagation()">'+
+          '<button class="push-btn pb-emp" onclick="pushToPortal('+m.id+',\'emp\')" title="Push to Employee announcement bar"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Emp Bar</button>'+
+          '<button class="push-btn pb-board" onclick="pushToPortal('+m.id+',\'board\')" title="Post as sticky note on Employee board"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="3" y1="21" x2="21" y2="21"/></svg>Board</button>'+
+          '<button class="push-btn pb-att" onclick="pushToPortal('+m.id+',\'att\')" title="Push to Attorney announcement bar"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Atty</button>'+
+          '<button class="memo-del-btn" onclick="deleteMemo('+m.id+')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>'+
+        '</div>'+
+      '</div>'+
+      (hasMore?'<div class="memo-expand-body'+(ex?' show':'')+'"><div class="memo-expand-content">'+esc(m.content||'')+'</div></div>':'')+
+    '</div>';
   }).join('');
 }
 
@@ -1532,21 +1549,23 @@ function renderSupplies(){
         '<div class="supply-item-btns"><button class="supply-del-btn" onclick="removeReceived(\''+r.id+'\')">✕ Remove</button></div>'+
       '</div>';
     }
+    // Filter out locally-received items from ordered column
+    var receivedIds=received.map(function(r){return r.id;});
+    var orderedVisible=ordered.filter(function(r){return receivedIds.indexOf(r.id)===-1;});
     el.innerHTML=
       '<div class="supply-col">'+
         '<div class="supply-col-head"><span class="supply-col-label"><span class="supply-dot" style="background:#e8a020"></span>Pending</span><span class="supply-count">'+pending.length+'</span></div>'+
-        pending.map(function(r){return atCard(r,'Ordered');}).join('')+
-        (pending.length===0?'<div style="text-align:center;padding:14px;font-size:12px;color:var(--gray-400);">No pending orders</div>':'')+
+        '<div class="supply-col-body">'+
+          pending.map(function(r){return atCard(r,'Ordered');}).join('')+
+          (pending.length===0?'<div style="text-align:center;padding:14px;font-size:12px;color:var(--gray-400);">No pending orders</div>':'')+
+        '</div>'+
       '</div>'+
       '<div class="supply-col">'+
-        '<div class="supply-col-head"><span class="supply-col-label"><span class="supply-dot" style="background:#2563eb"></span>Ordered</span><span class="supply-count">'+ordered.length+'</span></div>'+
-        ordered.map(function(r){return atCard(r,null);}).join('')+
-        (ordered.length===0?'<div style="text-align:center;padding:14px;font-size:12px;color:var(--gray-400);">No ordered items</div>':'')+
-      '</div>'+
-      '<div class="supply-col">'+
-        '<div class="supply-col-head"><span class="supply-col-label"><span class="supply-dot" style="background:#2e7d32"></span>Received</span><span class="supply-count">'+received.length+'</span></div>'+
-        received.map(localCard).join('')+
-        (received.length===0?'<div style="text-align:center;padding:14px;font-size:12px;color:var(--gray-400);">Nothing received yet</div>':'')+
+        '<div class="supply-col-head"><span class="supply-col-label"><span class="supply-dot" style="background:#2563eb"></span>Ordered</span><span class="supply-count">'+orderedVisible.length+'</span></div>'+
+        '<div class="supply-col-body">'+
+          orderedVisible.map(function(r){return atCard(r,null);}).join('')+
+          (orderedVisible.length===0?'<div style="text-align:center;padding:14px;font-size:12px;color:var(--gray-400);">No outstanding orders</div>':'')+
+        '</div>'+
       '</div>';
   })
   .catch(function(e){
@@ -1556,18 +1575,19 @@ function renderSupplies(){
 }
 
 function moveAtSupply(recordId,newStatus){
-  var token=localStorage.getItem('fibi_at_token');if(!token)return;
-  showToast('Updating status...','');
+  var token=localStorage.getItem('fibi_at_token');
+  if(!token){showToast('Airtable token not set — connect via Sales Report widget','');return;}
+  showToast('Updating to '+newStatus+'…','');
   fetch('https://api.airtable.com/v0/'+SUPPLY_AT_BASE+'/'+SUPPLY_AT_TABLE+'/'+recordId,{
     method:'PATCH',
     headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},
     body:JSON.stringify({fields:{Status:newStatus}})
   }).then(function(r){return r.json();})
   .then(function(d){
-    if(d.error)throw new Error(d.error.message);
+    if(d.error){throw new Error(d.error.message||d.error.type||JSON.stringify(d.error));}
     showToast('Moved to '+newStatus+' ✓','green');
     renderSupplies();
-  }).catch(function(e){showToast('Error: '+e.message,'');});
+  }).catch(function(e){showToast('Error: '+e.message,'');console.error('moveAtSupply',e);});
 }
 
 function receiveSupply(recordId,name){
@@ -1631,6 +1651,7 @@ function loadSlackFeed(forceRefresh){
   fetchSlackData(token);
 }
 function connectSlack(){var t=document.getElementById('slackTokenInput').value.trim();if(!t)return;localStorage.setItem(SLACK_KEY,t);loadSlackFeed(true);}
+function slackResetToken(){localStorage.removeItem(SLACK_KEY);localStorage.removeItem(SLACK_CACHE_KEY);var d=document.getElementById('slackDot');var txt=document.getElementById('slackStatusTxt');if(d)d.className='slack-dot';if(txt)txt.textContent='Not connected';loadSlackFeed(false);}
 // Use POST + form-encoded body to avoid CORS preflight (Authorization header triggers OPTIONS which some networks block)
 function slackPost(method,params,token){
   var body='token='+encodeURIComponent(token.trim());
