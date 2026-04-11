@@ -645,15 +645,22 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 
 <script>
 // Constants
-const TASKS_KEY='fibi_tasks';const MEMOS_KEY='fibi_memos';const HIRING_KEY='fibi_roles';const BOARD_KEY='fibi_board';const ANN_KEY='fibi_announcement';const TOP3_KEY='fibi_vp_top3';const CAL_KEY='fibi_vp_calendar';const DUE_POPUP_KEY='fibi_vp_popup_date';const SUPPLIES_KEY='fibi_vp_supplies';const MEETING_KEY='fibi_vp_meeting';const SALES_KEY='fibi_vp_sales';const SALES_AT_TOKEN='fibi_at_token';const SLACK_TOKEN='fibi_slack_token';const SLACK_CACHE='fibi_slack_cache';const ARCHIVE_KEY='fibi_vp_archive';const DEFAULT_ANN='Stay focused on the day's priorities. Check your Top 3 and keep the team aligned.';const VALID_PASSWORDS=['FibiVP2026','FibiAdmin2026'];
+const TASKS_KEY='fibi_vp_tasks';const MEMOS_KEY='fibi_vp_memos';const HIRING_KEY='fibi_vp_hiring';const BOARD_KEY='fibi_vp_board';const ANN_KEY='fibi_vp_ann';
+// Shared keys — push-to portals
+const EMP_ANN='fibi_announcement';const ATT_ANN='fibi_attorney_ann';const EMP_BOARD='fibi_memos';
+const TOP3_KEY='fibi_vp_top3';const CAL_KEY='fibi_vp_calendar';const DUE_POPUP_KEY='fibi_vp_popup_date';const SUPPLIES_KEY='fibi_vp_supplies';const MEETING_KEY='fibi_vp_meeting';const SALES_KEY='fibi_vp_sales';const SALES_AT_TOKEN='fibi_at_token';const SLACK_TOKEN='fibi_slack_token';const SLACK_CACHE='fibi_slack_cache';const ARCHIVE_KEY='fibi_vp_archive';const DEFAULT_ANN="Welcome to your VP Operations dashboard.";const VALID_PASSWORDS=['FibiVP2026','FibiAdmin2026'];
 let _activeFilter='All';let _memoEx={};let _currentSort='Due Date';
 
 // Auth
-function checkAuth(){var t=localStorage.getItem('fibiToken');if(t&&atob(t)===VALID_PASSWORDS.join('|')){launchApp();}else{document.getElementById('loginGate').classList.remove('hidden');}}
+function checkAuth(){var t=localStorage.getItem('fibiToken');if(t){try{var dec=atob(t);if(VALID_PASSWORDS.indexOf(dec)!==-1){launchApp();return;}}catch(e){}}document.getElementById('loginGate').classList.remove('hidden');}
 function doLogin(){var p=document.getElementById('loginPass').value;var r=document.getElementById('loginErr');if(VALID_PASSWORDS.indexOf(p)!==-1){var t=btoa(p);localStorage.setItem('fibiToken',t);if(document.getElementById('rememberMe').checked){localStorage.setItem('fibiRemember','true');}launchApp();}else{r.textContent='Invalid password. Try again.';}}
 function signOut(){localStorage.removeItem('fibiToken');location.reload();}
 function launchApp(){document.getElementById('loginGate').classList.add('hidden');document.getElementById('app').classList.remove('hidden');initApp();}
-function initApp(){startClock();fetchWeather();loadAnn();renderTasks();renderMemos();renderHiring();renderBoard();renderTop3();renderCalendar();renderSupplies();renderMeeting();loadSalesWidget();loadSlackWidget();updateCounts();setTimeout(checkDueToday,1200);}
+function initApp(){
+  startClock();fetchWeather();loadAnn();renderTasks();renderMemos();renderHiring();renderBoard();renderTop3();renderCalendar();renderSupplies();renderMeeting();loadSalesWidget();loadSlackWidget();updateCounts();setTimeout(checkDueToday,1200);
+  // Show one-time setup if tokens missing
+  if(!localStorage.getItem(SALES_AT_TOKEN)||!localStorage.getItem(SLACK_TOKEN)){setTimeout(showSetupModal,800);}
+}
 
 // Clock & Weather
 function startClock(){setInterval(function(){var now=new Date();var h=String(now.getHours()).padStart(2,'0');var m=String(now.getMinutes()).padStart(2,'0');document.getElementById('clockHour').textContent=h;document.getElementById('clockMin').textContent=m;var opts={weekday:'short',month:'short',day:'numeric'};document.getElementById('clockDate').textContent=now.toLocaleDateString('en-US',opts);},1000);}
@@ -764,8 +771,43 @@ function resetSlackToken(){localStorage.removeItem(SLACK_TOKEN);localStorage.rem
 // Update counts
 function updateCounts(){document.getElementById('taskCount').textContent=getTasks().length;document.getElementById('memoCount').textContent=getMemos().length;document.getElementById('hiringCount').textContent=getRoles().length;document.getElementById('boardCount').textContent=getBoardNotes().length;}
 
+// ── ONE-TIME SETUP MODAL ──────────────────────────────────────────
+function showSetupModal(){var m=document.getElementById('setupModal');m.style.opacity='1';m.style.pointerEvents='auto';}
+function closeSetupModal(){var m=document.getElementById('setupModal');m.style.opacity='0';m.style.pointerEvents='none';}
+function saveSetupTokens(){
+  var at=document.getElementById('setupAtToken').value.trim();
+  var sl=document.getElementById('setupSlackToken').value.trim();
+  if(at)localStorage.setItem(SALES_AT_TOKEN,at);
+  if(sl)localStorage.setItem(SLACK_TOKEN,sl);
+  closeSetupModal();
+  loadSalesWidget();loadSlackWidget();
+  toast('Tokens saved! Widgets are now connected ✓');
+}
+
 // Init on load
 window.addEventListener('load',checkAuth);
 </script>
+
+<!-- SETUP MODAL -->
+<div id="setupModal" style="display:flex;position:fixed;inset:0;z-index:9990;background:rgba(0,0,0,0.55);backdrop-filter:blur(5px);align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.2s;">
+  <div style="background:#fff;border-radius:18px;padding:28px 26px;width:92%;max-width:480px;box-shadow:0 24px 64px rgba(0,0,0,0.25);border-top:4px solid var(--amber);">
+    <div style="font-size:17px;font-weight:800;color:var(--navy);margin-bottom:4px;">⚡ One-Time Setup</div>
+    <div style="font-size:12.5px;color:var(--gray-500);margin-bottom:20px;">Paste your tokens below — they're saved in your browser and never need to be entered again.</div>
+    <div style="margin-bottom:14px;">
+      <div style="font-size:10.5px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Airtable Personal Access Token</div>
+      <input id="setupAtToken" type="text" style="width:100%;padding:9px 12px;border:1.5px solid var(--gray-200);border-radius:8px;font-size:13px;font-family:inherit;color:var(--gray-900);outline:none;" placeholder="pat..." onfocus="this.style.borderColor='var(--amber)'" onblur="this.style.borderColor='var(--gray-200)'">
+      <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">airtable.com → Account → Developer Hub → Personal Access Tokens</div>
+    </div>
+    <div style="margin-bottom:20px;">
+      <div style="font-size:10.5px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Slack User Token</div>
+      <input id="setupSlackToken" type="text" style="width:100%;padding:9px 12px;border:1.5px solid var(--gray-200);border-radius:8px;font-size:13px;font-family:inherit;color:var(--gray-900);outline:none;" placeholder="xoxp-..." onfocus="this.style.borderColor='var(--amber)'" onblur="this.style.borderColor='var(--gray-200)'">
+      <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">api.slack.com → Your Apps → OAuth & Permissions → User OAuth Token</div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button onclick="closeSetupModal()" style="padding:9px 16px;border:1.5px solid var(--gray-200);border-radius:8px;background:none;color:var(--gray-500);font-size:13px;cursor:pointer;font-family:inherit;">Skip for now</button>
+      <button onclick="saveSetupTokens()" style="padding:9px 20px;background:var(--amber);border:none;border-radius:8px;color:var(--dark-navy);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">Save &amp; Connect</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
