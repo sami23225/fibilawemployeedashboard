@@ -741,71 +741,6 @@
     transform: translateX(4px);
   }
 
-  /* Quick Link Cards */
-  .quick-link-card {
-    background: var(--white);
-    border: 1.5px solid var(--gray-200);
-    border-radius: var(--radius-lg);
-    padding: 18px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    transition: all var(--transition);
-    box-shadow: 0 2px 12px rgba(1, 45, 68, 0.06);
-  }
-
-  .quick-link-card:hover {
-    border-color: var(--teal);
-    box-shadow: 0 4px 20px rgba(60, 191, 186, 0.12);
-    transform: translateY(-2px);
-  }
-
-  .quick-link-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .quick-link-icon svg {
-    width: 22px;
-    height: 22px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2;
-  }
-
-  .quick-link-icon.esl {
-    background: rgba(60, 191, 186, 0.1);
-    color: var(--teal);
-  }
-
-  .quick-link-icon.citizenship {
-    background: rgba(3, 120, 160, 0.1);
-    color: #0378a0;
-  }
-
-  .quick-link-text {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    flex: 1;
-  }
-
-  .quick-link-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--navy-dark);
-  }
-
-  .quick-link-desc {
-    font-size: 12px;
-    color: var(--gray-500);
-  }
-
   /* Section */
   .section {
     margin-bottom: 32px;
@@ -2301,35 +2236,6 @@
       <div class="meeting-arrow">→</div>
     </a>
 
-    <!-- Quick Links Grid -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:20px;margin-left:26px;margin-right:26px;">
-      <!-- ESL Registration -->
-      <a href="https://fibilaw.com/esl" target="_blank" style="text-decoration:none;">
-        <div class="quick-link-card">
-          <div class="quick-link-icon esl">
-            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          </div>
-          <div class="quick-link-text">
-            <div class="quick-link-title">ESL Student Registration</div>
-            <div class="quick-link-desc">English as a Second Language</div>
-          </div>
-        </div>
-      </a>
-
-      <!-- Citizenship Prep Registration -->
-      <a href="https://fibilaw.com/citizenshipprep" target="_blank" style="text-decoration:none;">
-        <div class="quick-link-card">
-          <div class="quick-link-icon citizenship">
-            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </div>
-          <div class="quick-link-text">
-            <div class="quick-link-title">Citizenship Prep Registration</div>
-            <div class="quick-link-desc">Naturalization Course</div>
-          </div>
-        </div>
-      </a>
-    </div>
-
     <!-- Custom Tools (dynamically added) -->
     <div class="section" id="customToolsSection" data-section style="display:none;">
       <div class="section-head">
@@ -2554,6 +2460,46 @@
           <div class="office-dot"></div>
           <div class="office-name">College Park</div>
           <div class="office-sub">Affirm Pay Later</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ESL Student Registration -->
+    <div class="section animate-in delay-8" data-section>
+      <div class="section-head">
+        <div class="section-icon indigo"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <div class="section-title">ESL Student Registration</div>
+        <div class="section-count">1</div>
+        <div class="section-line"></div>
+      </div>
+      <div class="cards">
+        <a href="https://fibilaw.com/esl" class="card" target="_blank" data-search="esl english student registration">
+          <div class="card-icon indigo"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="card-body">
+            <div class="card-title">ESL Registration</div>
+            <div class="card-desc">Register for English as a Second Language classes</div>
+          </div>
+          <div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Citizenship Prep Student Registration -->
+    <div class="section animate-in delay-9" data-section>
+      <div class="section-head">
+        <div class="section-icon indigo"><svg viewBox="0 0 24 24"><path d="M4 4h16v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4z"/><path d="M7 9h10M7 13h4"/></svg></div>
+        <div class="section-title">Citizenship Prep Registration</div>
+        <div class="section-count">1</div>
+        <div class="section-line"></div>
+      </div>
+      <div class="cards">
+        <a href="https://fibilaw.com/citizenshipprep" class="card" target="_blank" data-search="citizenship preparation student registration">
+          <div class="card-icon indigo"><svg viewBox="0 0 24 24"><path d="M4 4h16v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4z"/><path d="M7 9h10M7 13h4"/></svg></div>
+          <div class="card-body">
+            <div class="card-title">Citizenship Prep Registration</div>
+            <div class="card-desc">Register for U.S. Citizenship preparation programs</div>
+          </div>
+          <div class="card-go"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
         </a>
       </div>
     </div>
