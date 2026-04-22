@@ -117,6 +117,19 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 .ann-save{padding:5px 12px;background:var(--amber);border:none;border-radius:6px;color:var(--dark-navy);font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;}
 .ann-cancel{padding:5px 10px;background:none;border:1px solid var(--gray-200);border-radius:6px;color:var(--gray-500);font-size:12px;cursor:pointer;font-family:inherit;}
 
+/* ══ MEETING CARD ══ */
+.meeting-card{background:linear-gradient(135deg,#3cbfba 0%,#2a9f9a 100%);border:none;border-radius:16px;padding:20px 22px;box-shadow:0 2px 10px rgba(1,45,68,0.05);margin-top:22px;display:flex;align-items:center;justify-content:space-between;transition:all var(--transition);position:relative;overflow:hidden;}
+.meeting-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 100% 0%,rgba(255,255,255,0.1) 0%,transparent 70%);pointer-events:none;}
+.meeting-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(60,191,186,0.2);}
+.meeting-card-content{display:flex;align-items:center;gap:14px;position:relative;z-index:1;}
+.meeting-card-icon{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.meeting-card-icon svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;}
+.meeting-card-text{display:flex;flex-direction:column;gap:2px;}
+.meeting-card-label{font-size:11px;font-weight:700;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.5px;}
+.meeting-card-title{font-size:16px;font-weight:700;color:#fff;}
+.meeting-arrow{color:#fff;font-size:20px;position:relative;z-index:1;transition:transform 0.2s;}
+.meeting-card:hover .meeting-arrow{transform:translateX(4px);}
+
 /* ══ SECTIONS ══ */
 .section{margin-top:22px;background:#fff;border:1.5px solid var(--gray-200);border-radius:16px;padding:20px 22px 22px;box-shadow:0 2px 10px rgba(1,45,68,0.05);}
 .section-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:14px;border-bottom:1.5px solid var(--gray-100);}
@@ -623,6 +636,22 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
         <button class="ann-cancel" onclick="cancelAnn()">Cancel</button>
       </div>
     </div>
+
+    <!-- MEETING CARD -->
+    <a href="https://zoom.us/my/fibilaw" target="_blank" style="text-decoration:none;">
+      <div class="meeting-card">
+        <div class="meeting-card-content">
+          <div class="meeting-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          </div>
+          <div class="meeting-card-text">
+            <div class="meeting-card-label">Weekly Meeting</div>
+            <div class="meeting-card-title">Office Staff Meeting</div>
+          </div>
+        </div>
+        <div class="meeting-arrow">→</div>
+      </div>
+    </a>
 
     <div class="content">
 
