@@ -647,6 +647,100 @@
 
   .modal-btn-confirm:hover { background: #35aca7; }
 
+  /* Meeting Card */
+  .meeting-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, var(--teal) 0%, #2a9f9a 100%);
+    border: none;
+    border-radius: var(--radius-lg);
+    padding: 22px 28px;
+    margin-bottom: 28px;
+    text-decoration: none;
+    color: var(--white);
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: 0 4px 16px rgba(60, 191, 186, 0.25);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .meeting-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .meeting-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(60, 191, 186, 0.35);
+    background: linear-gradient(135deg, #41d4cc 0%, #2a9f9a 100%);
+  }
+
+  .meeting-card-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+    flex: 1;
+  }
+
+  .meeting-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .meeting-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--white);
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .meeting-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.9px;
+    opacity: 0.9;
+    margin-bottom: 3px;
+  }
+
+  .meeting-title {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .meeting-arrow {
+    font-size: 24px;
+    opacity: 0.8;
+    position: relative;
+    z-index: 1;
+    transition: transform var(--transition);
+  }
+
+  .meeting-card:hover .meeting-arrow {
+    transform: translateX(4px);
+  }
+
   /* Section */
   .section {
     margin-bottom: 32px;
@@ -1965,6 +2059,15 @@
         Training Portal
       </a>
     </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Portals</div>
+      <a href="https://app.fibilaw.com/attorney.html" class="nav-link" target="_blank">
+        <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+        Attorney Portal
+        <span class="badge" style="background:rgba(60,191,186,0.15);color:var(--teal);">New</span>
+      </a>
+    </div>
   </nav>
 
   <div class="sidebar-foot">
@@ -2118,6 +2221,20 @@
         </div>
       </div>
     </div>
+
+    <!-- Office Staff Weekly Meeting -->
+    <a href="https://zoom.us/j/91668038655?pwd=1IDNo7U5t3ywidwW5BZRjyQ7tgmAqL.1" target="_blank" class="meeting-card animate-in delay-4">
+      <div class="meeting-card-content">
+        <div class="meeting-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/><path d="M12 5v14"/><path d="M12 5a7 7 0 0 1 7 7"/><path d="M12 5a7 7 0 0 0-7 7"/></svg>
+        </div>
+        <div>
+          <div class="meeting-label">Office Staff Meeting</div>
+          <div class="meeting-title">Weekly Zoom Call</div>
+        </div>
+      </div>
+      <div class="meeting-arrow">→</div>
+    </a>
 
     <!-- Custom Tools (dynamically added) -->
     <div class="section" id="customToolsSection" data-section style="display:none;">
