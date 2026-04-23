@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CEO Dashboard · Fibi Law</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#012D44;--teal:#3cbfba;
+  --amber:#e8a020;--amber-bg:rgba(232,160,32,0.1);--amber-border:rgba(232,160,32,0.25);
+  --dark-navy:#011d2e;--sidebar-dark:#01243a;
+  --white:#ffffff;
+  --gray-50:#f9fafc;--gray-100:#f0f2f5;--gray-200:#e4e8ed;--gray-300:#d0d6de;
+  --gray-400:#9aa5b4;--gray-500:#6b7585;--gray-600:#4a5568;--gray-700:#2d3748;--gray-900:#1a202c;
+  --teal-bg:rgba(60,191,186,0.1);--teal-border:rgba(60,191,186,0.25);
+  --rose:#e53e3e;--rose-bg:rgba(229,62,62,0.08);
+  --green:#22863a;--green-bg:rgba(34,134,58,0.08);
+  --transition:0.18s ease;--sidebar-w:272px;--radius:12px;
+  --shadow-sm:0 1px 4px rgba(1,45,68,0.06);--shadow-md:0 4px 16px rgba(1,45,68,0.1);--shadow-lg:0 8px 32px rgba(1,45,68,0.14);
+}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);color:var(--gray-900);}
+
+#loginGate{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,var(--dark-navy) 0%,#013a56 50%,#011d2e 100%);display:flex;align-items:center;justify-content:center;}
+#loginGate.hidden{display:none;}
+.login-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:44px 40px;width:380px;max-width:94vw;backdrop-filter:blur(20px);text-align:center;}
+.login-logo{width:72px;height:72px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;overflow:hidden;background:var(--dark-navy);}
+.login-title{font-size:22px;font-weight:700;color:#fff;margin-bottom:4px;}
+.login-sub{font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:28px;}
+.login-field{margin-bottom:14px;}
+.login-field input{width:100%;padding:13px 16px;border-radius:10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:14px;font-family:inherit;outline:none;transition:border-color var(--transition);}
+.login-field input:focus{border-color:var(--amber);}
+.login-field input::placeholder{color:rgba(255,255,255,0.35);}
+.login-err{color:#fc8181;font-size:12px;margin-bottom:10px;min-height:18px;}
+.login-btn{width:100%;padding:13px;background:var(--amber);border:none;border-radius:10px;color:var(--dark-navy);font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity var(--transition),transform 0.1s;}
+.login-btn:hover{opacity:0.9;transform:translateY(-1px);}
+
+#app{display:flex;height:100vh;overflow:hidden;}
+#app.hidden{display:none;}
+
+.sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--sidebar-dark);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;border-right:1px solid rgba(255,255,255,0.06);}
+.sidebar-top{padding:20px 18px 14px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.sidebar-logo{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.sidebar-logo-mark{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;background:var(--dark-navy);}
+.sidebar-logo-mark img{width:100%;height:100%;object-fit:contain;}
+.sidebar-logo-name{font-size:15px;font-weight:700;color:#fff;line-height:1.2;}
+.sidebar-logo-sub{font-size:10px;color:rgba(255,255,255,0.35);}
+.ceo-badge{display:inline-flex;align-items:center;gap:5px;background:var(--amber-bg);border:1px solid var(--amber-border);color:var(--amber);padding:4px 10px;border-radius:20px;font-size:10.5px;font-weight:700;letter-spacing:0.3px;}
+.sidebar-nav{padding:10px 10px;flex:1;}
+.nav-label{font-size:9px;font-weight:700;letter-spacing:1.3px;color:rgba(255,255,255,0.22);text-transform:uppercase;padding:8px 8px 4px;}
+.nav-link{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:8px;color:rgba(255,255,255,0.5);text-decoration:none;font-size:12.5px;font-weight:500;transition:all var(--transition);cursor:pointer;border:none;background:none;width:100%;text-align:left;}
+.nav-link:hover{background:rgba(255,255,255,0.07);color:#fff;}
+.nav-link .ni{width:27px;height:27px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(255,255,255,0.06);}
+.nav-link .ni svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.nav-link:hover .ni{background:rgba(255,255,255,0.1);}
+.sidebar-footer{padding:10px;border-top:1px solid rgba(255,255,255,0.07);}
+.signout-btn{display:flex;align-items:center;gap:8px;width:100%;padding:9px 10px;border-radius:8px;border:none;background:rgba(229,62,62,0.08);color:#fc8181;font-size:12px;font-weight:500;font-family:inherit;cursor:pointer;transition:background var(--transition);}
+.signout-btn:hover{background:rgba(229,62,62,0.15);}
+.signout-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;}
+
+.main{flex:1;overflow-y:auto;background:var(--gray-50);}
+.content{max-width:1200px;margin:0 auto;padding:0 26px 60px;}
+
+.hero{background:linear-gradient(135deg,var(--dark-navy) 0%,#013a56 55%,#01243a 100%);padding:30px 26px 26px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:rgba(232,160,32,0.05);pointer-events:none;}
+.hero-eyebrow{font-size:10.5px;color:var(--amber);font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:5px;}
+.hero-name{font-size:25px;font-weight:700;color:#fff;margin-bottom:3px;}
+.hero-sub{font-size:12.5px;color:rgba(255,255,255,0.42);}
+
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:20px;}
+.kpi-card{background:#fff;border:1.5px solid var(--gray-200);border-radius:12px;padding:18px;box-shadow:var(--shadow-sm);}
+.kpi-label{font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;}
+.kpi-value{font-size:28px;font-weight:700;color:var(--navy);}
+.kpi-sub{font-size:12px;color:var(--gray-500);margin-top:6px;}
+
+.section{margin-top:22px;background:#fff;border:1.5px solid var(--gray-200);border-radius:16px;padding:20px 22px 22px;box-shadow:var(--shadow-sm);}
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:14px;border-bottom:1.5px solid var(--gray-100);}
+.section-icon{width:31px;height:31px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.section-icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.si-a{background:var(--amber-bg);color:var(--amber);}
+.si-t{background:var(--teal-bg);color:var(--teal);}
+.si-r{background:var(--rose-bg);color:var(--rose);}
+.si-g{background:rgba(34,134,58,0.1);color:var(--green);}
+.section-title{font-size:14.5px;font-weight:700;color:var(--navy);}
+.section-line{flex:1;height:1px;background:var(--gray-200);}
+
+.chart-container{position:relative;height:300px;margin-bottom:20px;}
+.date-filter{display:flex;gap:10px;margin-bottom:16px;}
+.date-input{padding:8px 12px;border:1px solid var(--gray-200);border-radius:8px;font-family:inherit;font-size:13px;flex:1;}
+.btn-filter{padding:8px 16px;background:var(--amber);border:none;border-radius:8px;color:var(--dark-navy);font-weight:700;font-size:12px;cursor:pointer;transition:opacity var(--transition);}
+.btn-filter:hover{opacity:0.88;}
+
+.table-container{overflow-x:auto;}
+.data-table{width:100%;border-collapse:collapse;}
+.data-table th{background:var(--gray-50);padding:12px;text-align:left;font-size:12px;font-weight:700;color:var(--gray-600);border-bottom:1.5px solid var(--gray-200);}
+.data-table td{padding:12px;border-bottom:1px solid var(--gray-100);font-size:13px;}
+.data-table tr:hover{background:var(--gray-50);}
+
+.status-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:8px;font-size:11px;font-weight:600;}
+.status-pending{background:rgba(232,160,32,0.12);color:var(--amber);}
+.status-completed{background:rgba(34,134,58,0.12);color:var(--green);}
+.status-denied{background:var(--rose-bg);color:var(--rose);}
+
+.board-screw{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--gray-400);box-shadow:-1px -1px 0 rgba(0,0,0,0.1);z-index:1;}
+.board-screw.tl{top:10px;left:10px;}
+.board-screw.tr{top:10px;right:10px;}
+.board-screw.bl{bottom:10px;left:10px;}
+.board-screw.br{bottom:10px;right:10px;}
+
+.memo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;padding:0 0 10px 0;}
+.memo-item{padding:12px;border-radius:8px;font-size:12px;line-height:1.5;position:relative;cursor:pointer;transition:transform 0.1s,box-shadow 0.1s;}
+.memo-item:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
+.memo-yellow{background:#fff59d;color:#333;}
+.memo-blue{background:#b3e5fc;color:#01579b;}
+.memo-green{background:#c8e6c9;color:#1b5e20;}
+.memo-pink{background:#f8bbd0;color:#880e4f;}
+.memo-orange{background:#ffe0b2;color:#e65100;}
+
+.add-btn{display:flex;align-items:center;gap:6px;padding:10px 14px;background:var(--amber);border:none;border-radius:8px;color:var(--dark-navy);font-size:12px;font-weight:700;cursor:pointer;transition:opacity var(--transition);}
+.add-btn:hover{opacity:0.88;}
+.add-btn svg{width:13px;height:13px;}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:1000;}
+.modal-overlay.show{display:flex;}
+.modal-box{background:#fff;border-radius:14px;padding:24px;width:90%;max-width:500px;box-shadow:var(--shadow-lg);}
+.modal-title{font-size:16px;font-weight:700;margin-bottom:16px;}
+.form-group{margin-bottom:14px;}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--gray-700);margin-bottom:6px;}
+.form-input{width:100%;padding:9px 12px;border:1px solid var(--gray-200);border-radius:8px;font-family:inherit;font-size:13px;outline:none;transition:border-color var(--transition);}
+.form-input:focus{border-color:var(--amber);}
+.form-buttons{display:flex;gap:10px;margin-top:20px;justify-content:flex-end;}
+.form-btn{padding:9px 16px;border:none;border-radius:8px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;transition:opacity var(--transition);}
+.form-btn-save{background:var(--amber);color:var(--dark-navy);}
+.form-btn-cancel{background:var(--gray-100);color:var(--gray-600);}
+
+@media(max-width:768px){
+  .sidebar{width:64px;}
+  .sidebar-logo-name,.sidebar-logo-sub,.nav-label{display:none;}
+  .content{padding:0 16px 40px;}
+  .kpi-row{grid-template-columns:1fr;}
+  .chart-container{height:250px;}
+}
+</style>
+</head>
+<body>
+
+<div id="loginGate">
+  <div class="login-card">
+    <div class="login-logo"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23012D44' width='100' height='100'/%3E%3Ctext x='50' y='65' font-size='60' font-weight='700' fill='white' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E" alt="Fibi Law"></div>
+    <div class="login-title">CEO Dashboard</div>
+    <div class="login-sub">Fibi Law Firm</div>
+    <div class="login-err" id="loginErr"></div>
+    <div class="login-field">
+      <input type="password" id="pwdInput" placeholder="Enter password" onkeypress="if(event.key==='Enter')signIn()">
+    </div>
+    <button class="login-btn" onclick="signIn()">Access Dashboard</button>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+  <div class="sidebar">
+    <div class="sidebar-top">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-mark"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23012D44' width='100' height='100'/%3E%3Ctext x='50' y='65' font-size='60' font-weight='700' fill='white' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E" alt="Fibi Law"></div>
+        <div class="brand-info">
+          <div class="sidebar-logo-name">Fibi Law</div>
+          <div class="sidebar-logo-sub">CEO Dashboard</div>
+        </div>
+      </div>
+      <div class="ceo-badge">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+        Executive
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">Dashboard</div>
+      <a class="nav-link" onclick="scrollSec('sales')">
+        <span class="ni"><svg viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+        Sales & Cells
+      </a>
+      <a class="nav-link" onclick="scrollSec('refunds')">
+        <span class="ni"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+        Refund Requests
+      </a>
+      <a class="nav-link" onclick="scrollSec('esl')">
+        <span class="ni"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        ESL & Citizenship
+      </a>
+      <a class="nav-link" onclick="scrollSec('ecas')">
+        <span class="ni"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
+        ECAS Submissions
+      </a>
+      <div class="nav-label" style="margin-top:14px;">Tools</div>
+      <a class="nav-link" onclick="scrollSec('tasks')">
+        <span class="ni"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg></span>
+        Task Board
+      </a>
+      <a class="nav-link" onclick="scrollSec('notes')">
+        <span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="7" y1="17" x2="7" y2="21"/><line x1="17" y1="17" x2="17" y2="21"/></svg></span>
+        Quick Notes
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="signout-btn" onclick="signOut()">
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="hero">
+      <div class="hero-eyebrow">Welcome</div>
+      <div class="hero-name">CEO Dashboard</div>
+      <div class="hero-sub">Real-time business insights and operations management</div>
+    </div>
+
+    <div class="content">
+      <!-- KPI Cards -->
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-label">Total Sales (30d)</div>
+          <div class="kpi-value" id="kpiTotalSales">$0</div>
+          <div class="kpi-sub">All offices combined</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Refund Requests (Open)</div>
+          <div class="kpi-value" id="kpiRefunds">0</div>
+          <div class="kpi-sub">Pending review</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">New ESL Signups</div>
+          <div class="kpi-value" id="kpiESL">0</div>
+          <div class="kpi-sub">This month</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">ECAS Submissions</div>
+          <div class="kpi-value" id="kpiECAS">0</div>
+          <div class="kpi-sub">Pending approval</div>
+        </div>
+      </div>
+
+      <!-- Sales & Cells Section -->
+      <div class="section" id="sales">
+        <div class="section-head">
+          <div class="section-icon si-a"><svg viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="section-title">Sales & Cell Trends</div>
+          <div class="section-line"></div>
+        </div>
+        <div class="date-filter">
+          <input type="date" id="salesStartDate" class="date-input">
+          <input type="date" id="salesEndDate" class="date-input">
+          <button class="btn-filter" onclick="loadSalesChart()">Filter</button>
+        </div>
+        <div class="chart-container">
+          <canvas id="salesChart"></canvas>
+        </div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Office</th>
+                <th>Date</th>
+                <th>Sales Amount</th>
+                <th>Trend</th>
+              </tr>
+            </thead>
+            <tbody id="salesTableBody">
+              <tr><td colspan="4" style="text-align:center;padding:20px;color:var(--gray-400);">Loading sales data...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Refund Requests Section -->
+      <div class="section" id="refunds">
+        <div class="section-head">
+          <div class="section-icon si-r"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+          <div class="section-title">Refund Requests</div>
+          <div class="section-line"></div>
+        </div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Client Name</th>
+                <th>Amount</th>
+                <th>Date Requested</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="refundsTableBody">
+              <tr><td colspan="4" style="text-align:center;padding:20px;color:var(--gray-400);">Loading refund requests...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ESL & Citizenship Section -->
+      <div class="section" id="esl">
+        <div class="section-head">
+          <div class="section-icon si-t"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="section-title">ESL & Citizenship Signups</div>
+          <div class="section-line"></div>
+        </div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Program</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="eslTableBody">
+              <tr><td colspan="5" style="text-align:center;padding:20px;color:var(--gray-400);">Loading signups...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ECAS Submissions Section -->
+      <div class="section" id="ecas">
+        <div class="section-head">
+          <div class="section-icon si-g"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+          <div class="section-title">ECAS Submissions</div>
+          <div class="section-line"></div>
+        </div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Case ID</th>
+                <th>Client</th>
+                <th>Submission Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="ecasTableBody">
+              <tr><td colspan="4" style="text-align:center;padding:20px;color:var(--gray-400);">Loading submissions...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Task Board Section -->
+      <div class="section" id="tasks">
+        <div class="section-head">
+          <div class="section-icon si-a"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg></div>
+          <div class="section-title">Task Board</div>
+          <div class="section-line"></div>
+        </div>
+        <button class="add-btn" onclick="showTaskModal()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Task
+        </button>
+        <div style="margin-top:16px;">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Task</th>
+                  <th>Priority</th>
+                  <th>Status</th>
+                  <th>Due Date</th>
+                </tr>
+              </thead>
+              <tbody id="tasksTableBody">
+                <tr><td colspan="4" style="text-align:center;padding:20px;color:var(--gray-400);">No tasks yet</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Notes Section -->
+      <div class="section" id="notes">
+        <div class="section-head">
+          <div class="section-icon si-a"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="7" y1="17" x2="7" y2="21"/><line x1="17" y1="17" x2="17" y2="21"/></svg></div>
+          <div class="section-title">Quick Notes</div>
+          <div class="section-line"></div>
+        </div>
+        <button class="add-btn" onclick="showNoteModal()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Note
+        </button>
+        <div class="memo-grid" id="notesGrid" style="margin-top:16px;">
+          <div style="padding:20px;color:var(--gray-400);grid-column:1/-1;text-align:center;">No notes yet</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Task Modal -->
+<div class="modal-overlay" id="taskModal">
+  <div class="modal-box">
+    <div class="modal-title">Add New Task</div>
+    <div class="form-group">
+      <label class="form-label">Task</label>
+      <input type="text" class="form-input" id="taskName" placeholder="e.g. Review Q2 financials">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Priority</label>
+      <select class="form-input" id="taskPriority">
+        <option>High</option>
+        <option>Medium</option>
+        <option>Low</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Due Date</label>
+      <input type="date" class="form-input" id="taskDue">
+    </div>
+    <div class="form-buttons">
+      <button class="form-btn form-btn-cancel" onclick="closeTaskModal()">Cancel</button>
+      <button class="form-btn form-btn-save" onclick="saveTask()">Add Task</button>
+    </div>
+  </div>
+</div>
+
+<!-- Note Modal -->
+<div class="modal-overlay" id="noteModal">
+  <div class="modal-box">
+    <div class="modal-title">Add Quick Note</div>
+    <div class="form-group">
+      <label class="form-label">Note</label>
+      <textarea class="form-input" id="noteText" placeholder="Write a quick note..." rows="4" style="resize:none;"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Color</label>
+      <div style="display:flex;gap:8px;">
+        <button style="width:30px;height:30px;border:none;border-radius:6px;background:#fff59d;cursor:pointer;" onclick="setNoteColor('yellow')"></button>
+        <button style="width:30px;height:30px;border:none;border-radius:6px;background:#b3e5fc;cursor:pointer;" onclick="setNoteColor('blue')"></button>
+        <button style="width:30px;height:30px;border:none;border-radius:6px;background:#c8e6c9;cursor:pointer;" onclick="setNoteColor('green')"></button>
+        <button style="width:30px;height:30px;border:none;border-radius:6px;background:#f8bbd0;cursor:pointer;" onclick="setNoteColor('pink')"></button>
+        <button style="width:30px;height:30px;border:none;border-radius:6px;background:#ffe0b2;cursor:pointer;" onclick="setNoteColor('orange')"></button>
+      </div>
+    </div>
+    <div class="form-buttons">
+      <button class="form-btn form-btn-cancel" onclick="closeNoteModal()">Cancel</button>
+      <button class="form-btn form-btn-save" onclick="saveNote()">Add Note</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const LOGIN_KEY='CEO_DASHBOARD_PWD';
+const SALES_DATA_KEY='ceo_sales_data';
+const TASKS_KEY='ceo_tasks';
+const NOTES_KEY='ceo_notes';
+const AT_KEY='ceo_airtable_token';
+
+let salesChart=null;
+let currentNoteColor='yellow';
+
+function signIn(){
+  const pwd=document.getElementById('pwdInput').value.trim();
+  if(!pwd){document.getElementById('loginErr').textContent='Enter password';return;}
+  if(pwd==='ceo2024'){
+    localStorage.setItem(LOGIN_KEY,'true');
+    document.getElementById('loginGate').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+    initDashboard();
+  }else{
+    document.getElementById('loginErr').textContent='Incorrect password';
+  }
+}
+
+function signOut(){
+  localStorage.removeItem(LOGIN_KEY);
+  location.reload();
+}
+
+function initDashboard(){
+  checkAuth();
+  loadSalesData();
+  loadRefundData();
+  loadESLData();
+  loadECASData();
+  loadTasks();
+  loadNotes();
+  setDefaultDates();
+}
+
+function checkAuth(){
+  if(!localStorage.getItem(LOGIN_KEY)){
+    document.getElementById('loginGate').classList.remove('hidden');
+    document.getElementById('app').classList.add('hidden');
+  }
+}
+
+function setDefaultDates(){
+  const today=new Date();
+  const thirtyDaysAgo=new Date(today.getTime()-30*24*60*60*1000);
+  document.getElementById('salesEndDate').value=today.toISOString().split('T')[0];
+  document.getElementById('salesStartDate').value=thirtyDaysAgo.toISOString().split('T')[0];
+}
+
+function loadSalesData(){
+  fetchAirtable('appVKOmxf2xCvVwqX','tblpsxvI6HSYo3OWl',function(data){
+    if(!data||!data.records)return;
+    const records=data.records;
+    let total=0;
+    const tableHTML=records.slice(0,20).map(r=>{
+      const fields=r.fields||{};
+      const amount=parseFloat(fields.Total)||0;
+      total+=amount;
+      return '<tr><td>'+(fields.Office||'—')+'</td><td>'+(fields.Date||'—')+'</td><td>$'+amount.toFixed(2)+'</td><td><span style="color:var(--green);">↑</span></td></tr>';
+    }).join('');
+    document.getElementById('salesTableBody').innerHTML=tableHTML||'<tr><td colspan="4">No data</td></tr>';
+    document.getElementById('kpiTotalSales').textContent='$'+total.toFixed(0);
+    renderSalesChart(records);
+  });
+}
+
+function renderSalesChart(records){
+  const dates={};
+  records.forEach(r=>{
+    const date=r.fields.Date||'Unknown';
+    const amount=parseFloat(r.fields.Total)||0;
+    dates[date]=(dates[date]||0)+amount;
+  });
+  const labels=Object.keys(dates).sort().slice(-30);
+  const data=labels.map(d=>dates[d]);
+
+  const ctx=document.getElementById('salesChart').getContext('2d');
+  if(salesChart)salesChart.destroy();
+  salesChart=new Chart(ctx,{
+    type:'line',
+    data:{labels,datasets:[{label:'Daily Sales',data,borderColor:'#e8a020',backgroundColor:'rgba(232,160,32,0.1)',borderWidth:2,fill:true,tension:0.4}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true}},scales:{y:{beginAtZero:true}}}
+  });
+}
+
+function loadRefundData(){
+  fetchAirtable('appqqwcCHCqt0052s','tblRefunds',function(data){
+    if(!data||!data.records){
+      document.getElementById('refundsTableBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray-400);">Connect Airtable to view refunds</td></tr>';
+      return;
+    }
+    const records=data.records;
+    let openCount=0;
+    const tableHTML=records.slice(0,15).map(r=>{
+      const fields=r.fields||{};
+      const status=fields.Status||'Pending';
+      if(status==='Pending'||status==='Open')openCount++;
+      const statusClass=status==='Approved'?'status-completed':status==='Denied'?'status-denied':'status-pending';
+      return '<tr><td>'+(fields.ClientName||'—')+'</td><td>$'+(parseFloat(fields.Amount)||0).toFixed(2)+'</td><td>'+(fields.DateRequested||'—')+'</td><td><span class="status-badge '+statusClass+'">'+status+'</span></td></tr>';
+    }).join('');
+    document.getElementById('refundsTableBody').innerHTML=tableHTML||'<tr><td colspan="4">No refunds</td></tr>';
+    document.getElementById('kpiRefunds').textContent=openCount;
+  });
+}
+
+function loadESLData(){
+  document.getElementById('eslTableBody').innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray-400);">Connect Airtable ESL base to view signups</td></tr>';
+}
+
+function loadECASData(){
+  fetchAirtable('appeUvC8eggzVvNyG','tblECAS',function(data){
+    if(!data||!data.records){
+      document.getElementById('ecasTableBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray-400);">Connect Airtable to view submissions</td></tr>';
+      return;
+    }
+    const records=data.records;
+    let submitCount=0;
+    const tableHTML=records.slice(0,15).map(r=>{
+      const fields=r.fields||{};
+      const status=fields.Status||'Pending';
+      if(status==='Pending'||status==='Submitted')submitCount++;
+      const statusClass=status==='Approved'?'status-completed':status==='Denied'?'status-denied':'status-pending';
+      return '<tr><td>'+(fields.CaseID||'—')+'</td><td>'+(fields.ClientName||'—')+'</td><td>'+(fields.SubmissionDate||'—')+'</td><td><span class="status-badge '+statusClass+'">'+status+'</span></td></tr>';
+    }).join('');
+    document.getElementById('ecasTableBody').innerHTML=tableHTML||'<tr><td colspan="4">No submissions</td></tr>';
+    document.getElementById('kpiECAS').textContent=submitCount;
+  });
+}
+
+function loadSalesChart(){
+  loadSalesData();
+}
+
+function fetchAirtable(baseId,tableId,callback){
+  const token=localStorage.getItem(AT_KEY);
+  if(!token){
+    callback(null);
+    return;
+  }
+  fetch('https://api.airtable.com/v0/'+baseId+'/'+tableId+'?pageSize=100',{
+    headers:{Authorization:'Bearer '+token}
+  }).then(r=>r.json()).then(d=>callback(d)).catch(e=>{console.error(e);callback(null);});
+}
+
+function loadTasks(){
+  const tasks=JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');
+  const html=tasks.map((t,i)=>'<tr><td>'+t.name+'</td><td><span class="status-badge" style="background:rgba(232,160,32,0.12);color:var(--amber);">'+t.priority+'</span></td><td><span class="status-badge status-pending">Pending</span></td><td>'+t.due+'</td></tr>').join('');
+  document.getElementById('tasksTableBody').innerHTML=html||'<tr><td colspan="4" style="text-align:center;color:var(--gray-400);">No tasks yet</td></tr>';
+}
+
+function loadNotes(){
+  const notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');
+  const html=notes.map(n=>'<div class="memo-item memo-'+n.color+'">'+n.text+'</div>').join('');
+  document.getElementById('notesGrid').innerHTML=html||'<div style="padding:20px;color:var(--gray-400);grid-column:1/-1;text-align:center;">No notes yet</div>';
+}
+
+function showTaskModal(){
+  document.getElementById('taskModal').classList.add('show');
+}
+
+function closeTaskModal(){
+  document.getElementById('taskModal').classList.remove('show');
+}
+
+function saveTask(){
+  const name=document.getElementById('taskName').value.trim();
+  const priority=document.getElementById('taskPriority').value;
+  const due=document.getElementById('taskDue').value;
+  if(!name)return;
+  const tasks=JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');
+  tasks.push({name,priority,due});
+  localStorage.setItem(TASKS_KEY,JSON.stringify(tasks));
+  loadTasks();
+  closeTaskModal();
+  document.getElementById('taskName').value='';
+}
+
+function showNoteModal(){
+  document.getElementById('noteModal').classList.add('show');
+}
+
+function closeNoteModal(){
+  document.getElementById('noteModal').classList.remove('show');
+}
+
+function setNoteColor(color){
+  currentNoteColor=color;
+}
+
+function saveNote(){
+  const text=document.getElementById('noteText').value.trim();
+  if(!text)return;
+  const notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');
+  notes.push({text,color:currentNoteColor});
+  localStorage.setItem(NOTES_KEY,JSON.stringify(notes));
+  loadNotes();
+  closeNoteModal();
+  document.getElementById('noteText').value='';
+  currentNoteColor='yellow';
+}
+
+function scrollSec(secId){
+  document.getElementById(secId).scrollIntoView({behavior:'smooth'});
+}
+
+window.addEventListener('load',function(){
+  if(localStorage.getItem(LOGIN_KEY)){
+    document.getElementById('loginGate').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+    initDashboard();
+  }
+});
+</script>
+</body>
+</html>
