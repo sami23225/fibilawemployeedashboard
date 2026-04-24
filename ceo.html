@@ -638,9 +638,11 @@ function loadSalesData(){
     let total=0;
     const tableHTML=records.slice(0,20).map(r=>{
       const fields=r.fields||{};
-      const amount=parseFloat(fields.Total)||0;
+      const amount=parseFloat(fields['Total'])||0;
       total+=amount;
-      return '<tr><td>'+(fields.Office||'—')+'</td><td>'+(fields.Date||'—')+'</td><td>$'+amount.toFixed(2)+'</td><td><span style="color:var(--green);">↑</span></td></tr>';
+      const officeField=fields['Office']||'—';
+      const office=Array.isArray(officeField)?officeField[0]:officeField;
+      return '<tr><td>'+office+'</td><td>'+(fields['Date']||'—')+'</td><td>$'+amount.toFixed(2)+'</td><td><span style="color:var(--green);">↑</span></td></tr>';
     }).join('');
     document.getElementById('salesTableBody').innerHTML=tableHTML||'<tr><td colspan="4">No data</td></tr>';
     document.getElementById('kpiTotalSales').textContent='$'+total.toFixed(0);
@@ -651,8 +653,8 @@ function loadSalesData(){
 function renderSalesChart(records){
   const dates={};
   records.forEach(r=>{
-    const date=r.fields.Date||'Unknown';
-    const amount=parseFloat(r.fields.Total)||0;
+    const date=r.fields['Date']||'Unknown';
+    const amount=parseFloat(r.fields['Total'])||0;
     dates[date]=(dates[date]||0)+amount;
   });
   const labels=Object.keys(dates).sort().slice(-30);
@@ -670,17 +672,17 @@ function renderSalesChart(records){
 function loadRefundData(){
   fetchAirtable('appqqwcCHCqt0052s','tblLT6so9xhE04uWe',function(data){
     if(!data||!data.records){
-      document.getElementById('refundsTableBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray-400);">Connect Airtable to view refunds</td></tr>';
+      document.getElementById('refundsTableBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray-400);">No refund requests</td></tr>';
       return;
     }
     const records=data.records;
     let openCount=0;
     const tableHTML=records.slice(0,15).map(r=>{
       const fields=r.fields||{};
-      const status=fields.Status||'Pending';
+      const status=fields['Approval Status']||'Pending';
       if(status==='Pending'||status==='Open')openCount++;
       const statusClass=status==='Approved'?'status-completed':status==='Denied'?'status-denied':'status-pending';
-      return '<tr><td>'+(fields.ClientName||'—')+'</td><td>$'+(parseFloat(fields.Amount)||0).toFixed(2)+'</td><td>'+(fields.DateRequested||'—')+'</td><td><span class="status-badge '+statusClass+'">'+status+'</span></td></tr>';
+      return '<tr><td>'+(fields['Client Name']||'—')+'</td><td>$'+(parseFloat(fields['Amount Requested'])||0).toFixed(2)+'</td><td>'+(fields['Request Date']||'—')+'</td><td><span class="status-badge '+statusClass+'">'+status+'</span></td></tr>';
     }).join('');
     document.getElementById('refundsTableBody').innerHTML=tableHTML||'<tr><td colspan="4">No refunds</td></tr>';
     document.getElementById('kpiRefunds').textContent=openCount;
@@ -694,11 +696,12 @@ function loadESLData(){
       return;
     }
     const records=data.records;
-    let eslCount=0;
+    let eslCount=records.length;
     const tableHTML=records.slice(0,15).map(r=>{
       const fields=r.fields||{};
-      eslCount++;
-      return '<tr><td>'+(fields.Name||'—')+'</td><td>ESL</td><td>'+(fields.Email||'—')+'</td><td>'+(fields.Phone||'—')+'</td><td>'+(fields.CreatedTime||'—').substring(0,10)+'</td></tr>';
+      const program=fields.Course||'ESL';
+      const date=r.createdTime?r.createdTime.substring(0,10):'—';
+      return '<tr><td>'+(fields.Name||'—')+'</td><td>'+program+'</td><td>'+(fields.Email||'—')+'</td><td>'+(fields['Phone Number']||'—')+'</td><td>'+date+'</td></tr>';
     }).join('');
     document.getElementById('eslTableBody').innerHTML=tableHTML||'<tr><td colspan="5">No signups</td></tr>';
     document.getElementById('kpiESL').textContent=eslCount;
@@ -708,17 +711,16 @@ function loadESLData(){
 function loadECASData(){
   fetchAirtable('appeUvC8eggzVvNyG','tblByDLJ90v5x0R8r',function(data){
     if(!data||!data.records){
-      document.getElementById('ecasTableBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray-400);">Connect Airtable to view submissions</td></tr>';
+      document.getElementById('ecasTableBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray-400);">No ECAS submissions</td></tr>';
       return;
     }
     const records=data.records;
-    let submitCount=0;
+    let submitCount=records.length;
     const tableHTML=records.slice(0,15).map(r=>{
       const fields=r.fields||{};
-      const status=fields.Status||'Pending';
-      if(status==='Pending'||status==='Submitted')submitCount++;
-      const statusClass=status==='Approved'?'status-completed':status==='Denied'?'status-denied':'status-pending';
-      return '<tr><td>'+(fields.CaseID||'—')+'</td><td>'+(fields.ClientName||'—')+'</td><td>'+(fields.SubmissionDate||'—')+'</td><td><span class="status-badge '+statusClass+'">'+status+'</span></td></tr>';
+      const type=fields.Type||'Pending';
+      const statusClass=type==='Completed'?'status-completed':type==='Denied'?'status-denied':'status-pending';
+      return '<tr><td>'+(fields['A-Number']||'—')+'</td><td>'+(fields['Client Name']||'—')+'</td><td>'+(fields['Office']||'—')+'</td><td><span class="status-badge '+statusClass+'">'+type+'</span></td></tr>';
     }).join('');
     document.getElementById('ecasTableBody').innerHTML=tableHTML||'<tr><td colspan="4">No submissions</td></tr>';
     document.getElementById('kpiECAS').textContent=submitCount;
