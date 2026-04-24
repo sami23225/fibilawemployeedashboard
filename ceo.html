@@ -668,7 +668,7 @@ function renderSalesChart(records){
 }
 
 function loadRefundData(){
-  fetchAirtable('appqqwcCHCqt0052s','tblRefunds',function(data){
+  fetchAirtable('appqqwcCHCqt0052s','tblLT6so9xhE04uWe',function(data){
     if(!data||!data.records){
       document.getElementById('refundsTableBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray-400);">Connect Airtable to view refunds</td></tr>';
       return;
@@ -688,11 +688,25 @@ function loadRefundData(){
 }
 
 function loadESLData(){
-  document.getElementById('eslTableBody').innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray-400);">Connect Airtable ESL base to view signups</td></tr>';
+  fetchAirtable('appT8CRulW5zqPQqM','tbl3HkLKk7TsRLIhw',function(data){
+    if(!data||!data.records){
+      document.getElementById('eslTableBody').innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray-400);">No ESL signups yet</td></tr>';
+      return;
+    }
+    const records=data.records;
+    let eslCount=0;
+    const tableHTML=records.slice(0,15).map(r=>{
+      const fields=r.fields||{};
+      eslCount++;
+      return '<tr><td>'+(fields.Name||'—')+'</td><td>ESL</td><td>'+(fields.Email||'—')+'</td><td>'+(fields.Phone||'—')+'</td><td>'+(fields.CreatedTime||'—').substring(0,10)+'</td></tr>';
+    }).join('');
+    document.getElementById('eslTableBody').innerHTML=tableHTML||'<tr><td colspan="5">No signups</td></tr>';
+    document.getElementById('kpiESL').textContent=eslCount;
+  });
 }
 
 function loadECASData(){
-  fetchAirtable('appeUvC8eggzVvNyG','tblECAS',function(data){
+  fetchAirtable('appeUvC8eggzVvNyG','tblByDLJ90v5x0R8r',function(data){
     if(!data||!data.records){
       document.getElementById('ecasTableBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray-400);">Connect Airtable to view submissions</td></tr>';
       return;
