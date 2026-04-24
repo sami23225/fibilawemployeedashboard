@@ -255,8 +255,8 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 
   <div class="main">
     <div class="hero">
-      <div class="hero-eyebrow">Welcome</div>
-      <div class="hero-name">CEO Dashboard</div>
+      <div class="hero-eyebrow">Welcome Back</div>
+      <div class="hero-name">Kodwo</div>
       <div class="hero-sub">Real-time business insights and operations management</div>
     </div>
 
@@ -293,20 +293,8 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
           <div class="section-line"></div>
         </div>
         <div id="newsContainer" style="display:grid;gap:12px;">
-          <div style="padding:16px;background:#fff;border-radius:10px;border-left:3px solid var(--teal);">
-            <div style="font-size:12px;font-weight:700;color:var(--teal);margin-bottom:6px;">USCIS Processing Times</div>
-            <div style="font-size:13px;color:var(--gray-700);">Check current USCIS processing times for all applications at uscis.gov/processing-times</div>
-            <div style="font-size:11px;color:var(--gray-400);margin-top:8px;">Updated regularly</div>
-          </div>
-          <div style="padding:16px;background:#fff;border-radius:10px;border-left:3px solid var(--amber);">
-            <div style="font-size:12px;font-weight:700;color:var(--amber);margin-bottom:6px;">Immigration News Feed</div>
-            <div style="font-size:13px;color:var(--gray-700);">Stay updated on immigration policy changes and USCIS announcements</div>
-            <div style="font-size:11px;color:var(--gray-400);margin-top:8px;">Source: USCIS.gov</div>
-          </div>
-          <div style="padding:16px;background:#fff;border-radius:10px;border-left:3px solid var(--green);">
-            <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:6px;">Case Status Updates</div>
-            <div style="font-size:13px;color:var(--gray-700);">Monitor client case statuses through the USCIS Case Status Online tool</div>
-            <div style="font-size:11px;color:var(--gray-400);margin-top:8px;">Real-time tracking available</div>
+          <div style="padding:16px;background:#fff;border-radius:10px;border-left:3px solid var(--gray-300);text-align:center;">
+            <div style="font-size:13px;color:var(--gray-400);">Loading latest immigration updates...</div>
           </div>
         </div>
       </div>
@@ -328,6 +316,52 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
             Join Meeting
           </button>
         </a>
+      </div>
+
+      <!-- Task Board Section -->
+      <div class="section" id="tasks">
+        <div class="section-head">
+          <div class="section-icon si-a"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg></div>
+          <div class="section-title">Task Board</div>
+          <div class="section-line"></div>
+        </div>
+        <button class="add-btn" onclick="showTaskModal()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Task
+        </button>
+        <div style="margin-top:16px;">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Task</th>
+                  <th>Priority</th>
+                  <th>Status</th>
+                  <th>Due Date</th>
+                </tr>
+              </thead>
+              <tbody id="tasksTableBody">
+                <tr><td colspan="4" style="text-align:center;padding:20px;color:var(--gray-400);">No tasks yet</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Notes Section -->
+      <div class="section" id="notes">
+        <div class="section-head">
+          <div class="section-icon si-a"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="7" y1="17" x2="7" y2="21"/><line x1="17" y1="17" x2="17" y2="21"/></svg></div>
+          <div class="section-title">Quick Notes</div>
+          <div class="section-line"></div>
+        </div>
+        <button class="add-btn" onclick="showNoteModal()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Note
+        </button>
+        <div class="memo-grid" id="notesGrid" style="margin-top:16px;">
+          <div style="padding:20px;color:var(--gray-400);grid-column:1/-1;text-align:center;">No notes yet</div>
+        </div>
       </div>
 
       <!-- Sales & Cells Section -->
@@ -435,51 +469,30 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
         </div>
       </div>
 
-      <!-- Task Board Section -->
-      <div class="section" id="tasks">
-        <div class="section-head">
-          <div class="section-icon si-a"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg></div>
-          <div class="section-title">Task Board</div>
-          <div class="section-line"></div>
-        </div>
-        <button class="add-btn" onclick="showTaskModal()">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Add Task
-        </button>
-        <div style="margin-top:16px;">
-          <div class="table-container">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Task</th>
-                  <th>Priority</th>
-                  <th>Status</th>
-                  <th>Due Date</th>
-                </tr>
-              </thead>
-              <tbody id="tasksTableBody">
-                <tr><td colspan="4" style="text-align:center;padding:20px;color:var(--gray-400);">No tasks yet</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    </div>
+  </div>
+</div>
 
-      <!-- Quick Notes Section -->
-      <div class="section" id="notes">
-        <div class="section-head">
-          <div class="section-icon si-a"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="7" y1="17" x2="7" y2="21"/><line x1="17" y1="17" x2="17" y2="21"/></svg></div>
-          <div class="section-title">Quick Notes</div>
-          <div class="section-line"></div>
-        </div>
-        <button class="add-btn" onclick="showNoteModal()">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Add Note
-        </button>
-        <div class="memo-grid" id="notesGrid" style="margin-top:16px;">
-          <div style="padding:20px;color:var(--gray-400);grid-column:1/-1;text-align:center;">No notes yet</div>
-        </div>
-      </div>
+<!-- Token Setup Modal -->
+<div class="modal-overlay" id="tokenModal">
+  <div class="modal-box">
+    <div class="modal-title">Set Up Airtable Integration</div>
+    <div style="margin-bottom:16px;font-size:13px;color:var(--gray-600);line-height:1.6;">
+      To connect your Airtable bases (Sales, Refunds, ESL, ECAS), you'll need to provide your Airtable Personal Access Token.
+      <br/><br/>
+      <strong>How to get your token:</strong><br/>
+      1. Go to <a href="https://airtable.com/account/api" target="_blank" style="color:var(--amber);text-decoration:underline;">airtable.com/account/api</a><br/>
+      2. Click "Generate Token"<br/>
+      3. Grant access to the required bases<br/>
+      4. Copy the token and paste it below
+    </div>
+    <div class="form-group">
+      <label class="form-label">Airtable API Token</label>
+      <input type="password" class="form-input" id="tokenInput" placeholder="pat... (keep this secret!)" style="font-family:monospace;font-size:12px;">
+    </div>
+    <div class="form-buttons">
+      <button class="form-btn form-btn-cancel" onclick="skipTokenSetup()">Skip for Now</button>
+      <button class="form-btn form-btn-save" onclick="saveToken()">Save Token</button>
     </div>
   </div>
 </div>
@@ -566,6 +579,7 @@ function signOut(){
 
 function initDashboard(){
   checkAuth();
+  checkTokenSetup();
   loadSalesData();
   loadRefundData();
   loadESLData();
@@ -575,6 +589,7 @@ function initDashboard(){
   setDefaultDates();
   startClock();
   loadWeather();
+  loadNews();
 }
 
 function checkAuth(){
@@ -582,6 +597,31 @@ function checkAuth(){
     document.getElementById('loginGate').classList.remove('hidden');
     document.getElementById('app').classList.add('hidden');
   }
+}
+
+function checkTokenSetup(){
+  const hasToken=localStorage.getItem(AT_KEY);
+  const hasSeenSetup=localStorage.getItem('ceo_token_setup_shown');
+  if(!hasToken&&!hasSeenSetup){
+    document.getElementById('tokenModal').classList.add('show');
+  }
+}
+
+function saveToken(){
+  const token=document.getElementById('tokenInput').value.trim();
+  if(!token){
+    alert('Please enter your Airtable token');
+    return;
+  }
+  localStorage.setItem(AT_KEY,token);
+  localStorage.setItem('ceo_token_setup_shown','true');
+  document.getElementById('tokenModal').classList.remove('show');
+  location.reload();
+}
+
+function skipTokenSetup(){
+  localStorage.setItem('ceo_token_setup_shown','true');
+  document.getElementById('tokenModal').classList.remove('show');
 }
 
 function setDefaultDates(){
@@ -780,6 +820,43 @@ function loadWeather(){
       document.getElementById('weatherDesc').textContent=descriptions[code]||'Clear';
     })
     .catch(e=>{console.log('Weather fetch failed');});
+}
+
+function loadNews(){
+  const newsData=[
+    {title:'USCIS Processing Times',desc:'Check current USCIS processing times for all applications and benefit types',color:'var(--teal)'},
+    {title:'I-485 Processing',desc:'Green Card applications (Form I-485) currently processing 12-18 months',color:'var(--amber)'},
+    {title:'USCIS Online Services',desc:'Submit and track applications through USCIS Case Status Online',color:'var(--green)'}
+  ];
+
+  try{
+    fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.uscis.gov/news/feeds/rss')
+      .then(r=>r.json())
+      .then(d=>{
+        if(d.items&&d.items.length>0){
+          const items=d.items.slice(0,3).map(item=>({
+            title:item.title||'USCIS Update',
+            desc:item.description||item.content||'Latest USCIS news and updates',
+            color:['var(--teal)','var(--amber)','var(--green)'][Math.floor(Math.random()*3)]
+          }));
+          renderNews(items);
+        }else{
+          renderNews(newsData);
+        }
+      })
+      .catch(e=>{renderNews(newsData);});
+  }catch(e){
+    renderNews(newsData);
+  }
+}
+
+function renderNews(items){
+  const html=items.map(item=>'<div style="padding:16px;background:#fff;border-radius:10px;border-left:3px solid '+item.color+';">'+
+    '<div style="font-size:12px;font-weight:700;color:'+item.color+';margin-bottom:6px;">'+item.title+'</div>'+
+    '<div style="font-size:13px;color:var(--gray-700);">'+item.desc.substring(0,120)+'...</div>'+
+    '<div style="font-size:11px;color:var(--gray-400);margin-top:8px;">Updated from USCIS sources</div>'+
+    '</div>').join('');
+  document.getElementById('newsContainer').innerHTML=html;
 }
 
 window.addEventListener('load',function(){
