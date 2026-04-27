@@ -246,6 +246,10 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
       </a>
     </nav>
     <div class="sidebar-footer">
+      <button class="signout-btn" onclick="manageToken()" style="background:rgba(60,191,186,0.08);color:var(--teal);">
+        <svg viewBox="0 0 24 24"><path d="M12 21v-2m0-14V3m9 9h2m-16 0H3m16.364 5.364l1.414-1.414m-19.456 0l1.414 1.414m16.364-16.364l1.414 1.414m-19.456 0l1.414-1.414"/></svg>
+        Airtable Token
+      </button>
       <button class="signout-btn" onclick="signOut()">
         <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         Sign Out
@@ -486,13 +490,14 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
       3. Grant access to the required bases<br/>
       4. Copy the token and paste it below
     </div>
+    <div id="tokenStatus" style="padding:12px;background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:8px;margin-bottom:16px;font-size:12px;color:var(--amber);display:none;"></div>
     <div class="form-group">
       <label class="form-label">Airtable API Token</label>
       <input type="password" class="form-input" id="tokenInput" placeholder="pat... (keep this secret!)" style="font-family:monospace;font-size:12px;">
     </div>
     <div class="form-buttons">
       <button class="form-btn form-btn-cancel" onclick="skipTokenSetup()">Skip for Now</button>
-      <button class="form-btn form-btn-save" onclick="saveToken()">Save Token</button>
+      <button class="form-btn form-btn-save" onclick="saveToken()">Save & Test Token</button>
     </div>
   </div>
 </div>
@@ -579,17 +584,24 @@ function signOut(){
 
 function initDashboard(){
   checkAuth();
+  const hasToken=!!localStorage.getItem(AT_KEY);
+  console.log('Token present:',hasToken);
+  if(hasToken){
+    console.log('Token (first 10 chars):', localStorage.getItem(AT_KEY).substring(0,10));
+  }
   checkTokenSetup();
-  loadSalesData();
-  loadRefundData();
-  loadESLData();
-  loadECASData();
-  loadTasks();
-  loadNotes();
-  setDefaultDates();
-  startClock();
-  loadWeather();
-  loadNews();
+  if(hasToken){
+    loadTasks();
+    loadNotes();
+    setDefaultDates();
+    startClock();
+    loadWeather();
+    loadNews();
+    loadSalesData();
+    loadRefundData();
+    loadESLData();
+    loadECASData();
+  }
 }
 
 function checkAuth(){
@@ -619,6 +631,18 @@ function saveToken(){
   location.reload();
 }
 
+function manageToken(){
+  const currentToken=localStorage.getItem(AT_KEY);
+  document.getElementById('tokenInput').value=currentToken||'';
+  if(currentToken){
+    document.getElementById('tokenStatus').style.display='block';
+    document.getElementById('tokenStatus').textContent='✓ Token is configured ('+currentToken.substring(0,10)+'...)';
+  }else{
+    document.getElementById('tokenStatus').style.display='none';
+  }
+  document.getElementById('tokenModal').classList.add('show');
+}
+
 function skipTokenSetup(){
   localStorage.setItem('ceo_token_setup_shown','true');
   document.getElementById('tokenModal').classList.remove('show');
@@ -632,8 +656,15 @@ function setDefaultDates(){
 }
 
 function loadSalesData(){
-  fetchAirtable('appVKOmxf2xCvVwqX','tblpsxvI6HSYo3OWl',function(data){
-    if(!data||!data.records)return;
+  console.log('loadSalesData called');
+  const baseId='appVKOmxf2xCvVwqX';
+  const tableId='tblpsxvI6HSYo3OWl';
+  fetchAirtable(baseId,tableId,function(data){
+    if(!data||!data.records){
+      console.warn('No sales data returned');
+      document.getElementById('salesTableBody').innerHTML='<tr><td colspan="4" style="color:var(--rose);">⚠ Unable to load sales data. Check token.</td></tr>';
+      return;
+    }
     const records=data.records;
     let total=0;
     const tableHTML=records.slice(0,20).map(r=>{
@@ -644,7 +675,7 @@ function loadSalesData(){
       const office=Array.isArray(officeField)?officeField[0]:officeField;
       return '<tr><td>'+office+'</td><td>'+(fields['Date']||'—')+'</td><td>$'+amount.toFixed(2)+'</td><td><span style="color:var(--green);">↑</span></td></tr>';
     }).join('');
-    document.getElementById('salesTableBody').innerHTML=tableHTML||'<tr><td colspan="4">No data</td></tr>';
+    document.getElementById('salesTableBody').innerHTML=tableHTML||'<tr><td colspan="4">No records found</td></tr>';
     document.getElementById('kpiTotalSales').textContent='$'+total.toFixed(0);
     renderSalesChart(records);
   });
@@ -670,9 +701,13 @@ function renderSalesChart(records){
 }
 
 function loadRefundData(){
-  fetchAirtable('appqqwcCHCqt0052s','tblLT6so9xhE04uWe',function(data){
+  console.log('loadRefundData called');
+  const baseId='appqqwcCHCqt0052s';
+  const tableId='tblLT6so9xhE04uWe';
+  fetchAirtable(baseId,tableId,function(data){
     if(!data||!data.records){
-      document.getElementById('refundsTableBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray-400);">No refund requests</td></tr>';
+      console.warn('No refund data returned');
+      document.getElementById('refundsTableBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--rose);">⚠ Unable to load refund requests</td></tr>';
       return;
     }
     const records=data.records;
@@ -690,9 +725,13 @@ function loadRefundData(){
 }
 
 function loadESLData(){
-  fetchAirtable('appT8CRulW5zqPQqM','tbl3HkLKk7TsRLIhw',function(data){
+  console.log('loadESLData called');
+  const baseId='appT8CRulW5zqPQqM';
+  const tableId='tbl3HkLKk7TsRLIhw';
+  fetchAirtable(baseId,tableId,function(data){
     if(!data||!data.records){
-      document.getElementById('eslTableBody').innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray-400);">No ESL signups yet</td></tr>';
+      console.warn('No ESL data returned');
+      document.getElementById('eslTableBody').innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--rose);">⚠ Unable to load ESL signups</td></tr>';
       return;
     }
     const records=data.records;
@@ -709,9 +748,13 @@ function loadESLData(){
 }
 
 function loadECASData(){
-  fetchAirtable('appeUvC8eggzVvNyG','tblByDLJ90v5x0R8r',function(data){
+  console.log('loadECASData called');
+  const baseId='appeUvC8eggzVvNyG';
+  const tableId='tblByDLJ90v5x0R8r';
+  fetchAirtable(baseId,tableId,function(data){
     if(!data||!data.records){
-      document.getElementById('ecasTableBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--gray-400);">No ECAS submissions</td></tr>';
+      console.warn('No ECAS data returned');
+      document.getElementById('ecasTableBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--rose);">⚠ Unable to load ECAS submissions</td></tr>';
       return;
     }
     const records=data.records;
@@ -734,12 +777,30 @@ function loadSalesChart(){
 function fetchAirtable(baseId,tableId,callback){
   const token=localStorage.getItem(AT_KEY);
   if(!token){
+    console.warn('No Airtable token found');
     callback(null);
     return;
   }
-  fetch('https://api.airtable.com/v0/'+baseId+'/'+tableId+'?pageSize=100',{
-    headers:{Authorization:'Bearer '+token}
-  }).then(r=>r.json()).then(d=>callback(d)).catch(e=>{console.error(e);callback(null);});
+  const url='https://api.airtable.com/v0/'+baseId+'/'+tableId+'?pageSize=100';
+  console.log('Fetching from:', url);
+  fetch(url,{
+    headers:{
+      'Authorization':'Bearer '+token,
+      'Content-Type':'application/json'
+    }
+  }).then(async r=>{
+    const text=await r.text();
+    console.log('Status:',r.status,'Response:',text.substring(0,200));
+    if(r.status===401){
+      console.error('401 Unauthorized - Token may be invalid or expired');
+      return null;
+    }
+    if(!r.ok){
+      console.error('HTTP Error:',r.status,r.statusText);
+      return null;
+    }
+    return JSON.parse(text);
+  }).then(d=>callback(d)).catch(e=>{console.error('Fetch error:',e);callback(null);});
 }
 
 function loadTasks(){
@@ -882,6 +943,24 @@ window.addEventListener('load',function(){
     initDashboard();
   }
 });
+
+// Diagnostic info for debugging
+window.diagnostics={
+  token:()=>localStorage.getItem(AT_KEY)?.substring(0,15)+'...',
+  checkToken:function(){
+    const token=localStorage.getItem(AT_KEY);
+    if(!token){console.log('❌ NO TOKEN FOUND');return;}
+    console.log('✓ Token present:',token.substring(0,20)+'...');
+    console.log('Testing token on Airtable meta endpoint...');
+    fetch('https://api.airtable.com/v0/meta/bases',{
+      headers:{Authorization:'Bearer '+token}
+    }).then(r=>{
+      console.log('Meta response status:',r.status);
+      if(r.status===200)console.log('✓ Token is valid!');
+      else console.log('❌ Token failed with status',r.status);
+    }).catch(e=>console.log('❌ Error:',e.message));
+  }
+};
 </script>
 </body>
 </html>
