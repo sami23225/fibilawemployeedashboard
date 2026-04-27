@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CEO Dashboard · Fibi Law</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -44,13 +44,11 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 .sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--sidebar-dark);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;border-right:1px solid rgba(255,255,255,0.06);}
 .sidebar-top{padding:20px 18px 14px;border-bottom:1px solid rgba(255,255,255,0.07);}
 
-/* Clock */
 .sidebar-clock{padding:16px 18px 12px;border-bottom:1px solid rgba(255,255,255,0.07);}
 .clock-time{font-size:38px;font-weight:300;color:#fff;letter-spacing:-1px;line-height:1;font-variant-numeric:tabular-nums;}
 .clock-time span{font-size:18px;font-weight:500;color:var(--amber);}
 .clock-date{font-size:11px;color:rgba(255,255,255,0.4);margin-top:5px;}
 
-/* Weather */
 .sidebar-weather{padding:12px 18px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:12px;}
 .weather-icon{font-size:28px;line-height:1;}
 .weather-temp{font-size:22px;font-weight:600;color:#fff;line-height:1;}
@@ -71,12 +69,12 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 .nav-link .ni svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 .nav-link:hover .ni{background:rgba(255,255,255,0.1);}
 .sidebar-footer{padding:10px;border-top:1px solid rgba(255,255,255,0.07);}
-.signout-btn{display:flex;align-items:center;gap:8px;width:100%;padding:9px 10px;border-radius:8px;border:none;background:rgba(229,62,62,0.08);color:#fc8181;font-size:12px;font-weight:500;font-family:inherit;cursor:pointer;transition:background var(--transition);}
+.signout-btn{display:flex;align-items:center;gap:8px;width:100%;padding:9px 10px;border-radius:8px;border:none;background:rgba(229,62,62,0.08);color:#fc8181;font-size:12px;font-weight:500;font-family:inherit;cursor:pointer;transition:background var(--transition);margin-bottom:6px;}
 .signout-btn:hover{background:rgba(229,62,62,0.15);}
 .signout-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;}
 
 .main{flex:1;overflow-y:auto;background:var(--gray-50);}
-.content{max-width:1200px;margin:0 auto;padding:0 26px 60px;}
+.content{max-width:1280px;margin:0 auto;padding:0 26px 60px;}
 
 .hero{background:linear-gradient(135deg,var(--dark-navy) 0%,#013a56 55%,#01243a 100%);padding:30px 26px 26px;position:relative;overflow:hidden;}
 .hero::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:rgba(232,160,32,0.05);pointer-events:none;}
@@ -85,7 +83,12 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 .hero-sub{font-size:12.5px;color:rgba(255,255,255,0.42);}
 
 .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:20px;}
-.kpi-card{background:#fff;border:1.5px solid var(--gray-200);border-radius:12px;padding:18px;box-shadow:var(--shadow-sm);}
+.kpi-card{background:#fff;border:1.5px solid var(--gray-200);border-radius:12px;padding:18px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;}
+.kpi-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--amber));}
+.kpi-card.k-amber{--accent:var(--amber);}
+.kpi-card.k-rose{--accent:var(--rose);}
+.kpi-card.k-teal{--accent:var(--teal);}
+.kpi-card.k-green{--accent:var(--green);}
 .kpi-label{font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;}
 .kpi-value{font-size:28px;font-weight:700;color:var(--navy);}
 .kpi-sub{font-size:12px;color:var(--gray-500);margin-top:6px;}
@@ -100,58 +103,99 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 .si-g{background:rgba(34,134,58,0.1);color:var(--green);}
 .section-title{font-size:14.5px;font-weight:700;color:var(--navy);}
 .section-line{flex:1;height:1px;background:var(--gray-200);}
+.section-meta{font-size:11px;color:var(--gray-500);font-weight:500;}
 
 .chart-container{position:relative;height:300px;margin-bottom:20px;}
-.date-filter{display:flex;gap:10px;margin-bottom:16px;}
-.date-input{padding:8px 12px;border:1px solid var(--gray-200);border-radius:8px;font-family:inherit;font-size:13px;flex:1;}
+.date-filter{display:flex;gap:10px;margin-bottom:16px;align-items:center;flex-wrap:wrap;}
+.date-input,.select-input{padding:8px 12px;border:1px solid var(--gray-200);border-radius:8px;font-family:inherit;font-size:13px;background:#fff;color:var(--gray-700);}
+.date-input{flex:1;min-width:140px;}
 .btn-filter{padding:8px 16px;background:var(--amber);border:none;border-radius:8px;color:var(--dark-navy);font-weight:700;font-size:12px;cursor:pointer;transition:opacity var(--transition);}
 .btn-filter:hover{opacity:0.88;}
+.btn-secondary{padding:8px 14px;background:var(--gray-100);border:none;border-radius:8px;color:var(--gray-700);font-weight:600;font-size:12px;cursor:pointer;transition:background var(--transition);}
+.btn-secondary:hover{background:var(--gray-200);}
 
-.table-container{overflow-x:auto;}
+.table-container{overflow-x:auto;border-radius:10px;border:1px solid var(--gray-100);}
 .data-table{width:100%;border-collapse:collapse;}
-.data-table th{background:var(--gray-50);padding:12px;text-align:left;font-size:12px;font-weight:700;color:var(--gray-600);border-bottom:1.5px solid var(--gray-200);}
-.data-table td{padding:12px;border-bottom:1px solid var(--gray-100);font-size:13px;}
-.data-table tr:hover{background:var(--gray-50);}
+.data-table th{background:var(--gray-50);padding:11px 12px;text-align:left;font-size:11px;font-weight:700;color:var(--gray-600);border-bottom:1.5px solid var(--gray-200);text-transform:uppercase;letter-spacing:0.4px;white-space:nowrap;}
+.data-table td{padding:11px 12px;border-bottom:1px solid var(--gray-100);font-size:13px;color:var(--gray-700);vertical-align:middle;}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table tr.clickable{cursor:pointer;transition:background var(--transition);}
+.data-table tr.clickable:hover{background:var(--gray-50);}
+.data-table .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;color:var(--navy);}
+.data-table .muted{color:var(--gray-400);}
 
-.status-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:8px;font-size:11px;font-weight:600;}
+.status-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:8px;font-size:11px;font-weight:600;white-space:nowrap;}
 .status-pending{background:rgba(232,160,32,0.12);color:var(--amber);}
-.status-completed{background:rgba(34,134,58,0.12);color:var(--green);}
+.status-completed,.status-approved{background:rgba(34,134,58,0.12);color:var(--green);}
 .status-denied{background:var(--rose-bg);color:var(--rose);}
+.status-info{background:var(--teal-bg);color:var(--teal);}
+.priority-high{background:var(--rose-bg);color:var(--rose);}
+.priority-medium{background:rgba(232,160,32,0.12);color:var(--amber);}
+.priority-low{background:rgba(60,191,186,0.12);color:var(--teal);}
 
-.board-screw{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--gray-400);box-shadow:-1px -1px 0 rgba(0,0,0,0.1);z-index:1;}
-.board-screw.tl{top:10px;left:10px;}
-.board-screw.tr{top:10px;right:10px;}
-.board-screw.bl{bottom:10px;left:10px;}
-.board-screw.br{bottom:10px;right:10px;}
+/* STICKY NOTES */
+.memo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:22px;padding:14px 6px;}
+.memo-item{position:relative;padding:18px 14px 14px;font-family:'Caveat',cursive;font-size:18px;line-height:1.35;color:#333;min-height:140px;cursor:default;transition:transform 0.18s ease, box-shadow 0.18s ease;box-shadow:0 6px 14px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06);word-break:break-word;}
+.memo-item:nth-child(4n+1){transform:rotate(-1.5deg);}
+.memo-item:nth-child(4n+2){transform:rotate(1deg);}
+.memo-item:nth-child(4n+3){transform:rotate(-0.6deg);}
+.memo-item:nth-child(4n+4){transform:rotate(2deg);}
+.memo-item:hover{transform:translateY(-3px) rotate(0deg) scale(1.02);box-shadow:0 14px 28px rgba(0,0,0,0.13), 0 4px 8px rgba(0,0,0,0.08);z-index:5;}
+.memo-item::before{content:'';position:absolute;top:-7px;left:50%;transform:translateX(-50%) rotate(-3deg);width:62px;height:18px;background:rgba(255,255,255,0.55);border:1px solid rgba(0,0,0,0.04);box-shadow:0 1px 2px rgba(0,0,0,0.08);}
+.memo-yellow{background:linear-gradient(135deg,#fff8a8 0%, #fff076 100%);}
+.memo-blue{background:linear-gradient(135deg,#bfe7ff 0%, #92d4ff 100%);color:#0d3b5c;}
+.memo-green{background:linear-gradient(135deg,#cdeecc 0%, #aae0a8 100%);color:#1b4d1d;}
+.memo-pink{background:linear-gradient(135deg,#ffc8df 0%, #ffa3c8 100%);color:#75143f;}
+.memo-orange{background:linear-gradient(135deg,#ffd9a3 0%, #ffb961 100%);color:#7a3d00;}
+.memo-delete{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,0.15);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity var(--transition),background var(--transition);font-family:'Inter',sans-serif;font-size:14px;line-height:1;padding:0;}
+.memo-item:hover .memo-delete{opacity:1;}
+.memo-delete:hover{background:var(--rose);}
+.memo-meta{font-family:'Inter',sans-serif;font-size:10px;color:rgba(0,0,0,0.4);margin-top:8px;font-weight:500;}
 
-.memo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;padding:0 0 10px 0;}
-.memo-item{padding:12px;border-radius:8px;font-size:12px;line-height:1.5;position:relative;cursor:pointer;transition:transform 0.1s,box-shadow 0.1s;}
-.memo-item:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
-.memo-yellow{background:#fff59d;color:#333;}
-.memo-blue{background:#b3e5fc;color:#01579b;}
-.memo-green{background:#c8e6c9;color:#1b5e20;}
-.memo-pink{background:#f8bbd0;color:#880e4f;}
-.memo-orange{background:#ffe0b2;color:#e65100;}
+/* TASK ROW ACTIONS */
+.task-actions{display:flex;gap:6px;justify-content:flex-end;}
+.icon-btn{width:28px;height:28px;border-radius:6px;border:none;background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:background var(--transition);color:var(--gray-400);}
+.icon-btn:hover{background:var(--gray-100);color:var(--navy);}
+.icon-btn.danger:hover{background:var(--rose-bg);color:var(--rose);}
+.icon-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.task-completed td{color:var(--gray-400);text-decoration:line-through;}
 
 .add-btn{display:flex;align-items:center;gap:6px;padding:10px 14px;background:var(--amber);border:none;border-radius:8px;color:var(--dark-navy);font-size:12px;font-weight:700;cursor:pointer;transition:opacity var(--transition);}
 .add-btn:hover{opacity:0.88;}
 .add-btn svg{width:13px;height:13px;}
 
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:1000;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px;}
 .modal-overlay.show{display:flex;}
-.modal-box{background:#fff;border-radius:14px;padding:24px;width:90%;max-width:500px;box-shadow:var(--shadow-lg);}
-.modal-title{font-size:16px;font-weight:700;margin-bottom:16px;}
+.modal-box{background:#fff;border-radius:14px;padding:24px;width:100%;max-width:560px;max-height:85vh;overflow-y:auto;box-shadow:var(--shadow-lg);}
+.modal-box.wide{max-width:720px;}
+.modal-title{font-size:16px;font-weight:700;margin-bottom:6px;color:var(--navy);}
+.modal-sub{font-size:12px;color:var(--gray-500);margin-bottom:18px;}
 .form-group{margin-bottom:14px;}
 .form-label{display:block;font-size:12px;font-weight:600;color:var(--gray-700);margin-bottom:6px;}
-.form-input{width:100%;padding:9px 12px;border:1px solid var(--gray-200);border-radius:8px;font-family:inherit;font-size:13px;outline:none;transition:border-color var(--transition);}
+.form-input{width:100%;padding:9px 12px;border:1px solid var(--gray-200);border-radius:8px;font-family:inherit;font-size:13px;outline:none;transition:border-color var(--transition);background:#fff;}
 .form-input:focus{border-color:var(--amber);}
 .form-buttons{display:flex;gap:10px;margin-top:20px;justify-content:flex-end;}
 .form-btn{padding:9px 16px;border:none;border-radius:8px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;transition:opacity var(--transition);}
 .form-btn-save{background:var(--amber);color:var(--dark-navy);}
 .form-btn-cancel{background:var(--gray-100);color:var(--gray-600);}
+.form-btn-danger{background:var(--rose-bg);color:var(--rose);margin-right:auto;}
 
-/* ══ MEETING CARD ══ */
-.meeting-card{background:#fff;border:1.5px solid var(--amber-border);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow-sm);margin:20px auto 0;max-width:100%;display:flex;align-items:center;justify-content:space-between;transition:all var(--transition);}
+/* Refund detail rows */
+.detail-grid{display:grid;grid-template-columns:140px 1fr;gap:10px 16px;font-size:13px;margin-top:8px;}
+.detail-grid dt{color:var(--gray-500);font-weight:600;}
+.detail-grid dd{color:var(--gray-900);}
+.detail-section{margin-top:18px;padding-top:14px;border-top:1px solid var(--gray-100);}
+.detail-section-title{font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;}
+
+/* News */
+.news-card{display:block;padding:14px 16px;background:#fff;border-radius:10px;border-left:3px solid var(--gray-300);text-decoration:none;color:inherit;transition:transform 0.1s, box-shadow 0.1s;}
+.news-card:hover{transform:translateX(2px);box-shadow:var(--shadow-md);}
+.news-card-title{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:6px;line-height:1.4;}
+.news-card-meta{font-size:11px;color:var(--gray-500);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.news-card-source{color:var(--amber);font-weight:600;}
+
+/* MEETING CARD */
+.meeting-card{background:#fff;border:1.5px solid var(--amber-border);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow-sm);margin:20px auto 0;max-width:100%;display:flex;align-items:center;justify-content:space-between;transition:all var(--transition);gap:14px;}
 .meeting-card:hover{box-shadow:0 4px 16px rgba(232,160,32,0.12);border-color:var(--amber);}
 .meeting-card-content{display:flex;align-items:center;gap:12px;}
 .meeting-card-icon{width:38px;height:38px;border-radius:9px;background:var(--amber-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -166,8 +210,11 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
   .sidebar{width:64px;}
   .sidebar-logo-name,.sidebar-logo-sub,.nav-label{display:none;}
   .content{padding:0 16px 40px;}
-  .kpi-row{grid-template-columns:1fr;}
+  .kpi-row{grid-template-columns:1fr 1fr;}
   .chart-container{height:250px;}
+  .meeting-card{flex-direction:column;align-items:flex-start;}
+  .detail-grid{grid-template-columns:1fr;gap:4px 0;}
+  .detail-grid dt{margin-top:8px;}
 }
 </style>
 </head>
@@ -202,13 +249,11 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
       </div>
     </div>
 
-    <!-- Clock -->
     <div class="sidebar-clock">
       <div class="clock-time"><span id="clockHour">12</span>:<span id="clockMin">00</span><span id="clockAMPM">AM</span></div>
       <div class="clock-date" id="clockDate">Monday, Apr 23</div>
     </div>
 
-    <!-- Weather -->
     <div class="sidebar-weather">
       <div class="weather-icon" id="weatherIcon">🌤️</div>
       <div>
@@ -235,6 +280,10 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
         <span class="ni"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
         ECAS Submissions
       </a>
+      <a class="nav-link" onclick="scrollSec('calendly')">
+        <span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+        Calendly Events
+      </a>
       <div class="nav-label" style="margin-top:14px;">Tools</div>
       <a class="nav-link" onclick="scrollSec('tasks')">
         <span class="ni"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg></span>
@@ -242,13 +291,21 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
       </a>
       <a class="nav-link" onclick="scrollSec('notes')">
         <span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="7" y1="17" x2="7" y2="21"/><line x1="17" y1="17" x2="17" y2="21"/></svg></span>
-        Quick Notes
+        Sticky Notes
       </a>
     </nav>
     <div class="sidebar-footer">
+      <button class="signout-btn" onclick="refreshAll()" style="background:rgba(60,191,186,0.08);color:var(--teal);">
+        <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        Refresh Data
+      </button>
       <button class="signout-btn" onclick="manageToken()" style="background:rgba(60,191,186,0.08);color:var(--teal);">
-        <svg viewBox="0 0 24 24"><path d="M12 21v-2m0-14V3m9 9h2m-16 0H3m16.364 5.364l1.414-1.414m-19.456 0l1.414 1.414m16.364-16.364l1.414 1.414m-19.456 0l1.414-1.414"/></svg>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         Airtable Token
+      </button>
+      <button class="signout-btn" onclick="manageCalendlyToken()" style="background:rgba(232,160,32,0.1);color:var(--amber);">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Calendly Token
       </button>
       <button class="signout-btn" onclick="signOut()">
         <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -265,45 +322,48 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
     </div>
 
     <div class="content">
-      <!-- KPI Cards -->
       <div class="kpi-row">
-        <div class="kpi-card">
+        <div class="kpi-card k-amber">
           <div class="kpi-label">Total Sales (30d)</div>
-          <div class="kpi-value" id="kpiTotalSales">$0</div>
-          <div class="kpi-sub">All offices combined</div>
+          <div class="kpi-value" id="kpiTotalSales">—</div>
+          <div class="kpi-sub" id="kpiTotalSalesSub">All offices combined</div>
         </div>
-        <div class="kpi-card">
+        <div class="kpi-card k-rose">
           <div class="kpi-label">Refund Requests (Open)</div>
-          <div class="kpi-value" id="kpiRefunds">0</div>
-          <div class="kpi-sub">Pending review</div>
+          <div class="kpi-value" id="kpiRefunds">—</div>
+          <div class="kpi-sub" id="kpiRefundsSub">Pending review</div>
         </div>
-        <div class="kpi-card">
-          <div class="kpi-label">New ESL Signups</div>
-          <div class="kpi-value" id="kpiESL">0</div>
-          <div class="kpi-sub">This month</div>
+        <div class="kpi-card k-teal">
+          <div class="kpi-label">ESL & Citizenship Signups</div>
+          <div class="kpi-value" id="kpiESL">—</div>
+          <div class="kpi-sub" id="kpiESLSub">All-time signups</div>
         </div>
-        <div class="kpi-card">
+        <div class="kpi-card k-green">
           <div class="kpi-label">ECAS Submissions</div>
-          <div class="kpi-value" id="kpiECAS">0</div>
-          <div class="kpi-sub">Pending approval</div>
+          <div class="kpi-value" id="kpiECAS">—</div>
+          <div class="kpi-sub" id="kpiECASSub">Total cases</div>
+        </div>
+        <div class="kpi-card" style="--accent:#6f42c1;">
+          <div class="kpi-label">Upcoming Calendly</div>
+          <div class="kpi-value" id="kpiCalendly">—</div>
+          <div class="kpi-sub" id="kpiCalendlySub">Next 7 days</div>
         </div>
       </div>
 
-      <!-- Immigration News & Updates -->
       <div class="section" style="background:linear-gradient(135deg,rgba(60,191,186,0.05),rgba(232,160,32,0.05));border-color:rgba(60,191,186,0.2);">
         <div class="section-head">
           <div class="section-icon si-t"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="17"/></svg></div>
-          <div class="section-title">USCIS & Immigration Updates</div>
+          <div class="section-title">USCIS & Immigration News</div>
           <div class="section-line"></div>
+          <div class="section-meta" id="newsMeta">Live feed</div>
         </div>
-        <div id="newsContainer" style="display:grid;gap:12px;">
+        <div id="newsContainer" style="display:grid;gap:10px;">
           <div style="padding:16px;background:#fff;border-radius:10px;border-left:3px solid var(--gray-300);text-align:center;">
             <div style="font-size:13px;color:var(--gray-400);">Loading latest immigration updates...</div>
           </div>
         </div>
       </div>
 
-      <!-- Weekly Meeting Card -->
       <div class="meeting-card">
         <div class="meeting-card-content">
           <div class="meeting-card-icon">
@@ -311,10 +371,10 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
           </div>
           <div class="meeting-card-text">
             <div class="meeting-card-label">Weekly Meeting</div>
-            <div class="meeting-card-title">Executive Team Meeting</div>
+            <div class="meeting-card-title">Staff Meeting</div>
           </div>
         </div>
-        <a href="https://zoom.us/my/fibilaw" target="_blank">
+        <a href="https://zoom.us/my/fibilaw" target="_blank" rel="noopener">
           <button class="meeting-card-btn">
             <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             Join Meeting
@@ -322,63 +382,76 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
         </a>
       </div>
 
-      <!-- Task Board Section -->
+      <!-- Task Board -->
       <div class="section" id="tasks">
         <div class="section-head">
           <div class="section-icon si-a"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg></div>
           <div class="section-title">Task Board</div>
           <div class="section-line"></div>
+          <div class="section-meta" id="tasksMeta"></div>
         </div>
-        <button class="add-btn" onclick="showTaskModal()">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Add Task
-        </button>
-        <div style="margin-top:16px;">
-          <div class="table-container">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Task</th>
-                  <th>Priority</th>
-                  <th>Status</th>
-                  <th>Due Date</th>
-                </tr>
-              </thead>
-              <tbody id="tasksTableBody">
-                <tr><td colspan="4" style="text-align:center;padding:20px;color:var(--gray-400);">No tasks yet</td></tr>
-              </tbody>
-            </table>
-          </div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px;">
+          <button class="add-btn" onclick="showTaskModal()">
+            <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2.4"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Task
+          </button>
+          <select class="select-input" id="taskFilter" onchange="loadTasks()">
+            <option value="all">All Tasks</option>
+            <option value="open">Open Only</option>
+            <option value="completed">Completed Only</option>
+          </select>
+        </div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width:40px;">Done</th>
+                <th>Task</th>
+                <th>Priority</th>
+                <th>Due Date</th>
+                <th style="width:90px;text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tasksTableBody">
+              <tr><td colspan="5" style="text-align:center;padding:20px;color:var(--gray-400);">No tasks yet</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
-      <!-- Quick Notes Section -->
+      <!-- Sticky Notes -->
       <div class="section" id="notes">
         <div class="section-head">
           <div class="section-icon si-a"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="7" y1="17" x2="7" y2="21"/><line x1="17" y1="17" x2="17" y2="21"/></svg></div>
-          <div class="section-title">Quick Notes</div>
+          <div class="section-title">Sticky Notes</div>
           <div class="section-line"></div>
+          <div class="section-meta" id="notesMeta"></div>
         </div>
         <button class="add-btn" onclick="showNoteModal()">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2.4"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           Add Note
         </button>
-        <div class="memo-grid" id="notesGrid" style="margin-top:16px;">
-          <div style="padding:20px;color:var(--gray-400);grid-column:1/-1;text-align:center;">No notes yet</div>
+        <div class="memo-grid" id="notesGrid" style="margin-top:8px;">
+          <div style="padding:20px;color:var(--gray-400);grid-column:1/-1;text-align:center;font-family:'Inter',sans-serif;">No notes yet — pin one to your board.</div>
         </div>
       </div>
 
-      <!-- Sales & Cells Section -->
+      <!-- Sales -->
       <div class="section" id="sales">
         <div class="section-head">
           <div class="section-icon si-a"><svg viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
           <div class="section-title">Sales & Cell Trends</div>
           <div class="section-line"></div>
+          <div class="section-meta" id="salesMeta"></div>
         </div>
         <div class="date-filter">
           <input type="date" id="salesStartDate" class="date-input">
           <input type="date" id="salesEndDate" class="date-input">
-          <button class="btn-filter" onclick="loadSalesChart()">Filter</button>
+          <select class="select-input" id="salesOfficeFilter" onchange="renderSalesView()">
+            <option value="">All Offices</option>
+          </select>
+          <button class="btn-filter" onclick="renderSalesView()">Apply Filter</button>
+          <button class="btn-secondary" onclick="resetSalesFilter()">Reset</button>
         </div>
         <div class="chart-container">
           <canvas id="salesChart"></canvas>
@@ -387,87 +460,184 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
           <table class="data-table">
             <thead>
               <tr>
-                <th>Office</th>
                 <th>Date</th>
-                <th>Sales Amount</th>
-                <th>Trend</th>
+                <th>Office</th>
+                <th>Staff</th>
+                <th class="num">New Clients</th>
+                <th class="num">Card</th>
+                <th class="num">Cash</th>
+                <th class="num">Zelle</th>
+                <th class="num">Other</th>
+                <th class="num">Total</th>
               </tr>
             </thead>
             <tbody id="salesTableBody">
-              <tr><td colspan="4" style="text-align:center;padding:20px;color:var(--gray-400);">Loading sales data...</td></tr>
+              <tr><td colspan="9" style="text-align:center;padding:20px;color:var(--gray-400);">Loading sales data...</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Refund Requests Section -->
+      <!-- Refunds -->
       <div class="section" id="refunds">
         <div class="section-head">
           <div class="section-icon si-r"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
           <div class="section-title">Refund Requests</div>
           <div class="section-line"></div>
+          <div class="section-meta" id="refundsMeta"></div>
+        </div>
+        <div class="date-filter">
+          <select class="select-input" id="refundStatusFilter" onchange="renderRefundsView()">
+            <option value="">All Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="Approved">Approved</option>
+            <option value="Denied">Denied</option>
+          </select>
+          <select class="select-input" id="refundOfficeFilter" onchange="renderRefundsView()">
+            <option value="">All Offices</option>
+          </select>
+          <span style="font-size:12px;color:var(--gray-500);">Click any row for full details</span>
         </div>
         <div class="table-container">
           <table class="data-table">
             <thead>
               <tr>
-                <th>Client Name</th>
-                <th>Amount</th>
-                <th>Date Requested</th>
+                <th>Date</th>
+                <th>Client</th>
+                <th>Office</th>
+                <th>Service</th>
+                <th>Reason</th>
+                <th>Manager</th>
+                <th>Payment</th>
+                <th class="num">Amount</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody id="refundsTableBody">
-              <tr><td colspan="4" style="text-align:center;padding:20px;color:var(--gray-400);">Loading refund requests...</td></tr>
+              <tr><td colspan="9" style="text-align:center;padding:20px;color:var(--gray-400);">Loading refund requests...</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- ESL & Citizenship Section -->
+      <!-- ESL & Citizenship -->
       <div class="section" id="esl">
         <div class="section-head">
           <div class="section-icon si-t"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="section-title">ESL & Citizenship Signups</div>
           <div class="section-line"></div>
+          <div class="section-meta" id="eslMeta"></div>
+        </div>
+        <div class="date-filter">
+          <select class="select-input" id="eslCourseFilter" onchange="renderESLView()">
+            <option value="">All Courses</option>
+          </select>
+          <select class="select-input" id="eslLocationFilter" onchange="renderESLView()">
+            <option value="">All Locations</option>
+          </select>
+          <select class="select-input" id="eslLanguageFilter" onchange="renderESLView()">
+            <option value="">All Languages</option>
+          </select>
         </div>
         <div class="table-container">
           <table class="data-table">
             <thead>
               <tr>
+                <th>Date</th>
                 <th>Name</th>
-                <th>Program</th>
+                <th>Course</th>
+                <th>Country</th>
+                <th>Language</th>
+                <th>Heard From</th>
+                <th>Location</th>
                 <th>Email</th>
                 <th>Phone</th>
-                <th>Date</th>
               </tr>
             </thead>
             <tbody id="eslTableBody">
-              <tr><td colspan="5" style="text-align:center;padding:20px;color:var(--gray-400);">Loading signups...</td></tr>
+              <tr><td colspan="9" style="text-align:center;padding:20px;color:var(--gray-400);">Loading signups...</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- ECAS Submissions Section -->
-      <div class="section" id="ecas">
+      <!-- Calendly Upcoming Events -->
+      <div class="section" id="calendly">
         <div class="section-head">
-          <div class="section-icon si-g"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
-          <div class="section-title">ECAS Submissions</div>
+          <div class="section-icon" style="background:rgba(111,66,193,0.1);color:#6f42c1;"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div class="section-title">Upcoming Calendly Events</div>
           <div class="section-line"></div>
+          <div class="section-meta" id="calendlyMeta">—</div>
+        </div>
+        <div class="date-filter">
+          <select class="select-input" id="calendlyRangeFilter" onchange="renderCalendlyView()">
+            <option value="7">Next 7 days</option>
+            <option value="14">Next 14 days</option>
+            <option value="30" selected>Next 30 days</option>
+            <option value="90">Next 90 days</option>
+            <option value="all">All upcoming</option>
+          </select>
+          <select class="select-input" id="calendlyBranchFilter" onchange="renderCalendlyView()">
+            <option value="">All Branches</option>
+          </select>
+          <select class="select-input" id="calendlyLocationFilter" onchange="renderCalendlyView()">
+            <option value="">All Location Types</option>
+          </select>
+          <span style="font-size:12px;color:var(--gray-500);">Click any row for full invitee details</span>
         </div>
         <div class="table-container">
           <table class="data-table">
             <thead>
               <tr>
-                <th>Case ID</th>
+                <th>When</th>
+                <th>Event</th>
+                <th>Invitee</th>
+                <th>Phone</th>
+                <th>Service Type</th>
+                <th>Heard From</th>
+                <th>Location</th>
+                <th>Host</th>
+              </tr>
+            </thead>
+            <tbody id="calendlyTableBody">
+              <tr><td colspan="8" style="text-align:center;padding:20px;color:var(--gray-400);">Loading upcoming events...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ECAS -->
+      <div class="section" id="ecas">
+        <div class="section-head">
+          <div class="section-icon si-g"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+          <div class="section-title">ECAS Submissions</div>
+          <div class="section-line"></div>
+          <div class="section-meta" id="ecasMeta"></div>
+        </div>
+        <div class="date-filter">
+          <select class="select-input" id="ecasOfficeFilter" onchange="renderECASView()">
+            <option value="">All Offices</option>
+          </select>
+          <select class="select-input" id="ecasTypeFilter" onchange="renderECASView()">
+            <option value="">All Types</option>
+          </select>
+          <span style="font-size:12px;color:var(--gray-500);">Click any row for full details</span>
+        </div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>A-Number</th>
                 <th>Client</th>
-                <th>Submission Date</th>
-                <th>Status</th>
+                <th>Office</th>
+                <th>Submitted By</th>
+                <th>Type</th>
+                <th>Dependents</th>
               </tr>
             </thead>
             <tbody id="ecasTableBody">
-              <tr><td colspan="4" style="text-align:center;padding:20px;color:var(--gray-400);">Loading submissions...</td></tr>
+              <tr><td colspan="7" style="text-align:center;padding:20px;color:var(--gray-400);">Loading submissions...</td></tr>
             </tbody>
           </table>
         </div>
@@ -482,13 +652,14 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
   <div class="modal-box">
     <div class="modal-title">Set Up Airtable Integration</div>
     <div style="margin-bottom:16px;font-size:13px;color:var(--gray-600);line-height:1.6;">
-      To connect your Airtable bases (Sales, Refunds, ESL, ECAS), you'll need to provide your Airtable Personal Access Token.
+      To connect your Airtable bases (Sales, Refunds, ESL, ECAS), you'll need an Airtable Personal Access Token.
       <br/><br/>
       <strong>How to get your token:</strong><br/>
-      1. Go to <a href="https://airtable.com/account/api" target="_blank" style="color:var(--amber);text-decoration:underline;">airtable.com/account/api</a><br/>
-      2. Click "Generate Token"<br/>
-      3. Grant access to the required bases<br/>
-      4. Copy the token and paste it below
+      1. Go to <a href="https://airtable.com/create/tokens" target="_blank" rel="noopener" style="color:var(--amber);text-decoration:underline;">airtable.com/create/tokens</a><br/>
+      2. Click "Create token"<br/>
+      3. Add scopes: <code>data.records:read</code> and <code>schema.bases:read</code><br/>
+      4. Add access: "All current and future bases in all current and future workspaces"<br/>
+      5. Copy the token (starts with <code>pat...</code>) and paste it below
     </div>
     <div id="tokenStatus" style="padding:12px;background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:8px;margin-bottom:16px;font-size:12px;color:var(--amber);display:none;"></div>
     <div class="form-group">
@@ -505,7 +676,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 <!-- Task Modal -->
 <div class="modal-overlay" id="taskModal">
   <div class="modal-box">
-    <div class="modal-title">Add New Task</div>
+    <div class="modal-title" id="taskModalTitle">Add New Task</div>
     <div class="form-group">
       <label class="form-label">Task</label>
       <input type="text" class="form-input" id="taskName" placeholder="e.g. Review Q2 financials">
@@ -514,7 +685,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
       <label class="form-label">Priority</label>
       <select class="form-input" id="taskPriority">
         <option>High</option>
-        <option>Medium</option>
+        <option selected>Medium</option>
         <option>Low</option>
       </select>
     </div>
@@ -523,8 +694,9 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
       <input type="date" class="form-input" id="taskDue">
     </div>
     <div class="form-buttons">
+      <button class="form-btn form-btn-danger" id="taskDeleteBtn" onclick="deleteEditingTask()" style="display:none;">Delete</button>
       <button class="form-btn form-btn-cancel" onclick="closeTaskModal()">Cancel</button>
-      <button class="form-btn form-btn-save" onclick="saveTask()">Add Task</button>
+      <button class="form-btn form-btn-save" onclick="saveTask()">Save</button>
     </div>
   </div>
 </div>
@@ -532,19 +704,19 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 <!-- Note Modal -->
 <div class="modal-overlay" id="noteModal">
   <div class="modal-box">
-    <div class="modal-title">Add Quick Note</div>
+    <div class="modal-title" id="noteModalTitle">Add Quick Note</div>
     <div class="form-group">
       <label class="form-label">Note</label>
-      <textarea class="form-input" id="noteText" placeholder="Write a quick note..." rows="4" style="resize:none;"></textarea>
+      <textarea class="form-input" id="noteText" placeholder="Write a quick note..." rows="4" style="resize:none;font-family:'Caveat',cursive;font-size:18px;"></textarea>
     </div>
     <div class="form-group">
       <label class="form-label">Color</label>
-      <div style="display:flex;gap:8px;">
-        <button style="width:30px;height:30px;border:none;border-radius:6px;background:#fff59d;cursor:pointer;" onclick="setNoteColor('yellow')"></button>
-        <button style="width:30px;height:30px;border:none;border-radius:6px;background:#b3e5fc;cursor:pointer;" onclick="setNoteColor('blue')"></button>
-        <button style="width:30px;height:30px;border:none;border-radius:6px;background:#c8e6c9;cursor:pointer;" onclick="setNoteColor('green')"></button>
-        <button style="width:30px;height:30px;border:none;border-radius:6px;background:#f8bbd0;cursor:pointer;" onclick="setNoteColor('pink')"></button>
-        <button style="width:30px;height:30px;border:none;border-radius:6px;background:#ffe0b2;cursor:pointer;" onclick="setNoteColor('orange')"></button>
+      <div id="noteColorPicker" style="display:flex;gap:8px;">
+        <button data-color="yellow" style="width:34px;height:34px;border:2px solid var(--navy);border-radius:6px;background:#fff076;cursor:pointer;" onclick="setNoteColor('yellow')"></button>
+        <button data-color="blue" style="width:34px;height:34px;border:2px solid transparent;border-radius:6px;background:#92d4ff;cursor:pointer;" onclick="setNoteColor('blue')"></button>
+        <button data-color="green" style="width:34px;height:34px;border:2px solid transparent;border-radius:6px;background:#aae0a8;cursor:pointer;" onclick="setNoteColor('green')"></button>
+        <button data-color="pink" style="width:34px;height:34px;border:2px solid transparent;border-radius:6px;background:#ffa3c8;cursor:pointer;" onclick="setNoteColor('pink')"></button>
+        <button data-color="orange" style="width:34px;height:34px;border:2px solid transparent;border-radius:6px;background:#ffb961;cursor:pointer;" onclick="setNoteColor('orange')"></button>
       </div>
     </div>
     <div class="form-buttons">
@@ -554,16 +726,107 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
   </div>
 </div>
 
+<!-- Refund Detail Modal -->
+<div class="modal-overlay" id="refundDetailModal">
+  <div class="modal-box wide">
+    <div class="modal-title" id="refundDetailTitle">Refund Request</div>
+    <div class="modal-sub" id="refundDetailSub"></div>
+    <dl class="detail-grid" id="refundDetailGrid"></dl>
+    <div class="detail-section" id="refundDetailDescSection" style="display:none;">
+      <div class="detail-section-title">Description of What Occurred</div>
+      <div id="refundDetailDesc" style="font-size:13px;line-height:1.55;color:var(--gray-700);white-space:pre-wrap;"></div>
+    </div>
+    <div class="detail-section" id="refundDetailReasonSection" style="display:none;">
+      <div class="detail-section-title">Manager's Reason</div>
+      <div id="refundDetailReason" style="font-size:13px;line-height:1.55;color:var(--gray-700);white-space:pre-wrap;"></div>
+    </div>
+    <div class="form-buttons">
+      <button class="form-btn form-btn-cancel" onclick="closeRefundDetail()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Calendly Token Modal -->
+<div class="modal-overlay" id="calendlyTokenModal">
+  <div class="modal-box">
+    <div class="modal-title">Set Up Calendly Integration</div>
+    <div style="margin-bottom:16px;font-size:13px;color:var(--gray-600);line-height:1.6;">
+      To pull upcoming consultations from your Calendly account, paste a Personal Access Token.
+      <br/><br/>
+      <strong>How to get your token:</strong><br/>
+      1. Go to <a href="https://calendly.com/integrations/api_webhooks" target="_blank" rel="noopener" style="color:var(--amber);text-decoration:underline;">calendly.com/integrations/api_webhooks</a><br/>
+      2. Click "Generate New Token" under Personal Access Tokens<br/>
+      3. Give it a name like "CEO Dashboard"<br/>
+      4. Copy the token and paste it below
+      <br/><br/>
+      <span style="color:var(--rose);">The token is stored only in your browser. Never commit it to GitHub or share it.</span>
+    </div>
+    <div id="calendlyTokenStatus" style="padding:12px;background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:8px;margin-bottom:16px;font-size:12px;color:var(--amber);display:none;"></div>
+    <div class="form-group">
+      <label class="form-label">Calendly API Token</label>
+      <input type="password" class="form-input" id="calendlyTokenInput" placeholder="eyJ... (paste the long string)" style="font-family:monospace;font-size:11px;">
+    </div>
+    <div class="form-buttons">
+      <button class="form-btn form-btn-cancel" onclick="closeCalendlyTokenModal()">Cancel</button>
+      <button class="form-btn form-btn-save" onclick="saveCalendlyToken()">Save & Test Token</button>
+    </div>
+  </div>
+</div>
+
+<!-- Calendly Event Detail Modal -->
+<div class="modal-overlay" id="calendlyDetailModal">
+  <div class="modal-box wide">
+    <div class="modal-title" id="calendlyDetailTitle">Calendly Event</div>
+    <div class="modal-sub" id="calendlyDetailSub"></div>
+    <dl class="detail-grid" id="calendlyDetailGrid"></dl>
+    <div class="detail-section" id="calendlyDetailQASection" style="display:none;">
+      <div class="detail-section-title">Invitee Intake Answers</div>
+      <dl class="detail-grid" id="calendlyDetailQA"></dl>
+    </div>
+    <div class="form-buttons" style="justify-content:space-between;">
+      <div style="display:flex;gap:8px;">
+        <a id="calendlyDetailReschedule" href="#" target="_blank" rel="noopener" class="form-btn form-btn-cancel" style="text-decoration:none;display:none;">Reschedule</a>
+        <a id="calendlyDetailCancel" href="#" target="_blank" rel="noopener" class="form-btn" style="text-decoration:none;background:var(--rose-bg);color:var(--rose);display:none;">Cancel Event</a>
+      </div>
+      <button class="form-btn form-btn-cancel" onclick="closeCalendlyDetail()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ECAS Detail Modal -->
+<div class="modal-overlay" id="ecasDetailModal">
+  <div class="modal-box wide">
+    <div class="modal-title" id="ecasDetailTitle">ECAS Submission</div>
+    <dl class="detail-grid" id="ecasDetailGrid"></dl>
+    <div class="detail-section" id="ecasDetailDepSection" style="display:none;">
+      <div class="detail-section-title">Dependents</div>
+      <div id="ecasDetailDep" style="font-size:13px;line-height:1.55;color:var(--gray-700);white-space:pre-wrap;"></div>
+    </div>
+    <div class="form-buttons">
+      <button class="form-btn form-btn-cancel" onclick="closeECASDetail()">Close</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const LOGIN_KEY='CEO_DASHBOARD_PWD';
-const SALES_DATA_KEY='ceo_sales_data';
-const TASKS_KEY='ceo_tasks';
-const NOTES_KEY='ceo_notes';
+const TASKS_KEY='ceo_tasks_v2';
+const NOTES_KEY='ceo_notes_v2';
 const AT_KEY='ceo_airtable_token';
+const CT_KEY='ceo_calendly_token';
 
 let salesChart=null;
 let currentNoteColor='yellow';
+let editingTaskId=null;
 
+// In-memory caches of loaded Airtable data so we can re-render with filters quickly.
+let salesRecords=[];
+let refundRecords=[];
+let eslRecords=[];
+let ecasRecords=[];
+let calendlyEvents=[];
+
+// ───────── AUTH ─────────
 function signIn(){
   const pwd=document.getElementById('pwdInput').value.trim();
   if(!pwd){document.getElementById('loginErr').textContent='Enter password';return;}
@@ -576,39 +839,51 @@ function signIn(){
     document.getElementById('loginErr').textContent='Incorrect password';
   }
 }
-
-function signOut(){
-  localStorage.removeItem(LOGIN_KEY);
-  location.reload();
-}
-
-function initDashboard(){
-  checkAuth();
-  const hasToken=!!localStorage.getItem(AT_KEY);
-  console.log('Token present:',hasToken);
-  if(hasToken){
-    console.log('Token (first 10 chars):', localStorage.getItem(AT_KEY).substring(0,10));
-  }
-  checkTokenSetup();
-  if(hasToken){
-    loadTasks();
-    loadNotes();
-    setDefaultDates();
-    startClock();
-    loadWeather();
-    loadNews();
-    loadSalesData();
-    loadRefundData();
-    loadESLData();
-    loadECASData();
-  }
-}
+function signOut(){localStorage.removeItem(LOGIN_KEY);location.reload();}
 
 function checkAuth(){
   if(!localStorage.getItem(LOGIN_KEY)){
     document.getElementById('loginGate').classList.remove('hidden');
     document.getElementById('app').classList.add('hidden');
   }
+}
+
+// ───────── INIT ─────────
+function initDashboard(){
+  checkAuth();
+  const hasToken=!!localStorage.getItem(AT_KEY);
+  console.log('Token present:',hasToken);
+  checkTokenSetup();
+  startClock();
+  loadWeather();
+  loadNews();
+  loadTasks();
+  loadNotes();
+  setDefaultDates();
+  if(hasToken){
+    loadSalesData();
+    loadRefundData();
+    loadESLData();
+    loadECASData();
+  }
+  if(localStorage.getItem(CT_KEY)){
+    loadCalendlyEvents();
+  }else{
+    document.getElementById('calendlyTableBody').innerHTML='<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--gray-400);">No Calendly token set. Click "Calendly Token" in the sidebar to connect.</td></tr>';
+    document.getElementById('kpiCalendly').textContent='—';
+    document.getElementById('kpiCalendlySub').textContent='Token not set';
+  }
+}
+
+function refreshAll(){
+  if(localStorage.getItem(AT_KEY)){
+    loadSalesData();
+    loadRefundData();
+    loadESLData();
+    loadECASData();
+  }
+  if(localStorage.getItem(CT_KEY))loadCalendlyEvents();
+  loadNews();
 }
 
 function checkTokenSetup(){
@@ -621,10 +896,7 @@ function checkTokenSetup(){
 
 function saveToken(){
   const token=document.getElementById('tokenInput').value.trim();
-  if(!token){
-    alert('Please enter your Airtable token');
-    return;
-  }
+  if(!token){alert('Please enter your Airtable token');return;}
   localStorage.setItem(AT_KEY,token);
   localStorage.setItem('ceo_token_setup_shown','true');
   document.getElementById('tokenModal').classList.remove('show');
@@ -637,9 +909,7 @@ function manageToken(){
   if(currentToken){
     document.getElementById('tokenStatus').style.display='block';
     document.getElementById('tokenStatus').textContent='✓ Token is configured ('+currentToken.substring(0,10)+'...)';
-  }else{
-    document.getElementById('tokenStatus').style.display='none';
-  }
+  }else{document.getElementById('tokenStatus').style.display='none';}
   document.getElementById('tokenModal').classList.add('show');
 }
 
@@ -655,219 +925,750 @@ function setDefaultDates(){
   document.getElementById('salesStartDate').value=thirtyDaysAgo.toISOString().split('T')[0];
 }
 
+function resetSalesFilter(){
+  setDefaultDates();
+  document.getElementById('salesOfficeFilter').value='';
+  renderSalesView();
+}
+
+// ───────── HELPERS ─────────
+function fmtMoney(n){if(n===null||n===undefined||isNaN(n))return '$0';return '$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});}
+function fmtMoneyDec(n){if(n===null||n===undefined||isNaN(n))return '$0.00';return '$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fmtDate(d){if(!d)return '—';try{const dt=new Date(d);if(isNaN(dt))return d;return dt.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});}catch(e){return d;}}
+function escHtml(s){if(s===null||s===undefined)return '';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function uniqSorted(arr){return [...new Set(arr.filter(x=>x))].sort((a,b)=>String(a).localeCompare(String(b)));}
+function fillSelect(selectId, options, currentValue){
+  const sel=document.getElementById(selectId);if(!sel)return;
+  const cur=currentValue!==undefined?currentValue:sel.value;
+  const firstLabel=sel.options[0]?sel.options[0].text:'All';
+  sel.innerHTML='<option value="">'+escHtml(firstLabel)+'</option>'+options.map(o=>'<option value="'+escHtml(o)+'"'+(o===cur?' selected':'')+'>'+escHtml(o)+'</option>').join('');
+}
+
+function fetchAirtable(baseId,tableId,callback,sortField){
+  const token=localStorage.getItem(AT_KEY);
+  if(!token){console.warn('No Airtable token found');callback(null);return;}
+  let url='https://api.airtable.com/v0/'+baseId+'/'+tableId+'?pageSize=100';
+  if(sortField){
+    url+='&sort%5B0%5D%5Bfield%5D='+encodeURIComponent(sortField)+'&sort%5B0%5D%5Bdirection%5D=desc';
+  }
+  console.log('Fetching:', url);
+  fetch(url,{headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'}})
+    .then(async r=>{
+      const text=await r.text();
+      console.log('Status:',r.status);
+      if(r.status===401){console.error('401 Unauthorized — invalid token');return null;}
+      if(r.status===403){console.error('403 Forbidden — token lacks scope or base access');return null;}
+      if(!r.ok){console.error('HTTP Error:',r.status,r.statusText,text.substring(0,200));return null;}
+      return JSON.parse(text);
+    })
+    .then(d=>callback(d))
+    .catch(e=>{console.error('Fetch error:',e);callback(null);});
+}
+
+// ───────── SALES ─────────
 function loadSalesData(){
-  console.log('loadSalesData called');
-  const baseId='appVKOmxf2xCvVwqX';
-  const tableId='tblpsxvI6HSYo3OWl';
-  fetchAirtable(baseId,tableId,function(data){
+  document.getElementById('salesTableBody').innerHTML='<tr><td colspan="9" style="text-align:center;padding:20px;color:var(--gray-400);">Loading sales data...</td></tr>';
+  fetchAirtable('appVKOmxf2xCvVwqX','tblpsxvI6HSYo3OWl',function(data){
     if(!data||!data.records){
-      console.warn('No sales data returned');
-      document.getElementById('salesTableBody').innerHTML='<tr><td colspan="4" style="color:var(--rose);">⚠ Unable to load sales data. Check token.</td></tr>';
-      return;
+      document.getElementById('salesTableBody').innerHTML='<tr><td colspan="9" style="color:var(--rose);text-align:center;padding:20px;">⚠ Unable to load sales data. Check token.</td></tr>';
+      document.getElementById('kpiTotalSales').textContent='—';return;
     }
-    const records=data.records;
-    let total=0;
-    const tableHTML=records.slice(0,20).map(r=>{
-      const fields=r.fields||{};
-      const amount=parseFloat(fields['Total'])||0;
-      total+=amount;
-      const officeField=fields['Office']||'—';
-      const office=Array.isArray(officeField)?officeField[0]:officeField;
-      return '<tr><td>'+office+'</td><td>'+(fields['Date']||'—')+'</td><td>$'+amount.toFixed(2)+'</td><td><span style="color:var(--green);">↑</span></td></tr>';
-    }).join('');
-    document.getElementById('salesTableBody').innerHTML=tableHTML||'<tr><td colspan="4">No records found</td></tr>';
-    document.getElementById('kpiTotalSales').textContent='$'+total.toFixed(0);
-    renderSalesChart(records);
-  });
+    salesRecords=data.records.map(r=>{
+      const f=r.fields||{};
+      return {
+        id:r.id,
+        date:f['Date']||r.createdTime||'',
+        office:typeof f['Office']==='object'?(f['Office']&&f['Office'].name)||'':(f['Office']||''),
+        staff:typeof f['Name of Staff Submitting the Report']==='object'?(f['Name of Staff Submitting the Report']&&f['Name of Staff Submitting the Report'].name)||'':(f['Name of Staff Submitting the Report']||''),
+        total:parseFloat(f['Total'])||0,
+        card:parseFloat(f['Card Sales'])||0,
+        cash:parseFloat(f['Cash Sales'])||0,
+        zelle:parseFloat(f['Zelle Sales'])||0,
+        check:parseFloat(f['Check Sales'])||0,
+        money:parseFloat(f['Money Order Sales'])||0,
+        cashapp:parseFloat(f['Cashapp Sales'])||parseFloat(f['Cashapp '])||0,
+        affirm:parseFloat(f['Affirm Financing'])||0,
+        newClients:parseInt(f['Total Number of New Clients for Today'])||0,
+      };
+    });
+    // Populate office filter from data
+    fillSelect('salesOfficeFilter', uniqSorted(salesRecords.map(r=>r.office)));
+    renderSalesView();
+  },'Date');
+}
+
+function renderSalesView(){
+  const start=document.getElementById('salesStartDate').value;
+  const end=document.getElementById('salesEndDate').value;
+  const office=document.getElementById('salesOfficeFilter').value;
+  let filtered=salesRecords.slice();
+  if(start)filtered=filtered.filter(r=>!r.date||r.date>=start);
+  if(end)filtered=filtered.filter(r=>!r.date||r.date<=end);
+  if(office)filtered=filtered.filter(r=>r.office===office);
+
+  // Already date-desc from server; ensure
+  filtered.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+
+  let total=0,clients=0;
+  const rows=filtered.map(r=>{
+    total+=r.total;clients+=r.newClients;
+    const other=(r.check+r.money+r.cashapp+r.affirm);
+    return '<tr>'+
+      '<td>'+escHtml(fmtDate(r.date))+'</td>'+
+      '<td>'+escHtml(r.office||'—')+'</td>'+
+      '<td>'+escHtml(r.staff||'—')+'</td>'+
+      '<td class="num">'+(r.newClients||0)+'</td>'+
+      '<td class="num">'+fmtMoney(r.card)+'</td>'+
+      '<td class="num">'+fmtMoney(r.cash)+'</td>'+
+      '<td class="num">'+fmtMoney(r.zelle)+'</td>'+
+      '<td class="num">'+fmtMoney(other)+'</td>'+
+      '<td class="num" style="color:var(--amber);">'+fmtMoney(r.total)+'</td>'+
+    '</tr>';
+  }).join('');
+  document.getElementById('salesTableBody').innerHTML=rows||'<tr><td colspan="9" style="text-align:center;padding:20px;color:var(--gray-400);">No matching sales records.</td></tr>';
+  document.getElementById('kpiTotalSales').textContent=fmtMoney(total);
+  document.getElementById('kpiTotalSalesSub').textContent=clients+' new clients · '+filtered.length+' reports';
+  document.getElementById('salesMeta').textContent=filtered.length+' rows';
+  renderSalesChart(filtered);
 }
 
 function renderSalesChart(records){
   const dates={};
   records.forEach(r=>{
-    const date=r.fields['Date']||'Unknown';
-    const amount=parseFloat(r.fields['Total'])||0;
-    dates[date]=(dates[date]||0)+amount;
+    if(!r.date)return;
+    dates[r.date]=(dates[r.date]||0)+r.total;
   });
-  const labels=Object.keys(dates).sort().slice(-30);
+  const labels=Object.keys(dates).sort();
   const data=labels.map(d=>dates[d]);
-
   const ctx=document.getElementById('salesChart').getContext('2d');
   if(salesChart)salesChart.destroy();
   salesChart=new Chart(ctx,{
     type:'line',
-    data:{labels,datasets:[{label:'Daily Sales',data,borderColor:'#e8a020',backgroundColor:'rgba(232,160,32,0.1)',borderWidth:2,fill:true,tension:0.4}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true}},scales:{y:{beginAtZero:true}}}
+    data:{labels:labels.map(d=>fmtDate(d)),datasets:[{label:'Daily Sales',data,borderColor:'#e8a020',backgroundColor:'rgba(232,160,32,0.12)',borderWidth:2,fill:true,tension:0.35,pointRadius:3,pointHoverRadius:5}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fmtMoneyDec(c.parsed.y)}}},scales:{y:{beginAtZero:true,ticks:{callback:v=>'$'+v.toLocaleString()}}}}
   });
 }
 
+// ───────── REFUNDS ─────────
 function loadRefundData(){
-  console.log('loadRefundData called');
-  const baseId='appqqwcCHCqt0052s';
-  const tableId='tblLT6so9xhE04uWe';
-  fetchAirtable(baseId,tableId,function(data){
+  document.getElementById('refundsTableBody').innerHTML='<tr><td colspan="9" style="text-align:center;padding:20px;color:var(--gray-400);">Loading refund requests...</td></tr>';
+  fetchAirtable('appqqwcCHCqt0052s','tblLT6so9xhE04uWe',function(data){
     if(!data||!data.records){
-      console.warn('No refund data returned');
-      document.getElementById('refundsTableBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--rose);">⚠ Unable to load refund requests</td></tr>';
-      return;
+      document.getElementById('refundsTableBody').innerHTML='<tr><td colspan="9" style="text-align:center;color:var(--rose);padding:20px;">⚠ Unable to load refund requests</td></tr>';
+      document.getElementById('kpiRefunds').textContent='—';return;
     }
-    const records=data.records;
-    let openCount=0;
-    const tableHTML=records.slice(0,15).map(r=>{
-      const fields=r.fields||{};
-      const status=fields['Approval Status']||'Pending';
-      if(status==='Pending'||status==='Open')openCount++;
-      const statusClass=status==='Approved'?'status-completed':status==='Denied'?'status-denied':'status-pending';
-      return '<tr><td>'+(fields['Client Name']||'—')+'</td><td>$'+(parseFloat(fields['Amount Requested'])||0).toFixed(2)+'</td><td>'+(fields['Request Date']||'—')+'</td><td><span class="status-badge '+statusClass+'">'+status+'</span></td></tr>';
-    }).join('');
-    document.getElementById('refundsTableBody').innerHTML=tableHTML||'<tr><td colspan="4">No refunds</td></tr>';
-    document.getElementById('kpiRefunds').textContent=openCount;
-  });
+    refundRecords=data.records.map(r=>{
+      const f=r.fields||{};
+      const obj=v=>typeof v==='object'?(v&&v.name)||'':(v||'');
+      return {
+        id:r.id,
+        requestNumber:f['Request Number']||'',
+        date:f['Request Date']||r.createdTime||'',
+        client:f['Client Name']||'',
+        email:f['Client Email Address']||'',
+        office:obj(f['Office']),
+        reason:obj(f['Reason for Refund']),
+        hireDate:f['Date of Hiring']||'',
+        service:f['Service Hired For']||'',
+        amount:parseFloat(f['Amount Requested'])||0,
+        manager:obj(f['Manager Requesting Refund']),
+        payment:obj(f['Original Payment Method']),
+        description:f['Description of What Occured']||'',
+        status:obj(f['Approval Status'])||'Pending',
+        managerReason:f['Reason']||'',
+        zellePhone:f['Zelle or Cashapp Phone Number for Refund']||'',
+      };
+    });
+    fillSelect('refundOfficeFilter', uniqSorted(refundRecords.map(r=>r.office)));
+    renderRefundsView();
+  },'Request Date');
 }
 
+function renderRefundsView(){
+  const status=document.getElementById('refundStatusFilter').value;
+  const office=document.getElementById('refundOfficeFilter').value;
+  let filtered=refundRecords.slice();
+  if(status)filtered=filtered.filter(r=>r.status===status);
+  if(office)filtered=filtered.filter(r=>r.office===office);
+  filtered.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+
+  let openCount=0;
+  const rows=filtered.map(r=>{
+    if(r.status==='Pending'||r.status==='Open'||!r.status)openCount++;
+    const cls=r.status==='Approved'?'status-approved':r.status==='Denied'?'status-denied':'status-pending';
+    return '<tr class="clickable" onclick="showRefundDetail(\''+r.id+'\')">'+
+      '<td>'+escHtml(fmtDate(r.date))+'</td>'+
+      '<td>'+escHtml(r.client||'—')+'</td>'+
+      '<td>'+escHtml(r.office||'—')+'</td>'+
+      '<td>'+escHtml(r.service||'—')+'</td>'+
+      '<td>'+escHtml(r.reason||'—')+'</td>'+
+      '<td>'+escHtml(r.manager||'—')+'</td>'+
+      '<td>'+escHtml(r.payment||'—')+'</td>'+
+      '<td class="num">'+fmtMoneyDec(r.amount)+'</td>'+
+      '<td><span class="status-badge '+cls+'">'+escHtml(r.status||'Pending')+'</span></td>'+
+    '</tr>';
+  }).join('');
+  document.getElementById('refundsTableBody').innerHTML=rows||'<tr><td colspan="9" style="text-align:center;padding:20px;color:var(--gray-400);">No matching refund requests.</td></tr>';
+
+  // KPI: open count from full list, not filtered
+  const allOpen=refundRecords.filter(r=>r.status==='Pending'||r.status==='Open'||!r.status).length;
+  document.getElementById('kpiRefunds').textContent=allOpen;
+  document.getElementById('kpiRefundsSub').textContent=refundRecords.length+' total · '+allOpen+' open';
+  document.getElementById('refundsMeta').textContent=filtered.length+' rows';
+}
+
+function showRefundDetail(id){
+  const r=refundRecords.find(x=>x.id===id);if(!r)return;
+  document.getElementById('refundDetailTitle').textContent='Refund Request '+(r.requestNumber?'#'+r.requestNumber:'');
+  document.getElementById('refundDetailSub').textContent=r.client+(r.email?' · '+r.email:'');
+  const items=[
+    ['Request Date',fmtDate(r.date)],
+    ['Office',r.office||'—'],
+    ['Service Hired For',r.service||'—'],
+    ['Date of Hiring',fmtDate(r.hireDate)],
+    ['Reason for Refund',r.reason||'—'],
+    ['Manager Requesting',r.manager||'—'],
+    ['Original Payment Method',r.payment||'—'],
+    ['Amount Requested',fmtMoneyDec(r.amount)],
+    ['Approval Status',r.status||'Pending'],
+    ['Refund Phone (Zelle/Cashapp)',r.zellePhone||'—'],
+  ];
+  document.getElementById('refundDetailGrid').innerHTML=items.map(it=>'<dt>'+escHtml(it[0])+'</dt><dd>'+escHtml(it[1])+'</dd>').join('');
+  if(r.description){document.getElementById('refundDetailDescSection').style.display='block';document.getElementById('refundDetailDesc').textContent=r.description;}
+  else document.getElementById('refundDetailDescSection').style.display='none';
+  if(r.managerReason){document.getElementById('refundDetailReasonSection').style.display='block';document.getElementById('refundDetailReason').textContent=r.managerReason;}
+  else document.getElementById('refundDetailReasonSection').style.display='none';
+  document.getElementById('refundDetailModal').classList.add('show');
+}
+function closeRefundDetail(){document.getElementById('refundDetailModal').classList.remove('show');}
+
+// ───────── ESL ─────────
 function loadESLData(){
-  console.log('loadESLData called');
-  const baseId='appT8CRulW5zqPQqM';
-  const tableId='tbl3HkLKk7TsRLIhw';
-  fetchAirtable(baseId,tableId,function(data){
+  document.getElementById('eslTableBody').innerHTML='<tr><td colspan="9" style="text-align:center;padding:20px;color:var(--gray-400);">Loading signups...</td></tr>';
+  fetchAirtable('appT8CRulW5zqPQqM','tbl3HkLKk7TsRLIhw',function(data){
     if(!data||!data.records){
-      console.warn('No ESL data returned');
-      document.getElementById('eslTableBody').innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--rose);">⚠ Unable to load ESL signups</td></tr>';
-      return;
+      document.getElementById('eslTableBody').innerHTML='<tr><td colspan="9" style="text-align:center;color:var(--rose);padding:20px;">⚠ Unable to load ESL signups</td></tr>';
+      document.getElementById('kpiESL').textContent='—';return;
     }
-    const records=data.records;
-    let eslCount=records.length;
-    const tableHTML=records.slice(0,15).map(r=>{
-      const fields=r.fields||{};
-      const program=fields.Course||'ESL';
-      const date=r.createdTime?r.createdTime.substring(0,10):'—';
-      return '<tr><td>'+(fields.Name||'—')+'</td><td>'+program+'</td><td>'+(fields.Email||'—')+'</td><td>'+(fields['Phone Number']||'—')+'</td><td>'+date+'</td></tr>';
-    }).join('');
-    document.getElementById('eslTableBody').innerHTML=tableHTML||'<tr><td colspan="5">No signups</td></tr>';
-    document.getElementById('kpiESL').textContent=eslCount;
+    eslRecords=data.records.map(r=>{
+      const f=r.fields||{};
+      const obj=v=>typeof v==='object'?(v&&v.name)||'':(v||'');
+      return {
+        id:r.id,
+        date:r.createdTime||'',
+        name:f['Name']||'',
+        phone:f['Phone Number']||'',
+        email:f['Email']||'',
+        country:f['Country']||'',
+        language:f['Language']||'',
+        heard:obj(f['How Did You Hear About Us']),
+        course:obj(f['Course']),
+        location:obj(f['Location']),
+      };
+    });
+    fillSelect('eslCourseFilter', uniqSorted(eslRecords.map(r=>r.course)));
+    fillSelect('eslLocationFilter', uniqSorted(eslRecords.map(r=>r.location)));
+    fillSelect('eslLanguageFilter', uniqSorted(eslRecords.map(r=>r.language)));
+    renderESLView();
   });
 }
 
+function renderESLView(){
+  const c=document.getElementById('eslCourseFilter').value;
+  const loc=document.getElementById('eslLocationFilter').value;
+  const lang=document.getElementById('eslLanguageFilter').value;
+  let filtered=eslRecords.slice();
+  if(c)filtered=filtered.filter(r=>r.course===c);
+  if(loc)filtered=filtered.filter(r=>r.location===loc);
+  if(lang)filtered=filtered.filter(r=>r.language===lang);
+  filtered.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+
+  const rows=filtered.map(r=>{
+    return '<tr>'+
+      '<td>'+escHtml(fmtDate(r.date))+'</td>'+
+      '<td><strong>'+escHtml(r.name||'—')+'</strong></td>'+
+      '<td>'+(r.course?'<span class="status-badge status-info">'+escHtml(r.course)+'</span>':'<span class="muted">—</span>')+'</td>'+
+      '<td>'+escHtml(r.country||'—')+'</td>'+
+      '<td>'+escHtml(r.language||'—')+'</td>'+
+      '<td>'+escHtml(r.heard||'—')+'</td>'+
+      '<td>'+escHtml(r.location||'—')+'</td>'+
+      '<td>'+(r.email?'<a href="mailto:'+escHtml(r.email)+'" style="color:var(--teal);text-decoration:none;">'+escHtml(r.email)+'</a>':'<span class="muted">—</span>')+'</td>'+
+      '<td>'+(r.phone?'<a href="tel:'+escHtml(r.phone)+'" style="color:var(--gray-700);text-decoration:none;">'+escHtml(r.phone)+'</a>':'<span class="muted">—</span>')+'</td>'+
+    '</tr>';
+  }).join('');
+  document.getElementById('eslTableBody').innerHTML=rows||'<tr><td colspan="9" style="text-align:center;padding:20px;color:var(--gray-400);">No matching signups.</td></tr>';
+
+  document.getElementById('kpiESL').textContent=eslRecords.length;
+  // count this month
+  const now=new Date();const monthStart=new Date(now.getFullYear(),now.getMonth(),1).toISOString().split('T')[0];
+  const thisMonth=eslRecords.filter(r=>(r.date||'').substring(0,10)>=monthStart).length;
+  document.getElementById('kpiESLSub').textContent=thisMonth+' this month · '+eslRecords.length+' all-time';
+  document.getElementById('eslMeta').textContent=filtered.length+' rows';
+}
+
+// ───────── ECAS ─────────
 function loadECASData(){
-  console.log('loadECASData called');
-  const baseId='appeUvC8eggzVvNyG';
-  const tableId='tblByDLJ90v5x0R8r';
-  fetchAirtable(baseId,tableId,function(data){
+  document.getElementById('ecasTableBody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--gray-400);">Loading submissions...</td></tr>';
+  fetchAirtable('appeUvC8eggzVvNyG','tblByDLJ90v5x0R8r',function(data){
     if(!data||!data.records){
-      console.warn('No ECAS data returned');
-      document.getElementById('ecasTableBody').innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--rose);">⚠ Unable to load ECAS submissions</td></tr>';
-      return;
+      document.getElementById('ecasTableBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--rose);padding:20px;">⚠ Unable to load ECAS submissions</td></tr>';
+      document.getElementById('kpiECAS').textContent='—';return;
     }
-    const records=data.records;
-    let submitCount=records.length;
-    const tableHTML=records.slice(0,15).map(r=>{
-      const fields=r.fields||{};
-      const type=fields.Type||'Pending';
-      const statusClass=type==='Completed'?'status-completed':type==='Denied'?'status-denied':'status-pending';
-      return '<tr><td>'+(fields['A-Number']||'—')+'</td><td>'+(fields['Client Name']||'—')+'</td><td>'+(fields['Office']||'—')+'</td><td><span class="status-badge '+statusClass+'">'+type+'</span></td></tr>';
-    }).join('');
-    document.getElementById('ecasTableBody').innerHTML=tableHTML||'<tr><td colspan="4">No submissions</td></tr>';
-    document.getElementById('kpiECAS').textContent=submitCount;
+    ecasRecords=data.records.map(r=>{
+      const f=r.fields||{};
+      const obj=v=>typeof v==='object'?(v&&v.name)||'':(v||'');
+      return {
+        id:r.id,
+        date:r.createdTime||'',
+        aNumber:f['A-Number']||'',
+        client:f['Client Name']||'',
+        office:obj(f['Office']),
+        employee:f['Employee Name']||'',
+        clientAddress:f['Client Address']||'',
+        dependents:f['Dependent Names and A-Number']||'',
+        type:obj(f['Type']),
+      };
+    });
+    fillSelect('ecasOfficeFilter', uniqSorted(ecasRecords.map(r=>r.office)));
+    fillSelect('ecasTypeFilter', uniqSorted(ecasRecords.map(r=>r.type)));
+    renderECASView();
   });
 }
 
-function loadSalesChart(){
-  loadSalesData();
+function renderECASView(){
+  const office=document.getElementById('ecasOfficeFilter').value;
+  const type=document.getElementById('ecasTypeFilter').value;
+  let filtered=ecasRecords.slice();
+  if(office)filtered=filtered.filter(r=>r.office===office);
+  if(type)filtered=filtered.filter(r=>r.type===type);
+  filtered.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+
+  const rows=filtered.map(r=>{
+    const dep=r.dependents?(r.dependents.split('\n').filter(Boolean).length||1):0;
+    return '<tr class="clickable" onclick="showECASDetail(\''+r.id+'\')">'+
+      '<td>'+escHtml(fmtDate(r.date))+'</td>'+
+      '<td><span style="font-family:monospace;font-size:12px;">'+escHtml(r.aNumber||'—')+'</span></td>'+
+      '<td><strong>'+escHtml(r.client||'—')+'</strong></td>'+
+      '<td>'+escHtml(r.office||'—')+'</td>'+
+      '<td>'+escHtml(r.employee||'—')+'</td>'+
+      '<td>'+(r.type?'<span class="status-badge status-info">'+escHtml(r.type)+'</span>':'<span class="muted">—</span>')+'</td>'+
+      '<td>'+(dep>0?dep+' dep.':'<span class="muted">none</span>')+'</td>'+
+    '</tr>';
+  }).join('');
+  document.getElementById('ecasTableBody').innerHTML=rows||'<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--gray-400);">No matching submissions.</td></tr>';
+  document.getElementById('kpiECAS').textContent=ecasRecords.length;
+  document.getElementById('kpiECASSub').textContent=filtered.length+' shown · '+ecasRecords.length+' total';
+  document.getElementById('ecasMeta').textContent=filtered.length+' rows';
 }
 
-function fetchAirtable(baseId,tableId,callback){
-  const token=localStorage.getItem(AT_KEY);
-  if(!token){
-    console.warn('No Airtable token found');
-    callback(null);
-    return;
-  }
-  const url='https://api.airtable.com/v0/'+baseId+'/'+tableId+'?pageSize=100';
-  console.log('Fetching from:', url);
-  fetch(url,{
-    headers:{
-      'Authorization':'Bearer '+token,
-      'Content-Type':'application/json'
-    }
-  }).then(async r=>{
-    const text=await r.text();
-    console.log('Status:',r.status,'Response:',text.substring(0,200));
-    if(r.status===401){
-      console.error('401 Unauthorized - Token may be invalid or expired');
-      return null;
-    }
-    if(!r.ok){
-      console.error('HTTP Error:',r.status,r.statusText);
-      return null;
-    }
-    return JSON.parse(text);
-  }).then(d=>callback(d)).catch(e=>{console.error('Fetch error:',e);callback(null);});
+function showECASDetail(id){
+  const r=ecasRecords.find(x=>x.id===id);if(!r)return;
+  document.getElementById('ecasDetailTitle').textContent='ECAS Submission · '+(r.client||'—');
+  const items=[
+    ['Submitted',fmtDate(r.date)],
+    ['A-Number',r.aNumber||'—'],
+    ['Client Name',r.client||'—'],
+    ['Office',r.office||'—'],
+    ['Submitted By',r.employee||'—'],
+    ['Type',r.type||'—'],
+    ['Client Address',r.clientAddress||'—'],
+  ];
+  document.getElementById('ecasDetailGrid').innerHTML=items.map(it=>'<dt>'+escHtml(it[0])+'</dt><dd>'+escHtml(it[1])+'</dd>').join('');
+  if(r.dependents){document.getElementById('ecasDetailDepSection').style.display='block';document.getElementById('ecasDetailDep').textContent=r.dependents;}
+  else document.getElementById('ecasDetailDepSection').style.display='none';
+  document.getElementById('ecasDetailModal').classList.add('show');
 }
+function closeECASDetail(){document.getElementById('ecasDetailModal').classList.remove('show');}
 
+// ───────── TASKS ─────────
 function loadTasks(){
   const tasks=JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');
-  const html=tasks.map((t,i)=>'<tr><td>'+t.name+'</td><td><span class="status-badge" style="background:rgba(232,160,32,0.12);color:var(--amber);">'+t.priority+'</span></td><td><span class="status-badge status-pending">Pending</span></td><td>'+t.due+'</td></tr>').join('');
-  document.getElementById('tasksTableBody').innerHTML=html||'<tr><td colspan="4" style="text-align:center;color:var(--gray-400);">No tasks yet</td></tr>';
-}
-
-function loadNotes(){
-  const notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');
-  const html=notes.map(n=>'<div class="memo-item memo-'+n.color+'">'+n.text+'</div>').join('');
-  document.getElementById('notesGrid').innerHTML=html||'<div style="padding:20px;color:var(--gray-400);grid-column:1/-1;text-align:center;">No notes yet</div>';
+  const filter=document.getElementById('taskFilter')?document.getElementById('taskFilter').value:'all';
+  let list=tasks.slice();
+  if(filter==='open')list=list.filter(t=>!t.completed);
+  if(filter==='completed')list=list.filter(t=>t.completed);
+  list.sort((a,b)=>{
+    if(a.completed!==b.completed)return a.completed?1:-1;
+    return (a.due||'').localeCompare(b.due||'');
+  });
+  const html=list.map(t=>{
+    const cls=t.priority==='High'?'priority-high':t.priority==='Low'?'priority-low':'priority-medium';
+    const due=t.due?fmtDate(t.due):'<span class="muted">No date</span>';
+    const overdue=t.due&&!t.completed&&new Date(t.due)<new Date(new Date().toDateString());
+    return '<tr'+(t.completed?' class="task-completed"':'')+'>'+
+      '<td><input type="checkbox" '+(t.completed?'checked':'')+' onchange="toggleTask(\''+t.id+'\')" style="cursor:pointer;width:16px;height:16px;"></td>'+
+      '<td>'+escHtml(t.name)+'</td>'+
+      '<td><span class="status-badge '+cls+'">'+escHtml(t.priority||'Medium')+'</span></td>'+
+      '<td'+(overdue?' style="color:var(--rose);font-weight:600;"':'')+'>'+due+(overdue?' <span style="font-size:10px;text-transform:uppercase;">Overdue</span>':'')+'</td>'+
+      '<td><div class="task-actions">'+
+        '<button class="icon-btn" title="Edit" onclick="editTask(\''+t.id+'\')"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>'+
+        '<button class="icon-btn danger" title="Delete" onclick="deleteTask(\''+t.id+'\')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>'+
+      '</div></td>'+
+    '</tr>';
+  }).join('');
+  document.getElementById('tasksTableBody').innerHTML=html||'<tr><td colspan="5" style="text-align:center;color:var(--gray-400);padding:20px;">No tasks yet — add your first one above.</td></tr>';
+  const open=tasks.filter(t=>!t.completed).length;
+  document.getElementById('tasksMeta').textContent=open+' open / '+tasks.length+' total';
 }
 
 function showTaskModal(){
+  editingTaskId=null;
+  document.getElementById('taskModalTitle').textContent='Add New Task';
+  document.getElementById('taskName').value='';
+  document.getElementById('taskPriority').value='Medium';
+  document.getElementById('taskDue').value='';
+  document.getElementById('taskDeleteBtn').style.display='none';
   document.getElementById('taskModal').classList.add('show');
 }
 
-function closeTaskModal(){
-  document.getElementById('taskModal').classList.remove('show');
+function editTask(id){
+  const tasks=JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');
+  const t=tasks.find(x=>x.id===id);if(!t)return;
+  editingTaskId=id;
+  document.getElementById('taskModalTitle').textContent='Edit Task';
+  document.getElementById('taskName').value=t.name||'';
+  document.getElementById('taskPriority').value=t.priority||'Medium';
+  document.getElementById('taskDue').value=t.due||'';
+  document.getElementById('taskDeleteBtn').style.display='inline-block';
+  document.getElementById('taskModal').classList.add('show');
 }
+
+function closeTaskModal(){document.getElementById('taskModal').classList.remove('show');editingTaskId=null;}
 
 function saveTask(){
   const name=document.getElementById('taskName').value.trim();
   const priority=document.getElementById('taskPriority').value;
   const due=document.getElementById('taskDue').value;
-  if(!name)return;
+  if(!name){alert('Please enter a task name');return;}
   const tasks=JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');
-  tasks.push({name,priority,due});
+  if(editingTaskId){
+    const idx=tasks.findIndex(t=>t.id===editingTaskId);
+    if(idx>=0)tasks[idx]={...tasks[idx],name,priority,due};
+  }else{
+    tasks.push({id:Date.now()+'_'+Math.random().toString(36).slice(2,8),name,priority,due,completed:false,created:Date.now()});
+  }
+  localStorage.setItem(TASKS_KEY,JSON.stringify(tasks));
+  loadTasks();closeTaskModal();
+}
+
+function deleteTask(id){
+  if(!confirm('Delete this task?'))return;
+  const tasks=JSON.parse(localStorage.getItem(TASKS_KEY)||'[]').filter(t=>t.id!==id);
   localStorage.setItem(TASKS_KEY,JSON.stringify(tasks));
   loadTasks();
-  closeTaskModal();
-  document.getElementById('taskName').value='';
+}
+function deleteEditingTask(){if(editingTaskId){deleteTask(editingTaskId);closeTaskModal();}}
+
+function toggleTask(id){
+  const tasks=JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');
+  const t=tasks.find(x=>x.id===id);if(!t)return;
+  t.completed=!t.completed;
+  localStorage.setItem(TASKS_KEY,JSON.stringify(tasks));
+  loadTasks();
+}
+
+// ───────── NOTES ─────────
+function loadNotes(){
+  const notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');
+  notes.sort((a,b)=>(b.created||0)-(a.created||0));
+  const html=notes.map(n=>{
+    const dt=n.created?new Date(n.created).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'';
+    return '<div class="memo-item memo-'+escHtml(n.color||'yellow')+'">'+
+      '<button class="memo-delete" title="Delete" onclick="deleteNote(\''+n.id+'\')">×</button>'+
+      escHtml(n.text)+
+      '<div class="memo-meta">'+escHtml(dt)+'</div>'+
+    '</div>';
+  }).join('');
+  document.getElementById('notesGrid').innerHTML=html||'<div style="padding:30px;color:var(--gray-400);grid-column:1/-1;text-align:center;font-family:Inter,sans-serif;">No notes yet — pin one to your board.</div>';
+  document.getElementById('notesMeta').textContent=notes.length+' note'+(notes.length===1?'':'s');
 }
 
 function showNoteModal(){
+  document.getElementById('noteModalTitle').textContent='Add Quick Note';
+  document.getElementById('noteText').value='';
+  setNoteColor('yellow');
   document.getElementById('noteModal').classList.add('show');
 }
-
-function closeNoteModal(){
-  document.getElementById('noteModal').classList.remove('show');
-}
-
+function closeNoteModal(){document.getElementById('noteModal').classList.remove('show');}
 function setNoteColor(color){
   currentNoteColor=color;
+  document.querySelectorAll('#noteColorPicker button').forEach(b=>{
+    b.style.borderColor=b.dataset.color===color?'var(--navy)':'transparent';
+  });
 }
-
 function saveNote(){
   const text=document.getElementById('noteText').value.trim();
   if(!text)return;
   const notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');
-  notes.push({text,color:currentNoteColor});
+  notes.push({id:Date.now()+'_'+Math.random().toString(36).slice(2,8),text,color:currentNoteColor,created:Date.now()});
+  localStorage.setItem(NOTES_KEY,JSON.stringify(notes));
+  loadNotes();closeNoteModal();
+}
+function deleteNote(id){
+  const notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]').filter(n=>n.id!==id);
   localStorage.setItem(NOTES_KEY,JSON.stringify(notes));
   loadNotes();
-  closeNoteModal();
-  document.getElementById('noteText').value='';
-  currentNoteColor='yellow';
 }
 
-function scrollSec(secId){
-  document.getElementById(secId).scrollIntoView({behavior:'smooth'});
+// ───────── CALENDLY ─────────
+function manageCalendlyToken(){
+  const cur=localStorage.getItem(CT_KEY);
+  document.getElementById('calendlyTokenInput').value=cur||'';
+  if(cur){
+    document.getElementById('calendlyTokenStatus').style.display='block';
+    document.getElementById('calendlyTokenStatus').textContent='✓ Token is configured ('+cur.substring(0,12)+'...)';
+  }else{document.getElementById('calendlyTokenStatus').style.display='none';}
+  document.getElementById('calendlyTokenModal').classList.add('show');
 }
+function closeCalendlyTokenModal(){document.getElementById('calendlyTokenModal').classList.remove('show');}
+function saveCalendlyToken(){
+  const t=document.getElementById('calendlyTokenInput').value.trim();
+  if(!t){alert('Please paste your Calendly token');return;}
+  localStorage.setItem(CT_KEY,t);
+  closeCalendlyTokenModal();
+  loadCalendlyEvents();
+}
+
+// Decode user_uuid from the JWT payload (no users:read scope needed)
+function calendlyUserUri(token){
+  try{
+    const parts=token.split('.');
+    if(parts.length<2)return null;
+    let p=parts[1].replace(/-/g,'+').replace(/_/g,'/');
+    while(p.length%4)p+='=';
+    const json=JSON.parse(atob(p));
+    if(json.user_uuid)return 'https://api.calendly.com/users/'+json.user_uuid;
+  }catch(e){console.warn('Cannot parse Calendly token:',e);}
+  return null;
+}
+
+function calendlyHeaders(){
+  return {'Authorization':'Bearer '+localStorage.getItem(CT_KEY),'Content-Type':'application/json'};
+}
+
+function loadCalendlyEvents(){
+  const token=localStorage.getItem(CT_KEY);
+  if(!token){document.getElementById('calendlyTableBody').innerHTML='<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--gray-400);">No Calendly token set.</td></tr>';return;}
+  const userUri=calendlyUserUri(token);
+  if(!userUri){
+    document.getElementById('calendlyTableBody').innerHTML='<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--rose);">⚠ Token format unrecognized. Generate a new Personal Access Token at calendly.com/integrations/api_webhooks.</td></tr>';
+    return;
+  }
+  document.getElementById('calendlyTableBody').innerHTML='<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--gray-400);">Loading upcoming events...</td></tr>';
+  document.getElementById('calendlyMeta').textContent='Loading...';
+  const now=new Date().toISOString();
+  const params=new URLSearchParams({user:userUri,status:'active',min_start_time:now,'sort':'start_time:asc',count:'50'});
+  fetch('https://api.calendly.com/scheduled_events?'+params.toString(),{headers:calendlyHeaders()})
+    .then(async r=>{
+      const txt=await r.text();
+      if(r.status===401){document.getElementById('calendlyTableBody').innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--rose);padding:20px;">⚠ Calendly token rejected (401). Click "Calendly Token" to update.</td></tr>';return null;}
+      if(r.status===403){document.getElementById('calendlyTableBody').innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--rose);padding:20px;">⚠ Calendly token missing required scopes (need scheduled_events:read).</td></tr>';return null;}
+      if(!r.ok){console.error('Calendly error:',r.status,txt);return null;}
+      try{return JSON.parse(txt);}catch(e){console.error('Parse error:',e);return null;}
+    })
+    .then(d=>{
+      if(!d||!d.collection){
+        document.getElementById('calendlyMeta').textContent='Unable to load';
+        document.getElementById('kpiCalendly').textContent='—';
+        return;
+      }
+      // Map raw events to lighter objects
+      calendlyEvents=d.collection.map(ev=>{
+        const host=(ev.event_memberships&&ev.event_memberships[0])||{};
+        const loc=ev.location||{};
+        return {
+          uri:ev.uri,
+          uuid:ev.uri?ev.uri.split('/').pop():'',
+          name:ev.name||'Calendly Event',
+          start:ev.start_time,
+          end:ev.end_time,
+          status:ev.status,
+          locType:loc.type||'',
+          locValue:loc.location||loc.join_url||'',
+          locInfo:loc.additional_info||'',
+          hostName:host.user_name||'',
+          hostEmail:host.user_email||'',
+          inviteeCount:(ev.invitees_counter&&ev.invitees_counter.active)||0,
+          eventTypeUri:ev.event_type||'',
+          // Filled in later by fetchInvitees:
+          invitee:null
+        };
+      });
+      // Populate filters from event names (treating prefix before \n as branch)
+      const branches=uniqSorted(calendlyEvents.map(e=>{const i=(e.name||'').indexOf('\n');return i>0?e.name.substring(0,i):e.name;}));
+      fillSelect('calendlyBranchFilter', branches);
+      const locTypes=uniqSorted(calendlyEvents.map(e=>e.locType));
+      fillSelect('calendlyLocationFilter', locTypes);
+      // Render immediately with what we have
+      renderCalendlyView();
+      // Then fetch invitees in parallel (only first ~30 to be polite to API)
+      const toFetch=calendlyEvents.slice(0,30);
+      Promise.all(toFetch.map(ev=>fetchEventInvitees(ev))).then(()=>renderCalendlyView());
+    })
+    .catch(e=>{
+      console.error('Calendly fetch error:',e);
+      document.getElementById('calendlyTableBody').innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--rose);padding:20px;">⚠ Network error loading Calendly. Check console.</td></tr>';
+    });
+}
+
+function fetchEventInvitees(ev){
+  if(!ev||!ev.uri)return Promise.resolve();
+  return fetch(ev.uri+'/invitees',{headers:calendlyHeaders()})
+    .then(r=>r.ok?r.json():null)
+    .then(d=>{
+      if(d&&d.collection&&d.collection.length>0){
+        const inv=d.collection[0];
+        ev.invitee={
+          name:inv.name||'',
+          email:inv.email||'',
+          status:inv.status||'',
+          rescheduleUrl:inv.reschedule_url||'',
+          cancelUrl:inv.cancel_url||'',
+          qa:Array.isArray(inv.questions_and_answers)?inv.questions_and_answers:[]
+        };
+      }
+    })
+    .catch(e=>console.warn('Invitee fetch failed for',ev.uri,e));
+}
+
+function calendlyQA(ev,keywordList){
+  if(!ev.invitee||!ev.invitee.qa)return '';
+  for(const kw of keywordList){
+    const m=ev.invitee.qa.find(x=>x.question&&x.question.toLowerCase().includes(kw.toLowerCase()));
+    if(m&&m.answer)return m.answer;
+  }
+  return '';
+}
+
+function fmtCalendlyWhen(iso){
+  if(!iso)return '—';
+  try{
+    const d=new Date(iso);
+    return d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+  }catch(e){return iso;}
+}
+
+function locTypePretty(t){
+  const m={'physical':'In-person','google_conference':'Google Meet','zoom':'Zoom','microsoft_teams_conference':'MS Teams','outbound_call':'Phone (we call)','inbound_call':'Phone (they call)','webex':'Webex','custom':'Custom','ask_invitee':'Ask invitee','gotomeeting':'GoToMeeting'};
+  return m[t]||t||'—';
+}
+
+function locDisplay(ev){
+  if(!ev.locType)return '<span class="muted">—</span>';
+  const pretty=locTypePretty(ev.locType);
+  if(ev.locType==='physical'&&ev.locValue){
+    return '<div style="font-size:11px;color:var(--gray-500);font-weight:600;text-transform:uppercase;letter-spacing:0.3px;">'+escHtml(pretty)+'</div><div>'+escHtml(ev.locValue)+'</div>';
+  }
+  if((ev.locType==='zoom'||ev.locType==='google_conference'||ev.locType==='microsoft_teams_conference')&&ev.locValue){
+    return '<a href="'+escHtml(ev.locValue)+'" target="_blank" rel="noopener" style="color:var(--teal);text-decoration:none;font-weight:600;">'+escHtml(pretty)+' →</a>';
+  }
+  return escHtml(pretty);
+}
+
+function renderCalendlyView(){
+  const range=document.getElementById('calendlyRangeFilter').value;
+  const branch=document.getElementById('calendlyBranchFilter').value;
+  const locTypeF=document.getElementById('calendlyLocationFilter').value;
+  let filtered=calendlyEvents.slice();
+  if(range&&range!=='all'){
+    const days=parseInt(range);
+    const cutoff=new Date(Date.now()+days*86400000).toISOString();
+    filtered=filtered.filter(e=>e.start&&e.start<=cutoff);
+  }
+  if(branch)filtered=filtered.filter(e=>{const i=(e.name||'').indexOf('\n');const b=i>0?e.name.substring(0,i):e.name;return b===branch;});
+  if(locTypeF)filtered=filtered.filter(e=>e.locType===locTypeF);
+
+  const rows=filtered.map(ev=>{
+    const i=(ev.name||'').indexOf('\n');
+    const branchName=i>0?ev.name.substring(0,i):ev.name;
+    const sub=i>0?ev.name.substring(i+1):'';
+    const inviteeName=ev.invitee?ev.invitee.name:'<span class="muted">Loading…</span>';
+    const phone=calendlyQA(ev,['phone','phone number']);
+    const service=calendlyQA(ev,['immigration type','service','consultation','reason']);
+    const heard=calendlyQA(ev,['hear about','heard from','find us']);
+    return '<tr class="clickable" onclick="showCalendlyDetail(\''+ev.uri+'\')">'+
+      '<td><div style="font-weight:600;color:var(--navy);">'+escHtml(fmtCalendlyWhen(ev.start))+'</div>'+
+        '<div style="font-size:10px;color:var(--gray-400);">'+escHtml(relativeWhen(ev.start))+'</div></td>'+
+      '<td><div style="font-weight:600;color:var(--navy);">'+escHtml(branchName)+'</div>'+
+        (sub?'<div style="font-size:11px;color:var(--gray-500);">'+escHtml(sub)+'</div>':'')+'</td>'+
+      '<td>'+(typeof inviteeName==='string'&&inviteeName.startsWith('<')?inviteeName:'<strong>'+escHtml(inviteeName)+'</strong>'+(ev.invitee&&ev.invitee.email?'<div style="font-size:11px;color:var(--gray-500);">'+escHtml(ev.invitee.email)+'</div>':''))+'</td>'+
+      '<td>'+(phone?'<a href="tel:'+escHtml(phone)+'" style="color:var(--gray-700);text-decoration:none;">'+escHtml(phone)+'</a>':'<span class="muted">—</span>')+'</td>'+
+      '<td>'+(service?escHtml(service):'<span class="muted">—</span>')+'</td>'+
+      '<td>'+(heard?escHtml(heard):'<span class="muted">—</span>')+'</td>'+
+      '<td>'+locDisplay(ev)+'</td>'+
+      '<td><div style="font-size:12px;">'+escHtml(ev.hostName||'—')+'</div></td>'+
+    '</tr>';
+  }).join('');
+  document.getElementById('calendlyTableBody').innerHTML=rows||'<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--gray-400);">No upcoming events match these filters.</td></tr>';
+
+  // KPI: events in next 7 days
+  const cutoff7=new Date(Date.now()+7*86400000).toISOString();
+  const next7=calendlyEvents.filter(e=>e.start&&e.start<=cutoff7).length;
+  document.getElementById('kpiCalendly').textContent=next7;
+  document.getElementById('kpiCalendlySub').textContent=calendlyEvents.length+' total upcoming · '+next7+' in next 7d';
+  document.getElementById('calendlyMeta').textContent=filtered.length+' showing';
+}
+
+function relativeWhen(iso){
+  if(!iso)return '';
+  const d=new Date(iso);const diff=d-Date.now();
+  const days=Math.floor(diff/86400000);
+  const hours=Math.floor(diff/3600000);
+  if(diff<0)return 'past';
+  if(hours<1)return 'in <1 hour';
+  if(hours<24)return 'in '+hours+'h';
+  if(days<7)return 'in '+days+' day'+(days===1?'':'s');
+  if(days<30)return 'in '+Math.floor(days/7)+' week'+(Math.floor(days/7)===1?'':'s');
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+}
+
+function showCalendlyDetail(uri){
+  const ev=calendlyEvents.find(x=>x.uri===uri);if(!ev)return;
+  const i=(ev.name||'').indexOf('\n');
+  const branchName=i>0?ev.name.substring(0,i):ev.name;
+  const sub=i>0?ev.name.substring(i+1):'';
+  document.getElementById('calendlyDetailTitle').textContent=branchName+(sub?' · '+sub:'');
+  document.getElementById('calendlyDetailSub').textContent=fmtCalendlyWhen(ev.start)+' · '+relativeWhen(ev.start);
+
+  const items=[
+    ['Start',new Date(ev.start).toLocaleString('en-US',{weekday:'long',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'})],
+    ['End',ev.end?new Date(ev.end).toLocaleString('en-US',{hour:'numeric',minute:'2-digit',timeZoneName:'short'}):'—'],
+    ['Location Type',locTypePretty(ev.locType)],
+    ['Location',ev.locValue||'—'],
+    ['Host',ev.hostName+(ev.hostEmail?' · '+ev.hostEmail:'')],
+    ['Status',ev.status||'—'],
+  ];
+  if(ev.invitee){
+    items.push(['Invitee',ev.invitee.name||'—']);
+    items.push(['Invitee Email',ev.invitee.email||'—']);
+  }
+  document.getElementById('calendlyDetailGrid').innerHTML=items.map(it=>'<dt>'+escHtml(it[0])+'</dt><dd>'+escHtml(it[1])+'</dd>').join('');
+
+  if(ev.invitee&&ev.invitee.qa&&ev.invitee.qa.length>0){
+    document.getElementById('calendlyDetailQASection').style.display='block';
+    document.getElementById('calendlyDetailQA').innerHTML=ev.invitee.qa.map(q=>{
+      // Truncate the long phone disclaimer question
+      let qText=q.question||'';
+      if(qText.length>80)qText=qText.substring(0,80).split('\n')[0]+'…';
+      return '<dt>'+escHtml(qText)+'</dt><dd>'+escHtml(q.answer||'—')+'</dd>';
+    }).join('');
+  }else{document.getElementById('calendlyDetailQASection').style.display='none';}
+
+  const rsLink=document.getElementById('calendlyDetailReschedule');
+  const cnLink=document.getElementById('calendlyDetailCancel');
+  if(ev.invitee&&ev.invitee.rescheduleUrl){rsLink.href=ev.invitee.rescheduleUrl;rsLink.style.display='inline-block';}else{rsLink.style.display='none';}
+  if(ev.invitee&&ev.invitee.cancelUrl){cnLink.href=ev.invitee.cancelUrl;cnLink.style.display='inline-block';}else{cnLink.style.display='none';}
+
+  document.getElementById('calendlyDetailModal').classList.add('show');
+}
+function closeCalendlyDetail(){document.getElementById('calendlyDetailModal').classList.remove('show');}
+
+// ───────── MISC ─────────
+function scrollSec(secId){document.getElementById(secId).scrollIntoView({behavior:'smooth'});}
 
 function startClock(){
-  function updateClock(){
+  function update(){
     const now=new Date();
-    const hours=String(now.getHours()).padStart(2,'0');
     const mins=String(now.getMinutes()).padStart(2,'0');
     const ampm=now.getHours()>=12?'PM':'AM';
     const displayHours=now.getHours()%12||12;
@@ -876,12 +1677,9 @@ function startClock(){
     document.getElementById('clockAMPM').textContent=ampm;
     const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const dayName=days[now.getDay()];
-    const monthName=months[now.getMonth()];
-    document.getElementById('clockDate').textContent=dayName+', '+monthName+' '+now.getDate();
+    document.getElementById('clockDate').textContent=days[now.getDay()]+', '+months[now.getMonth()]+' '+now.getDate();
   }
-  updateClock();
-  setInterval(updateClock,1000);
+  update();setInterval(update,1000);
 }
 
 function loadWeather(){
@@ -891,48 +1689,60 @@ function loadWeather(){
       const temp=Math.round(d.current.temperature_2m);
       const code=d.current.weather_code;
       const icons={'0':'☀️','1':'🌤️','2':'⛅','3':'☁️','45':'🌫️','51':'🌧️','61':'🌧️','71':'🌨️','80':'⛈️','95':'⛈️'};
-      const descriptions={'0':'Clear','1':'Mostly Clear','2':'Partly Cloudy','3':'Overcast','45':'Foggy','51':'Light Rain','61':'Rain','71':'Snow','80':'Showers','95':'Thunderstorm'};
+      const desc={'0':'Clear','1':'Mostly Clear','2':'Partly Cloudy','3':'Overcast','45':'Foggy','51':'Light Rain','61':'Rain','71':'Snow','80':'Showers','95':'Thunderstorm'};
       document.getElementById('weatherIcon').textContent=icons[code]||'🌤️';
       document.getElementById('weatherTemp').textContent=temp+'°F';
-      document.getElementById('weatherDesc').textContent=descriptions[code]||'Clear';
+      document.getElementById('weatherDesc').textContent=desc[code]||'Clear';
     })
-    .catch(e=>{console.log('Weather fetch failed');});
+    .catch(e=>console.log('Weather fetch failed'));
 }
 
+// ───────── NEWS ─────────
+// Google News RSS (USCIS retired their feed in 2025)
 function loadNews(){
-  const newsData=[
-    {title:'USCIS Processing Times',desc:'Check current USCIS processing times for all applications and benefit types',color:'var(--teal)'},
-    {title:'I-485 Processing',desc:'Green Card applications (Form I-485) currently processing 12-18 months',color:'var(--amber)'},
-    {title:'USCIS Online Services',desc:'Submit and track applications through USCIS Case Status Online',color:'var(--green)'}
+  const fallback=[
+    {title:'USCIS Newsroom',link:'https://www.uscis.gov/newsroom',source:'USCIS',pubDate:''},
+    {title:'USCIS Processing Times',link:'https://egov.uscis.gov/processing-times/',source:'USCIS',pubDate:''},
+    {title:'USCIS Case Status Online',link:'https://egov.uscis.gov/casestatus/landing.do',source:'USCIS',pubDate:''}
   ];
-
-  try{
-    fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.uscis.gov/news/feeds/rss')
-      .then(r=>r.json())
-      .then(d=>{
-        if(d.items&&d.items.length>0){
-          const items=d.items.slice(0,3).map(item=>({
-            title:item.title||'USCIS Update',
-            desc:item.description||item.content||'Latest USCIS news and updates',
-            color:['var(--teal)','var(--amber)','var(--green)'][Math.floor(Math.random()*3)]
-          }));
-          renderNews(items);
-        }else{
-          renderNews(newsData);
-        }
-      })
-      .catch(e=>{renderNews(newsData);});
-  }catch(e){
-    renderNews(newsData);
-  }
+  const feedUrl='https://news.google.com/rss/search?q=USCIS+immigration&hl=en-US&gl=US&ceid=US:en';
+  const apiUrl='https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(feedUrl);
+  document.getElementById('newsMeta').textContent='Loading...';
+  fetch(apiUrl)
+    .then(r=>r.json())
+    .then(d=>{
+      if(d&&d.status==='ok'&&d.items&&d.items.length>0){
+        const items=d.items.slice(0,8).map(item=>{
+          const rawTitle=item.title||'USCIS Update';
+          const splitIdx=rawTitle.lastIndexOf(' - ');
+          return {
+            title:splitIdx>0?rawTitle.substring(0,splitIdx):rawTitle,
+            source:splitIdx>0?rawTitle.substring(splitIdx+3):'',
+            link:item.link||'#',
+            pubDate:item.pubDate||''
+          };
+        });
+        renderNews(items);
+        document.getElementById('newsMeta').textContent='Updated '+new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+      }else{renderNews(fallback);document.getElementById('newsMeta').textContent='Showing fallback links';}
+    })
+    .catch(e=>{console.warn('News fetch failed:',e);renderNews(fallback);document.getElementById('newsMeta').textContent='Offline — fallback links';});
 }
 
 function renderNews(items){
-  const html=items.map(item=>'<div style="padding:16px;background:#fff;border-radius:10px;border-left:3px solid '+item.color+';">'+
-    '<div style="font-size:12px;font-weight:700;color:'+item.color+';margin-bottom:6px;">'+item.title+'</div>'+
-    '<div style="font-size:13px;color:var(--gray-700);">'+item.desc.substring(0,120)+'...</div>'+
-    '<div style="font-size:11px;color:var(--gray-400);margin-top:8px;">Updated from USCIS sources</div>'+
-    '</div>').join('');
+  const colors=['var(--teal)','var(--amber)','var(--green)','var(--navy)'];
+  const html=items.map((item,i)=>{
+    const color=colors[i%colors.length];
+    const dateStr=item.pubDate?new Date(item.pubDate).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'';
+    return '<a class="news-card" href="'+escHtml(item.link)+'" target="_blank" rel="noopener" style="border-left-color:'+color+';">'+
+      '<div class="news-card-title">'+escHtml(item.title)+'</div>'+
+      '<div class="news-card-meta">'+
+        (item.source?'<span class="news-card-source">'+escHtml(item.source)+'</span>':'')+
+        (dateStr?'<span>'+escHtml(dateStr)+'</span>':'')+
+        '<span style="color:var(--gray-400);">→ Read article</span>'+
+      '</div>'+
+    '</a>';
+  }).join('');
   document.getElementById('newsContainer').innerHTML=html;
 }
 
@@ -944,21 +1754,32 @@ window.addEventListener('load',function(){
   }
 });
 
-// Diagnostic info for debugging
+// Diagnostic helpers
 window.diagnostics={
   token:()=>localStorage.getItem(AT_KEY)?.substring(0,15)+'...',
   checkToken:function(){
     const token=localStorage.getItem(AT_KEY);
     if(!token){console.log('❌ NO TOKEN FOUND');return;}
     console.log('✓ Token present:',token.substring(0,20)+'...');
-    console.log('Testing token on Airtable meta endpoint...');
-    fetch('https://api.airtable.com/v0/meta/bases',{
-      headers:{Authorization:'Bearer '+token}
-    }).then(r=>{
+    fetch('https://api.airtable.com/v0/meta/bases',{headers:{Authorization:'Bearer '+token}}).then(r=>{
       console.log('Meta response status:',r.status);
       if(r.status===200)console.log('✓ Token is valid!');
       else console.log('❌ Token failed with status',r.status);
     }).catch(e=>console.log('❌ Error:',e.message));
+  },
+  reloadAll:refreshAll,
+  resetTokenModal:function(){localStorage.removeItem('ceo_token_setup_shown');location.reload();},
+  checkCalendlyToken:function(){
+    const t=localStorage.getItem(CT_KEY);
+    if(!t){console.log('❌ NO CALENDLY TOKEN');return;}
+    console.log('✓ Calendly token present:',t.substring(0,15)+'...');
+    const uri=calendlyUserUri(t);console.log('User URI from token:',uri);
+    if(!uri){console.log('❌ Cannot extract user_uuid from token');return;}
+    fetch('https://api.calendly.com/scheduled_events?user='+encodeURIComponent(uri)+'&count=1',{headers:calendlyHeaders()}).then(r=>{
+      console.log('Calendly response status:',r.status);
+      if(r.status===200)console.log('✓ Calendly token is valid!');
+      else r.text().then(t=>console.log('Body:',t.substring(0,300)));
+    });
   }
 };
 </script>
