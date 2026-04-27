@@ -187,6 +187,9 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 .detail-section{margin-top:18px;padding-top:14px;border-top:1px solid var(--gray-100);}
 .detail-section-title{font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;}
 
+/* Attachment cards */
+.att-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--amber);}
+
 /* News */
 .news-card{display:block;padding:14px 16px;background:#fff;border-radius:10px;border-left:3px solid var(--gray-300);text-decoration:none;color:inherit;transition:transform 0.1s, box-shadow 0.1s;}
 .news-card:hover{transform:translateX(2px);box-shadow:var(--shadow-md);}
@@ -634,10 +637,11 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
                 <th>Submitted By</th>
                 <th>Type</th>
                 <th>Dependents</th>
+                <th>Docs</th>
               </tr>
             </thead>
             <tbody id="ecasTableBody">
-              <tr><td colspan="7" style="text-align:center;padding:20px;color:var(--gray-400);">Loading submissions...</td></tr>
+              <tr><td colspan="8" style="text-align:center;padding:20px;color:var(--gray-400);">Loading submissions...</td></tr>
             </tbody>
           </table>
         </div>
@@ -802,6 +806,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
       <div class="detail-section-title">Dependents</div>
       <div id="ecasDetailDep" style="font-size:13px;line-height:1.55;color:var(--gray-700);white-space:pre-wrap;"></div>
     </div>
+    <div id="ecasDetailDocs"></div>
     <div class="form-buttons">
       <button class="form-btn form-btn-cancel" onclick="closeECASDetail()">Close</button>
     </div>
@@ -810,10 +815,13 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
 
 <script>
 const LOGIN_KEY='CEO_DASHBOARD_PWD';
-const TASKS_KEY='ceo_tasks_v2';
-const NOTES_KEY='ceo_notes_v2';
 const AT_KEY='ceo_airtable_token';
 const CT_KEY='ceo_calendly_token';
+
+// Tasks & Notes Airtable base (cross-browser sync)
+const TN_BASE='appR0PrICvi0WGwiR';
+const TASKS_TABLE='tblgBugrFy1H14FKe';
+const NOTES_TABLE='tblIUB5C6J8Ls1ZDf';
 
 let salesChart=null;
 let currentNoteColor='yellow';
@@ -825,6 +833,8 @@ let refundRecords=[];
 let eslRecords=[];
 let ecasRecords=[];
 let calendlyEvents=[];
+let taskRecords=[];
+let noteRecords=[];
 
 // ───────── AUTH ─────────
 function signIn(){
@@ -1208,10 +1218,10 @@ function renderESLView(){
 
 // ───────── ECAS ─────────
 function loadECASData(){
-  document.getElementById('ecasTableBody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--gray-400);">Loading submissions...</td></tr>';
+  document.getElementById('ecasTableBody').innerHTML='<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--gray-400);">Loading submissions...</td></tr>';
   fetchAirtable('appeUvC8eggzVvNyG','tblByDLJ90v5x0R8r',function(data){
     if(!data||!data.records){
-      document.getElementById('ecasTableBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--rose);padding:20px;">⚠ Unable to load ECAS submissions</td></tr>';
+      document.getElementById('ecasTableBody').innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--rose);padding:20px;">⚠ Unable to load ECAS submissions</td></tr>';
       document.getElementById('kpiECAS').textContent='—';return;
     }
     ecasRecords=data.records.map(r=>{
@@ -1227,6 +1237,9 @@ function loadECASData(){
         clientAddress:f['Client Address']||'',
         dependents:f['Dependent Names and A-Number']||'',
         type:obj(f['Type']),
+        signedContract:Array.isArray(f['Signed Contract'])?f['Signed Contract']:[],
+        clientInvoice:Array.isArray(f['Client Invoice'])?f['Client Invoice']:[],
+        supportingDocs:Array.isArray(f['Supporting Documents'])?f['Supporting Documents']:[],
       };
     });
     fillSelect('ecasOfficeFilter', uniqSorted(ecasRecords.map(r=>r.office)));
@@ -1245,6 +1258,8 @@ function renderECASView(){
 
   const rows=filtered.map(r=>{
     const dep=r.dependents?(r.dependents.split('\n').filter(Boolean).length||1):0;
+    const docCount=(r.signedContract.length+r.clientInvoice.length+r.supportingDocs.length);
+    const docsCell=docCount>0?'<span style="display:inline-flex;align-items:center;gap:4px;color:var(--amber);font-weight:600;font-size:12px;">📎 '+docCount+'</span>':'<span class="muted">—</span>';
     return '<tr class="clickable" onclick="showECASDetail(\''+r.id+'\')">'+
       '<td>'+escHtml(fmtDate(r.date))+'</td>'+
       '<td><span style="font-family:monospace;font-size:12px;">'+escHtml(r.aNumber||'—')+'</span></td>'+
@@ -1253,12 +1268,42 @@ function renderECASView(){
       '<td>'+escHtml(r.employee||'—')+'</td>'+
       '<td>'+(r.type?'<span class="status-badge status-info">'+escHtml(r.type)+'</span>':'<span class="muted">—</span>')+'</td>'+
       '<td>'+(dep>0?dep+' dep.':'<span class="muted">none</span>')+'</td>'+
+      '<td>'+docsCell+'</td>'+
     '</tr>';
   }).join('');
-  document.getElementById('ecasTableBody').innerHTML=rows||'<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--gray-400);">No matching submissions.</td></tr>';
+  document.getElementById('ecasTableBody').innerHTML=rows||'<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--gray-400);">No matching submissions.</td></tr>';
   document.getElementById('kpiECAS').textContent=ecasRecords.length;
   document.getElementById('kpiECASSub').textContent=filtered.length+' shown · '+ecasRecords.length+' total';
   document.getElementById('ecasMeta').textContent=filtered.length+' rows';
+}
+
+function attachmentCard(att){
+  if(!att||!att.url)return '';
+  const isImg=att.type&&att.type.startsWith('image/');
+  const isPdf=att.type==='application/pdf';
+  const thumb=att.thumbnails&&att.thumbnails.large?att.thumbnails.large.url:'';
+  const sizeKb=att.size?Math.round(att.size/1024):0;
+  const sizeStr=sizeKb>1024?(sizeKb/1024).toFixed(1)+' MB':sizeKb+' KB';
+  const ext=(att.filename||'').split('.').pop().toUpperCase();
+  const icon=isPdf?'📄':isImg?'🖼️':'📎';
+  const preview=isImg&&thumb?'<img src="'+escHtml(thumb)+'" alt="" style="width:100%;height:120px;object-fit:cover;border-radius:8px 8px 0 0;background:var(--gray-100);">':
+    isPdf?'<div style="height:80px;display:flex;align-items:center;justify-content:center;background:var(--rose-bg);color:var(--rose);font-size:32px;border-radius:8px 8px 0 0;">📄</div>':
+    '<div style="height:80px;display:flex;align-items:center;justify-content:center;background:var(--gray-100);color:var(--gray-500);font-size:11px;font-weight:700;border-radius:8px 8px 0 0;">'+escHtml(ext||'FILE')+'</div>';
+  return '<a href="'+escHtml(att.url)+'" target="_blank" rel="noopener" class="att-card" style="display:block;border:1px solid var(--gray-200);border-radius:9px;overflow:hidden;text-decoration:none;color:inherit;background:#fff;transition:transform 0.1s, box-shadow 0.1s;">'+
+    preview+
+    '<div style="padding:8px 10px;">'+
+      '<div style="font-size:11px;font-weight:600;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+icon+' '+escHtml(att.filename||'file')+'</div>'+
+      '<div style="font-size:10px;color:var(--gray-500);margin-top:2px;">'+escHtml(sizeStr)+'</div>'+
+    '</div>'+
+  '</a>';
+}
+
+function attachmentSection(label, atts){
+  if(!atts||atts.length===0)return '';
+  const cards=atts.map(attachmentCard).join('');
+  return '<div class="detail-section"><div class="detail-section-title">'+escHtml(label)+' ('+atts.length+')</div>'+
+    '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;">'+cards+'</div>'+
+  '</div>';
 }
 
 function showECASDetail(id){
@@ -1276,20 +1321,83 @@ function showECASDetail(id){
   document.getElementById('ecasDetailGrid').innerHTML=items.map(it=>'<dt>'+escHtml(it[0])+'</dt><dd>'+escHtml(it[1])+'</dd>').join('');
   if(r.dependents){document.getElementById('ecasDetailDepSection').style.display='block';document.getElementById('ecasDetailDep').textContent=r.dependents;}
   else document.getElementById('ecasDetailDepSection').style.display='none';
+
+  // Render document sections (signed contract, client invoice, supporting docs)
+  const docsHost=document.getElementById('ecasDetailDocs');
+  let docsHtml='';
+  docsHtml+=attachmentSection('Signed Contract', r.signedContract);
+  docsHtml+=attachmentSection('Client Invoice', r.clientInvoice);
+  docsHtml+=attachmentSection('Supporting Documents', r.supportingDocs);
+  if(!docsHtml)docsHtml='<div class="detail-section"><div class="detail-section-title">Documents</div><div style="font-size:12px;color:var(--gray-400);">No documents attached.</div></div>';
+  docsHost.innerHTML=docsHtml;
+
   document.getElementById('ecasDetailModal').classList.add('show');
 }
 function closeECASDetail(){document.getElementById('ecasDetailModal').classList.remove('show');}
 
-// ───────── TASKS ─────────
+// ───────── AIRTABLE WRITE HELPERS (Tasks & Notes sync) ─────────
+function airtableWrite(method, baseId, tableId, body, recordId){
+  const token=localStorage.getItem(AT_KEY);
+  if(!token)return Promise.reject(new Error('No Airtable token'));
+  const url='https://api.airtable.com/v0/'+baseId+'/'+tableId+(recordId?'/'+recordId:'');
+  return fetch(url,{
+    method:method,
+    headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
+    body:body?JSON.stringify(body):undefined
+  }).then(async r=>{
+    const text=await r.text();
+    if(r.status===401)throw new Error('AUTH: Token rejected (401). Please re-paste the token.');
+    if(r.status===403)throw new Error('SCOPE: Token lacks write permission. Regenerate at airtable.com/create/tokens with "data.records:write" scope, then update the Airtable Token in the sidebar.');
+    if(!r.ok)throw new Error('HTTP '+r.status+': '+text.substring(0,160));
+    return text?JSON.parse(text):null;
+  });
+}
+function airtableWriteError(e){
+  console.error('Airtable write failed:',e);
+  alert(e&&e.message?e.message:'Unable to save to Airtable. Check console for details.');
+}
+
+// ───────── TASKS (Airtable-backed) ─────────
 function loadTasks(){
-  const tasks=JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');
+  if(!localStorage.getItem(AT_KEY)){
+    document.getElementById('tasksTableBody').innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--gray-400);padding:20px;">Set your Airtable token to sync tasks.</td></tr>';
+    document.getElementById('tasksMeta').textContent='';return;
+  }
+  document.getElementById('tasksMeta').textContent='Loading...';
+  fetchAirtable(TN_BASE, TASKS_TABLE, function(data){
+    if(!data||!data.records){
+      document.getElementById('tasksTableBody').innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--rose);padding:20px;">⚠ Unable to load tasks. Check Airtable token.</td></tr>';
+      document.getElementById('tasksMeta').textContent='Unable to load';return;
+    }
+    taskRecords=data.records.map(r=>{
+      const f=r.fields||{};
+      const obj=v=>typeof v==='object'?(v&&v.name)||'':(v||'');
+      const status=obj(f['Status']);
+      return {
+        id:r.id,
+        name:f['Name']||'(untitled)',
+        description:f['Notes']||'',
+        priority:obj(f['Priority'])||'Medium',
+        due:f['Due']||'',
+        status:status||'Todo',
+        completed:status==='Done',
+        created:r.createdTime||''
+      };
+    });
+    renderTasksView();
+  });
+}
+
+function renderTasksView(){
   const filter=document.getElementById('taskFilter')?document.getElementById('taskFilter').value:'all';
-  let list=tasks.slice();
+  let list=taskRecords.slice();
   if(filter==='open')list=list.filter(t=>!t.completed);
   if(filter==='completed')list=list.filter(t=>t.completed);
   list.sort((a,b)=>{
     if(a.completed!==b.completed)return a.completed?1:-1;
-    return (a.due||'').localeCompare(b.due||'');
+    if(a.due&&b.due)return a.due.localeCompare(b.due);
+    if(a.due)return -1;if(b.due)return 1;
+    return (b.created||'').localeCompare(a.created||'');
   });
   const html=list.map(t=>{
     const cls=t.priority==='High'?'priority-high':t.priority==='Low'?'priority-low':'priority-medium';
@@ -1297,7 +1405,7 @@ function loadTasks(){
     const overdue=t.due&&!t.completed&&new Date(t.due)<new Date(new Date().toDateString());
     return '<tr'+(t.completed?' class="task-completed"':'')+'>'+
       '<td><input type="checkbox" '+(t.completed?'checked':'')+' onchange="toggleTask(\''+t.id+'\')" style="cursor:pointer;width:16px;height:16px;"></td>'+
-      '<td>'+escHtml(t.name)+'</td>'+
+      '<td>'+escHtml(t.name)+(t.description?'<div style="font-size:11px;color:var(--gray-500);margin-top:2px;">'+escHtml(t.description.substring(0,80))+(t.description.length>80?'…':'')+'</div>':'')+'</td>'+
       '<td><span class="status-badge '+cls+'">'+escHtml(t.priority||'Medium')+'</span></td>'+
       '<td'+(overdue?' style="color:var(--rose);font-weight:600;"':'')+'>'+due+(overdue?' <span style="font-size:10px;text-transform:uppercase;">Overdue</span>':'')+'</td>'+
       '<td><div class="task-actions">'+
@@ -1307,8 +1415,8 @@ function loadTasks(){
     '</tr>';
   }).join('');
   document.getElementById('tasksTableBody').innerHTML=html||'<tr><td colspan="5" style="text-align:center;color:var(--gray-400);padding:20px;">No tasks yet — add your first one above.</td></tr>';
-  const open=tasks.filter(t=>!t.completed).length;
-  document.getElementById('tasksMeta').textContent=open+' open / '+tasks.length+' total';
+  const open=taskRecords.filter(t=>!t.completed).length;
+  document.getElementById('tasksMeta').textContent=open+' open / '+taskRecords.length+' total';
 }
 
 function showTaskModal(){
@@ -1322,8 +1430,7 @@ function showTaskModal(){
 }
 
 function editTask(id){
-  const tasks=JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');
-  const t=tasks.find(x=>x.id===id);if(!t)return;
+  const t=taskRecords.find(x=>x.id===id);if(!t)return;
   editingTaskId=id;
   document.getElementById('taskModalTitle').textContent='Edit Task';
   document.getElementById('taskName').value=t.name||'';
@@ -1340,37 +1447,62 @@ function saveTask(){
   const priority=document.getElementById('taskPriority').value;
   const due=document.getElementById('taskDue').value;
   if(!name){alert('Please enter a task name');return;}
-  const tasks=JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');
-  if(editingTaskId){
-    const idx=tasks.findIndex(t=>t.id===editingTaskId);
-    if(idx>=0)tasks[idx]={...tasks[idx],name,priority,due};
-  }else{
-    tasks.push({id:Date.now()+'_'+Math.random().toString(36).slice(2,8),name,priority,due,completed:false,created:Date.now()});
-  }
-  localStorage.setItem(TASKS_KEY,JSON.stringify(tasks));
-  loadTasks();closeTaskModal();
+  const fields={Name:name,Priority:priority};
+  if(due)fields.Due=due;
+  const saveBtn=document.querySelector('#taskModal .form-btn-save');
+  if(saveBtn)saveBtn.textContent='Saving…';
+  const op=editingTaskId
+    ?airtableWrite('PATCH',TN_BASE,TASKS_TABLE,{fields},editingTaskId)
+    :airtableWrite('POST',TN_BASE,TASKS_TABLE,{fields:{...fields,Status:'Todo'}});
+  op.then(()=>{closeTaskModal();loadTasks();})
+    .catch(airtableWriteError)
+    .finally(()=>{if(saveBtn)saveBtn.textContent='Save';});
 }
 
 function deleteTask(id){
   if(!confirm('Delete this task?'))return;
-  const tasks=JSON.parse(localStorage.getItem(TASKS_KEY)||'[]').filter(t=>t.id!==id);
-  localStorage.setItem(TASKS_KEY,JSON.stringify(tasks));
-  loadTasks();
+  airtableWrite('DELETE',TN_BASE,TASKS_TABLE,null,id)
+    .then(()=>loadTasks())
+    .catch(airtableWriteError);
 }
 function deleteEditingTask(){if(editingTaskId){deleteTask(editingTaskId);closeTaskModal();}}
 
 function toggleTask(id){
-  const tasks=JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');
-  const t=tasks.find(x=>x.id===id);if(!t)return;
-  t.completed=!t.completed;
-  localStorage.setItem(TASKS_KEY,JSON.stringify(tasks));
-  loadTasks();
+  const t=taskRecords.find(x=>x.id===id);if(!t)return;
+  const newStatus=t.completed?'Todo':'Done';
+  // Optimistic update
+  t.completed=!t.completed;t.status=newStatus;renderTasksView();
+  airtableWrite('PATCH',TN_BASE,TASKS_TABLE,{fields:{Status:newStatus}},id)
+    .catch(e=>{
+      // Roll back
+      t.completed=!t.completed;t.status=t.completed?'Done':'Todo';renderTasksView();
+      airtableWriteError(e);
+    });
 }
 
-// ───────── NOTES ─────────
+// ───────── NOTES (Airtable-backed) ─────────
 function loadNotes(){
-  const notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');
-  notes.sort((a,b)=>(b.created||0)-(a.created||0));
+  if(!localStorage.getItem(AT_KEY)){
+    document.getElementById('notesGrid').innerHTML='<div style="padding:30px;color:var(--gray-400);grid-column:1/-1;text-align:center;font-family:Inter,sans-serif;">Set your Airtable token to sync notes.</div>';
+    document.getElementById('notesMeta').textContent='';return;
+  }
+  document.getElementById('notesMeta').textContent='Loading...';
+  fetchAirtable(TN_BASE, NOTES_TABLE, function(data){
+    if(!data||!data.records){
+      document.getElementById('notesGrid').innerHTML='<div style="padding:30px;color:var(--rose);grid-column:1/-1;text-align:center;font-family:Inter,sans-serif;">⚠ Unable to load notes. Check Airtable token.</div>';
+      document.getElementById('notesMeta').textContent='Unable to load';return;
+    }
+    noteRecords=data.records.map(r=>{
+      const f=r.fields||{};
+      const obj=v=>typeof v==='object'?(v&&v.name)||'':(v||'');
+      return {id:r.id,text:f['Text']||'',color:obj(f['Color'])||'yellow',created:r.createdTime||''};
+    });
+    renderNotesView();
+  });
+}
+
+function renderNotesView(){
+  const notes=noteRecords.slice().sort((a,b)=>(b.created||'').localeCompare(a.created||''));
   const html=notes.map(n=>{
     const dt=n.created?new Date(n.created).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'';
     return '<div class="memo-item memo-'+escHtml(n.color||'yellow')+'">'+
@@ -1399,15 +1531,17 @@ function setNoteColor(color){
 function saveNote(){
   const text=document.getElementById('noteText').value.trim();
   if(!text)return;
-  const notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');
-  notes.push({id:Date.now()+'_'+Math.random().toString(36).slice(2,8),text,color:currentNoteColor,created:Date.now()});
-  localStorage.setItem(NOTES_KEY,JSON.stringify(notes));
-  loadNotes();closeNoteModal();
+  const saveBtn=document.querySelector('#noteModal .form-btn-save');
+  if(saveBtn)saveBtn.textContent='Saving…';
+  airtableWrite('POST',TN_BASE,NOTES_TABLE,{fields:{Text:text,Color:currentNoteColor}})
+    .then(()=>{closeNoteModal();loadNotes();})
+    .catch(airtableWriteError)
+    .finally(()=>{if(saveBtn)saveBtn.textContent='Add Note';});
 }
 function deleteNote(id){
-  const notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]').filter(n=>n.id!==id);
-  localStorage.setItem(NOTES_KEY,JSON.stringify(notes));
-  loadNotes();
+  airtableWrite('DELETE',TN_BASE,NOTES_TABLE,null,id)
+    .then(()=>loadNotes())
+    .catch(airtableWriteError);
 }
 
 // ───────── CALENDLY ─────────
