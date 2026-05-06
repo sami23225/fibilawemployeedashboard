@@ -1683,7 +1683,7 @@ function deleteRole(id){
 function fillRole(id){
   var r=_roles.find(function(x){return x.id===id;});
   if(!r||r.stage==='Filled')return;
-  vpAt('PATCH',VP_HIRING_TBL,'/'+id,{fields:{Stage:'Filled'}},function(d,err){
+  vpAt('PATCH',VP_HIRING_TBL,'/'+id,{fields:{Status:'Filled'}},function(d,err){
     if(err){showToast('Error: '+err);return;}
     r.stage='Filled';
     renderHiring();updateCounts();
