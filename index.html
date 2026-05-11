@@ -3099,9 +3099,31 @@ const cardIcons = {
   emerald: '<svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>'
 };
 
+// Default tools that appear on all dashboards
+const DEFAULT_TOOLS = [
+  {
+    name: 'USCIS/Court Calendar Request',
+    desc: 'Submit calendar requests for USCIS and court dates',
+    url: 'https://airtable.com/appVKOmxf2xCvVwqX/pagf6AqOo9XVpa2mw/form',
+    color: 'navy'
+  }
+];
+
 function getCustomTools() {
-  try { return JSON.parse(localStorage.getItem(CUSTOM_TOOLS_KEY)) || []; }
-  catch(e) { return []; }
+  try {
+    const stored = JSON.parse(localStorage.getItem(CUSTOM_TOOLS_KEY));
+    // Return stored tools, or initialize with defaults if first time
+    if (stored && Array.isArray(stored) && stored.length > 0) {
+      return stored;
+    }
+    // First time: initialize with defaults
+    if (!localStorage.getItem(CUSTOM_TOOLS_KEY)) {
+      saveCustomTools(DEFAULT_TOOLS);
+      return DEFAULT_TOOLS;
+    }
+    return stored || [];
+  }
+  catch(e) { return DEFAULT_TOOLS; }
 }
 
 function saveCustomTools(tools) {
