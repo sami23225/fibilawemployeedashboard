@@ -828,6 +828,10 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--gray-50);c
             <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Add Role
           </button>
+          <button class="btn-add outline" id="hiringFilterBtn" onclick="toggleShowFilled()" style="margin-left:8px;">
+            <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+            Show Filled (0)
+          </button>
         </div>
         <div class="hiring-grid" id="hiringGrid"></div>
       </div>
@@ -1680,6 +1684,12 @@ function deleteRole(id){
   });
 }
 
+function toggleShowFilled(){
+  var current=localStorage.getItem('vp_show_filled')==='true';
+  localStorage.setItem('vp_show_filled',current?'false':'true');
+  renderHiring();
+}
+
 function fillRole(id){
   var r=_roles.find(function(x){return x.id===id;});
   if(!r||r.stage==='Filled')return;
@@ -1695,11 +1705,14 @@ function renderHiring(){
   var roles=_roles;
   var open=roles.filter(function(r){return r.stage!=='Filled';}).length;
   document.getElementById('hiringCount').textContent=open+' open';
+  var showFilled=localStorage.getItem('vp_show_filled')==='true';
+  var displayRoles=showFilled?roles:roles.filter(function(r){return r.stage!=='Filled';});
   var sc={'Sourcing':'rs-sourcing','Screening':'rs-screening','Interviewing':'rs-interviewing','Offer Sent':'rs-offer','On Hold':'rs-hold','Filled':'rs-filled'};
   var stgColor={'Sourcing':'#9aa5b4','Screening':'#2563eb','Interviewing':'#0d9488','Offer Sent':'#b7791f','On Hold':'#c53030','Filled':'#2e7d32'};
   var grid=document.getElementById('hiringGrid');
   if(roles.length===0){grid.innerHTML='<div class="hiring-empty"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><p>No roles yet — add your first open position.</p></div>';return;}
-  grid.innerHTML=roles.map(function(r){
+  var filterBtn=document.getElementById('hiringFilterBtn');if(filterBtn){filterBtn.textContent=showFilled?'Hide Filled':'Show Filled ('+(_roles.filter(function(r){return r.stage==='Filled';}).length)+')';}
+  grid.innerHTML=displayRoles.map(function(r){
     var ps=r.posted?new Date(r.posted+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—';
     var ts=r.target?new Date(r.target+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—';
     return '<div class="role-card"><div class="role-accent" style="background:'+(stgColor[r.stage]||'#9aa5b4')+'"></div><div class="role-body">'+
