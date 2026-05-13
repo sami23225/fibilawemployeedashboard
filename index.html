@@ -1877,6 +1877,32 @@
   .color-dot.selected svg { opacity: 1; }
 
   /* Custom card delete button */
+  .card-edit {
+    position: absolute;
+    top: 8px;
+    right: 36px;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--indigo-bg);
+    color: var(--indigo);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition);
+    z-index: 5;
+  }
+
+  .card-edit:hover { background: var(--indigo); color: var(--white); }
+
+  .card-edit svg {
+    width: 12px; height: 12px;
+    stroke: currentColor; fill: none;
+    stroke-width: 2.5;
+  }
+
+  .card.custom-card:hover .card-edit { display: flex; }
+
   .card-delete {
     position: absolute;
     top: 8px;
@@ -2662,6 +2688,49 @@
   </div>
 </div>
 
+<div class="add-modal-overlay" id="editToolModal">
+  <div class="add-modal">
+    <div class="add-modal-title">Edit Tool</div>
+    <div class="add-modal-subtitle">Update the tool information.</div>
+
+    <input type="hidden" id="editToolIndex" value="">
+
+    <div class="form-group">
+      <label class="form-label">Tool Name</label>
+      <input type="text" class="form-input" id="editToolName" placeholder="e.g. Case Status Tracker">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <textarea class="form-textarea" id="editToolDesc" placeholder="Brief description of what this tool does" rows="2"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Link URL</label>
+      <input type="url" class="form-input" id="editToolUrl" placeholder="https://...">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Card Color</label>
+      <div class="color-preview" id="editColorPicker">
+        <div class="edit-color-dot selected" data-color="teal" style="background:var(--teal);" onclick="pickEditColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="edit-color-dot" data-color="navy" style="background:var(--navy);" onclick="pickEditColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="edit-color-dot" data-color="amber" style="background:var(--amber);" onclick="pickEditColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="edit-color-dot" data-color="rose" style="background:var(--rose);" onclick="pickEditColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="edit-color-dot" data-color="indigo" style="background:var(--indigo);" onclick="pickEditColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="edit-color-dot" data-color="emerald" style="background:var(--emerald);" onclick="pickEditColor(this)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      </div>
+    </div>
+
+    <div class="form-error" id="editToolError"></div>
+
+    <div class="form-buttons">
+      <button class="form-btn form-btn-cancel" onclick="closeEditToolModal()">Cancel</button>
+      <button class="form-btn form-btn-add" onclick="submitEditTool()">Update Tool</button>
+    </div>
+  </div>
+</div>
+
 <!-- Password Modal -->
 <div class="modal-overlay" id="pwModal">
   <div class="modal">
@@ -2826,6 +2895,9 @@ function verifyPassword() {
     } else if (action && action.startsWith('delete_')) {
       const idx = parseInt(action.split('_')[1]);
       performDelete(idx);
+    } else if (action && action.startsWith('edit_')) {
+      const idx = parseInt(action.split('_')[1]);
+      performEditTool(idx);
     } else {
       openEditMode();
     }
@@ -3088,6 +3160,7 @@ renderMemos();
 let adminUnlocked = false;
 const CUSTOM_TOOLS_KEY = 'fibi_custom_tools';
 let selectedColor = 'teal';
+let selectedEditColor = 'teal';
 
 // SVG icons for custom cards (generic set)
 const cardIcons = {
@@ -3104,7 +3177,7 @@ const DEFAULT_TOOLS = [
   {
     name: 'USCIS/Court Calendar Request',
     desc: 'Submit calendar requests for USCIS and court dates',
-    url: 'https://airtable.com/appVKOmxf2xCvVwqX/pagf6AqOo9XVpa2mw/form',
+    url: 'https://airtable.com/appmxh0oX7m2TUmD4/pagH54nhUVuULZZev/form',
     color: 'navy'
   }
 ];
@@ -3152,6 +3225,9 @@ function renderCustomTools() {
     card.className = 'card custom-card';
     card.setAttribute('data-search', tool.name.toLowerCase() + ' ' + tool.desc.toLowerCase());
     card.innerHTML =
+      '<div class="card-edit" onclick="event.preventDefault();event.stopPropagation();editCustomTool(' + i + ')" title="Edit (admin only)">' +
+        '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+      '</div>' +
       '<div class="card-delete" onclick="event.preventDefault();event.stopPropagation();deleteCustomTool(' + i + ')" title="Delete (admin only)">' +
         '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
       '</div>' +
@@ -3262,9 +3338,78 @@ function performDelete(index) {
   }
 }
 
+function editCustomTool(index) {
+  if (!adminUnlocked) {
+    window._afterAdminAuth = 'edit_' + index;
+    document.getElementById('pwModal').classList.add('open');
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwError').textContent = '';
+    document.getElementById('pwInput').classList.remove('error');
+    setTimeout(() => document.getElementById('pwInput').focus(), 150);
+    return;
+  }
+  performEditTool(index);
+}
+
+function performEditTool(index) {
+  const tools = getCustomTools();
+  if (index < 0 || index >= tools.length) return;
+
+  const tool = tools[index];
+  document.getElementById('editToolIndex').value = index;
+  document.getElementById('editToolName').value = tool.name;
+  document.getElementById('editToolDesc').value = tool.desc;
+  document.getElementById('editToolUrl').value = tool.url;
+  document.getElementById('editToolError').textContent = '';
+
+  document.querySelectorAll('.edit-color-dot').forEach(d => d.classList.remove('selected'));
+  document.querySelector('.edit-color-dot[data-color="' + tool.color + '"]').classList.add('selected');
+  selectedEditColor = tool.color;
+
+  document.getElementById('editToolModal').classList.add('open');
+  setTimeout(() => document.getElementById('editToolName').focus(), 150);
+}
+
+function closeEditToolModal() {
+  document.getElementById('editToolModal').classList.remove('open');
+}
+
+function pickEditColor(el) {
+  document.querySelectorAll('.edit-color-dot').forEach(d => d.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedEditColor = el.getAttribute('data-color');
+}
+
+function submitEditTool() {
+  const index = parseInt(document.getElementById('editToolIndex').value);
+  const name = document.getElementById('editToolName').value.trim();
+  const desc = document.getElementById('editToolDesc').value.trim();
+  const url = document.getElementById('editToolUrl').value.trim();
+  const errEl = document.getElementById('editToolError');
+
+  if (!name) { errEl.textContent = 'Please enter a tool name.'; return; }
+  if (!url) { errEl.textContent = 'Please enter a URL.'; return; }
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    errEl.textContent = 'URL must start with http:// or https://'; return;
+  }
+
+  const tools = getCustomTools();
+  if (index >= 0 && index < tools.length) {
+    tools[index] = { name, desc: desc || 'Custom tool', url, color: selectedEditColor };
+    saveCustomTools(tools);
+    renderCustomTools();
+    closeEditToolModal();
+  }
+}
+
 // Close add-tool modal on overlay click
 document.getElementById('addToolModal').addEventListener('click', function(e) {
   if (e.target === this) closeAddToolModal();
+});
+
+// Close edit-tool modal on overlay click
+document.getElementById('editToolModal').addEventListener('click', function(e) {
+  if (e.target === this) closeEditToolModal();
 });
 
 // Load custom tools on page ready
