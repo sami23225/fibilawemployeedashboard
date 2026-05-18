@@ -3159,6 +3159,12 @@ renderMemos();
 // ===== CUSTOM TOOLS (Add / Delete) =====
 let adminUnlocked = false;
 const CUSTOM_TOOLS_KEY = 'fibi_custom_tools';
+const DEFAULTS_VERSION_KEY = 'fibi_defaults_version';
+// Bump DEFAULTS_VERSION whenever DEFAULT_TOOLS below changes (name/url/desc/color).
+// On load, any stored tool whose name matches a DEFAULT_TOOL will be re-synced
+// to the canonical url/desc/color in source. This is the migration that unsticks
+// employees whose localStorage was poisoned with an earlier wrong URL.
+const DEFAULTS_VERSION = 2;
 let selectedColor = 'teal';
 let selectedEditColor = 'teal';
 
@@ -3182,21 +3188,49 @@ const DEFAULT_TOOLS = [
   }
 ];
 
+// Force any stored tool with the same name as a DEFAULT_TOOL to use the
+// canonical url/desc/color from source. Preserves any extra user-added tools.
+function syncDefaultTools(stored) {
+  const out = Array.isArray(stored) ? stored.slice() : [];
+  DEFAULT_TOOLS.forEach(function(def) {
+    const idx = out.findIndex(function(t) { return t && t.name === def.name; });
+    if (idx >= 0) {
+      out[idx] = {
+        name: def.name,
+        desc: def.desc,
+        url: def.url,
+        color: def.color
+      };
+    } else {
+      out.push({ name: def.name, desc: def.desc, url: def.url, color: def.color });
+    }
+  });
+  return out;
+}
+
 function getCustomTools() {
   try {
-    const stored = JSON.parse(localStorage.getItem(CUSTOM_TOOLS_KEY));
-    // Return stored tools, or initialize with defaults if first time
-    if (stored && Array.isArray(stored) && stored.length > 0) {
+    let stored = JSON.parse(localStorage.getItem(CUSTOM_TOOLS_KEY));
+    if (!stored || !Array.isArray(stored)) stored = [];
+
+    // One-time (per version bump) migration: re-sync default tool URLs.
+    // Fixes the case where an old, wrong URL is stuck in a user's localStorage.
+    const seenVersion = parseInt(localStorage.getItem(DEFAULTS_VERSION_KEY) || '0', 10);
+    if (seenVersion < DEFAULTS_VERSION) {
+      stored = syncDefaultTools(stored);
+      saveCustomTools(stored);
+      localStorage.setItem(DEFAULTS_VERSION_KEY, String(DEFAULTS_VERSION));
       return stored;
     }
-    // First time: initialize with defaults
-    if (!localStorage.getItem(CUSTOM_TOOLS_KEY)) {
+
+    // First-time initialization with defaults
+    if (stored.length === 0 && !localStorage.getItem(CUSTOM_TOOLS_KEY)) {
       saveCustomTools(DEFAULT_TOOLS);
-      return DEFAULT_TOOLS;
+      return DEFAULT_TOOLS.slice();
     }
-    return stored || [];
+    return stored;
   }
-  catch(e) { return DEFAULT_TOOLS; }
+  catch(e) { return DEFAULT_TOOLS.slice(); }
 }
 
 function saveCustomTools(tools) {
