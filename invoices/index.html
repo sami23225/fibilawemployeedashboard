@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FIBI Law Firm — Invoice Search</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #1a2d4e;
+      --blue:   #2563eb;
+      --green:  #16a34a;
+      --amber:  #d97706;
+      --red:    #dc2626;
+      --gray:   #6b7280;
+      --light:  #f3f4f6;
+      --border: #e5e7eb;
+      --white:  #ffffff;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--light);
+      color: #111827;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    header svg { flex-shrink: 0; }
+    header h1  { font-size: 1.4rem; font-weight: 700; }
+    header p   { font-size: 0.85rem; opacity: 0.7; margin-top: 2px; }
+
+    /* ── Search card ── */
+    .search-card {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 32px;
+    }
+    .filters {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 12px;
+      align-items: end;
+    }
+    @media (max-width: 900px) {
+      .filters { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 500px) {
+      .filters { grid-template-columns: 1fr; }
+    }
+
+    label { font-size: 0.78rem; font-weight: 600; color: var(--gray); display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: .04em; }
+
+    input, select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color .15s;
+    }
+    input:focus, select:focus { border-color: var(--blue); }
+
+    .btn-reset {
+      padding: 8px 16px;
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      color: var(--gray);
+      font-weight: 600;
+      transition: background .15s;
+      white-space: nowrap;
+    }
+    .btn-reset:hover { background: var(--border); }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      padding: 12px 32px;
+      font-size: 0.85rem;
+      color: var(--gray);
+      display: flex;
+      gap: 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+    }
+    .stats-bar span b { color: #111; }
+
+    /* ── Table ── */
+    .table-wrap {
+      padding: 24px 32px;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+      font-size: 0.88rem;
+    }
+    thead { background: var(--navy); color: var(--white); }
+    th {
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+    th:hover { background: #253d63; }
+    th .sort-arrow { opacity: 0.4; margin-left: 4px; }
+    th.sorted .sort-arrow { opacity: 1; }
+
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #f9fafb; }
+    td { padding: 12px 16px; vertical-align: middle; }
+
+    /* status badges */
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .badge-paid     { background: #dcfce7; color: var(--green); }
+    .badge-partial  { background: #fef3c7; color: var(--amber); }
+    .badge-sent     { background: #dbeafe; color: var(--blue);  }
+    .badge-viewed   { background: #e0e7ff; color: #4338ca; }
+    .badge-pastdue  { background: #fee2e2; color: var(--red);   }
+    .badge-draft    { background: var(--light); color: var(--gray); }
+    .badge-unknown  { background: var(--light); color: var(--gray); }
+
+    /* download button */
+    .btn-dl {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: var(--blue);
+      color: var(--white);
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background .15s;
+      white-space: nowrap;
+    }
+    .btn-dl:hover { background: #1d4ed8; }
+    .btn-dl.unavail { background: var(--light); color: var(--gray); pointer-events: none; }
+
+    /* empty / loading state */
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--gray);
+      font-size: 1rem;
+    }
+    .empty svg { margin: 0 auto 12px; display: block; opacity: .3; }
+
+    /* pagination */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 32px 32px;
+      font-size: 0.85rem;
+    }
+    .pagination button {
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background .1s;
+    }
+    .pagination button:hover:not(:disabled) { background: var(--light); }
+    .pagination button:disabled { opacity: .4; cursor: default; }
+    .pagination .page-info { color: var(--gray); }
+  </style>
+</head>
+<body>
+
+<header>
+  <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+    <rect width="36" height="36" rx="8" fill="white" fill-opacity=".15"/>
+    <path d="M10 10h16v4H10zM10 17h10v3H10zM10 23h12v3H10z" fill="white"/>
+  </svg>
+  <div>
+    <h1>FIBI Law Firm — Invoices</h1>
+    <p>Search, filter, and download invoice PDFs</p>
+  </div>
+</header>
+
+<div class="search-card">
+  <div class="filters">
+    <div>
+      <label>Search client or invoice #</label>
+      <input type="search" id="q" placeholder="e.g. Keita or 0691" oninput="applyFilters()" />
+    </div>
+    <div>
+      <label>Status</label>
+      <select id="statusFilter" onchange="applyFilters()">
+        <option value="">All statuses</option>
+        <option>Paid</option>
+        <option>Partial</option>
+        <option>Sent</option>
+        <option>Viewed</option>
+        <option>Past Due</option>
+        <option>Draft</option>
+      </select>
+    </div>
+    <div>
+      <label>From date</label>
+      <input type="date" id="dateFrom" onchange="applyFilters()" />
+    </div>
+    <div>
+      <label>To date</label>
+      <input type="date" id="dateTo" onchange="applyFilters()" />
+    </div>
+    <div>
+      <label>&nbsp;</label>
+      <button class="btn-reset" onclick="resetFilters()">Clear filters</button>
+    </div>
+  </div>
+</div>
+
+<div class="stats-bar" id="statsBar">Loading invoices…</div>
+
+<div class="table-wrap">
+  <table id="invoiceTable">
+    <thead>
+      <tr>
+        <th onclick="sortBy('invoice_number')">Invoice # <span class="sort-arrow" id="arrow-invoice_number">↕</span></th>
+        <th onclick="sortBy('client_name')">Client <span class="sort-arrow" id="arrow-client_name">↕</span></th>
+        <th onclick="sortBy('date')">Date <span class="sort-arrow" id="arrow-date">↕</span></th>
+        <th onclick="sortBy('amount')">Amount <span class="sort-arrow" id="arrow-amount">↕</span></th>
+        <th onclick="sortBy('balance')">Balance <span class="sort-arrow" id="arrow-balance">↕</span></th>
+        <th onclick="sortBy('status')">Status <span class="sort-arrow" id="arrow-status">↕</span></th>
+        <th>PDF</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+
+<div class="pagination" id="paginationBar"></div>
+
+<script>
+  const PDF_DIR  = 'pdfs/';
+  const PAGE_SZ  = 50;
+
+  let allInvoices = [];
+  let filtered    = [];
+  let sortField   = 'date';
+  let sortAsc     = false;
+  let currentPage = 1;
+
+  // ── Load data ──
+  fetch('index.json')
+    .then(r => {
+      if (!r.ok) throw new Error('index.json not found');
+      return r.json();
+    })
+    .then(data => {
+      allInvoices = data;
+      applyFilters();
+    })
+    .catch(err => {
+      document.getElementById('statsBar').textContent = '⚠ Could not load index.json — make sure it is in the same folder as this page.';
+      document.getElementById('tableBody').innerHTML =
+        `<tr><td colspan="7"><div class="empty">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 110 20A10 10 0 0112 2zm0 2a8 8 0 100 16A8 8 0 0012 4zm1 11h-2v2h2v-2zm0-8h-2v6h2V7z"/></svg>
+          <p>${err.message}</p>
+        </div></td></tr>`;
+    });
+
+  // ── Filter + sort ──
+  function applyFilters() {
+    const q      = document.getElementById('q').value.toLowerCase().trim();
+    const status = document.getElementById('statusFilter').value;
+    const from   = document.getElementById('dateFrom').value;
+    const to     = document.getElementById('dateTo').value;
+
+    filtered = allInvoices.filter(inv => {
+      if (q && !inv.invoice_number.toLowerCase().includes(q) &&
+               !inv.client_name.toLowerCase().includes(q)) return false;
+      if (status && inv.status !== status) return false;
+      if (from   && inv.date < from) return false;
+      if (to     && inv.date > to)   return false;
+      return true;
+    });
+
+    doSort();
+    currentPage = 1;
+    render();
+  }
+
+  function sortBy(field) {
+    if (sortField === field) {
+      sortAsc = !sortAsc;
+    } else {
+      sortField = field;
+      sortAsc   = true;
+    }
+    // update arrows
+    document.querySelectorAll('th').forEach(th => th.classList.remove('sorted'));
+    const arrowEl = document.getElementById('arrow-' + field);
+    if (arrowEl) {
+      arrowEl.parentElement.classList.add('sorted');
+      arrowEl.textContent = sortAsc ? '↑' : '↓';
+    }
+    doSort();
+    render();
+  }
+
+  function doSort() {
+    filtered.sort((a, b) => {
+      let va = a[sortField] ?? '';
+      let vb = b[sortField] ?? '';
+      if (typeof va === 'number') return sortAsc ? va - vb : vb - va;
+      va = va.toString().toLowerCase();
+      vb = vb.toString().toLowerCase();
+      return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
+    });
+  }
+
+  function resetFilters() {
+    document.getElementById('q').value           = '';
+    document.getElementById('statusFilter').value = '';
+    document.getElementById('dateFrom').value     = '';
+    document.getElementById('dateTo').value       = '';
+    applyFilters();
+  }
+
+  // ── Render ──
+  function usd(n) {
+    return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function badgeClass(status) {
+    const map = { Paid: 'paid', Partial: 'partial', Sent: 'sent', Viewed: 'viewed', 'Past Due': 'pastdue', Draft: 'draft' };
+    return 'badge badge-' + (map[status] || 'unknown');
+  }
+
+  function fmtDate(d) {
+    if (!d) return '—';
+    const [y, m, day] = d.split('-');
+    const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${mo[+m - 1]} ${+day}, ${y}`;
+  }
+
+  function render() {
+    const total  = filtered.length;
+    const pages  = Math.max(1, Math.ceil(total / PAGE_SZ));
+    currentPage  = Math.min(currentPage, pages);
+    const start  = (currentPage - 1) * PAGE_SZ;
+    const page   = filtered.slice(start, start + PAGE_SZ);
+
+    // stats
+    const totalAmt = filtered.reduce((s, i) => s + i.amount,  0);
+    const totalBal = filtered.reduce((s, i) => s + i.balance, 0);
+    document.getElementById('statsBar').innerHTML =
+      `<span>Showing <b>${total}</b> of <b>${allInvoices.length}</b> invoices</span>
+       <span>Total billed: <b>${usd(totalAmt)}</b></span>
+       <span>Outstanding: <b>${usd(totalBal)}</b></span>`;
+
+    // table rows
+    if (page.length === 0) {
+      document.getElementById('tableBody').innerHTML =
+        `<tr><td colspan="7"><div class="empty">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+          <p>No invoices match your filters.</p>
+        </div></td></tr>`;
+    } else {
+      document.getElementById('tableBody').innerHTML = page.map(inv => `
+        <tr>
+          <td><b>${inv.invoice_number}</b></td>
+          <td>${inv.client_name}</td>
+          <td>${fmtDate(inv.date)}</td>
+          <td>${usd(inv.amount)}</td>
+          <td style="color:${inv.balance > 0 ? '#dc2626' : '#16a34a'}">${usd(inv.balance)}</td>
+          <td><span class="${badgeClass(inv.status)}">${inv.status}</span></td>
+          <td>
+            ${inv.available
+              ? `<a class="btn-dl" href="${PDF_DIR}${inv.filename}" download>
+                   <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                   PDF
+                 </a>`
+              : `<span class="btn-dl unavail">Unavailable</span>`
+            }
+          </td>
+        </tr>`).join('');
+    }
+
+    // pagination
+    document.getElementById('paginationBar').innerHTML = pages <= 1 ? '' : `
+      <button onclick="goPage(1)"        ${currentPage===1     ?'disabled':''}>«</button>
+      <button onclick="goPage(${currentPage-1})" ${currentPage===1     ?'disabled':''}>‹</button>
+      <span class="page-info">Page ${currentPage} of ${pages}</span>
+      <button onclick="goPage(${currentPage+1})" ${currentPage===pages ?'disabled':''}>›</button>
+      <button onclick="goPage(${pages})"  ${currentPage===pages ?'disabled':''}>»</button>`;
+  }
+
+  function goPage(n) {
+    currentPage = n;
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
