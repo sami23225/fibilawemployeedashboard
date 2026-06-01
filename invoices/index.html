@@ -167,6 +167,8 @@
     }
     .btn-dl:hover { background: #1d4ed8; }
     .btn-dl.unavail { background: var(--light); color: var(--gray); pointer-events: none; }
+    .btn-view { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: var(--white); color: var(--navy); border: 1.5px solid var(--navy); border-radius: 6px; font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: background .15s; white-space: nowrap; }
+    .btn-view:hover { background: var(--light); }
 
     /* empty / loading state */
     .empty {
@@ -406,9 +408,14 @@
             ${inv.available
               ? `<a class="btn-dl" href="${PDF_DIR}${inv.filename}" download>
                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                   PDF
+                   Download PDF
                  </a>`
-              : `<span class="btn-dl unavail">Unavailable</span>`
+              : inv.view_link
+                ? `<a class="btn-view" href="${inv.view_link}" target="_blank" rel="noopener">
+                     <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                     View Invoice
+                   </a>`
+                : `<span class="btn-dl unavail">Unavailable</span>`
             }
           </td>
         </tr>`).join('');
