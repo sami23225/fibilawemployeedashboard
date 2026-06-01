@@ -1,0 +1,6722 @@
+[
+  {
+    "invoice_number": "0691",
+    "client_name": "Ousmane Keita",
+    "date": "2025-06-09",
+    "amount": 5500.0,
+    "balance": 4500.0,
+    "status": "Paid",
+    "filename": "0691_Ousmane_Keita.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0690",
+    "client_name": "Siah Siahlor Nyemah",
+    "date": "2025-06-09",
+    "amount": 1000.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0690_Siah_Siahlor_Nyemah.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0689",
+    "client_name": "Youssouf Fofona",
+    "date": "2025-06-09",
+    "amount": 6000.0,
+    "balance": 5000.0,
+    "status": "Paid",
+    "filename": "0689_Youssouf_Fofona.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0688",
+    "client_name": "Jn Baptiste Petit Pre",
+    "date": "2025-06-06",
+    "amount": 3500.0,
+    "balance": 1200.0,
+    "status": "Paid",
+    "filename": "0688_Jn_Baptiste_Petit_Pre.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0687",
+    "client_name": "Oumar Gaye",
+    "date": "2025-06-06",
+    "amount": 5000.0,
+    "balance": 4000.0,
+    "status": "Paid",
+    "filename": "0687_Oumar_Gaye.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0686",
+    "client_name": "Serigne Cheikh Lo",
+    "date": "2025-06-04",
+    "amount": 200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0686_Serigne_Cheikh_Lo.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0685",
+    "client_name": "Mbaye Samb",
+    "date": "2025-06-03",
+    "amount": 5500.0,
+    "balance": 4500.0,
+    "status": "Paid",
+    "filename": "0685_Mbaye_Samb.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0684",
+    "client_name": "Mohammed Isshak Aliye",
+    "date": "2025-06-03",
+    "amount": 750.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0684_Mohammed_Isshak_Aliye.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0683",
+    "client_name": "Birahim Thiam",
+    "date": "2025-05-30",
+    "amount": 5500.0,
+    "balance": 4500.0,
+    "status": "Paid",
+    "filename": "0683_Birahim_Thiam.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0682",
+    "client_name": "Touba Leye",
+    "date": "2025-05-27",
+    "amount": 5000.0,
+    "balance": 3200.0,
+    "status": "Paid",
+    "filename": "0682_Touba_Leye.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0681",
+    "client_name": "Youssou Thaim",
+    "date": "2025-05-27",
+    "amount": 300.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0681_Youssou_Thaim.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0680",
+    "client_name": "PAPA Djiby LY",
+    "date": "2025-05-23",
+    "amount": 5500.0,
+    "balance": 4500.0,
+    "status": "Paid",
+    "filename": "0680_PAPA_Djiby_LY.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0679",
+    "client_name": "Mouna Mahamat Issa",
+    "date": "2025-05-20",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0679_Mouna_Mahamat_Issa.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0678",
+    "client_name": "Louis PAINTSIL",
+    "date": "2025-05-19",
+    "amount": 2650.0,
+    "balance": 1000.0,
+    "status": "Paid",
+    "filename": "0678_Louis_PAINTSIL.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0677",
+    "client_name": "Elias Abass",
+    "date": "2025-05-19",
+    "amount": 200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0677_Elias_Abass.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0676",
+    "client_name": "Kojo Danso Abiam",
+    "date": "2025-05-17",
+    "amount": 3750.0,
+    "balance": 3050.0,
+    "status": "Paid",
+    "filename": "0676_Kojo_Danso_Abiam.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0675",
+    "client_name": "Jean Paul Karimunzira",
+    "date": "2025-05-15",
+    "amount": 400.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0675_Jean_Paul_Karimunzira.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0674",
+    "client_name": "Zahir Ismail Budy",
+    "date": "2025-05-14",
+    "amount": 10000.0,
+    "balance": 8680.52,
+    "status": "Paid",
+    "filename": "0674_Zahir_Ismail_Budy.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0673",
+    "client_name": "Rachel Indoko",
+    "date": "2025-05-12",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0673_Rachel_Indoko.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0672",
+    "client_name": "Serigne Cheikh Ndiaye",
+    "date": "2025-05-12",
+    "amount": 300.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0672_Serigne_Cheikh_Ndiaye.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0671",
+    "client_name": "Andrew Abdulai",
+    "date": "2025-05-12",
+    "amount": 500.0,
+    "balance": 300.0,
+    "status": "Paid",
+    "filename": "0671_Andrew_Abdulai.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0670",
+    "client_name": "Thierno Diop",
+    "date": "2025-05-09",
+    "amount": 5000.0,
+    "balance": 4000.0,
+    "status": "Paid",
+    "filename": "0670_Thierno_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0669",
+    "client_name": "Ibra Kane Diallo",
+    "date": "2025-04-29",
+    "amount": 5500.0,
+    "balance": 3500.0,
+    "status": "Paid",
+    "filename": "0669_Ibra_Kane_Diallo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0668",
+    "client_name": "Ibra Kane Diallo",
+    "date": "2025-05-08",
+    "amount": 5500.0,
+    "balance": 4000.0,
+    "status": "Paid",
+    "filename": "0668_Ibra_Kane_Diallo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0667",
+    "client_name": "ADJA DEMAISON",
+    "date": "2025-05-08",
+    "amount": 2250.0,
+    "balance": 1750.0,
+    "status": "Paid",
+    "filename": "0667_ADJA_DEMAISON.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0666",
+    "client_name": "Abdirahman Ali",
+    "date": "2025-05-07",
+    "amount": 200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0666_Abdirahman_Ali.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0665",
+    "client_name": "DJE DIALLO",
+    "date": "2025-05-07",
+    "amount": 5500.0,
+    "balance": 4500.0,
+    "status": "Paid",
+    "filename": "0665_DJE_DIALLO.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0664",
+    "client_name": "Deutz Bonicet",
+    "date": "2025-05-07",
+    "amount": 200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0664_Deutz_Bonicet.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0663",
+    "client_name": "Iman Yusuf",
+    "date": "2025-05-06",
+    "amount": 4000.0,
+    "balance": 3000.0,
+    "status": "Paid",
+    "filename": "0663_Iman_Yusuf.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0662",
+    "client_name": "Sylvio Theodor",
+    "date": "2025-05-06",
+    "amount": 200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0662_Sylvio_Theodor.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0661",
+    "client_name": "Olabissi Titilayo Bamiduro",
+    "date": "2025-05-05",
+    "amount": 250.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0661_Olabissi_Titilayo_Bamiduro.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0660",
+    "client_name": "Oluwadamisi Abijo",
+    "date": "2025-05-02",
+    "amount": 4500.0,
+    "balance": 3500.0,
+    "status": "Paid",
+    "filename": "0660_Oluwadamisi_Abijo.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0659",
+    "client_name": "Malick Ndiaye",
+    "date": "2025-06-02",
+    "amount": 7200.0,
+    "balance": 5250.0,
+    "status": "Paid",
+    "filename": "0659_Malick_Ndiaye.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0658",
+    "client_name": "Mariama Sire Sanoh",
+    "date": "2025-04-30",
+    "amount": 2000.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0658_Mariama_Sire_Sanoh.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0657",
+    "client_name": "Rihana Nuru Mohamed",
+    "date": "2025-04-29",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0657_Rihana_Nuru_Mohamed.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0656",
+    "client_name": "Iman Yusuf",
+    "date": "2025-04-28",
+    "amount": 200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0656_Iman_Yusuf.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0655",
+    "client_name": "Mada Sylla",
+    "date": "2025-04-28",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0655_Mada_Sylla.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0654",
+    "client_name": "Aissata Hady KANE",
+    "date": "2025-04-24",
+    "amount": 2250.0,
+    "balance": 750.0,
+    "status": "Paid",
+    "filename": "0654_Aissata_Hady_KANE.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0653",
+    "client_name": "Abdou Razac Ndiaye",
+    "date": "2025-04-23",
+    "amount": 2000.0,
+    "balance": 1700.0,
+    "status": "Paid",
+    "filename": "0653_Abdou_Razac_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0652",
+    "client_name": "El Hadji Thiam",
+    "date": "2025-04-22",
+    "amount": 1500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0652_El_Hadji_Thiam.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0651",
+    "client_name": "YAYE KHADY NDAO",
+    "date": "2025-04-17",
+    "amount": 5750.0,
+    "balance": 3350.0,
+    "status": "Paid",
+    "filename": "0651_YAYE_KHADY_NDAO.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0650",
+    "client_name": "Mamadou Falilou Gueye",
+    "date": "2025-04-14",
+    "amount": 5000.0,
+    "balance": 4000.0,
+    "status": "Paid",
+    "filename": "0650_Mamadou_Falilou_Gueye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0649",
+    "client_name": "Consonne Vallet",
+    "date": "2025-04-08",
+    "amount": 5500.0,
+    "balance": 3800.0,
+    "status": "Paid",
+    "filename": "0649_Consonne_Vallet.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0648",
+    "client_name": "Elisabeth Bakoubolo",
+    "date": "2025-04-08",
+    "amount": 200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0648_Elisabeth_Bakoubolo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0647",
+    "client_name": "Aminata Kane",
+    "date": "2025-05-16",
+    "amount": 5750.0,
+    "balance": 3750.0,
+    "status": "Paid",
+    "filename": "0647_Aminata_Kane.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0646",
+    "client_name": "Thierno Idrissa Ba",
+    "date": "2025-04-07",
+    "amount": 5000.0,
+    "balance": 2850.0,
+    "status": "Paid",
+    "filename": "0646_Thierno_Idrissa_Ba.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0645",
+    "client_name": "Mahamadou Rabani Mounkaila",
+    "date": "2025-04-05",
+    "amount": 1500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0645_Mahamadou_Rabani_Mounkaila.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0644",
+    "client_name": "Abdoulaye Dioulde Diallo",
+    "date": "2025-04-04",
+    "amount": 1500.0,
+    "balance": 600.0,
+    "status": "Paid",
+    "filename": "0644_Abdoulaye_Dioulde_Diallo.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0643",
+    "client_name": "Jasmine Brown",
+    "date": "2025-04-04",
+    "amount": 300.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0643_Jasmine_Brown.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0642",
+    "client_name": "Ousmane Sangare",
+    "date": "2025-04-02",
+    "amount": 1500.0,
+    "balance": 1000.0,
+    "status": "Paid",
+    "filename": "0642_Ousmane_Sangare.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0641",
+    "client_name": "Fatoumata Binta Bah",
+    "date": "2025-03-31",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0641_Fatoumata_Binta_Bah.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0640",
+    "client_name": "Samantha Alecia Baxter",
+    "date": "2025-03-29",
+    "amount": 4750.0,
+    "balance": 2950.0,
+    "status": "Paid",
+    "filename": "0640_Samantha_Alecia_Baxter.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0639",
+    "client_name": "Abena Asieduwaah",
+    "date": "2025-03-29",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0639_Abena_Asieduwaah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0638",
+    "client_name": "Abiosay Askia Morrison",
+    "date": "2025-03-27",
+    "amount": 4000.0,
+    "balance": 2400.0,
+    "status": "Paid",
+    "filename": "0638_Abiosay_Askia_Morrison.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0637",
+    "client_name": "Seena Green Mcswain",
+    "date": "2025-03-26",
+    "amount": 5700.0,
+    "balance": 3500.0,
+    "status": "Paid",
+    "filename": "0637_Seena_Green_Mcswain.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0636",
+    "client_name": "KALILU TOURAY",
+    "date": "2025-03-21",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0636_KALILU_TOURAY.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0635",
+    "client_name": "Nelson Rafael Zapata",
+    "date": "2025-03-21",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0635_Nelson_Rafael_Zapata.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0634",
+    "client_name": "Zahir Ismail Budy",
+    "date": "2025-03-13",
+    "amount": 350.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0634_Zahir_Ismail_Budy.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0633",
+    "client_name": "Ousmane BARRY",
+    "date": "2025-03-11",
+    "amount": 5700.0,
+    "balance": 4100.0,
+    "status": "Paid",
+    "filename": "0633_Ousmane_BARRY.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0632",
+    "client_name": "Dame Diop",
+    "date": "2025-03-07",
+    "amount": 2000.0,
+    "balance": 400.0,
+    "status": "Paid",
+    "filename": "0632_Dame_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0631",
+    "client_name": "Nur Saleha Begum",
+    "date": "2025-03-06",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0631_Nur_Saleha_Begum.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0630",
+    "client_name": "Fatouma L Bah",
+    "date": "2025-03-06",
+    "amount": 1950.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0630_Fatouma_L_Bah.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0629",
+    "client_name": "Marian Kamara Steed",
+    "date": "2025-03-04",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0629_Marian_Kamara_Steed.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0628",
+    "client_name": "Abdoul Goudouss BAH",
+    "date": "2025-03-04",
+    "amount": 5750.0,
+    "balance": 4750.0,
+    "status": "Paid",
+    "filename": "0628_Abdoul_Goudouss_BAH.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0627",
+    "client_name": "Philip Beryl",
+    "date": "2025-03-03",
+    "amount": 200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0627_Philip_Beryl.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0626",
+    "client_name": "Sarah Elyse Johnson",
+    "date": "2025-02-20",
+    "amount": 3250.0,
+    "balance": 1600.0,
+    "status": "Paid",
+    "filename": "0626_Sarah_Elyse_Johnson.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0625",
+    "client_name": "Bineta Babou",
+    "date": "2025-02-18",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0625_Bineta_Babou.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0624",
+    "client_name": "Khadim lo",
+    "date": "2025-02-17",
+    "amount": 5500.0,
+    "balance": 3100.0,
+    "status": "Paid",
+    "filename": "0624_Khadim_lo.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0623",
+    "client_name": "KHADIM DIOUF",
+    "date": "2025-02-13",
+    "amount": 5500.0,
+    "balance": 2800.0,
+    "status": "Paid",
+    "filename": "0623_KHADIM_DIOUF.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0622",
+    "client_name": "Jon Roise",
+    "date": "2025-02-11",
+    "amount": 200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0622_Jon_Roise.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0621",
+    "client_name": "Mamadou Seye",
+    "date": "2025-02-10",
+    "amount": 5990.0,
+    "balance": 3690.0,
+    "status": "Paid",
+    "filename": "0621_Mamadou_Seye.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0620",
+    "client_name": "Fatoumata Berete",
+    "date": "2025-02-05",
+    "amount": 5000.0,
+    "balance": 2800.0,
+    "status": "Paid",
+    "filename": "0620_Fatoumata_Berete.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0619",
+    "client_name": "Elhadj Abdoulaye BAH",
+    "date": "2025-02-03",
+    "amount": 5750.0,
+    "balance": 4750.0,
+    "status": "Paid",
+    "filename": "0619_Elhadj_Abdoulaye_BAH.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0618",
+    "client_name": "Oscar U Santana",
+    "date": "2025-01-30",
+    "amount": 1750.0,
+    "balance": 450.0,
+    "status": "Paid",
+    "filename": "0618_Oscar_U_Santana.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0617",
+    "client_name": "Yurany Melendez Urrutia",
+    "date": "2025-01-29",
+    "amount": 5500.0,
+    "balance": 2500.0,
+    "status": "Paid",
+    "filename": "0617_Yurany_Melendez_Urrutia.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0616",
+    "client_name": "Rhea Renesia Elizabeth Duncan",
+    "date": "2025-01-29",
+    "amount": 3500.0,
+    "balance": 2850.0,
+    "status": "Paid",
+    "filename": "0616_Rhea_Renesia_Elizabeth_Duncan.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0615",
+    "client_name": "kevon Alex Bailey",
+    "date": "2025-01-28",
+    "amount": 3500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0615_kevon_Alex_Bailey.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0614",
+    "client_name": "Allison J Layne",
+    "date": "2025-01-27",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0614_Allison_J_Layne.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0613",
+    "client_name": "Moussa Cherif",
+    "date": "2025-01-27",
+    "amount": 5500.0,
+    "balance": 3500.0,
+    "status": "Paid",
+    "filename": "0613_Moussa_Cherif.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0612",
+    "client_name": "Cheikh Sidi El Moctar Lemrabott",
+    "date": "2025-01-24",
+    "amount": 200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0612_Cheikh_Sidi_El_Moctar_Lemrabott.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0611",
+    "client_name": "SODA FALL",
+    "date": "2025-01-21",
+    "amount": 1200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0611_SODA_FALL.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0610",
+    "client_name": "TAIBA SAKHO",
+    "date": "2025-01-17",
+    "amount": 6000.0,
+    "balance": 3550.0,
+    "status": "Paid",
+    "filename": "0610_TAIBA_SAKHO.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0609",
+    "client_name": "Britanny Ashley Pryce",
+    "date": "2025-01-17",
+    "amount": 3500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0609_Britanny_Ashley_Pryce.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0608",
+    "client_name": "NICKELLE MICHAEL GOULDBOURNE",
+    "date": "2025-01-17",
+    "amount": 4000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0608_NICKELLE_MICHAEL_GOULDBOURNE.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0607",
+    "client_name": "MAMADOU SOUMBOUNOU",
+    "date": "2025-01-16",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0607_MAMADOU_SOUMBOUNOU.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0606",
+    "client_name": "AFIWA DOMENYO EHO EPSE AMEBOUBE",
+    "date": "2025-01-16",
+    "amount": 5000.0,
+    "balance": 3100.0,
+    "status": "Paid",
+    "filename": "0606_AFIWA_DOMENYO_EHO_EPSE_AMEBOUBE.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0605",
+    "client_name": "Mary A Breton",
+    "date": "2025-01-16",
+    "amount": 1500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0605_Mary_A_Breton.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0604",
+    "client_name": "Baye Taiba Ndiaye",
+    "date": "2025-01-14",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0604_Baye_Taiba_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0603",
+    "client_name": "ALseny Barry",
+    "date": "2025-01-14",
+    "amount": 6050.0,
+    "balance": 2350.0,
+    "status": "Paid",
+    "filename": "0603_ALseny_Barry.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0602",
+    "client_name": "Mamadou Falilou Gueye",
+    "date": "2025-01-13",
+    "amount": 4500.0,
+    "balance": 1550.0,
+    "status": "Paid",
+    "filename": "0602_Mamadou_Falilou_Gueye.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0600",
+    "client_name": "Samba Sow",
+    "date": "2025-01-07",
+    "amount": 5110.0,
+    "balance": 1500.0,
+    "status": "Paid",
+    "filename": "0600_Samba_Sow.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0599",
+    "client_name": "Mohammad Faisal Omari",
+    "date": "2025-01-07",
+    "amount": 750.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0599_Mohammad_Faisal_Omari.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0598",
+    "client_name": "Mustapha Adams Kadri",
+    "date": "2024-12-26",
+    "amount": 1500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0598_Mustapha_Adams_Kadri.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0597",
+    "client_name": "Talla Sylla",
+    "date": "2024-12-24",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0597_Talla_Sylla.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0596",
+    "client_name": "Ismaela Dia",
+    "date": "2024-12-23",
+    "amount": 5500.0,
+    "balance": 3400.0,
+    "status": "Paid",
+    "filename": "0596_Ismaela_Dia.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0595",
+    "client_name": "Demba Gadiaga",
+    "date": "2024-12-17",
+    "amount": 6000.0,
+    "balance": 3100.0,
+    "status": "Paid",
+    "filename": "0595_Demba_Gadiaga.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0594",
+    "client_name": "Jean Claude Kamekpor",
+    "date": "2024-12-16",
+    "amount": 6500.0,
+    "balance": 4500.0,
+    "status": "Paid",
+    "filename": "0594_Jean_Claude_Kamekpor.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0593",
+    "client_name": "Isatu Kamara Momoh",
+    "date": "2024-12-13",
+    "amount": 2000.0,
+    "balance": 685.0,
+    "status": "Paid",
+    "filename": "0593_Isatu_Kamara_Momoh.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0592",
+    "client_name": "NANA EFUA HAYFORD ABBAN",
+    "date": "2024-12-13",
+    "amount": 3500.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0592_NANA_EFUA_HAYFORD_ABBAN.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0591",
+    "client_name": "Ibrahima SALL",
+    "date": "2024-12-10",
+    "amount": 5500.0,
+    "balance": 1000.0,
+    "status": "Paid",
+    "filename": "0591_Ibrahima_SALL.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0590",
+    "client_name": "Djily Samb",
+    "date": "2024-12-07",
+    "amount": 6000.0,
+    "balance": 3300.0,
+    "status": "Paid",
+    "filename": "0590_Djily_Samb.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0589",
+    "client_name": "Ousmane Sakho",
+    "date": "2024-12-06",
+    "amount": 6000.0,
+    "balance": 1000.0,
+    "status": "Paid",
+    "filename": "0589_Ousmane_Sakho.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0588",
+    "client_name": "Herbert Kumah",
+    "date": "2024-12-06",
+    "amount": 1000.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0588_Herbert_Kumah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0587",
+    "client_name": "Anthony Bryan Kirk",
+    "date": "2024-12-05",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0587_Anthony_Bryan_Kirk.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0586",
+    "client_name": "Siaka Sylla",
+    "date": "2024-12-03",
+    "amount": 1900.0,
+    "balance": 700.0,
+    "status": "Paid",
+    "filename": "0586_Siaka_Sylla.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0585",
+    "client_name": "mbaye faye",
+    "date": "2024-11-27",
+    "amount": 5000.0,
+    "balance": 2700.0,
+    "status": "Paid",
+    "filename": "0585_mbaye_faye.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0584",
+    "client_name": "adama ndiaye",
+    "date": "2024-11-27",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0584_adama_ndiaye.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0583",
+    "client_name": "Siaka Sylla",
+    "date": "2024-11-26",
+    "amount": 1900.0,
+    "balance": 1900.0,
+    "status": "Sent",
+    "filename": "0583_Siaka_Sylla.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0582",
+    "client_name": "MAMADOU LAMARANA DIALLO",
+    "date": "2024-11-26",
+    "amount": 5000.0,
+    "balance": 2000.0,
+    "status": "Paid",
+    "filename": "0582_MAMADOU_LAMARANA_DIALLO.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0581",
+    "client_name": "Abdoulaye Diop",
+    "date": "2024-11-26",
+    "amount": 5000.0,
+    "balance": 1700.0,
+    "status": "Paid",
+    "filename": "0581_Abdoulaye_Diop.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0580",
+    "client_name": "Alassane Fall Niass",
+    "date": "2024-11-25",
+    "amount": 6000.0,
+    "balance": 5000.0,
+    "status": "Paid",
+    "filename": "0580_Alassane_Fall_Niass.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0579",
+    "client_name": "Haja-Umu Tunkura",
+    "date": "2024-11-25",
+    "amount": 6000.0,
+    "balance": 2500.0,
+    "status": "Paid",
+    "filename": "0579_Haja-Umu_Tunkura.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0578",
+    "client_name": "Ibrahima Sylla",
+    "date": "2024-11-25",
+    "amount": 6000.0,
+    "balance": 2900.0,
+    "status": "Paid",
+    "filename": "0578_Ibrahima_Sylla.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0577",
+    "client_name": "Sheryll Wilson",
+    "date": "2024-11-25",
+    "amount": 750.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0577_Sheryll_Wilson.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0576",
+    "client_name": "Eghosa Dante Okonedo",
+    "date": "2024-11-22",
+    "amount": 4000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0576_Eghosa_Dante_Okonedo.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0575",
+    "client_name": "Herbert Kumah",
+    "date": "2024-11-22",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0575_Herbert_Kumah.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0574",
+    "client_name": "Donald H Gardener",
+    "date": "2024-11-14",
+    "amount": 400.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0574_Donald_H_Gardener.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0573",
+    "client_name": "Esther Martins",
+    "date": "2024-11-13",
+    "amount": 300.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0573_Esther_Martins.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0572",
+    "client_name": "Muntala Joof",
+    "date": "2024-11-12",
+    "amount": 6500.0,
+    "balance": 2000.0,
+    "status": "Paid",
+    "filename": "0572_Muntala_Joof.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0571",
+    "client_name": "Abdul Samed Osman",
+    "date": "2024-11-11",
+    "amount": 6500.0,
+    "balance": 1500.0,
+    "status": "Paid",
+    "filename": "0571_Abdul_Samed_Osman.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0570",
+    "client_name": "Roshan Gurung",
+    "date": "2024-11-08",
+    "amount": 3500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0570_Roshan_Gurung.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0569",
+    "client_name": "Margaret Nepken Ojo",
+    "date": "2024-11-08",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0569_Margaret_Nepken_Ojo.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0568",
+    "client_name": "Assane Tine",
+    "date": "2024-11-07",
+    "amount": 6000.0,
+    "balance": 5000.0,
+    "status": "Paid",
+    "filename": "0568_Assane_Tine.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0567",
+    "client_name": "AFIWA DOMENYO EHO EPSE AMEBOUBE",
+    "date": "2024-11-06",
+    "amount": 200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0567_AFIWA_DOMENYO_EHO_EPSE_AMEBOUBE.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0566",
+    "client_name": "Mor Talla Sall",
+    "date": "2024-11-06",
+    "amount": 4500.0,
+    "balance": 3500.0,
+    "status": "Paid",
+    "filename": "0566_Mor_Talla_Sall.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0565",
+    "client_name": "Mohammad Faisal Omari",
+    "date": "2024-11-05",
+    "amount": 3500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0565_Mohammad_Faisal_Omari.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0564",
+    "client_name": "Mamadou Dioulde Diallo",
+    "date": "2024-11-04",
+    "amount": 5000.0,
+    "balance": 1750.0,
+    "status": "Paid",
+    "filename": "0564_Mamadou_Dioulde_Diallo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0563",
+    "client_name": "Josh Rotstein",
+    "date": "2024-11-01",
+    "amount": 3000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0563_Josh_Rotstein.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0562",
+    "client_name": "AHMED TIDIANE DIALLO",
+    "date": "2024-10-24",
+    "amount": 5300.0,
+    "balance": 2050.0,
+    "status": "Paid",
+    "filename": "0562_AHMED_TIDIANE_DIALLO.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0561",
+    "client_name": "Djasrabe Bienvenu",
+    "date": "2024-10-23",
+    "amount": 1900.0,
+    "balance": 0.0,
+    "status": "Paid",
+    "filename": "0561_Djasrabe_Bienvenu.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0560",
+    "client_name": "Cheikh Gaye LO",
+    "date": "2024-10-23",
+    "amount": 5000.0,
+    "balance": 1000.0,
+    "status": "Paid",
+    "filename": "0560_Cheikh_Gaye_LO.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0559",
+    "client_name": "SEBASTIAN ADOL MEIKLE",
+    "date": "2024-10-22",
+    "amount": 1500.0,
+    "balance": 750.0,
+    "status": "Paid",
+    "filename": "0559_SEBASTIAN_ADOL_MEIKLE.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0558",
+    "client_name": "Frimbong Sekyere",
+    "date": "2024-10-21",
+    "amount": 350.0,
+    "balance": 350.0,
+    "status": "Draft",
+    "filename": "0558_Frimbong_Sekyere.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0557",
+    "client_name": "Kodwo Ewusi",
+    "date": "2024-10-16",
+    "amount": 6000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0557_Kodwo_Ewusi.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0556",
+    "client_name": "Alrick Alston Barnes",
+    "date": "2024-10-09",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0556_Alrick_Alston_Barnes.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0555",
+    "client_name": "Forgue Kepler",
+    "date": "2024-10-04",
+    "amount": 750.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0555_Forgue_Kepler.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0554",
+    "client_name": "Allison J Layne",
+    "date": "2024-10-03",
+    "amount": 200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0554_Allison_J_Layne.pdf",
+    "available": true
+  },
+  {
+    "invoice_number": "0553",
+    "client_name": "Aboubakar Idrissou",
+    "date": "2024-09-27",
+    "amount": 6000.0,
+    "balance": 2800.0,
+    "status": "Paid",
+    "filename": "0553_Aboubakar_Idrissou.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0552",
+    "client_name": "Abdul-Jawad Abdul-Munin",
+    "date": "2024-09-26",
+    "amount": 3500.0,
+    "balance": 3000.0,
+    "status": "Paid",
+    "filename": "0552_Abdul-Jawad_Abdul-Munin.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0551",
+    "client_name": "Amadou DIALLO",
+    "date": "2025-06-03",
+    "amount": 6000.0,
+    "balance": 2000.0,
+    "status": "Paid",
+    "filename": "0551_Amadou_DIALLO.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0550",
+    "client_name": "Mamadou Sanoussy Bah",
+    "date": "2024-09-23",
+    "amount": 5000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0550_Mamadou_Sanoussy_Bah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0549",
+    "client_name": "Mor Talla Sall",
+    "date": "2024-09-20",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0549_Mor_Talla_Sall.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0548",
+    "client_name": "Sidi Karamoko",
+    "date": "2024-09-19",
+    "amount": 2050.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0548_Sidi_Karamoko.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0547",
+    "client_name": "Clementine Sefarkor Yarjah",
+    "date": "2024-09-18",
+    "amount": 6000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0547_Clementine_Sefarkor_Yarjah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0546",
+    "client_name": "Bousso NIASSE",
+    "date": "2024-09-16",
+    "amount": 5500.0,
+    "balance": 2000.0,
+    "status": "Paid",
+    "filename": "0546_Bousso_NIASSE.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0545",
+    "client_name": "Dame Sarr",
+    "date": "2024-09-17",
+    "amount": 5000.0,
+    "balance": 1100.0,
+    "status": "Paid",
+    "filename": "0545_Dame_Sarr.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0544",
+    "client_name": "Sitta Siah Milimono",
+    "date": "2024-09-17",
+    "amount": 400.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0544_Sitta_Siah_Milimono.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0543",
+    "client_name": "MAHMOUDOU DIALLO",
+    "date": "2025-05-20",
+    "amount": 6500.0,
+    "balance": 2500.0,
+    "status": "Paid",
+    "filename": "0543_MAHMOUDOU_DIALLO.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0542",
+    "client_name": "Rabiou Aboulaye",
+    "date": "2024-09-16",
+    "amount": 6000.0,
+    "balance": 900.0,
+    "status": "Paid",
+    "filename": "0542_Rabiou_Aboulaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0541",
+    "client_name": "MODORA Conteh",
+    "date": "2024-09-13",
+    "amount": 2500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0541_MODORA_Conteh.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0540",
+    "client_name": "SERIGNE ABDOU LAHAT DIOUF",
+    "date": "2024-09-13",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0540_SERIGNE_ABDOU_LAHAT_DIOUF.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0539",
+    "client_name": "Mamadou Ndiaye",
+    "date": "2024-09-10",
+    "amount": 6000.0,
+    "balance": 2400.0,
+    "status": "Paid",
+    "filename": "0539_Mamadou_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0538",
+    "client_name": "Amadou Dia",
+    "date": "2024-09-10",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0538_Amadou_Dia.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0537",
+    "client_name": "Abdul Rahman Musah",
+    "date": "2024-09-03",
+    "amount": 6000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0537_Abdul_Rahman_Musah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0536",
+    "client_name": "Aboubakary Tambadou",
+    "date": "2024-08-29",
+    "amount": 5450.0,
+    "balance": 1600.0,
+    "status": "Paid",
+    "filename": "0536_Aboubakary_Tambadou.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0535",
+    "client_name": "Hawa Bajar Jallow",
+    "date": "2024-08-28",
+    "amount": 3000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0535_Hawa_Bajar_Jallow.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0534",
+    "client_name": "Modou Diagne",
+    "date": "2024-08-28",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0534_Modou_Diagne.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0533",
+    "client_name": "Cheikh Tidiane Diop",
+    "date": "2024-08-28",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0533_Cheikh_Tidiane_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0532",
+    "client_name": "Katim toure",
+    "date": "2024-08-28",
+    "amount": 6000.0,
+    "balance": 3500.0,
+    "status": "Paid",
+    "filename": "0532_Katim_toure.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0531",
+    "client_name": "Zenaba Ibrahim",
+    "date": "2024-08-27",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0531_Zenaba_Ibrahim.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0530",
+    "client_name": "Malick Thiam",
+    "date": "2024-08-21",
+    "amount": 6000.0,
+    "balance": 1600.0,
+    "status": "Paid",
+    "filename": "0530_Malick_Thiam.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0529",
+    "client_name": "Abdoulaye Sall",
+    "date": "2024-08-19",
+    "amount": 200.0,
+    "balance": 100.0,
+    "status": "Paid",
+    "filename": "0529_Abdoulaye_Sall.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0528",
+    "client_name": "Daouda Faye",
+    "date": "2024-08-16",
+    "amount": 1500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0528_Daouda_Faye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0527",
+    "client_name": "Amina Mohamed Hassan",
+    "date": "2025-05-29",
+    "amount": 7000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0527_Amina_Mohamed_Hassan.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0526",
+    "client_name": "Khadim Dieng",
+    "date": "2024-08-12",
+    "amount": 5800.0,
+    "balance": 900.0,
+    "status": "Paid",
+    "filename": "0526_Khadim_Dieng.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0525",
+    "client_name": "Halima Ibrahim Mahamoud",
+    "date": "2024-08-09",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0525_Halima_Ibrahim_Mahamoud.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0523",
+    "client_name": "Mawata Dolley",
+    "date": "2024-08-09",
+    "amount": 1900.0,
+    "balance": 1400.0,
+    "status": "Paid",
+    "filename": "0523_Mawata_Dolley.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0522",
+    "client_name": "Nawapun Supanong",
+    "date": "2024-08-07",
+    "amount": 700.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0522_Nawapun_Supanong.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0521",
+    "client_name": "KHADIM DIOUF",
+    "date": "2024-08-06",
+    "amount": 3500.0,
+    "balance": 1300.0,
+    "status": "Paid",
+    "filename": "0521_KHADIM_DIOUF.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0520",
+    "client_name": "Brahim Gaye",
+    "date": "2024-08-06",
+    "amount": 6000.0,
+    "balance": 1200.0,
+    "status": "Paid",
+    "filename": "0520_Brahim_Gaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0519",
+    "client_name": "Negash Royal",
+    "date": "2024-08-05",
+    "amount": 5500.0,
+    "balance": 5200.0,
+    "status": "Paid",
+    "filename": "0519_Negash_Royal.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0518",
+    "client_name": "Cubaka Mwenelubala Hubert",
+    "date": "2024-08-05",
+    "amount": 2500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0518_Cubaka_Mwenelubala_Hubert.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0517",
+    "client_name": "Negash Royal",
+    "date": "2024-08-02",
+    "amount": 5500.0,
+    "balance": 1000.0,
+    "status": "Paid",
+    "filename": "0517_Negash_Royal.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0516",
+    "client_name": "Elhadji Samb",
+    "date": "2024-07-31",
+    "amount": 0.0,
+    "balance": -350.0,
+    "status": "Past Due",
+    "filename": "0516_Elhadji_Samb.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0515",
+    "client_name": "Ndiaga Mbengue",
+    "date": "2024-07-30",
+    "amount": 350.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0515_Ndiaga_Mbengue.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0514",
+    "client_name": "Oumou Tounkara",
+    "date": "2024-07-30",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0514_Oumou_Tounkara.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0513",
+    "client_name": "Handren Rafiq Tofiq",
+    "date": "2024-07-29",
+    "amount": 200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0513_Handren_Rafiq_Tofiq.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0512",
+    "client_name": "Vamougna Sanoh",
+    "date": "2024-07-24",
+    "amount": 6500.0,
+    "balance": 1100.0,
+    "status": "Paid",
+    "filename": "0512_Vamougna_Sanoh.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0511",
+    "client_name": "Mamadou Alpha Bah",
+    "date": "2024-07-24",
+    "amount": 6000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0511_Mamadou_Alpha_Bah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0510",
+    "client_name": "Godfred Mensah",
+    "date": "2024-07-23",
+    "amount": 6500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0510_Godfred_Mensah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0509",
+    "client_name": "Yususf Hassen",
+    "date": "2024-07-22",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0509_Yususf_Hassen.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0508",
+    "client_name": "Sahr Aruna",
+    "date": "2024-07-22",
+    "amount": 2000.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0508_Sahr_Aruna.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0507",
+    "client_name": "Amadou Dioulde Diallo",
+    "date": "2024-07-22",
+    "amount": 5000.0,
+    "balance": 4250.0,
+    "status": "Paid",
+    "filename": "0507_Amadou_Dioulde_Diallo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0506",
+    "client_name": "Fatiya A Abdullahi",
+    "date": "2024-07-19",
+    "amount": 2000.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0506_Fatiya_A_Abdullahi.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0505",
+    "client_name": "Modou Faye",
+    "date": "2024-07-19",
+    "amount": 6000.0,
+    "balance": 4000.0,
+    "status": "Paid",
+    "filename": "0505_Modou_Faye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0504",
+    "client_name": "Samba Ngom",
+    "date": "2024-07-19",
+    "amount": 6000.0,
+    "balance": 2450.0,
+    "status": "Paid",
+    "filename": "0504_Samba_Ngom.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0503",
+    "client_name": "Fanta Sirleaf",
+    "date": "2024-07-17",
+    "amount": 3500.0,
+    "balance": 3150.0,
+    "status": "Paid",
+    "filename": "0503_Fanta_Sirleaf.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0502",
+    "client_name": "Fessou Anani Lawson",
+    "date": "2024-07-16",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0502_Fessou_Anani_Lawson.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0501",
+    "client_name": "Kalthoum A Mohamed",
+    "date": "2024-07-12",
+    "amount": 2900.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0501_Kalthoum_A_Mohamed.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0500",
+    "client_name": "Mariam Mussa",
+    "date": "2024-07-12",
+    "amount": 2900.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0500_Mariam_Mussa.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0499",
+    "client_name": "Kalid A Jibro",
+    "date": "2024-07-11",
+    "amount": 4000.0,
+    "balance": 3000.0,
+    "status": "Paid",
+    "filename": "0499_Kalid_A_Jibro.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0498",
+    "client_name": "Haderami Gueye",
+    "date": "2024-07-11",
+    "amount": 5000.0,
+    "balance": 1800.0,
+    "status": "Paid",
+    "filename": "0498_Haderami_Gueye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0497",
+    "client_name": "Fatou Sacko",
+    "date": "2024-07-09",
+    "amount": 4800.0,
+    "balance": 4800.0,
+    "status": "Sent",
+    "filename": "0497_Fatou_Sacko.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0496",
+    "client_name": "Goumba Sene",
+    "date": "2024-07-05",
+    "amount": 6000.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0496_Goumba_Sene.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0495",
+    "client_name": "Boubacar Brahim not a client anymore",
+    "date": "2024-07-03",
+    "amount": 5500.0,
+    "balance": 4100.0,
+    "status": "Paid",
+    "filename": "0495_Boubacar_Brahim_not_a_client_anymore.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0494",
+    "client_name": "Bujirire Kaboyi",
+    "date": "2024-06-28",
+    "amount": 2000.0,
+    "balance": 1850.0,
+    "status": "Paid",
+    "filename": "0494_Bujirire_Kaboyi.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0493",
+    "client_name": "Fatoumata Binta Bah",
+    "date": "2024-06-26",
+    "amount": 6000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0493_Fatoumata_Binta_Bah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0492",
+    "client_name": "Oguntola Adesanya Olufunmilola A",
+    "date": "2024-06-25",
+    "amount": 4550.0,
+    "balance": 2650.0,
+    "status": "Paid",
+    "filename": "0492_Oguntola_Adesanya_Olufunmilola_A.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0489",
+    "client_name": "Amadou Diop",
+    "date": "2024-06-14",
+    "amount": 6000.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0489_Amadou_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0488",
+    "client_name": "Anuwer Junda",
+    "date": "2024-06-13",
+    "amount": 2800.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0488_Anuwer_Junda.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0487",
+    "client_name": "Fatmata Jah",
+    "date": "2024-06-13",
+    "amount": 175.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0487_Fatmata_Jah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0486",
+    "client_name": "Haoua Djime",
+    "date": "2024-06-11",
+    "amount": 2500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0486_Haoua_Djime.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0485",
+    "client_name": "Cheikh Kasse",
+    "date": "2024-06-10",
+    "amount": 6000.0,
+    "balance": 1700.0,
+    "status": "Paid",
+    "filename": "0485_Cheikh_Kasse.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0484",
+    "client_name": "Mor Diop",
+    "date": "2024-06-06",
+    "amount": 6000.0,
+    "balance": 1650.0,
+    "status": "Paid",
+    "filename": "0484_Mor_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0483",
+    "client_name": "Mame Ousmane Mbaye",
+    "date": "2024-06-06",
+    "amount": 6000.0,
+    "balance": 800.0,
+    "status": "Paid",
+    "filename": "0483_Mame_Ousmane_Mbaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0482",
+    "client_name": "Modou Lamine Diagne",
+    "date": "2024-05-29",
+    "amount": 6000.0,
+    "balance": 3100.0,
+    "status": "Paid",
+    "filename": "0482_Modou_Lamine_Diagne.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0481",
+    "client_name": "Abdou Mbengue",
+    "date": "2024-05-29",
+    "amount": 6000.0,
+    "balance": 2500.0,
+    "status": "Paid",
+    "filename": "0481_Abdou_Mbengue.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0480",
+    "client_name": "Abdou Bakhe KANE",
+    "date": "2024-05-16",
+    "amount": 6000.0,
+    "balance": 2800.0,
+    "status": "Paid",
+    "filename": "0480_Abdou_Bakhe_KANE.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0479",
+    "client_name": "Fatoumata Diabate",
+    "date": "2024-05-24",
+    "amount": 2000.0,
+    "balance": 1000.0,
+    "status": "Paid",
+    "filename": "0479_Fatoumata_Diabate.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0478",
+    "client_name": "Abdou Madjid Gakou",
+    "date": "2024-05-20",
+    "amount": 6000.0,
+    "balance": 2500.0,
+    "status": "Paid",
+    "filename": "0478_Abdou_Madjid_Gakou.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0477",
+    "client_name": "Khoudia Seck",
+    "date": "2024-05-13",
+    "amount": 2000.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0477_Khoudia_Seck.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0476",
+    "client_name": "Karamoko Kissima Drame",
+    "date": "2024-05-10",
+    "amount": 6000.0,
+    "balance": 300.0,
+    "status": "Paid",
+    "filename": "0476_Karamoko_Kissima_Drame.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0475",
+    "client_name": "Mamadou Mar",
+    "date": "2024-05-09",
+    "amount": 6000.0,
+    "balance": 2650.0,
+    "status": "Paid",
+    "filename": "0475_Mamadou_Mar.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0474",
+    "client_name": "Mayoro Kanteye",
+    "date": "2024-05-08",
+    "amount": 5400.0,
+    "balance": 5400.0,
+    "status": "Sent",
+    "filename": "0474_Mayoro_Kanteye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0473",
+    "client_name": "Khady Wade",
+    "date": "2024-05-06",
+    "amount": 6000.0,
+    "balance": 2450.0,
+    "status": "Paid",
+    "filename": "0473_Khady_Wade.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0472",
+    "client_name": "Souleymane Diagne",
+    "date": "2024-05-03",
+    "amount": 6000.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0472_Souleymane_Diagne.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0471",
+    "client_name": "Gihad altahir ibrahim Noureldin",
+    "date": "2024-05-02",
+    "amount": 3800.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0471_Gihad_altahir_ibrahim_Noureldin.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0470",
+    "client_name": "Abubakar Sadick Masawudu",
+    "date": "2024-05-01",
+    "amount": 6300.0,
+    "balance": 2000.0,
+    "status": "Paid",
+    "filename": "0470_Abubakar_Sadick_Masawudu.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0469",
+    "client_name": "Binta Cisse",
+    "date": "2024-05-01",
+    "amount": 6000.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0469_Binta_Cisse.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0468",
+    "client_name": "Mignongbeho Adjala",
+    "date": "2024-04-29",
+    "amount": 6000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0468_Mignongbeho_Adjala.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0467",
+    "client_name": "fatima ba",
+    "date": "2024-04-25",
+    "amount": 2000.0,
+    "balance": 1500.0,
+    "status": "Paid",
+    "filename": "0467_fatima_ba.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0466",
+    "client_name": "Penda Konte",
+    "date": "2024-04-25",
+    "amount": 5000.0,
+    "balance": 3000.0,
+    "status": "Paid",
+    "filename": "0466_Penda_Konte.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0465",
+    "client_name": "Aboubacar Sidiki Diabate",
+    "date": "2024-04-25",
+    "amount": 5500.0,
+    "balance": 3100.0,
+    "status": "Paid",
+    "filename": "0465_Aboubacar_Sidiki_Diabate.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0464",
+    "client_name": "Aneesa Shaheen",
+    "date": "2024-04-25",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0464_Aneesa_Shaheen.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0463",
+    "client_name": "Penda Konte",
+    "date": "2024-04-25",
+    "amount": 0.0,
+    "balance": 0.0,
+    "status": "Draft",
+    "filename": "0463_Penda_Konte.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0462",
+    "client_name": "Aminata Ba",
+    "date": "2024-04-24",
+    "amount": 300.0,
+    "balance": 150.0,
+    "status": "Paid",
+    "filename": "0462_Aminata_Ba.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0461",
+    "client_name": "Moussa Diallo",
+    "date": "2024-04-24",
+    "amount": 4000.0,
+    "balance": 400.0,
+    "status": "Paid",
+    "filename": "0461_Moussa_Diallo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0460",
+    "client_name": "Mor Lo",
+    "date": "2024-04-19",
+    "amount": 6000.0,
+    "balance": 2150.0,
+    "status": "Paid",
+    "filename": "0460_Mor_Lo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0459",
+    "client_name": "Mamadou Alpha Diallo",
+    "date": "2024-04-19",
+    "amount": 6000.0,
+    "balance": 300.0,
+    "status": "Paid",
+    "filename": "0459_Mamadou_Alpha_Diallo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0458",
+    "client_name": "Mamadou Barry",
+    "date": "2024-04-18",
+    "amount": 5500.0,
+    "balance": 4400.0,
+    "status": "Paid",
+    "filename": "0458_Mamadou_Barry.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0457",
+    "client_name": "Ali Mohamed Shomari",
+    "date": "2024-04-17",
+    "amount": 6000.0,
+    "balance": 1800.0,
+    "status": "Paid",
+    "filename": "0457_Ali_Mohamed_Shomari.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0456",
+    "client_name": "Kadidja Bah",
+    "date": "2024-04-16",
+    "amount": 2500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0456_Kadidja_Bah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0455",
+    "client_name": "Amadou Dieng",
+    "date": "2024-04-15",
+    "amount": 6000.0,
+    "balance": 900.0,
+    "status": "Paid",
+    "filename": "0455_Amadou_Dieng.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0454",
+    "client_name": "Ismael Barry",
+    "date": "2024-04-15",
+    "amount": 6000.0,
+    "balance": 800.0,
+    "status": "Paid",
+    "filename": "0454_Ismael_Barry.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0453",
+    "client_name": "Elhadji Ndiaye",
+    "date": "2024-04-13",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0453_Elhadji_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0452",
+    "client_name": "Hana Tawfiq",
+    "date": "2024-04-11",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0452_Hana_Tawfiq.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0451",
+    "client_name": "Adetoun Oluyemisi Oyediran",
+    "date": "2024-04-11",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0451_Adetoun_Oluyemisi_Oyediran.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0450",
+    "client_name": "Birane Ndiaye",
+    "date": "2024-04-08",
+    "amount": 6000.0,
+    "balance": 2400.0,
+    "status": "Paid",
+    "filename": "0450_Birane_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0449",
+    "client_name": "Assane Gueye",
+    "date": "2024-04-08",
+    "amount": 6000.0,
+    "balance": 2250.0,
+    "status": "Paid",
+    "filename": "0449_Assane_Gueye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0448",
+    "client_name": "Mor Ndiaye",
+    "date": "2024-04-08",
+    "amount": 5900.0,
+    "balance": 2200.0,
+    "status": "Paid",
+    "filename": "0448_Mor_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0447",
+    "client_name": "ABUBACARR DANSO",
+    "date": "2024-04-05",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0447_ABUBACARR_DANSO.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0446",
+    "client_name": "Aissata Moussa Sy",
+    "date": "2024-04-05",
+    "amount": 2000.0,
+    "balance": 1700.0,
+    "status": "Paid",
+    "filename": "0446_Aissata_Moussa_Sy.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0445",
+    "client_name": "Moussa Fall",
+    "date": "2024-04-04",
+    "amount": 5800.0,
+    "balance": 1150.0,
+    "status": "Paid",
+    "filename": "0445_Moussa_Fall.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0444",
+    "client_name": "Fuseina Obodai Laryea",
+    "date": "2024-04-03",
+    "amount": 5800.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0444_Fuseina_Obodai_Laryea.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0443",
+    "client_name": "Salim Abdullah",
+    "date": "2024-04-01",
+    "amount": 6000.0,
+    "balance": 3000.0,
+    "status": "Paid",
+    "filename": "0443_Salim_Abdullah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0442",
+    "client_name": "Emmanuel Camara",
+    "date": "2024-03-26",
+    "amount": 6000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0442_Emmanuel_Camara.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0441",
+    "client_name": "Mouhamed Ndao",
+    "date": "2024-03-25",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0441_Mouhamed_Ndao.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0439",
+    "client_name": "Alpha Diallo",
+    "date": "2024-03-22",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0439_Alpha_Diallo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0438",
+    "client_name": "Ekene Prince Mbagwu",
+    "date": "2024-03-22",
+    "amount": 1500.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0438_Ekene_Prince_Mbagwu.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0437",
+    "client_name": "Djene Cherif",
+    "date": "2024-03-19",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0437_Djene_Cherif.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0436",
+    "client_name": "Kiadiatu Gbozuah",
+    "date": "2024-03-18",
+    "amount": 2050.0,
+    "balance": 275.0,
+    "status": "Paid",
+    "filename": "0436_Kiadiatu_Gbozuah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0435",
+    "client_name": "Kossivi Timothe Soadjede",
+    "date": "2024-03-18",
+    "amount": 2000.0,
+    "balance": 1150.0,
+    "status": "Paid",
+    "filename": "0435_Kossivi_Timothe_Soadjede.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0434",
+    "client_name": "Rhode Duval Valdo Gassila",
+    "date": "2024-03-15",
+    "amount": 5500.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0434_Rhode_Duval_Valdo_Gassila.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0433",
+    "client_name": "Assane Mbengue",
+    "date": "2024-03-15",
+    "amount": 6000.0,
+    "balance": 2400.0,
+    "status": "Paid",
+    "filename": "0433_Assane_Mbengue.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0432",
+    "client_name": "Abdou Ndiaye",
+    "date": "2024-03-08",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0432_Abdou_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0431",
+    "client_name": "Nawapun Supanong",
+    "date": "2024-03-07",
+    "amount": 3500.0,
+    "balance": 3000.0,
+    "status": "Paid",
+    "filename": "0431_Nawapun_Supanong.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0430",
+    "client_name": "Anne Margaret George",
+    "date": "2024-03-07",
+    "amount": 2500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0430_Anne_Margaret_George.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0429",
+    "client_name": "Ousmane Camara",
+    "date": "2024-03-05",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0429_Ousmane_Camara.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0428",
+    "client_name": "Loty Sall",
+    "date": "2024-03-02",
+    "amount": 5400.0,
+    "balance": 3700.0,
+    "status": "Paid",
+    "filename": "0428_Loty_Sall.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0427",
+    "client_name": "Yahya Diallo",
+    "date": "2024-03-01",
+    "amount": 5500.0,
+    "balance": 1000.0,
+    "status": "Paid",
+    "filename": "0427_Yahya_Diallo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0426",
+    "client_name": "Abdalla Mudasiru",
+    "date": "2024-02-29",
+    "amount": 6000.0,
+    "balance": 1500.0,
+    "status": "Paid",
+    "filename": "0426_Abdalla_Mudasiru.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0425",
+    "client_name": "Thierno Hameth Ly",
+    "date": "2024-02-27",
+    "amount": 5500.0,
+    "balance": 2900.0,
+    "status": "Paid",
+    "filename": "0425_Thierno_Hameth_Ly.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0424",
+    "client_name": "Haderami Gueye",
+    "date": "2024-02-27",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0424_Haderami_Gueye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0423",
+    "client_name": "Gifty Fremah Ofori",
+    "date": "2024-02-26",
+    "amount": 3550.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0423_Gifty_Fremah_Ofori.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0422",
+    "client_name": "Khadim Gomis",
+    "date": "2024-02-26",
+    "amount": 6500.0,
+    "balance": 2950.0,
+    "status": "Paid",
+    "filename": "0422_Khadim_Gomis.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0421",
+    "client_name": "Moustapha Ndao",
+    "date": "2024-02-22",
+    "amount": 6000.0,
+    "balance": 2200.0,
+    "status": "Paid",
+    "filename": "0421_Moustapha_Ndao.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0420",
+    "client_name": "Babacar Ndiaye A245320993",
+    "date": "2024-02-22",
+    "amount": 6000.0,
+    "balance": 900.0,
+    "status": "Paid",
+    "filename": "0420_Babacar_Ndiaye_A245320993.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0419",
+    "client_name": "Cheikh Oumar Sy",
+    "date": "2024-02-22",
+    "amount": 6000.0,
+    "balance": 3940.0,
+    "status": "Paid",
+    "filename": "0419_Cheikh_Oumar_Sy.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0418",
+    "client_name": "Khadim Gomis",
+    "date": "2024-02-21",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0418_Khadim_Gomis.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0417",
+    "client_name": "Ahmed Belsum",
+    "date": "2024-02-21",
+    "amount": 2000.0,
+    "balance": 1400.0,
+    "status": "Paid",
+    "filename": "0417_Ahmed_Belsum.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0416",
+    "client_name": "Mamadou Bobo Diallo",
+    "date": "2024-02-20",
+    "amount": 6000.0,
+    "balance": 1800.0,
+    "status": "Paid",
+    "filename": "0416_Mamadou_Bobo_Diallo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0415",
+    "client_name": "Mohamed Koita",
+    "date": "2024-02-19",
+    "amount": 6000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0415_Mohamed_Koita.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0414",
+    "client_name": "Khadim Ndiaye",
+    "date": "2024-02-16",
+    "amount": 6000.0,
+    "balance": 1500.0,
+    "status": "Paid",
+    "filename": "0414_Khadim_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0413",
+    "client_name": "Dame Sarr",
+    "date": "2024-02-16",
+    "amount": 11000.0,
+    "balance": 6500.0,
+    "status": "Paid",
+    "filename": "0413_Dame_Sarr.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0412",
+    "client_name": "Dame Sarr",
+    "date": "2024-02-16",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0412_Dame_Sarr.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0411",
+    "client_name": "Adama Ndiaye",
+    "date": "2024-02-10",
+    "amount": 6000.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0411_Adama_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0410",
+    "client_name": "Omar Mbengue",
+    "date": "2024-02-09",
+    "amount": 6000.0,
+    "balance": 2750.0,
+    "status": "Paid",
+    "filename": "0410_Omar_Mbengue.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0409",
+    "client_name": "Omar Mbengue",
+    "date": "2024-02-09",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0409_Omar_Mbengue.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0408",
+    "client_name": "Thierno Diop",
+    "date": "2024-02-09",
+    "amount": 6000.0,
+    "balance": 550.0,
+    "status": "Paid",
+    "filename": "0408_Thierno_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0407",
+    "client_name": "Thierno Diop",
+    "date": "2024-02-09",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0407_Thierno_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0406",
+    "client_name": "Masse Sour",
+    "date": "2024-02-09",
+    "amount": 6000.0,
+    "balance": 1800.0,
+    "status": "Paid",
+    "filename": "0406_Masse_Sour.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0405",
+    "client_name": "Abdou Fall Diop",
+    "date": "2024-02-08",
+    "amount": 5500.0,
+    "balance": 1800.0,
+    "status": "Paid",
+    "filename": "0405_Abdou_Fall_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0404",
+    "client_name": "Fallou Diop",
+    "date": "2024-02-08",
+    "amount": 5500.0,
+    "balance": 2200.0,
+    "status": "Paid",
+    "filename": "0404_Fallou_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0403",
+    "client_name": "Mamadou Sougou",
+    "date": "2024-02-07",
+    "amount": 1000.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0403_Mamadou_Sougou.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0402",
+    "client_name": "Moussa Ba",
+    "date": "2024-02-05",
+    "amount": 5900.0,
+    "balance": 1700.0,
+    "status": "Paid",
+    "filename": "0402_Moussa_Ba.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0401",
+    "client_name": "Alpha Oumar Barry",
+    "date": "2024-02-05",
+    "amount": 5900.0,
+    "balance": 200.0,
+    "status": "Paid",
+    "filename": "0401_Alpha_Oumar_Barry.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0400",
+    "client_name": "Mamadou Aliou Barry",
+    "date": "2024-02-05",
+    "amount": 6000.0,
+    "balance": 1250.0,
+    "status": "Paid",
+    "filename": "0400_Mamadou_Aliou_Barry.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0399",
+    "client_name": "Amadou Mounir Barry",
+    "date": "2024-02-03",
+    "amount": 4500.0,
+    "balance": 600.0,
+    "status": "Paid",
+    "filename": "0399_Amadou_Mounir_Barry.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0398",
+    "client_name": "Youssouf Diallo",
+    "date": "2024-02-02",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0398_Youssouf_Diallo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0397",
+    "client_name": "Ali Mohamed Shomari",
+    "date": "2024-02-02",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0397_Ali_Mohamed_Shomari.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0396",
+    "client_name": "Sonko Yaya",
+    "date": "2024-02-02",
+    "amount": 5900.0,
+    "balance": 2400.0,
+    "status": "Paid",
+    "filename": "0396_Sonko_Yaya.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0395",
+    "client_name": "Ibrahima Gueye",
+    "date": "2024-02-02",
+    "amount": 6000.0,
+    "balance": 1990.0,
+    "status": "Paid",
+    "filename": "0395_Ibrahima_Gueye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0394",
+    "client_name": "Ayouba Souare",
+    "date": "2024-01-31",
+    "amount": 6000.0,
+    "balance": 5500.0,
+    "status": "Paid",
+    "filename": "0394_Ayouba_Souare.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0393",
+    "client_name": "Ayouba Souare",
+    "date": "2024-01-30",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0393_Ayouba_Souare.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0392",
+    "client_name": "Kossi Agbele",
+    "date": "2024-01-29",
+    "amount": 6000.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0392_Kossi_Agbele.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0391",
+    "client_name": "Serigne Abdou Aziz Mbacke Kebe",
+    "date": "2024-01-26",
+    "amount": 5500.0,
+    "balance": 1100.0,
+    "status": "Paid",
+    "filename": "0391_Serigne_Abdou_Aziz_Mbacke_Kebe.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0390",
+    "client_name": "Jessica Musa",
+    "date": "2024-01-24",
+    "amount": 3550.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0390_Jessica_Musa.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0389",
+    "client_name": "Masse Sour",
+    "date": "2024-01-24",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0389_Masse_Sour.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0388",
+    "client_name": "Alioune Badara Mbengue",
+    "date": "2024-01-23",
+    "amount": 6000.0,
+    "balance": 1800.0,
+    "status": "Paid",
+    "filename": "0388_Alioune_Badara_Mbengue.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0387",
+    "client_name": "Youssouf Diop",
+    "date": "2024-01-23",
+    "amount": 4000.0,
+    "balance": 1400.0,
+    "status": "Paid",
+    "filename": "0387_Youssouf_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0386",
+    "client_name": "Issa Diouf Not a client anymore",
+    "date": "2024-01-19",
+    "amount": 200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0386_Issa_Diouf_Not_a_client_anymore.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0385",
+    "client_name": "Rita Opare Adu",
+    "date": "2024-01-19",
+    "amount": 600.0,
+    "balance": 300.0,
+    "status": "Paid",
+    "filename": "0385_Rita_Opare_Adu.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0384",
+    "client_name": "Jayea Rebecca Paul",
+    "date": "2024-01-18",
+    "amount": 2000.0,
+    "balance": 1400.0,
+    "status": "Paid",
+    "filename": "0384_Jayea_Rebecca_Paul.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0383",
+    "client_name": "Aboubacry Thiam",
+    "date": "2024-01-18",
+    "amount": 5500.0,
+    "balance": 2500.0,
+    "status": "Paid",
+    "filename": "0383_Aboubacry_Thiam.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0382",
+    "client_name": "Serigne modou Bousso Ndiaye",
+    "date": "2024-01-13",
+    "amount": 4750.0,
+    "balance": 2750.0,
+    "status": "Paid",
+    "filename": "0382_Serigne_modou_Bousso_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0381",
+    "client_name": "Youssou Ngom",
+    "date": "2024-01-12",
+    "amount": 6000.0,
+    "balance": 1200.0,
+    "status": "Paid",
+    "filename": "0381_Youssou_Ngom.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0380",
+    "client_name": "Aminata Kaba",
+    "date": "2024-01-11",
+    "amount": 2000.0,
+    "balance": 2000.0,
+    "status": "Draft",
+    "filename": "0380_Aminata_Kaba.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0379",
+    "client_name": "Papa Alioune Kane",
+    "date": "2024-01-09",
+    "amount": 5500.0,
+    "balance": 3800.0,
+    "status": "Paid",
+    "filename": "0379_Papa_Alioune_Kane.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0378",
+    "client_name": "Djily Diop",
+    "date": "2024-01-05",
+    "amount": 400.0,
+    "balance": 400.0,
+    "status": "Sent",
+    "filename": "0378_Djily_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0377",
+    "client_name": "Masseye Diop",
+    "date": "2024-01-05",
+    "amount": 800.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0377_Masseye_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0376",
+    "client_name": "Aboubacar Diallo",
+    "date": "2024-01-05",
+    "amount": 250.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0376_Aboubacar_Diallo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0375",
+    "client_name": "Cheikh Keita",
+    "date": "2024-01-05",
+    "amount": 150.0,
+    "balance": 150.0,
+    "status": "Draft",
+    "filename": "0375_Cheikh_Keita.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0374",
+    "client_name": "Ndey Yassin Joof",
+    "date": "2024-01-04",
+    "amount": 6000.0,
+    "balance": 1000.0,
+    "status": "Paid",
+    "filename": "0374_Ndey_Yassin_Joof.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0373",
+    "client_name": "Mamadou Ba",
+    "date": "2024-01-04",
+    "amount": 5000.0,
+    "balance": 3300.0,
+    "status": "Paid",
+    "filename": "0373_Mamadou_Ba.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0372",
+    "client_name": "Moussa Diouf",
+    "date": "2025-05-28",
+    "amount": 6000.0,
+    "balance": 1100.0,
+    "status": "Paid",
+    "filename": "0372_Moussa_Diouf.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0371",
+    "client_name": "Mamadou Alpha Barry",
+    "date": "2024-01-02",
+    "amount": 4550.0,
+    "balance": 1550.0,
+    "status": "Paid",
+    "filename": "0371_Mamadou_Alpha_Barry.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0370",
+    "client_name": "Mamadou Dia not a client anymore",
+    "date": "2024-01-02",
+    "amount": 6000.0,
+    "balance": 3900.0,
+    "status": "Paid",
+    "filename": "0370_Mamadou_Dia_not_a_client_anymore.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0369",
+    "client_name": "Diambo Ibrahim",
+    "date": "2024-01-02",
+    "amount": 6000.0,
+    "balance": 2500.0,
+    "status": "Paid",
+    "filename": "0369_Diambo_Ibrahim.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0368",
+    "client_name": "Marlon Taffari Lewis",
+    "date": "2024-01-02",
+    "amount": 5500.0,
+    "balance": 4500.0,
+    "status": "Paid",
+    "filename": "0368_Marlon_Taffari_Lewis.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0366",
+    "client_name": "Babacar Ndiaye",
+    "date": "2023-12-29",
+    "amount": 5500.0,
+    "balance": 1900.0,
+    "status": "Paid",
+    "filename": "0366_Babacar_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0365",
+    "client_name": "Maodo Diop",
+    "date": "2023-12-28",
+    "amount": 1500.0,
+    "balance": 1500.0,
+    "status": "Draft",
+    "filename": "0365_Maodo_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0364",
+    "client_name": "Maodo Diop",
+    "date": "2023-12-28",
+    "amount": 10000.0,
+    "balance": 3000.0,
+    "status": "Paid",
+    "filename": "0364_Maodo_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0363",
+    "client_name": "Omar Diop",
+    "date": "2023-12-27",
+    "amount": 5500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0363_Omar_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0362",
+    "client_name": "Mamadian Bah",
+    "date": "2023-12-27",
+    "amount": 5300.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0362_Mamadian_Bah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0361",
+    "client_name": "Mamadian Bah",
+    "date": "2023-12-27",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0361_Mamadian_Bah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0360",
+    "client_name": "Kadidja Bah",
+    "date": "2023-12-26",
+    "amount": 750.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0360_Kadidja_Bah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0359",
+    "client_name": "Christian Nweke",
+    "date": "2023-12-21",
+    "amount": 5500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0359_Christian_Nweke.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0358",
+    "client_name": "Abou Bakry Ba",
+    "date": "2023-12-20",
+    "amount": 5500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0358_Abou_Bakry_Ba.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0357",
+    "client_name": "Teresa Angue Esono",
+    "date": "2023-12-18",
+    "amount": 5000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0357_Teresa_Angue_Esono.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0356",
+    "client_name": "Ajong Kuac Jor Ater",
+    "date": "2023-12-15",
+    "amount": 2000.0,
+    "balance": 300.0,
+    "status": "Paid",
+    "filename": "0356_Ajong_Kuac_Jor_Ater.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0355",
+    "client_name": "Fallou Mbathe",
+    "date": "2023-12-14",
+    "amount": 5500.0,
+    "balance": 2000.0,
+    "status": "Paid",
+    "filename": "0355_Fallou_Mbathe.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0354",
+    "client_name": "Kaifala Sannoh",
+    "date": "2023-12-13",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0354_Kaifala_Sannoh.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0353",
+    "client_name": "Daniel Kwofie",
+    "date": "2023-12-11",
+    "amount": 250.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0353_Daniel_Kwofie.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0352",
+    "client_name": "Abdou Gakou",
+    "date": "2023-12-11",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0352_Abdou_Gakou.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0351",
+    "client_name": "Aliou Ndiaye",
+    "date": "2023-12-08",
+    "amount": 5500.0,
+    "balance": 1400.0,
+    "status": "Paid",
+    "filename": "0351_Aliou_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0350",
+    "client_name": "Babacar Ndiaye",
+    "date": "2023-12-08",
+    "amount": 5500.0,
+    "balance": 1400.0,
+    "status": "Paid",
+    "filename": "0350_Babacar_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0349",
+    "client_name": "Mariamar Jackson",
+    "date": "2023-12-07",
+    "amount": 1000.0,
+    "balance": 700.0,
+    "status": "Paid",
+    "filename": "0349_Mariamar_Jackson.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0348",
+    "client_name": "Fatu Kamara",
+    "date": "2023-12-07",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0348_Fatu_Kamara.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0347",
+    "client_name": "Kaifala Sannoh",
+    "date": "2023-12-06",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0347_Kaifala_Sannoh.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0346",
+    "client_name": "Samba Sow",
+    "date": "2023-12-06",
+    "amount": 5500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0346_Samba_Sow.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0345",
+    "client_name": "Samba Sow",
+    "date": "2023-12-06",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0345_Samba_Sow.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0344",
+    "client_name": "Fallou Mboup",
+    "date": "2023-12-04",
+    "amount": 5500.0,
+    "balance": 540.0,
+    "status": "Paid",
+    "filename": "0344_Fallou_Mboup.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0343",
+    "client_name": "Mame Mousse Diop",
+    "date": "2023-12-04",
+    "amount": 5500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0343_Mame_Mousse_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0342",
+    "client_name": "Mame Mousse Diop",
+    "date": "2023-12-04",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0342_Mame_Mousse_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0341",
+    "client_name": "Mahmoute Thiam",
+    "date": "2023-12-04",
+    "amount": 5650.0,
+    "balance": 198.5,
+    "status": "Paid",
+    "filename": "0341_Mahmoute_Thiam.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0340",
+    "client_name": "Diadji Ndiaye",
+    "date": "2023-12-01",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0340_Diadji_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0339",
+    "client_name": "Djily Diop",
+    "date": "2023-12-01",
+    "amount": 5400.0,
+    "balance": 1000.0,
+    "status": "Paid",
+    "filename": "0339_Djily_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0338",
+    "client_name": "Seynabou Gueye",
+    "date": "2023-11-30",
+    "amount": 5500.0,
+    "balance": 1600.0,
+    "status": "Paid",
+    "filename": "0338_Seynabou_Gueye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0337",
+    "client_name": "Hadja A Swaray",
+    "date": "2023-11-30",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0337_Hadja_A_Swaray.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0336",
+    "client_name": "Faruk Abdul Samed",
+    "date": "2023-11-29",
+    "amount": 5500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0336_Faruk_Abdul_Samed.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0335",
+    "client_name": "Rogenia Velazquez",
+    "date": "2023-11-27",
+    "amount": 150.0,
+    "balance": 150.0,
+    "status": "Draft",
+    "filename": "0335_Rogenia_Velazquez.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0334",
+    "client_name": "Adole Kafui Francine Akuetey Akue",
+    "date": "2023-11-27",
+    "amount": 6500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0334_Adole_Kafui_Francine_Akuetey_Akue.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0333",
+    "client_name": "Oreoluwa Odukoya",
+    "date": "2023-11-27",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0333_Oreoluwa_Odukoya.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0332",
+    "client_name": "Djiby Ba",
+    "date": "2023-11-27",
+    "amount": 4900.0,
+    "balance": 2550.0,
+    "status": "Paid",
+    "filename": "0332_Djiby_Ba.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0331",
+    "client_name": "Abdoulie Gibril Jallow",
+    "date": "2023-11-22",
+    "amount": 5500.0,
+    "balance": 5000.0,
+    "status": "Paid",
+    "filename": "0331_Abdoulie_Gibril_Jallow.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0330",
+    "client_name": "Pape Makhtar Thiam",
+    "date": "2023-11-22",
+    "amount": 5500.0,
+    "balance": 4750.0,
+    "status": "Paid",
+    "filename": "0330_Pape_Makhtar_Thiam.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0329",
+    "client_name": "Boubacar Diallo",
+    "date": "2023-11-21",
+    "amount": 5250.0,
+    "balance": 3700.0,
+    "status": "Paid",
+    "filename": "0329_Boubacar_Diallo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0328",
+    "client_name": "Babacar Niang",
+    "date": "2023-11-21",
+    "amount": 5400.0,
+    "balance": 2600.0,
+    "status": "Paid",
+    "filename": "0328_Babacar_Niang.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0327",
+    "client_name": "Fallou Faye",
+    "date": "2023-11-21",
+    "amount": 5400.0,
+    "balance": 1700.0,
+    "status": "Paid",
+    "filename": "0327_Fallou_Faye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0326",
+    "client_name": "Fallou Cisse",
+    "date": "2023-11-21",
+    "amount": 5500.0,
+    "balance": 5500.0,
+    "status": "Sent",
+    "filename": "0326_Fallou_Cisse.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0325",
+    "client_name": "Moussa Sylla",
+    "date": "2023-11-20",
+    "amount": 150.0,
+    "balance": 150.0,
+    "status": "Sent",
+    "filename": "0325_Moussa_Sylla.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0324",
+    "client_name": "Moussa Sylla",
+    "date": "2023-11-20",
+    "amount": 5500.0,
+    "balance": 3050.0,
+    "status": "Paid",
+    "filename": "0324_Moussa_Sylla.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0323",
+    "client_name": "Assane Fall not a client anymore",
+    "date": "2023-11-20",
+    "amount": 5500.0,
+    "balance": 4650.0,
+    "status": "Paid",
+    "filename": "0323_Assane_Fall_not_a_client_anymore.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0322",
+    "client_name": "Assane Fall not a client anymore",
+    "date": "2023-11-20",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0322_Assane_Fall_not_a_client_anymore.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0321",
+    "client_name": "Issa Diouf Not a client anymore",
+    "date": "2023-11-20",
+    "amount": 5500.0,
+    "balance": 3250.0,
+    "status": "Paid",
+    "filename": "0321_Issa_Diouf_Not_a_client_anymore.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0320",
+    "client_name": "Issa Diouf Not a client anymore",
+    "date": "2023-11-20",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0320_Issa_Diouf_Not_a_client_anymore.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0319",
+    "client_name": "Meissa Niang",
+    "date": "2023-11-20",
+    "amount": 5400.0,
+    "balance": 3500.0,
+    "status": "Paid",
+    "filename": "0319_Meissa_Niang.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0318",
+    "client_name": "El Hadji Niang",
+    "date": "2023-11-20",
+    "amount": 5500.0,
+    "balance": 1700.0,
+    "status": "Paid",
+    "filename": "0318_El_Hadji_Niang.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0317",
+    "client_name": "Ousmane Sene",
+    "date": "2023-11-17",
+    "amount": 5100.0,
+    "balance": 850.0,
+    "status": "Paid",
+    "filename": "0317_Ousmane_Sene.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0316",
+    "client_name": "Paule Mireille Wasse",
+    "date": "2023-11-16",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0316_Paule_Mireille_Wasse.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0315",
+    "client_name": "Talla Diop",
+    "date": "2023-11-16",
+    "amount": 5400.0,
+    "balance": 1100.0,
+    "status": "Paid",
+    "filename": "0315_Talla_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0313",
+    "client_name": "Mahmoud Toure",
+    "date": "2023-11-15",
+    "amount": 5500.0,
+    "balance": 3500.0,
+    "status": "Paid",
+    "filename": "0313_Mahmoud_Toure.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0312",
+    "client_name": "Alpha Kane",
+    "date": "2023-11-15",
+    "amount": 5400.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0312_Alpha_Kane.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0311",
+    "client_name": "Amar Sow",
+    "date": "2023-11-14",
+    "amount": 5400.0,
+    "balance": 750.0,
+    "status": "Paid",
+    "filename": "0311_Amar_Sow.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0310",
+    "client_name": "Mayoro Kanteye",
+    "date": "2023-11-14",
+    "amount": 5200.0,
+    "balance": 1300.0,
+    "status": "Paid",
+    "filename": "0310_Mayoro_Kanteye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0309",
+    "client_name": "Masseye Diop",
+    "date": "2023-11-14",
+    "amount": 5500.0,
+    "balance": 1100.0,
+    "status": "Paid",
+    "filename": "0309_Masseye_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0307",
+    "client_name": "Ousmane Dioum",
+    "date": "2023-11-14",
+    "amount": 5500.0,
+    "balance": 5300.0,
+    "status": "Paid",
+    "filename": "0307_Ousmane_Dioum.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0306",
+    "client_name": "Martha Conteh",
+    "date": "2023-11-13",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0306_Martha_Conteh.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0305",
+    "client_name": "Ayuba Abdul Rahman",
+    "date": "2023-11-13",
+    "amount": 5500.0,
+    "balance": 4500.0,
+    "status": "Paid",
+    "filename": "0305_Ayuba_Abdul_Rahman.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0304",
+    "client_name": "AIMAN KARIM BUKHSH",
+    "date": "2023-11-10",
+    "amount": 1000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0304_AIMAN_KARIM_BUKHSH.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0303",
+    "client_name": "Abubakari Alhassan",
+    "date": "2023-11-10",
+    "amount": 5200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0303_Abubakari_Alhassan.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0302",
+    "client_name": "Morgan Karim",
+    "date": "2023-11-10",
+    "amount": 5500.0,
+    "balance": 1500.0,
+    "status": "Paid",
+    "filename": "0302_Morgan_Karim.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0301",
+    "client_name": "Penda Konte",
+    "date": "2023-11-10",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0301_Penda_Konte.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0300",
+    "client_name": "Matar Kanteye",
+    "date": "2023-11-10",
+    "amount": 5400.0,
+    "balance": 1550.0,
+    "status": "Paid",
+    "filename": "0300_Matar_Kanteye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0299",
+    "client_name": "Abdoulie Jallow",
+    "date": "2023-11-09",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0299_Abdoulie_Jallow.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0298",
+    "client_name": "Talari Carole Quali",
+    "date": "2023-11-09",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0298_Talari_Carole_Quali.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0297",
+    "client_name": "Ebrahima Bangura",
+    "date": "2023-11-08",
+    "amount": 145.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0297_Ebrahima_Bangura.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0296",
+    "client_name": "Paschal Oshiogbe Ogbhemhe",
+    "date": "2023-11-08",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0296_Paschal_Oshiogbe_Ogbhemhe.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0295",
+    "client_name": "Makhary Kane",
+    "date": "2023-11-07",
+    "amount": 5050.0,
+    "balance": 2550.0,
+    "status": "Paid",
+    "filename": "0295_Makhary_Kane.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0294",
+    "client_name": "Khalifa Ababacar Sy DIOUf",
+    "date": "2023-11-07",
+    "amount": 5500.0,
+    "balance": 3250.0,
+    "status": "Paid",
+    "filename": "0294_Khalifa_Ababacar_Sy_DIOUf.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0293",
+    "client_name": "Amy Kane",
+    "date": "2023-11-07",
+    "amount": 5500.0,
+    "balance": 4800.0,
+    "status": "Paid",
+    "filename": "0293_Amy_Kane.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0292",
+    "client_name": "Ami Colle Ndione",
+    "date": "2023-11-07",
+    "amount": 5500.0,
+    "balance": 2750.0,
+    "status": "Paid",
+    "filename": "0292_Ami_Colle_Ndione.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0291",
+    "client_name": "Pethula Clayton",
+    "date": "2023-11-06",
+    "amount": 3550.0,
+    "balance": 450.0,
+    "status": "Paid",
+    "filename": "0291_Pethula_Clayton.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0290",
+    "client_name": "ABO CHERIF",
+    "date": "2023-11-06",
+    "amount": 5200.0,
+    "balance": 2000.0,
+    "status": "Paid",
+    "filename": "0290_ABO_CHERIF.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0289",
+    "client_name": "Stanley Chukwukelu",
+    "date": "2023-11-06",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0289_Stanley_Chukwukelu.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0288",
+    "client_name": "Frederick osei bobbie",
+    "date": "2023-11-03",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0288_Frederick_osei_bobbie.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0287",
+    "client_name": "Mohamed Dieye",
+    "date": "2023-11-02",
+    "amount": 3500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0287_Mohamed_Dieye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0286",
+    "client_name": "Magueye Tall",
+    "date": "2023-10-31",
+    "amount": 5400.0,
+    "balance": 3600.0,
+    "status": "Paid",
+    "filename": "0286_Magueye_Tall.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0285",
+    "client_name": "Enumah Philip Jibulu",
+    "date": "2023-10-30",
+    "amount": 2500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0285_Enumah_Philip_Jibulu.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0284",
+    "client_name": "Namboudou Fofana",
+    "date": "2023-10-30",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0284_Namboudou_Fofana.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0283",
+    "client_name": "Serigne Mor Seck",
+    "date": "2023-10-30",
+    "amount": 5500.0,
+    "balance": 3750.0,
+    "status": "Paid",
+    "filename": "0283_Serigne_Mor_Seck.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0282",
+    "client_name": "Rhode Duval Valdo Gassila",
+    "date": "2023-10-27",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0282_Rhode_Duval_Valdo_Gassila.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0281",
+    "client_name": "Khadijat Aledeh",
+    "date": "2023-10-26",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0281_Khadijat_Aledeh.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0280",
+    "client_name": "Victor O Orelata",
+    "date": "2023-10-26",
+    "amount": 200.0,
+    "balance": 200.0,
+    "status": "Sent",
+    "filename": "0280_Victor_O_Orelata.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0279",
+    "client_name": "Khadim Dieng",
+    "date": "2023-10-25",
+    "amount": 5400.0,
+    "balance": 1600.0,
+    "status": "Paid",
+    "filename": "0279_Khadim_Dieng.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0278",
+    "client_name": "Festus Gerald Aguocha",
+    "date": "2023-10-24",
+    "amount": 200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0278_Festus_Gerald_Aguocha.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0277",
+    "client_name": "Seth Obeng",
+    "date": "2023-10-23",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0277_Seth_Obeng.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0276",
+    "client_name": "Ablaye Tine",
+    "date": "2023-10-23",
+    "amount": 5500.0,
+    "balance": 4300.0,
+    "status": "Paid",
+    "filename": "0276_Ablaye_Tine.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0275",
+    "client_name": "Ablaye Tine",
+    "date": "2023-10-23",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0275_Ablaye_Tine.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0274",
+    "client_name": "Diadji Ndiaye",
+    "date": "2023-10-20",
+    "amount": 5500.0,
+    "balance": 3160.0,
+    "status": "Paid",
+    "filename": "0274_Diadji_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0273",
+    "client_name": "Alfred Asamoah Agyeman",
+    "date": "2023-10-17",
+    "amount": 3000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0273_Alfred_Asamoah_Agyeman.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0272",
+    "client_name": "Papa Faye",
+    "date": "2023-10-17",
+    "amount": 5500.0,
+    "balance": 2600.0,
+    "status": "Paid",
+    "filename": "0272_Papa_Faye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0271",
+    "client_name": "Bassirou Syll",
+    "date": "2023-10-13",
+    "amount": 5650.0,
+    "balance": 2050.0,
+    "status": "Paid",
+    "filename": "0271_Bassirou_Syll.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0270",
+    "client_name": "Rhode Duval Valdo Gassila",
+    "date": "2023-10-13",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0270_Rhode_Duval_Valdo_Gassila.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0269",
+    "client_name": "El Hadji Mbacke Mboup",
+    "date": "2023-10-10",
+    "amount": 3500.0,
+    "balance": 1050.0,
+    "status": "Paid",
+    "filename": "0269_El_Hadji_Mbacke_Mboup.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0268",
+    "client_name": "Dame Ndiaye",
+    "date": "2023-10-10",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0268_Dame_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0267",
+    "client_name": "ALI IMDAD",
+    "date": "2023-10-10",
+    "amount": 725.0,
+    "balance": 725.0,
+    "status": "Sent",
+    "filename": "0267_ALI_IMDAD.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0266",
+    "client_name": "ALI IMDAD",
+    "date": "2023-10-10",
+    "amount": 725.0,
+    "balance": 725.0,
+    "status": "Sent",
+    "filename": "0266_ALI_IMDAD.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0265",
+    "client_name": "Abiodun Kafilat Iyewarun",
+    "date": "2023-10-09",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0265_Abiodun_Kafilat_Iyewarun.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0264",
+    "client_name": "Mamadou Djigo",
+    "date": "2023-10-04",
+    "amount": 350.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0264_Mamadou_Djigo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0263",
+    "client_name": "Mame Thierno Marone",
+    "date": "2023-10-03",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0263_Mame_Thierno_Marone.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0262",
+    "client_name": "Matar Dieng",
+    "date": "2023-10-03",
+    "amount": 5650.0,
+    "balance": 3000.0,
+    "status": "Paid",
+    "filename": "0262_Matar_Dieng.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0261",
+    "client_name": "Tapha Ndiaye",
+    "date": "2023-10-03",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0261_Tapha_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0260",
+    "client_name": "Ibrahima Kalil Komara",
+    "date": "2023-10-02",
+    "amount": 5000.0,
+    "balance": 1300.0,
+    "status": "Paid",
+    "filename": "0260_Ibrahima_Kalil_Komara.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0259",
+    "client_name": "Serigne Mor Seck",
+    "date": "2023-10-02",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0259_Serigne_Mor_Seck.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0258",
+    "client_name": "Khalid Ismaila Tijani",
+    "date": "2024-01-24",
+    "amount": 5500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0258_Khalid_Ismaila_Tijani.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0257",
+    "client_name": "MUNNIS HADONE SABEK",
+    "date": "2023-09-27",
+    "amount": 3150.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0257_MUNNIS_HADONE_SABEK.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0256",
+    "client_name": "Elhadji Yahya Tior not a client anymore",
+    "date": "2023-09-25",
+    "amount": 4700.0,
+    "balance": 3550.0,
+    "status": "Paid",
+    "filename": "0256_Elhadji_Yahya_Tior_not_a_client_anymore.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0255",
+    "client_name": "Elhadji Yahya Tior",
+    "date": "2023-09-25",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0255_Elhadji_Yahya_Tior.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0254",
+    "client_name": "Khadidja Issa",
+    "date": "2023-09-25",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0254_Khadidja_Issa.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0253",
+    "client_name": "Aboubacar Diallo",
+    "date": "2023-09-22",
+    "amount": 5000.0,
+    "balance": 700.0,
+    "status": "Paid",
+    "filename": "0253_Aboubacar_Diallo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0252",
+    "client_name": "Mbaye Sarr",
+    "date": "2023-09-22",
+    "amount": 5500.0,
+    "balance": 1500.0,
+    "status": "Paid",
+    "filename": "0252_Mbaye_Sarr.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0251",
+    "client_name": "Thioune Ndeye Astou",
+    "date": "2023-09-22",
+    "amount": 5500.0,
+    "balance": 3350.0,
+    "status": "Paid",
+    "filename": "0251_Thioune_Ndeye_Astou.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0250",
+    "client_name": "Mbaye Sarr",
+    "date": "2023-09-22",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0250_Mbaye_Sarr.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0249",
+    "client_name": "Souleymane Sakho",
+    "date": "2023-09-21",
+    "amount": 5000.0,
+    "balance": 3200.0,
+    "status": "Paid",
+    "filename": "0249_Souleymane_Sakho.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0248",
+    "client_name": "Ousmane Faye",
+    "date": "2023-09-19",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0248_Ousmane_Faye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0247",
+    "client_name": "Pape Aly Cisse",
+    "date": "2023-09-19",
+    "amount": 5500.0,
+    "balance": 1500.0,
+    "status": "Paid",
+    "filename": "0247_Pape_Aly_Cisse.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0246",
+    "client_name": "Babacar Faye",
+    "date": "2023-09-19",
+    "amount": 5500.0,
+    "balance": 1800.0,
+    "status": "Paid",
+    "filename": "0246_Babacar_Faye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0245",
+    "client_name": "Papa Mousse Dione",
+    "date": "2023-09-18",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0245_Papa_Mousse_Dione.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0244",
+    "client_name": "Fatoumata Savane",
+    "date": "2023-09-15",
+    "amount": 2000.0,
+    "balance": 1500.0,
+    "status": "Paid",
+    "filename": "0244_Fatoumata_Savane.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0243",
+    "client_name": "Baha Elislam Sekiou",
+    "date": "2023-09-15",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0243_Baha_Elislam_Sekiou.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0242",
+    "client_name": "Saheed Ajenifuja",
+    "date": "2023-09-15",
+    "amount": 1400.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0242_Saheed_Ajenifuja.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0241",
+    "client_name": "Nicola N Howard",
+    "date": "2023-09-13",
+    "amount": 2500.0,
+    "balance": 1500.0,
+    "status": "Paid",
+    "filename": "0241_Nicola_N_Howard.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0239",
+    "client_name": "Moussa Ndoye",
+    "date": "2023-09-12",
+    "amount": 4750.0,
+    "balance": 2050.0,
+    "status": "Paid",
+    "filename": "0239_Moussa_Ndoye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0238",
+    "client_name": "Ousmane Sow",
+    "date": "2023-09-12",
+    "amount": 4750.0,
+    "balance": 2000.0,
+    "status": "Paid",
+    "filename": "0238_Ousmane_Sow.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0237",
+    "client_name": "Bassamba Ndoye",
+    "date": "2023-09-12",
+    "amount": 4750.0,
+    "balance": 1750.0,
+    "status": "Paid",
+    "filename": "0237_Bassamba_Ndoye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0236",
+    "client_name": "Bassamba Ndoye",
+    "date": "2023-09-12",
+    "amount": 4750.0,
+    "balance": 4500.0,
+    "status": "Paid",
+    "filename": "0236_Bassamba_Ndoye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0235",
+    "client_name": "Serigne Thiam",
+    "date": "2023-09-12",
+    "amount": 4750.0,
+    "balance": 4500.0,
+    "status": "Paid",
+    "filename": "0235_Serigne_Thiam.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0234",
+    "client_name": "Modou Kane Thiam",
+    "date": "2023-09-12",
+    "amount": 4750.0,
+    "balance": 3400.0,
+    "status": "Paid",
+    "filename": "0234_Modou_Kane_Thiam.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0233",
+    "client_name": "Amadou Seydi",
+    "date": "2023-09-12",
+    "amount": 4750.0,
+    "balance": 1750.0,
+    "status": "Paid",
+    "filename": "0233_Amadou_Seydi.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0232",
+    "client_name": "Mariam Diakho",
+    "date": "2023-09-12",
+    "amount": 8050.0,
+    "balance": 4250.0,
+    "status": "Paid",
+    "filename": "0232_Mariam_Diakho.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0231",
+    "client_name": "Paula Galindo Suaza",
+    "date": "2023-09-12",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0231_Paula_Galindo_Suaza.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0230",
+    "client_name": "Brenda Steward",
+    "date": "2023-09-11",
+    "amount": 2500.0,
+    "balance": 1550.0,
+    "status": "Paid",
+    "filename": "0230_Brenda_Steward.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0229",
+    "client_name": "Adama Ba",
+    "date": "2023-09-08",
+    "amount": 4050.0,
+    "balance": 650.0,
+    "status": "Paid",
+    "filename": "0229_Adama_Ba.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0228",
+    "client_name": "Samba Ndiaye",
+    "date": "2023-09-08",
+    "amount": 5550.0,
+    "balance": 1400.0,
+    "status": "Paid",
+    "filename": "0228_Samba_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0227",
+    "client_name": "Tafsir Diattara",
+    "date": "2023-09-06",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0227_Tafsir_Diattara.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0226",
+    "client_name": "Jenet Mbah",
+    "date": "2023-09-05",
+    "amount": 1450.0,
+    "balance": 950.0,
+    "status": "Paid",
+    "filename": "0226_Jenet_Mbah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0225",
+    "client_name": "Abibatu Nallo",
+    "date": "2023-08-30",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0225_Abibatu_Nallo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0224",
+    "client_name": "Richard Danso",
+    "date": "2023-08-22",
+    "amount": 1550.0,
+    "balance": 450.0,
+    "status": "Paid",
+    "filename": "0224_Richard_Danso.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0223",
+    "client_name": "Fatoumata Diallo",
+    "date": "2023-08-22",
+    "amount": 2150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0223_Fatoumata_Diallo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0222",
+    "client_name": "Sarah Kanteh Kalenga",
+    "date": "2023-08-21",
+    "amount": 750.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0222_Sarah_Kanteh_Kalenga.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0221",
+    "client_name": "Esther Dankwah",
+    "date": "2023-08-18",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0221_Esther_Dankwah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0220",
+    "client_name": "Henry Uchenna Osuji",
+    "date": "2023-08-17",
+    "amount": 3500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0220_Henry_Uchenna_Osuji.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0219",
+    "client_name": "Abdoulaye Ciss",
+    "date": "2023-08-17",
+    "amount": 5550.0,
+    "balance": 1300.0,
+    "status": "Paid",
+    "filename": "0219_Abdoulaye_Ciss.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0218",
+    "client_name": "Amina Mohamed Hassan",
+    "date": "2023-08-16",
+    "amount": 1250.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0218_Amina_Mohamed_Hassan.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0217",
+    "client_name": "Moustapha Mbacke",
+    "date": "2023-08-11",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0217_Moustapha_Mbacke.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0216",
+    "client_name": "Ahmadou Khadim Ndaw",
+    "date": "2023-08-10",
+    "amount": 350.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0216_Ahmadou_Khadim_Ndaw.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0215",
+    "client_name": "Felix Frimpong",
+    "date": "2023-08-09",
+    "amount": 3550.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0215_Felix_Frimpong.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0214",
+    "client_name": "Diallo Adama Oury",
+    "date": "2023-08-02",
+    "amount": 750.0,
+    "balance": 450.0,
+    "status": "Paid",
+    "filename": "0214_Diallo_Adama_Oury.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0213",
+    "client_name": "Algassimou Bah",
+    "date": "2023-08-01",
+    "amount": 5450.0,
+    "balance": 2150.0,
+    "status": "Paid",
+    "filename": "0213_Algassimou_Bah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0212",
+    "client_name": "Massare Dieye",
+    "date": "2023-07-31",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0212_Massare_Dieye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0211",
+    "client_name": "Kodwo Ewusi",
+    "date": "2023-07-28",
+    "amount": 5973.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0211_Kodwo_Ewusi.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0210",
+    "client_name": "Kodwo Ewusi",
+    "date": "2023-07-27",
+    "amount": 6000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0210_Kodwo_Ewusi.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0209",
+    "client_name": "Odane Alex Aitcheson",
+    "date": "2023-07-25",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0209_Odane_Alex_Aitcheson.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0208",
+    "client_name": "Emmanuel Barkah Barku",
+    "date": "2023-07-24",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0208_Emmanuel_Barkah_Barku.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0207",
+    "client_name": "Philip Aboagye",
+    "date": "2023-07-24",
+    "amount": 5550.0,
+    "balance": 2150.0,
+    "status": "Paid",
+    "filename": "0207_Philip_Aboagye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0206",
+    "client_name": "Rania Abdulwahid Mohammed",
+    "date": "2023-07-21",
+    "amount": 1000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0206_Rania_Abdulwahid_Mohammed.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0205",
+    "client_name": "KINENALY LUANGPHISAI",
+    "date": "2023-07-20",
+    "amount": 2850.0,
+    "balance": 1850.0,
+    "status": "Paid",
+    "filename": "0205_KINENALY_LUANGPHISAI.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0204",
+    "client_name": "Tunji Bolaji Efununga",
+    "date": "2023-07-19",
+    "amount": 350.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0204_Tunji_Bolaji_Efununga.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0203",
+    "client_name": "Mamadou Bah",
+    "date": "2023-07-18",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0203_Mamadou_Bah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "R0202",
+    "client_name": "Test Recurring",
+    "date": "2023-07-17",
+    "amount": 20.0,
+    "balance": 20.0,
+    "status": "Sent",
+    "filename": "R0202_Test_Recurring.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0201",
+    "client_name": "Nathaniel Hassan",
+    "date": "2023-07-14",
+    "amount": 8000.0,
+    "balance": 4050.0,
+    "status": "Paid",
+    "filename": "0201_Nathaniel_Hassan.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "id195",
+    "client_name": "Ahmadou Khadim Ndaw",
+    "date": "2023-07-13",
+    "amount": 3750.0,
+    "balance": 3750.0,
+    "status": "Draft",
+    "filename": "id195_Ahmadou_Khadim_Ndaw.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0200",
+    "client_name": "Semira Yaqub Ashraq",
+    "date": "2023-07-11",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0200_Semira_Yaqub_Ashraq.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "R0199",
+    "client_name": "Test Recurring",
+    "date": "2023-07-10",
+    "amount": 20.0,
+    "balance": 20.0,
+    "status": "Sent",
+    "filename": "R0199_Test_Recurring.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "id190",
+    "client_name": "Test Recurring",
+    "date": "2023-07-10",
+    "amount": 20.0,
+    "balance": 20.0,
+    "status": "Sent",
+    "filename": "id190_Test_Recurring.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0196",
+    "client_name": "Massandje Doumbia",
+    "date": "2023-07-10",
+    "amount": 2050.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0196_Massandje_Doumbia.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0195",
+    "client_name": "MOHAMMED TAHER",
+    "date": "2023-07-10",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0195_MOHAMMED_TAHER.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0194",
+    "client_name": "Famatta Dulleh",
+    "date": "2023-07-06",
+    "amount": 2000.0,
+    "balance": 800.0,
+    "status": "Paid",
+    "filename": "0194_Famatta_Dulleh.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0193",
+    "client_name": "Kodwo Ewusi",
+    "date": "2023-07-05",
+    "amount": 5000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0193_Kodwo_Ewusi.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0191",
+    "client_name": "Ali Noor Abdullahi Ali",
+    "date": "2023-06-29",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0191_Ali_Noor_Abdullahi_Ali.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0190",
+    "client_name": "KAUSTUBH PRADIP GARGELWAR",
+    "date": "2023-06-23",
+    "amount": 3850.0,
+    "balance": 1850.0,
+    "status": "Paid",
+    "filename": "0190_KAUSTUBH_PRADIP_GARGELWAR.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0189",
+    "client_name": "KHAMLA RATSAMY",
+    "date": "2023-06-23",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0189_KHAMLA_RATSAMY.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0188",
+    "client_name": "Assane Gueye",
+    "date": "2023-06-21",
+    "amount": 1000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0188_Assane_Gueye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0187",
+    "client_name": "Ndeye Yacine Sene",
+    "date": "2023-06-20",
+    "amount": 2000.0,
+    "balance": 250.0,
+    "status": "Paid",
+    "filename": "0187_Ndeye_Yacine_Sene.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0186",
+    "client_name": "RABEA SANSRI",
+    "date": "2023-06-19",
+    "amount": 5500.0,
+    "balance": 2300.0,
+    "status": "Paid",
+    "filename": "0186_RABEA_SANSRI.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0185",
+    "client_name": "Ali Fuseini",
+    "date": "2023-06-19",
+    "amount": 5350.0,
+    "balance": 2750.0,
+    "status": "Paid",
+    "filename": "0185_Ali_Fuseini.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0184",
+    "client_name": "Emmanuel Opoku Akoto",
+    "date": "2023-06-07",
+    "amount": 750.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0184_Emmanuel_Opoku_Akoto.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0183",
+    "client_name": "Mary Mabil",
+    "date": "2023-06-05",
+    "amount": 1400.0,
+    "balance": 300.0,
+    "status": "Paid",
+    "filename": "0183_Mary_Mabil.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0182",
+    "client_name": "NEI YIM",
+    "date": "2023-06-05",
+    "amount": 2500.0,
+    "balance": 1000.0,
+    "status": "Paid",
+    "filename": "0182_NEI_YIM.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0181",
+    "client_name": "BALLY KEITA",
+    "date": "2023-06-01",
+    "amount": 2050.0,
+    "balance": 550.0,
+    "status": "Paid",
+    "filename": "0181_BALLY_KEITA.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0180",
+    "client_name": "Hassoumi Moumouni",
+    "date": "2023-06-01",
+    "amount": 1500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0180_Hassoumi_Moumouni.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0179",
+    "client_name": "Ishak Mohammad Razak",
+    "date": "2023-05-30",
+    "amount": 5500.0,
+    "balance": 2100.0,
+    "status": "Paid",
+    "filename": "0179_Ishak_Mohammad_Razak.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0178",
+    "client_name": "Ali Fuseini",
+    "date": "2023-05-24",
+    "amount": 200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0178_Ali_Fuseini.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0177",
+    "client_name": "YOUSSEF ZRIHI",
+    "date": "2023-05-19",
+    "amount": 5500.0,
+    "balance": 4000.0,
+    "status": "Paid",
+    "filename": "0177_YOUSSEF_ZRIHI.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0176",
+    "client_name": "ASHIQ HUSSAIN",
+    "date": "2023-05-18",
+    "amount": 1100.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0176_ASHIQ_HUSSAIN.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0175",
+    "client_name": "Mohamed Lamine Gerewou",
+    "date": "2023-05-18",
+    "amount": 1500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0175_Mohamed_Lamine_Gerewou.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0174",
+    "client_name": "ALI IMDAD",
+    "date": "2023-05-17",
+    "amount": 1200.0,
+    "balance": 550.0,
+    "status": "Paid",
+    "filename": "0174_ALI_IMDAD.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0173",
+    "client_name": "Best Onukwozor Agoh",
+    "date": "2023-05-16",
+    "amount": 5550.0,
+    "balance": 4550.0,
+    "status": "Paid",
+    "filename": "0173_Best_Onukwozor_Agoh.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0172",
+    "client_name": "Eunice Kwakye Appiah",
+    "date": "2023-05-15",
+    "amount": 2150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0172_Eunice_Kwakye_Appiah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0171",
+    "client_name": "Minouche Vague",
+    "date": "2023-05-11",
+    "amount": 1050.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0171_Minouche_Vague.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0170",
+    "client_name": "Isabel Bang Engoga Maye",
+    "date": "2023-05-10",
+    "amount": 3500.0,
+    "balance": 2500.0,
+    "status": "Paid",
+    "filename": "0170_Isabel_Bang_Engoga_Maye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0169",
+    "client_name": "JAVID HUSSAIN",
+    "date": "2023-05-10",
+    "amount": 1950.0,
+    "balance": 450.0,
+    "status": "Paid",
+    "filename": "0169_JAVID_HUSSAIN.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0168",
+    "client_name": "MUHAMMAD UMAIR KHAN KHAN",
+    "date": "2023-05-06",
+    "amount": 800.0,
+    "balance": 800.0,
+    "status": "Viewed",
+    "filename": "0168_MUHAMMAD_UMAIR_KHAN_KHAN.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0167",
+    "client_name": "PAPA MOR SECK",
+    "date": "2023-05-05",
+    "amount": 5300.0,
+    "balance": 3300.0,
+    "status": "Paid",
+    "filename": "0167_PAPA_MOR_SECK.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0166",
+    "client_name": "Khadim Sall",
+    "date": "2023-05-05",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0166_Khadim_Sall.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0165",
+    "client_name": "MOHAMMED KACI MOUSSA",
+    "date": "2023-05-04",
+    "amount": 2000.0,
+    "balance": 1000.0,
+    "status": "Paid",
+    "filename": "0165_MOHAMMED_KACI_MOUSSA.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0164",
+    "client_name": "LASSINA KEITA",
+    "date": "2023-05-02",
+    "amount": 2050.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0164_LASSINA_KEITA.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0163",
+    "client_name": "LASSINA KEITA",
+    "date": "2023-05-02",
+    "amount": 0.0,
+    "balance": 0.0,
+    "status": "Draft",
+    "filename": "0163_LASSINA_KEITA.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0162",
+    "client_name": "Ahmadou Khadim Ndaw",
+    "date": "2023-05-01",
+    "amount": 5900.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0162_Ahmadou_Khadim_Ndaw.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0161",
+    "client_name": "Ahmadou Khadim Ndaw",
+    "date": "2023-05-01",
+    "amount": 6000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0161_Ahmadou_Khadim_Ndaw.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0160",
+    "client_name": "Cyrille Kamdem",
+    "date": "2023-04-28",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0160_Cyrille_Kamdem.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0159",
+    "client_name": "LIZANDRA MARLENE ORTEGA UYAGUARI",
+    "date": "2023-04-26",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0159_LIZANDRA_MARLENE_ORTEGA_UYAGUARI.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0158",
+    "client_name": "DAOUDA & NAHOUA KAMAGATE",
+    "date": "2023-04-25",
+    "amount": 3650.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0158_DAOUDA___NAHOUA_KAMAGATE.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0157",
+    "client_name": "RUKHSANA FAZAL",
+    "date": "2023-04-24",
+    "amount": 1850.0,
+    "balance": 450.0,
+    "status": "Paid",
+    "filename": "0157_RUKHSANA_FAZAL.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0156",
+    "client_name": "Assata Keita",
+    "date": "2023-04-24",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0156_Assata_Keita.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0155",
+    "client_name": "Getahun Mintesinot",
+    "date": "2023-04-20",
+    "amount": 600.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0155_Getahun_Mintesinot.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0154",
+    "client_name": "THIRUSANGU PANNERSELVAM",
+    "date": "2023-04-17",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0154_THIRUSANGU_PANNERSELVAM.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0153",
+    "client_name": "Akosua Afra",
+    "date": "2023-04-17",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0153_Akosua_Afra.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0152",
+    "client_name": "Stacy Levy",
+    "date": "2023-04-10",
+    "amount": 5500.0,
+    "balance": 3500.0,
+    "status": "Paid",
+    "filename": "0152_Stacy_Levy.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0151",
+    "client_name": "Julianah Omolola Olatunbosun",
+    "date": "2023-04-08",
+    "amount": 4500.0,
+    "balance": 4000.0,
+    "status": "Paid",
+    "filename": "0151_Julianah_Omolola_Olatunbosun.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0150",
+    "client_name": "Terence Clarke",
+    "date": "2023-04-07",
+    "amount": 5500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0150_Terence_Clarke.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0149",
+    "client_name": "MUSARRAT B. KHAN",
+    "date": "2023-04-04",
+    "amount": 2050.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0149_MUSARRAT_B__KHAN.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0148",
+    "client_name": "MUSARRAT B. KHAN",
+    "date": "2023-04-04",
+    "amount": 2050.0,
+    "balance": 550.0,
+    "status": "Paid",
+    "filename": "0148_MUSARRAT_B__KHAN.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0147",
+    "client_name": "Emma sundayma Dee",
+    "date": "2023-04-03",
+    "amount": 750.0,
+    "balance": 550.0,
+    "status": "Paid",
+    "filename": "0147_Emma_sundayma_Dee.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0146",
+    "client_name": "Mohamad Amin Bin Abul Shama",
+    "date": "2023-04-03",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0146_Mohamad_Amin_Bin_Abul_Shama.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0145",
+    "client_name": "Maimouna Toure",
+    "date": "2023-03-27",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0145_Maimouna_Toure.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0144",
+    "client_name": "Anthony Ekeweme",
+    "date": "2023-03-20",
+    "amount": 3000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0144_Anthony_Ekeweme.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0143",
+    "client_name": "MOHAMMAD ALI BALOCH",
+    "date": "2023-03-20",
+    "amount": 900.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0143_MOHAMMAD_ALI_BALOCH.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0142",
+    "client_name": "Gning Talla",
+    "date": "2023-03-20",
+    "amount": 5400.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0142_Gning_Talla.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0141",
+    "client_name": "Hawa Sidibe",
+    "date": "2023-03-16",
+    "amount": 250.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0141_Hawa_Sidibe.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0140",
+    "client_name": "Sumoiwuo Charline Y",
+    "date": "2023-03-14",
+    "amount": 3950.0,
+    "balance": 1550.0,
+    "status": "Paid",
+    "filename": "0140_Sumoiwuo_Charline_Y.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0139",
+    "client_name": "Bayo Abu Bakarr",
+    "date": "2023-03-14",
+    "amount": 1800.0,
+    "balance": 800.0,
+    "status": "Paid",
+    "filename": "0139_Bayo_Abu_Bakarr.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0138",
+    "client_name": "Ingrid Buoh",
+    "date": "2023-03-09",
+    "amount": 2000.0,
+    "balance": 100.0,
+    "status": "Paid",
+    "filename": "0138_Ingrid_Buoh.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0137",
+    "client_name": "Winfield Alphonzo Brome",
+    "date": "2023-03-09",
+    "amount": 3000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0137_Winfield_Alphonzo_Brome.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0136",
+    "client_name": "Fanta Sackor",
+    "date": "2023-03-02",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0136_Fanta_Sackor.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0135",
+    "client_name": "Julio Ernesto Herrera Moncada",
+    "date": "2023-02-28",
+    "amount": 5550.0,
+    "balance": 650.0,
+    "status": "Paid",
+    "filename": "0135_Julio_Ernesto_Herrera_Moncada.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0134",
+    "client_name": "Abdallah Adamu Laryea",
+    "date": "2023-02-27",
+    "amount": 5550.0,
+    "balance": 1750.0,
+    "status": "Paid",
+    "filename": "0134_Abdallah_Adamu_Laryea.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0133",
+    "client_name": "Ana Guerra",
+    "date": "2023-02-22",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0133_Ana_Guerra.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0132",
+    "client_name": "MADJID YOUBI",
+    "date": "2023-02-21",
+    "amount": 1800.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0132_MADJID_YOUBI.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0131",
+    "client_name": "SALOMEY OWUSU",
+    "date": "2023-02-20",
+    "amount": 5300.0,
+    "balance": 1500.0,
+    "status": "Paid",
+    "filename": "0131_SALOMEY_OWUSU.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0130",
+    "client_name": "Kadidja Bah",
+    "date": "2023-02-14",
+    "amount": 2700.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0130_Kadidja_Bah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0129",
+    "client_name": "MOHAMED DJAMEL EDDINE HAOUAM",
+    "date": "2023-02-10",
+    "amount": 5550.0,
+    "balance": 4550.0,
+    "status": "Paid",
+    "filename": "0129_MOHAMED_DJAMEL_EDDINE_HAOUAM.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0128",
+    "client_name": "Emmanuel Sekyere",
+    "date": "2023-02-04",
+    "amount": 150.0,
+    "balance": 150.0,
+    "status": "Sent",
+    "filename": "0128_Emmanuel_Sekyere.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0127",
+    "client_name": "Asmerom Kahsai",
+    "date": "2023-02-04",
+    "amount": 1400.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0127_Asmerom_Kahsai.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0126",
+    "client_name": "Abdul-majeed Issah",
+    "date": "2023-02-01",
+    "amount": 5650.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0126_Abdul-majeed_Issah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0125",
+    "client_name": "Mendoza Aracely",
+    "date": "2023-01-18",
+    "amount": 1300.0,
+    "balance": 800.0,
+    "status": "Paid",
+    "filename": "0125_Mendoza_Aracely.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0124",
+    "client_name": "Sharaf Yousuf",
+    "date": "2023-01-16",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0124_Sharaf_Yousuf.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0123",
+    "client_name": "Christian Azizani",
+    "date": "2023-01-14",
+    "amount": 1500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0123_Christian_Azizani.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0122",
+    "client_name": "Obinna Nnatuanya",
+    "date": "2023-01-14",
+    "amount": 5500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0122_Obinna_Nnatuanya.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0121",
+    "client_name": "Teddy O Kwame",
+    "date": "2023-01-13",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0121_Teddy_O_Kwame.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0120",
+    "client_name": "Ashellarien Lang",
+    "date": "2023-01-12",
+    "amount": 200.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0120_Ashellarien_Lang.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0119",
+    "client_name": "Eghosa Dante Okonedo",
+    "date": "2023-01-07",
+    "amount": 1400.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0119_Eghosa_Dante_Okonedo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0118",
+    "client_name": "Hamza Salia",
+    "date": "2023-01-06",
+    "amount": 5650.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0118_Hamza_Salia.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0117",
+    "client_name": "Abdul Bhyan Adamu",
+    "date": "2023-01-05",
+    "amount": 1400.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0117_Abdul_Bhyan_Adamu.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0116",
+    "client_name": "Abdul Bhyan Adamu",
+    "date": "2023-01-05",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0116_Abdul_Bhyan_Adamu.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0115",
+    "client_name": "Portia Afriyie",
+    "date": "2022-12-30",
+    "amount": 1500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0115_Portia_Afriyie.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0114",
+    "client_name": "BOUBEKEUR AZOUAOU",
+    "date": "2022-12-28",
+    "amount": 5250.0,
+    "balance": 4550.0,
+    "status": "Paid",
+    "filename": "0114_BOUBEKEUR_AZOUAOU.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0113",
+    "client_name": "Alfadjo Djalo",
+    "date": "2022-12-23",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0113_Alfadjo_Djalo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0112",
+    "client_name": "Portia Afriyie",
+    "date": "2022-12-23",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0112_Portia_Afriyie.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0111",
+    "client_name": "Margaret Nepken Ojo",
+    "date": "2022-12-22",
+    "amount": 1000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0111_Margaret_Nepken_Ojo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0110",
+    "client_name": "Philippe Pandoupy",
+    "date": "2022-12-19",
+    "amount": 5500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0110_Philippe_Pandoupy.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0109",
+    "client_name": "Mohammed Kabiru Hussein",
+    "date": "2022-12-19",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0109_Mohammed_Kabiru_Hussein.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0108",
+    "client_name": "Gerard Allen",
+    "date": "2022-12-19",
+    "amount": 3500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0108_Gerard_Allen.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0107",
+    "client_name": "Elsita elizabeth Tocto Garcia",
+    "date": "2022-12-13",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0107_Elsita_elizabeth_Tocto_Garcia.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0106",
+    "client_name": "ARIEHL HOSPEDALES",
+    "date": "2022-12-12",
+    "amount": 400.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0106_ARIEHL_HOSPEDALES.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0105",
+    "client_name": "Dahabaye Youssouf",
+    "date": "2022-12-05",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0105_Dahabaye_Youssouf.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0104",
+    "client_name": "Oluwasegun",
+    "date": "2022-12-02",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0104_Oluwasegun.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0103",
+    "client_name": "Lateet Bello",
+    "date": "2022-11-30",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0103_Lateet_Bello.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0102",
+    "client_name": "TREZIA MWAKYOMA",
+    "date": "2022-11-30",
+    "amount": 3550.0,
+    "balance": 550.0,
+    "status": "Paid",
+    "filename": "0102_TREZIA_MWAKYOMA.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0101",
+    "client_name": "Julianah Omolola Olatunbosun",
+    "date": "2022-11-30",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0101_Julianah_Omolola_Olatunbosun.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0100",
+    "client_name": "Fatime Ramadane",
+    "date": "2022-11-28",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0100_Fatime_Ramadane.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0099",
+    "client_name": "Martha E Huerta-Nivelo",
+    "date": "2022-11-22",
+    "amount": 5050.0,
+    "balance": 3550.0,
+    "status": "Paid",
+    "filename": "0099_Martha_E_Huerta-Nivelo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0098",
+    "client_name": "James Gadu",
+    "date": "2022-11-18",
+    "amount": 1500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0098_James_Gadu.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0097",
+    "client_name": "MOHAMMED AYAS",
+    "date": "2022-11-15",
+    "amount": 1850.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0097_MOHAMMED_AYAS.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0096",
+    "client_name": "Kim Mpoyi",
+    "date": "2022-11-10",
+    "amount": 1500.0,
+    "balance": 100.0,
+    "status": "Paid",
+    "filename": "0096_Kim_Mpoyi.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0095",
+    "client_name": "Kim Mpoyi",
+    "date": "2022-11-10",
+    "amount": 1400.0,
+    "balance": 750.0,
+    "status": "Paid",
+    "filename": "0095_Kim_Mpoyi.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0094",
+    "client_name": "Papa alassane Diop",
+    "date": "2022-11-07",
+    "amount": 700.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0094_Papa_alassane_Diop.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0093",
+    "client_name": "Janice Scott",
+    "date": "2022-11-02",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0093_Janice_Scott.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0092",
+    "client_name": "Mohamed A Sheriff",
+    "date": "2022-11-02",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0092_Mohamed_A_Sheriff.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0091",
+    "client_name": "Janet Booker",
+    "date": "2022-10-31",
+    "amount": 350.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0091_Janet_Booker.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0090",
+    "client_name": "Suzan Mahmoud Aburai koko",
+    "date": "2022-10-31",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0090_Suzan_Mahmoud_Aburai_koko.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0089",
+    "client_name": "Makagbah Kamara",
+    "date": "2022-10-21",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0089_Makagbah_Kamara.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0088",
+    "client_name": "Laurent Cece Haba",
+    "date": "2022-10-14",
+    "amount": 400.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0088_Laurent_Cece_Haba.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0087",
+    "client_name": "Michele telfair",
+    "date": "2022-10-13",
+    "amount": 3500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0087_Michele_telfair.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0086",
+    "client_name": "Mada Sylla",
+    "date": "2022-10-06",
+    "amount": 4800.0,
+    "balance": 600.0,
+    "status": "Paid",
+    "filename": "0086_Mada_Sylla.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0085",
+    "client_name": "Fallou Cisse",
+    "date": "2022-10-06",
+    "amount": 5100.0,
+    "balance": 600.0,
+    "status": "Paid",
+    "filename": "0085_Fallou_Cisse.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0084",
+    "client_name": "Christian Azizani",
+    "date": "2022-10-06",
+    "amount": 3000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0084_Christian_Azizani.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0083",
+    "client_name": "Baye Taiba Ndiaye",
+    "date": "2022-10-05",
+    "amount": 5100.0,
+    "balance": 300.0,
+    "status": "Paid",
+    "filename": "0083_Baye_Taiba_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0080",
+    "client_name": "Roberto Rodriguez",
+    "date": "2022-09-26",
+    "amount": 3000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0080_Roberto_Rodriguez.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0079",
+    "client_name": "Daouda Traore",
+    "date": "2022-09-21",
+    "amount": 8500.0,
+    "balance": 3000.0,
+    "status": "Paid",
+    "filename": "0079_Daouda_Traore.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0078",
+    "client_name": "Janet Booker",
+    "date": "2022-09-19",
+    "amount": 2350.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0078_Janet_Booker.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0077",
+    "client_name": "Idelka Arias-Rodriguez",
+    "date": "2022-09-19",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0077_Idelka_Arias-Rodriguez.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0076",
+    "client_name": "janet Booker",
+    "date": "2022-09-16",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0076_janet_Booker.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0075",
+    "client_name": "Aracely Mendoza",
+    "date": "2022-09-08",
+    "amount": 2000.0,
+    "balance": 1250.0,
+    "status": "Paid",
+    "filename": "0075_Aracely_Mendoza.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0073",
+    "client_name": "Eric Young",
+    "date": "2022-08-30",
+    "amount": 3050.0,
+    "balance": 2850.0,
+    "status": "Paid",
+    "filename": "0073_Eric_Young.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0072",
+    "client_name": "Farida Yusuf",
+    "date": "2022-08-26",
+    "amount": 3800.0,
+    "balance": 1300.0,
+    "status": "Paid",
+    "filename": "0072_Farida_Yusuf.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0069",
+    "client_name": "waliyatou tidjani",
+    "date": "2022-08-23",
+    "amount": 0.0,
+    "balance": 0.0,
+    "status": "Sent",
+    "filename": "0069_waliyatou_tidjani.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0068",
+    "client_name": "Maimouna Camara",
+    "date": "2022-08-22",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0068_Maimouna_Camara.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0067",
+    "client_name": "Than Than Soe",
+    "date": "2022-08-16",
+    "amount": 2000.0,
+    "balance": 1250.0,
+    "status": "Paid",
+    "filename": "0067_Than_Than_Soe.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0066",
+    "client_name": "Marie Francine Oriol",
+    "date": "2022-08-17",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0066_Marie_Francine_Oriol.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0065",
+    "client_name": "Cristian Martinez",
+    "date": "2022-08-16",
+    "amount": 5000.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0065_Cristian_Martinez.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0064",
+    "client_name": "Paola Gonzalez Sierra",
+    "date": "2022-08-15",
+    "amount": 3000.0,
+    "balance": 2500.0,
+    "status": "Paid",
+    "filename": "0064_Paola_Gonzalez_Sierra.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0063",
+    "client_name": "Nazario de jesus Roca Lara",
+    "date": "2022-08-11",
+    "amount": 5500.0,
+    "balance": 3500.0,
+    "status": "Paid",
+    "filename": "0063_Nazario_de_jesus_Roca_Lara.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0062",
+    "client_name": "Serigne Cheikh Ndiaye",
+    "date": "2022-08-08",
+    "amount": 5500.0,
+    "balance": 100.0,
+    "status": "Paid",
+    "filename": "0062_Serigne_Cheikh_Ndiaye.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0061",
+    "client_name": "Michael Duane Tyler",
+    "date": "2022-08-08",
+    "amount": 3500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0061_Michael_Duane_Tyler.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0060",
+    "client_name": "Bernard Elie",
+    "date": "2022-08-08",
+    "amount": 1000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0060_Bernard_Elie.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0059",
+    "client_name": "Mohammed Yousuf Werah",
+    "date": "2022-08-04",
+    "amount": 1350.0,
+    "balance": 350.0,
+    "status": "Paid",
+    "filename": "0059_Mohammed_Yousuf_Werah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0058",
+    "client_name": "Hassoumi Moumouni",
+    "date": "2022-07-26",
+    "amount": 2700.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0058_Hassoumi_Moumouni.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0057",
+    "client_name": "W T",
+    "date": "2022-07-20",
+    "amount": 5000.0,
+    "balance": 600.0,
+    "status": "Paid",
+    "filename": "0057_W_T.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0056",
+    "client_name": "Haja Nyemah",
+    "date": "2022-07-13",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0056_Haja_Nyemah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0055",
+    "client_name": "Serigne Mbacke Mboup",
+    "date": "2022-07-07",
+    "amount": 5500.0,
+    "balance": 2200.0,
+    "status": "Paid",
+    "filename": "0055_Serigne_Mbacke_Mboup.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0054",
+    "client_name": "Demba Sene Niang",
+    "date": "2022-07-01",
+    "amount": 5500.0,
+    "balance": 2490.0,
+    "status": "Paid",
+    "filename": "0054_Demba_Sene_Niang.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0053",
+    "client_name": "Amr Mohamed Elgendy",
+    "date": "2022-06-30",
+    "amount": 5500.0,
+    "balance": 4000.0,
+    "status": "Paid",
+    "filename": "0053_Amr_Mohamed_Elgendy.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0052",
+    "client_name": "Ahmed Hassan",
+    "date": "2022-06-28",
+    "amount": 1900.0,
+    "balance": 0.0,
+    "status": "Paid",
+    "filename": "0052_Ahmed_Hassan.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0051",
+    "client_name": "Mary Mabil",
+    "date": "2022-06-28",
+    "amount": 750.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0051_Mary_Mabil.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0050",
+    "client_name": "Yassine Hammini",
+    "date": "2022-06-24",
+    "amount": 1000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0050_Yassine_Hammini.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0049",
+    "client_name": "Isata Alasan",
+    "date": "2022-06-24",
+    "amount": 2000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0049_Isata_Alasan.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0048",
+    "client_name": "Alfred Elea ANdi",
+    "date": "2022-06-23",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0048_Alfred_Elea_ANdi.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0047",
+    "client_name": "Ermyas Sereke",
+    "date": "2022-06-14",
+    "amount": 2500.0,
+    "balance": 1700.0,
+    "status": "Paid",
+    "filename": "0047_Ermyas_Sereke.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0044",
+    "client_name": "Sardnee Mamie",
+    "date": "2022-06-09",
+    "amount": 2550.0,
+    "balance": 2550.0,
+    "status": "Sent",
+    "filename": "0044_Sardnee_Mamie.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0043",
+    "client_name": "Hilal Abdul Rahimzai",
+    "date": "2022-05-23",
+    "amount": 1000.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0043_Hilal_Abdul_Rahimzai.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0042",
+    "client_name": "Amr Mohamed Elgendy",
+    "date": "2022-05-10",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0042_Amr_Mohamed_Elgendy.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0041",
+    "client_name": "fanta/Lamine (Washington) kamara",
+    "date": "2022-05-05",
+    "amount": 2050.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0041_fanta_Lamine__Washington__kamara.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0039",
+    "client_name": "Nouha Kontar de Amer",
+    "date": "2022-03-30",
+    "amount": 1900.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0039_Nouha_Kontar_de_Amer.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0038",
+    "client_name": "Ashraf Al-Kuntar",
+    "date": "2022-03-22",
+    "amount": 5750.0,
+    "balance": 3500.0,
+    "status": "Paid",
+    "filename": "0038_Ashraf_Al-Kuntar.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0037",
+    "client_name": "amilcar argueta",
+    "date": "2022-03-22",
+    "amount": 4000.0,
+    "balance": 3000.0,
+    "status": "Paid",
+    "filename": "0037_amilcar_argueta.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0036",
+    "client_name": "Syna Chib",
+    "date": "2022-03-10",
+    "amount": 3000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0036_Syna_Chib.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0035",
+    "client_name": "Gideon Adoma",
+    "date": "2022-03-04",
+    "amount": 5200.0,
+    "balance": 1720.0,
+    "status": "Paid",
+    "filename": "0035_Gideon_Adoma.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0034",
+    "client_name": "Mohamad Nasir Bin Mohamad Oli Ahmad",
+    "date": "2022-02-25",
+    "amount": 2050.0,
+    "balance": 150.0,
+    "status": "Paid",
+    "filename": "0034_Mohamad_Nasir_Bin_Mohamad_Oli_Ahmad.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0033",
+    "client_name": "Blanca Rodriguez",
+    "date": "2022-02-21",
+    "amount": 3500.0,
+    "balance": 1500.0,
+    "status": "Paid",
+    "filename": "0033_Blanca_Rodriguez.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0032",
+    "client_name": "Rem Tial",
+    "date": "2022-02-21",
+    "amount": 1500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0032_Rem_Tial.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0031",
+    "client_name": "Chaba Adjoud",
+    "date": "2022-02-16",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0031_Chaba_Adjoud.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0030",
+    "client_name": "Fauziyatu Barry",
+    "date": "2022-02-10",
+    "amount": 8550.0,
+    "balance": 8550.0,
+    "status": "Draft",
+    "filename": "0030_Fauziyatu_Barry.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0029",
+    "client_name": "Rual Hlei Sang",
+    "date": "2022-02-08",
+    "amount": 1450.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0029_Rual_Hlei_Sang.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0028",
+    "client_name": "Soe Min",
+    "date": "2022-01-25",
+    "amount": 1550.0,
+    "balance": 1050.0,
+    "status": "Paid",
+    "filename": "0028_Soe_Min.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0027",
+    "client_name": "Lanique Dale",
+    "date": "2022-01-14",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0027_Lanique_Dale.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0026",
+    "client_name": "Mohamad Mashin Bin Mohamed Yacob",
+    "date": "2021-12-22",
+    "amount": 1500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0026_Mohamad_Mashin_Bin_Mohamed_Yacob.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0025",
+    "client_name": "Hussein Bin Nezamuddin",
+    "date": "2021-12-22",
+    "amount": 1500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0025_Hussein_Bin_Nezamuddin.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0024",
+    "client_name": "Yuli Binki Bakri",
+    "date": "2021-12-22",
+    "amount": 1500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0024_Yuli_Binki_Bakri.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0022",
+    "client_name": "Joseph Joshua",
+    "date": "2021-12-16",
+    "amount": 1650.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0022_Joseph_Joshua.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0021",
+    "client_name": "Frederick Cooper",
+    "date": "2021-12-15",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0021_Frederick_Cooper.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0020",
+    "client_name": "Smire Al Baruki",
+    "date": "2021-12-15",
+    "amount": 150.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0020_Smire_Al_Baruki.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0019",
+    "client_name": "Yammam Nasreddine",
+    "date": "2021-12-14",
+    "amount": 5650.0,
+    "balance": 2650.0,
+    "status": "Paid",
+    "filename": "0019_Yammam_Nasreddine.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0018",
+    "client_name": "Khaldoun Almalouli",
+    "date": "2021-11-30",
+    "amount": 3000.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0018_Khaldoun_Almalouli.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0017",
+    "client_name": "Hla San Dar Oo",
+    "date": "2021-11-23",
+    "amount": 1550.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0017_Hla_San_Dar_Oo.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0016",
+    "client_name": "Naomi Ansah",
+    "date": "2021-11-16",
+    "amount": 5550.0,
+    "balance": 5050.0,
+    "status": "Paid",
+    "filename": "0016_Naomi_Ansah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0015",
+    "client_name": "Mohamad YUNUS BIN YUSUF",
+    "date": "2021-11-15",
+    "amount": 1550.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0015_Mohamad_YUNUS_BIN_YUSUF.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0014",
+    "client_name": "Aissa Lariane",
+    "date": "2021-11-03",
+    "amount": 3550.0,
+    "balance": 1000.0,
+    "status": "Paid",
+    "filename": "0014_Aissa_Lariane.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0013",
+    "client_name": "Mohamad Jaafar",
+    "date": "2021-10-21",
+    "amount": 1500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0013_Mohamad_Jaafar.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0012",
+    "client_name": "Ilyas Sobor",
+    "date": "2021-10-21",
+    "amount": 1500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0012_Ilyas_Sobor.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0011",
+    "client_name": "Misigi Chimala",
+    "date": "2021-10-08",
+    "amount": 2550.0,
+    "balance": 1850.0,
+    "status": "Paid",
+    "filename": "0011_Misigi_Chimala.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0010",
+    "client_name": "Tath Nhatavong",
+    "date": "2021-10-08",
+    "amount": 1500.0,
+    "balance": 1000.0,
+    "status": "Paid",
+    "filename": "0010_Tath_Nhatavong.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0009",
+    "client_name": "Biak Sung",
+    "date": "2021-10-04",
+    "amount": 500.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0009_Biak_Sung.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0008",
+    "client_name": "Sayed Shah",
+    "date": "2021-10-04",
+    "amount": 400.0,
+    "balance": 50.0,
+    "status": "Paid",
+    "filename": "0008_Sayed_Shah.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0007",
+    "client_name": "Shamsher Ali",
+    "date": "2021-09-29",
+    "amount": 350.0,
+    "balance": 350.0,
+    "status": "Draft",
+    "filename": "0007_Shamsher_Ali.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0006",
+    "client_name": "John Smith",
+    "date": "2021-09-27",
+    "amount": 0.01,
+    "balance": 0.01,
+    "status": "Draft",
+    "filename": "0006_John_Smith.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0005",
+    "client_name": "Ruth Dann",
+    "date": "2021-08-27",
+    "amount": 100.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0005_Ruth_Dann.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0004",
+    "client_name": "Ehab Alhusain",
+    "date": "2021-08-13",
+    "amount": 5050.0,
+    "balance": 2450.0,
+    "status": "Paid",
+    "filename": "0004_Ehab_Alhusain.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0003",
+    "client_name": "Mohamed Hussein",
+    "date": "2021-08-09",
+    "amount": 750.0,
+    "balance": 0.0,
+    "status": "Past Due",
+    "filename": "0003_Mohamed_Hussein.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0002",
+    "client_name": "Mohamed Zabar",
+    "date": "2021-08-09",
+    "amount": 2750.0,
+    "balance": 500.0,
+    "status": "Paid",
+    "filename": "0002_Mohamed_Zabar.pdf",
+    "available": false
+  },
+  {
+    "invoice_number": "0001",
+    "client_name": "Hazara Kamal",
+    "date": "2021-10-15",
+    "amount": 750.0,
+    "balance": 0.0,
+    "status": "Paid",
+    "filename": "0001_Hazara_Kamal.pdf",
+    "available": false
+  }
+]
