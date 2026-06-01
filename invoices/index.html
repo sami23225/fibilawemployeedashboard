@@ -8,20 +8,23 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:   #1a2d4e;
-      --blue:   #2563eb;
-      --green:  #16a34a;
-      --amber:  #d97706;
-      --red:    #dc2626;
-      --gray:   #6b7280;
-      --light:  #f3f4f6;
-      --border: #e5e7eb;
-      --white:  #ffffff;
+      --navy:      #012D44;
+      --navy-deep: #011e2f;
+      --navy-mid:  #013a58;
+      --teal:      #3cbfba;
+      --teal-light:#e6f9f8;
+      --green:     #16a34a;
+      --amber:     #d97706;
+      --red:       #dc2626;
+      --gray:      #6b7280;
+      --light:     #f3f4f6;
+      --border:    #e5e7eb;
+      --white:     #ffffff;
     }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--light);
+      background: #f0f4f7;
       color: #111827;
       min-height: 100vh;
     }
@@ -30,154 +33,174 @@
     header {
       background: var(--navy);
       color: var(--white);
-      padding: 20px 32px;
+      padding: 16px 32px;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
     }
-    header svg { flex-shrink: 0; }
-    header h1  { font-size: 1.4rem; font-weight: 700; }
-    header p   { font-size: 0.85rem; opacity: 0.7; margin-top: 2px; }
+    header img {
+      width: 42px;
+      height: 42px;
+      border-radius: 9px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .brand-name { font-size: 17px; font-weight: 700; letter-spacing: -0.4px; line-height: 1.2; }
+    .brand-sub  { font-size: 10px; color: var(--teal); text-transform: uppercase; letter-spacing: .08em; }
+    .header-title {
+      margin-left: auto;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.7);
+      letter-spacing: .02em;
+    }
 
     /* ── Search card ── */
     .search-card {
       background: var(--white);
       border-bottom: 1px solid var(--border);
-      padding: 20px 32px;
+      padding: 18px 32px;
     }
     .filters {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      grid-template-columns: 2fr 1fr 1fr 1fr auto;
       gap: 12px;
       align-items: end;
     }
-    @media (max-width: 900px) {
-      .filters { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 500px) {
-      .filters { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 900px) { .filters { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 500px) { .filters { grid-template-columns: 1fr; } }
 
-    label { font-size: 0.78rem; font-weight: 600; color: var(--gray); display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: .04em; }
-
+    label {
+      font-size: 0.73rem;
+      font-weight: 700;
+      color: var(--gray);
+      display: block;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
     input, select {
       width: 100%;
       padding: 8px 12px;
       border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 0.9rem;
+      border-radius: 7px;
+      font-size: 0.875rem;
       outline: none;
-      transition: border-color .15s;
+      transition: border-color .15s, box-shadow .15s;
+      background: var(--white);
     }
-    input:focus, select:focus { border-color: var(--blue); }
-
+    input:focus, select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(60,191,186,.15);
+    }
     .btn-reset {
-      padding: 8px 16px;
+      padding: 8px 18px;
       background: var(--light);
       border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 0.85rem;
+      border-radius: 7px;
+      font-size: 0.82rem;
       cursor: pointer;
       color: var(--gray);
       font-weight: 600;
       transition: background .15s;
       white-space: nowrap;
+      height: 38px;
     }
     .btn-reset:hover { background: var(--border); }
 
     /* ── Stats bar ── */
     .stats-bar {
-      padding: 12px 32px;
-      font-size: 0.85rem;
+      padding: 10px 32px;
+      font-size: 0.83rem;
       color: var(--gray);
-      display: flex;
-      gap: 24px;
-      border-bottom: 1px solid var(--border);
       background: var(--white);
+      border-bottom: 1px solid var(--border);
     }
-    .stats-bar span b { color: #111; }
+    .stats-bar b { color: #111; }
 
-    /* ── Table ── */
-    .table-wrap {
-      padding: 24px 32px;
-      overflow-x: auto;
-    }
+    /* ── Table wrapper ── */
+    .table-wrap { padding: 24px 32px; overflow-x: auto; }
+
     table {
       width: 100%;
       border-collapse: collapse;
       background: var(--white);
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,.08);
-      font-size: 0.88rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+      font-size: 0.875rem;
     }
     thead { background: var(--navy); color: var(--white); }
     th {
       padding: 12px 16px;
       text-align: left;
       font-weight: 600;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: .05em;
+      letter-spacing: .06em;
       cursor: pointer;
       user-select: none;
       white-space: nowrap;
     }
-    th:hover { background: #253d63; }
-    th .sort-arrow { opacity: 0.4; margin-left: 4px; }
-    th.sorted .sort-arrow { opacity: 1; }
+    th:hover { background: var(--navy-mid); }
+    th.sorted .sort-arrow { opacity: 1 !important; }
+    .sort-arrow { opacity: 0.35; margin-left: 4px; font-style: normal; }
 
     tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
     tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: #f9fafb; }
+    tbody tr:hover { background: #f8fafb; }
     td { padding: 12px 16px; vertical-align: middle; }
 
     /* status badges */
     .badge {
       display: inline-block;
       padding: 3px 10px;
-      border-radius: 12px;
-      font-size: 0.75rem;
+      border-radius: 20px;
+      font-size: 0.72rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: .04em;
+      letter-spacing: .05em;
     }
-    .badge-paid     { background: #dcfce7; color: var(--green); }
-    .badge-partial  { background: #fef3c7; color: var(--amber); }
-    .badge-sent     { background: #dbeafe; color: var(--blue);  }
-    .badge-viewed   { background: #e0e7ff; color: #4338ca; }
-    .badge-pastdue  { background: #fee2e2; color: var(--red);   }
-    .badge-draft    { background: var(--light); color: var(--gray); }
-    .badge-unknown  { background: var(--light); color: var(--gray); }
+    .badge-paid    { background: #dcfce7; color: #15803d; }
+    .badge-partial { background: #fef3c7; color: var(--amber); }
+    .badge-sent    { background: #dbeafe; color: #1d4ed8; }
+    .badge-viewed  { background: #ede9fe; color: #6d28d9; }
+    .badge-pastdue { background: #fee2e2; color: var(--red); }
+    .badge-draft   { background: var(--light); color: var(--gray); }
+    .badge-unknown { background: var(--light); color: var(--gray); }
 
-    /* download button */
-    .btn-dl {
+    /* action buttons */
+    .btn-dl, .btn-view {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      background: var(--blue);
-      color: var(--white);
-      border-radius: 6px;
-      font-size: 0.82rem;
+      gap: 5px;
+      padding: 6px 13px;
+      border-radius: 7px;
+      font-size: 0.8rem;
       font-weight: 600;
       text-decoration: none;
-      transition: background .15s;
       white-space: nowrap;
+      transition: opacity .15s, background .15s;
+      cursor: pointer;
     }
-    .btn-dl:hover { background: #1d4ed8; }
-    .btn-dl.unavail { background: var(--light); color: var(--gray); pointer-events: none; }
-    .btn-view { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: var(--white); color: var(--navy); border: 1.5px solid var(--navy); border-radius: 6px; font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: background .15s; white-space: nowrap; }
-    .btn-view:hover { background: var(--light); }
+    .btn-dl {
+      background: var(--teal);
+      color: var(--white);
+      border: none;
+    }
+    .btn-dl:hover { opacity: .88; }
 
-    /* empty / loading state */
-    .empty {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--gray);
-      font-size: 1rem;
+    .btn-view {
+      background: var(--white);
+      color: var(--navy);
+      border: 1.5px solid var(--navy);
     }
-    .empty svg { margin: 0 auto 12px; display: block; opacity: .3; }
+    .btn-view:hover { background: var(--teal-light); border-color: var(--teal); color: var(--navy); }
+
+    /* empty state */
+    .empty { text-align: center; padding: 60px 20px; color: var(--gray); }
+    .empty svg { margin: 0 auto 12px; display: block; opacity: .25; }
 
     /* pagination */
     .pagination {
@@ -186,18 +209,18 @@
       justify-content: center;
       gap: 8px;
       padding: 16px 32px 32px;
-      font-size: 0.85rem;
+      font-size: 0.83rem;
     }
     .pagination button {
       padding: 6px 14px;
       border: 1px solid var(--border);
       background: var(--white);
-      border-radius: 6px;
+      border-radius: 7px;
       cursor: pointer;
-      font-size: 0.85rem;
+      font-size: 0.83rem;
       transition: background .1s;
     }
-    .pagination button:hover:not(:disabled) { background: var(--light); }
+    .pagination button:hover:not(:disabled) { background: var(--teal-light); border-color: var(--teal); }
     .pagination button:disabled { opacity: .4; cursor: default; }
     .pagination .page-info { color: var(--gray); }
   </style>
@@ -205,21 +228,19 @@
 <body>
 
 <header>
-  <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-    <rect width="36" height="36" rx="8" fill="white" fill-opacity=".15"/>
-    <path d="M10 10h16v4H10zM10 17h10v3H10zM10 23h12v3H10z" fill="white"/>
-  </svg>
+  <img src="https://framerusercontent.com/images/7MqXsKyjGWvLQn25G3nNRe5KAM.webp?width=186&height=186" alt="Fibi Law" />
   <div>
-    <h1>FIBI Law Firm — Invoices</h1>
-    <p>Search, filter, and download invoice PDFs</p>
+    <div class="brand-name">Fibi Law</div>
+    <div class="brand-sub">For Immigrants, By Immigrants</div>
   </div>
+  <div class="header-title">Invoice Archive</div>
 </header>
 
 <div class="search-card">
   <div class="filters">
     <div>
       <label>Search client or invoice #</label>
-      <input type="search" id="q" placeholder="e.g. Keita or 0691" oninput="applyFilters()" />
+      <input type="search" id="q" placeholder="e.g. Keita  or  0691" oninput="applyFilters()" />
     </div>
     <div>
       <label>Status</label>
@@ -243,7 +264,7 @@
     </div>
     <div>
       <label>&nbsp;</label>
-      <button class="btn-reset" onclick="resetFilters()">Clear filters</button>
+      <button class="btn-reset" onclick="resetFilters()">Clear</button>
     </div>
   </div>
 </div>
@@ -258,9 +279,9 @@
         <th onclick="sortBy('client_name')">Client <span class="sort-arrow" id="arrow-client_name">↕</span></th>
         <th onclick="sortBy('date')">Date <span class="sort-arrow" id="arrow-date">↕</span></th>
         <th onclick="sortBy('amount')">Amount <span class="sort-arrow" id="arrow-amount">↕</span></th>
-        <th onclick="sortBy('balance')">Balance <span class="sort-arrow" id="arrow-balance">↕</span></th>
+        <th onclick="sortBy('balance')">Balance Due <span class="sort-arrow" id="arrow-balance">↕</span></th>
         <th onclick="sortBy('status')">Status <span class="sort-arrow" id="arrow-status">↕</span></th>
-        <th>PDF</th>
+        <th>Invoice</th>
       </tr>
     </thead>
     <tbody id="tableBody"></tbody>
@@ -270,8 +291,8 @@
 <div class="pagination" id="paginationBar"></div>
 
 <script>
-  const PDF_DIR  = 'pdfs/';
-  const PAGE_SZ  = 50;
+  const PDF_DIR = 'pdfs/';
+  const PAGE_SZ = 50;
 
   let allInvoices = [];
   let filtered    = [];
@@ -279,68 +300,47 @@
   let sortAsc     = false;
   let currentPage = 1;
 
-  // ── Load data ──
   fetch('index.json')
-    .then(r => {
-      if (!r.ok) throw new Error('index.json not found');
-      return r.json();
-    })
-    .then(data => {
-      allInvoices = data;
-      applyFilters();
-    })
+    .then(r => { if (!r.ok) throw new Error('index.json not found'); return r.json(); })
+    .then(data => { allInvoices = data; applyFilters(); })
     .catch(err => {
-      document.getElementById('statsBar').textContent = '⚠ Could not load index.json — make sure it is in the same folder as this page.';
-      document.getElementById('tableBody').innerHTML =
-        `<tr><td colspan="7"><div class="empty">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 110 20A10 10 0 0112 2zm0 2a8 8 0 100 16A8 8 0 0012 4zm1 11h-2v2h2v-2zm0-8h-2v6h2V7z"/></svg>
-          <p>${err.message}</p>
-        </div></td></tr>`;
+      document.getElementById('statsBar').textContent = 'Could not load invoice data: ' + err.message;
     });
 
-  // ── Filter + sort ──
   function applyFilters() {
     const q      = document.getElementById('q').value.toLowerCase().trim();
     const status = document.getElementById('statusFilter').value;
     const from   = document.getElementById('dateFrom').value;
     const to     = document.getElementById('dateTo').value;
-
-    filtered = allInvoices.filter(inv => {
-      if (q && !inv.invoice_number.toLowerCase().includes(q) &&
-               !inv.client_name.toLowerCase().includes(q)) return false;
+    filtered = allInvoices.filter(function(inv) {
+      if (q && inv.invoice_number.toLowerCase().indexOf(q) === -1 &&
+               inv.client_name.toLowerCase().indexOf(q) === -1) return false;
       if (status && inv.status !== status) return false;
       if (from   && inv.date < from) return false;
       if (to     && inv.date > to)   return false;
       return true;
     });
-
     doSort();
     currentPage = 1;
     render();
   }
 
   function sortBy(field) {
-    if (sortField === field) {
-      sortAsc = !sortAsc;
-    } else {
-      sortField = field;
-      sortAsc   = true;
-    }
-    // update arrows
-    document.querySelectorAll('th').forEach(th => th.classList.remove('sorted'));
-    const arrowEl = document.getElementById('arrow-' + field);
+    if (sortField === field) { sortAsc = !sortAsc; }
+    else { sortField = field; sortAsc = true; }
+    document.querySelectorAll('th').forEach(function(th) { th.classList.remove('sorted'); });
+    var arrowEl = document.getElementById('arrow-' + field);
     if (arrowEl) {
       arrowEl.parentElement.classList.add('sorted');
       arrowEl.textContent = sortAsc ? '↑' : '↓';
     }
-    doSort();
-    render();
+    doSort(); render();
   }
 
   function doSort() {
-    filtered.sort((a, b) => {
-      let va = a[sortField] ?? '';
-      let vb = b[sortField] ?? '';
+    filtered.sort(function(a, b) {
+      var va = a[sortField] != null ? a[sortField] : '';
+      var vb = b[sortField] != null ? b[sortField] : '';
       if (typeof va === 'number') return sortAsc ? va - vb : vb - va;
       va = va.toString().toLowerCase();
       vb = vb.toString().toLowerCase();
@@ -349,85 +349,87 @@
   }
 
   function resetFilters() {
-    document.getElementById('q').value           = '';
+    document.getElementById('q').value            = '';
     document.getElementById('statusFilter').value = '';
     document.getElementById('dateFrom').value     = '';
     document.getElementById('dateTo').value       = '';
     applyFilters();
   }
 
-  // ── Render ──
   function usd(n) {
     return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
   function badgeClass(status) {
-    const map = { Paid: 'paid', Partial: 'partial', Sent: 'sent', Viewed: 'viewed', 'Past Due': 'pastdue', Draft: 'draft' };
+    var map = { Paid:'paid', Partial:'partial', Sent:'sent', Viewed:'viewed', 'Past Due':'pastdue', Draft:'draft' };
     return 'badge badge-' + (map[status] || 'unknown');
   }
 
   function fmtDate(d) {
     if (!d) return '—';
-    const [y, m, day] = d.split('-');
-    const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    return `${mo[+m - 1]} ${+day}, ${y}`;
+    var parts = d.split('-');
+    if (parts.length < 3) return d;
+    var mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return mo[parseInt(parts[1]) - 1] + ' ' + parseInt(parts[2]) + ', ' + parts[0];
+  }
+
+  function actionBtn(inv) {
+    if (inv.available) {
+      return '<a class="btn-dl" href="' + PDF_DIR + inv.filename + '" download>'
+           + '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>'
+           + ' Download PDF</a>';
+    }
+    if (inv.view_link) {
+      return '<a class="btn-view" href="' + inv.view_link + '" target="_blank" rel="noopener">'
+           + '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>'
+           + ' View Invoice</a>';
+    }
+    return '<span style="color:#9ca3af;font-size:.8rem">—</span>';
   }
 
   function render() {
-    const total  = filtered.length;
-    const pages  = Math.max(1, Math.ceil(total / PAGE_SZ));
-    currentPage  = Math.min(currentPage, pages);
-    const start  = (currentPage - 1) * PAGE_SZ;
-    const page   = filtered.slice(start, start + PAGE_SZ);
+    var total = filtered.length;
+    var pages = Math.max(1, Math.ceil(total / PAGE_SZ));
+    currentPage = Math.min(currentPage, pages);
+    var start = (currentPage - 1) * PAGE_SZ;
+    var page  = filtered.slice(start, start + PAGE_SZ);
 
-    // stats
-    const totalAmt = filtered.reduce((s, i) => s + i.amount,  0);
-    const totalBal = filtered.reduce((s, i) => s + i.balance, 0);
     document.getElementById('statsBar').innerHTML =
-      `<span>Showing <b>${total}</b> of <b>${allInvoices.length}</b> invoices</span>
-       <span>Total billed: <b>${usd(totalAmt)}</b></span>
-       <span>Outstanding: <b>${usd(totalBal)}</b></span>`;
+      'Showing <b>' + total + '</b> of <b>' + allInvoices.length + '</b> invoices';
 
-    // table rows
     if (page.length === 0) {
       document.getElementById('tableBody').innerHTML =
-        `<tr><td colspan="7"><div class="empty">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
-          <p>No invoices match your filters.</p>
-        </div></td></tr>`;
+        '<tr><td colspan="7"><div class="empty">'
+        + '<svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>'
+        + '<p>No invoices match your filters.</p></div></td></tr>';
     } else {
-      document.getElementById('tableBody').innerHTML = page.map(inv => `
-        <tr>
-          <td><b>${inv.invoice_number}</b></td>
-          <td>${inv.client_name}</td>
-          <td>${fmtDate(inv.date)}</td>
-          <td>${usd(inv.amount)}</td>
-          <td style="color:${inv.balance > 0 ? '#dc2626' : '#16a34a'}">${usd(inv.balance)}</td>
-          <td><span class="${badgeClass(inv.status)}">${inv.status}</span></td>
-          <td>
-            ${inv.available
-              ? `<a class="btn-dl" href="${PDF_DIR}${inv.filename}" download>
-                   <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                   Download PDF
-                 </a>`
-              : inv.view_link
-                ? `<a class="btn-view" href="${inv.view_link}" target="_blank" rel="noopener">
-                     <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                     View Invoice
-                   </a>`
-                : `<span class="btn-dl unavail">Unavailable</span>`
-            }
-          </td>
-        </tr>`).join('');
+      var rows = '';
+      for (var i = 0; i < page.length; i++) {
+        var inv = page[i];
+        var balColor = inv.balance > 0 ? '#dc2626' : '#16a34a';
+        rows += '<tr>'
+          + '<td><b>' + inv.invoice_number + '</b></td>'
+          + '<td>' + inv.client_name + '</td>'
+          + '<td>' + fmtDate(inv.date) + '</td>'
+          + '<td>' + usd(inv.amount) + '</td>'
+          + '<td style="color:' + balColor + '">' + usd(inv.balance) + '</td>'
+          + '<td><span class="' + badgeClass(inv.status) + '">' + inv.status + '</span></td>'
+          + '<td>' + actionBtn(inv) + '</td>'
+          + '</tr>';
+      }
+      document.getElementById('tableBody').innerHTML = rows;
     }
 
-    // pagination
-    document.getElementById('paginationBar').innerHTML = pages <= 1 ? '' : `
-      <button onclick="goPage(1)"        ${currentPage===1     ?'disabled':''}>«</button>
-      <button onclick="goPage(${currentPage-1})" ${currentPage===1     ?'disabled':''}>‹</button>
-      <span class="page-info">Page ${currentPage} of ${pages}</span>
-      <button onclick="goPage(${currentPage+1})" ${currentPage===pages ?'disabled':''}>›</button>
-      <button onclick="goPage(${pages})"  ${currentPage===pages ?'disabled':''}>»</button>`;
+    if (pages <= 1) {
+      document.getElementById('paginationBar').innerHTML = '';
+    } else {
+      document.getElementById('paginationBar').innerHTML =
+        '<button onclick="goPage(1)" ' + (currentPage===1?'disabled':'') + '>«</button>'
+        + '<button onclick="goPage(' + (currentPage-1) + ')" ' + (currentPage===1?'disabled':'') + '>‹</button>'
+        + '<span class="page-info">Page ' + currentPage + ' of ' + pages + '</span>'
+        + '<button onclick="goPage(' + (currentPage+1) + ')" ' + (currentPage===pages?'disabled':'') + '>›</button>'
+        + '<button onclick="goPage(' + pages + ')" ' + (currentPage===pages?'disabled':'') + '>»</button>';
+    }
   }
 
   function goPage(n) {
