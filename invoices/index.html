@@ -300,7 +300,8 @@
   let sortAsc     = false;
   let currentPage = 1;
 
-  fetch('index.json')
+  // cache-buster forces fresh fetch, bypassing CDN/browser cache
+  fetch('index.json?v=' + Date.now())
     .then(r => { if (!r.ok) throw new Error('index.json not found'); return r.json(); })
     .then(data => { allInvoices = data; applyFilters(); })
     .catch(err => {
@@ -315,7 +316,7 @@
     filtered = allInvoices.filter(function(inv) {
       if (q && inv.invoice_number.toLowerCase().indexOf(q) === -1 &&
                inv.client_name.toLowerCase().indexOf(q) === -1) return false;
-      if (status && inv.status !== status) return false;
+      if (status && displayStatus(inv) !== status) return false;
       if (from   && inv.date < from) return false;
       if (to     && inv.date > to)   return false;
       return true;
@@ -358,6 +359,12 @@
 
   function usd(n) {
     return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  // If Heartland says Paid but a balance remains, treat as Partial
+  function displayStatus(inv) {
+    if (inv.balance > 0 && inv.status === 'Paid') return 'Partial';
+    return inv.status;
   }
 
   function badgeClass(status) {
@@ -413,7 +420,7 @@
           + '<td>' + fmtDate(inv.date) + '</td>'
           + '<td>' + usd(inv.amount) + '</td>'
           + '<td style="color:' + balColor + '">' + usd(inv.balance) + '</td>'
-          + '<td><span class="' + badgeClass(inv.status) + '">' + inv.status + '</span></td>'
+          + '<td><span class="' + badgeClass(displayStatus(inv)) + '">' + displayStatus(inv) + '</span></td>'
           + '<td>' + actionBtn(inv) + '</td>'
           + '</tr>';
       }
