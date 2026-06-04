@@ -546,85 +546,156 @@ async function makeDocx(data) {
 function makePdf(data) {
   var jsPDF = window.jspdf.jsPDF;
   var doc = new jsPDF({orientation:'portrait', unit:'in', format:[8.5, 14]});
-  var y = 0.9, L = 0.75, R = 7.75, W = R - L;
+  var L = 0.75, R = 7.75, W = R - L;
+  var y = 0.9;
+  var mid = L + 2.75;   // `)` column  ~3.5" from page left
+  var S11 = 11, S12 = 12, S13 = 13, S10 = 10;
 
+  function setF(sz, bold) { doc.setFont('Times', bold ? 'bold' : 'normal'); doc.setFontSize(sz); }
   function ln(text, opts) {
-    opts = opts || {};
-    var sz = opts.sz || 11, bold = opts.bold || false, cx = opts.cx || false, rx = opts.rx || false, ind = opts.indent || 0;
-    doc.setFont('Times', bold ? 'bold' : 'normal'); doc.setFontSize(sz);
-    var x = cx ? L + W / 2 : rx ? R : L + ind;
-    var lines = doc.splitTextToSize(text, W - ind);
+    opts = opts||{}; var sz=opts.sz||11, bold=opts.bold||false, cx=opts.cx||false, rx=opts.rx||false, ind=opts.indent||0;
+    setF(sz, bold);
+    var x = cx ? L+W/2 : rx ? R : L+ind;
+    var avail = rx ? W : cx ? W : W-ind;
+    var lines = doc.splitTextToSize(text, avail);
     var align = cx ? 'center' : rx ? 'right' : 'left';
-    lines.forEach(function(l) { if (y > 13.0) { doc.addPage([8.5,14]); y = 0.9; } doc.text(l, x, y, {align:align}); y += sz * 0.019; });
+    lines.forEach(function(l){ if(y>13.2){doc.addPage([8.5,14]);y=0.9;} doc.text(l,x,y,{align:align}); y+=sz*0.019; });
   }
-  function gap(n) { y += (n || 1) * 0.18; }
+  function gap(n){ y+=(n||1)*0.18; }
+  function hline(x1,x2,w){ doc.setLineWidth(w||0.01); doc.line(x1,y,x2,y); }
 
-  ln(data.attorney + ', Esq.', {sz:11}); gap(0.4);
-  doc.setFont('Times','normal'); doc.setFontSize(10);
-  doc.text(data.bar || '', L, y);
-  doc.setFont('Times','bold'); doc.setFontSize(10);
-  doc.text(data.detained, R, y, {align:'right'});
-  y += 10 * 0.019; gap(0.3);
-  ln('FIBI Law Firm', {sz:11}); gap(0.3);
-  ln('6546 Woodland Ave, Philadelphia, PA, 19142', {sz:10}); gap(1.4);
-  ln('UNITED STATES DEPARTMENT OF JUSTICE', {sz:12, bold:true, cx:true}); gap(0.3);
-  ln('EXECUTIVE OFFICE FOR IMMIGRATION REVIEW', {sz:12, bold:true, cx:true}); gap(0.2);
-  ln('IMMIGRATION COURT', {sz:12, bold:true, cx:true}); gap(0.3);
-  ln(data.court_city, {sz:12, bold:true, cx:true}); gap(1.0);
-
-  var mid = L + 2.75;
-  doc.setFont('Times','normal'); doc.setFontSize(11);
-  doc.setLineWidth(0.012); doc.line(L, y, mid, y); y += 0.14;
-  doc.text(')', mid, y); y += 11 * 0.019;
-  doc.text('In the Matter of:', L, y); doc.text(')', mid, y); y += 11 * 0.019;
-  doc.text(')  File No: ' + data.anumber, mid, y); y += 11 * 0.019;
-  doc.setFont('Times','bold'); doc.text(data.respondent, (L + mid) / 2, y, {align:'center'}); doc.setFont('Times','normal');
-  doc.text(')', mid, y); y += 11 * 0.019;
-  doc.text(')', mid, y); y += 11 * 0.019;
-  doc.text(')', mid, y); y += 11 * 0.019;
-  doc.text('IN REMOVAL PROCEEDINGS', L, y); doc.text(')', mid, y); y += 11 * 0.019;
-  doc.setLineWidth(0.012); doc.line(L, y, mid, y); y += 0.1;
-  gap(2.5);
-  doc.setFont('Times','bold'); doc.setFontSize(12);
-  doc.text('MOTION TO WITHDRAW AS A COUNSEL', L + W / 2, y, {align:'center'});
-  doc.setFont('Times','normal'); doc.setFontSize(11);
+  // ─────────────────────────────────────────────────────────────────
+  // PAGE 1 — Caption
+  // ─────────────────────────────────────────────────────────────────
+  setF(S11,false); doc.text(data.attorney+', Esq.', L, y);
+  setF(S10,true);  doc.text(data.detained, R, y, {align:'right'}); y+=S11*0.019;
+  setF(S10,false); doc.text(data.bar||'', L, y); y+=S10*0.019;
+  ln('FIBI Law Firm',{sz:S11}); ln('6546 Woodland Ave, Philadelphia, PA, 19142',{sz:S10});
+  gap(1.2);
+  ln('UNITED STATES DEPARTMENT OF JUSTICE',{sz:S12,bold:true,cx:true});
+  ln('EXECUTIVE OFFICE FOR IMMIGRATION REVIEW',{sz:S12,bold:true,cx:true});
+  ln('IMMIGRATION COURT',{sz:S12,bold:true,cx:true});
+  ln(data.court_city,{sz:S12,bold:true,cx:true});
   gap(0.8);
 
-  doc.addPage([8.5,14]); y = 0.9;
-  doc.setFont('Times','bold'); doc.setFontSize(13);
-  var title = 'MOTION TO WITHDRAW AS A COUNSEL';
-  var tw = doc.getTextWidth(title);
-  doc.text(title, L + W / 2, y, {align:'center'});
-  doc.setLineWidth(0.006); doc.line(L + W / 2 - tw / 2, y + 0.03, L + W / 2 + tw / 2, y + 0.03);
-  y += 13 * 0.019; gap(0.8);
-  ln('Honorable Immigration Judge:', {sz:11}); gap(0.7);
-  ln('I, ' + data.attorney + ', respectfully move to withdraw as counsel of record in the above-referenced matter. As grounds for this Motion, undersigned counsel states as follows:', {sz:11}); gap(0.7);
-  var paras = [
+  // Caption bracket
+  setF(S11,false);
+  hline(L,mid,0.012); y+=0.14;
+  doc.text(')',mid,y); y+=S11*0.019;
+  doc.text('In the Matter of:',L,y); doc.text(')',mid,y); y+=S11*0.019;
+  doc.text(')  File No: '+data.anumber, mid, y); y+=S11*0.019;
+  setF(S11,true); doc.text(data.respondent,(L+mid)/2,y,{align:'center'}); setF(S11,false);
+  doc.text(')',mid,y); y+=S11*0.019;
+  doc.text(')',mid,y); y+=S11*0.019;
+  doc.text(')',mid,y); y+=S11*0.019;
+  doc.text('IN REMOVAL PROCEEDINGS',L,y); doc.text(')',mid,y); y+=S11*0.019;
+  hline(L,mid,0.012); y+=0.08;
+
+  gap(2.5);
+  ln('MOTION TO WITHDRAW AS A COUNSEL',{sz:S12,bold:true,cx:true});
+  gap(0.5);
+
+  // ─────────────────────────────────────────────────────────────────
+  // PAGE 2 — Motion Body
+  // ─────────────────────────────────────────────────────────────────
+  doc.addPage([8.5,14]); y=0.9;
+  setF(S13,true);
+  var tw=doc.getTextWidth('MOTION TO WITHDRAW AS A COUNSEL');
+  doc.text('MOTION TO WITHDRAW AS A COUNSEL',L+W/2,y,{align:'center'});
+  doc.setLineWidth(0.006); doc.line(L+W/2-tw/2,y+0.04,L+W/2+tw/2,y+0.04);
+  y+=S13*0.019; gap(0.8);
+
+  ln('Honorable Immigration Judge:',{sz:S11}); gap(0.7);
+  ln('I, '+data.attorney+', respectfully move to withdraw as counsel of record in the above-referenced matter. As grounds for this Motion, undersigned counsel states as follows:',{sz:S11}); gap(0.7);
+
+  var body=[
     'Undersigned counsel previously entered an appearance in this matter through Form EOIR-28 while associated with FIBI Law Firm. Undersigned counsel is no longer employed by, affiliated with, or associated with FIBI Law Firm and therefore is no longer in a position to represent the Respondent in this matter.',
     'The Respondent will continue to be represented by the principal attorney of record associated with FIBI Law Firm, whose appearance remains valid and effective before this Court.',
     'The Respondent has been notified of this Motion and does not object to the withdrawal of undersigned counsel.',
     'Accordingly, the withdrawal of undersigned counsel will not prejudice the Respondent, as representation by the principal attorney of record will continue uninterrupted.',
     'Any existing EOIR-28 filed by the principal attorney of record should remain in full force and effect, and all future notices and correspondence should continue to be directed to that attorney.',
   ];
-  paras.forEach(function(p, i) { ln((i+1) + '.   ' + p, {sz:11}); gap(0.7); });
-  gap(0.3);
-  ln('WHEREFORE, undersigned respectfully requests that the Court grant this Motion and permit the withdrawal of ' + data.attorney + ', as counsel of record in this matter, while maintaining the appearance of the principal attorney associated with FIBI Law Firm.', {sz:11});
-  gap(1.5); ln('Respectfully submitted,', {sz:11}); gap(1.8);
-  doc.setFont('Times','normal'); doc.setFontSize(11);
-  doc.text('/s/ ' + data.attorney, R, y, {align:'right'}); y += 11 * 0.022;
-  doc.text(data.attorney + ', Esq.', R, y, {align:'right'}); y += 11 * 0.022;
-  if (data.bar) { doc.text('Bar No. ' + data.bar, R, y, {align:'right'}); y += 11 * 0.022; }
-  if (data.date) { doc.text(data.date, R, y, {align:'right'}); }
+  body.forEach(function(p,i){ ln((i+1)+'.   '+p,{sz:S11,indent:0.3}); gap(0.7); });
+  gap(0.2);
+  ln('             WHEREFORE, undersigned respectfully requests that the Court grant this Motion and permit the withdrawal of '+data.attorney+', as counsel of record in this matter, while maintaining the appearance of the principal attorney associated with FIBI Law Firm.',{sz:S11});
 
-  doc.addPage([8.5,14]); y = 0.9;
-  ln('CERTIFICATE OF SERVICE', {sz:13, bold:true, cx:true}); gap(1.0);
-  ln('CASE NAME: In re: ' + data.respondent + '     ' + data.anumber, {sz:11, bold:true}); gap(0.8);
-  ln('This document was electronically filed through ECAS, and both parties are participating in ECAS. Therefore, no separate service was completed.', {sz:11});
-  gap(2.5);
-  doc.text('/s/ ' + data.attorney, R, y, {align:'right'}); y += 11 * 0.022;
-  doc.text(data.attorney + ', Esq.', R, y, {align:'right'});
+  // ─────────────────────────────────────────────────────────────────
+  // PAGE 3 — Signature
+  // ─────────────────────────────────────────────────────────────────
+  doc.addPage([8.5,14]); y=0.9;
+  gap(4.0);
+  ln('Respectfully submitted,',{sz:S11,rx:true}); gap(1.8);
+  setF(S11,false);
+  doc.text('/s/ '+data.attorney, R, y, {align:'right'}); y+=S11*0.022;
+  doc.text(data.attorney+', Esq.', R, y, {align:'right'}); y+=S11*0.022;
+  if(data.bar){ doc.text('Bar No. '+data.bar, R, y, {align:'right'}); y+=S11*0.022; }
+  if(data.date){ doc.text(data.date, R, y, {align:'right'}); }
+
+  // ─────────────────────────────────────────────────────────────────
+  // PAGE 4 — Order of the Immigration Judge
+  // ─────────────────────────────────────────────────────────────────
+  doc.addPage([8.5,14]); y=0.9;
+  ln('UNITED STATES DEPARTMENT OF JUSTICE',{sz:S12,bold:true,cx:true});
+  ln('EXECUTIVE OFFICE FOR IMMIGRATION REVIEW',{sz:S12,bold:true,cx:true});
+  ln('IMMIGRATION COURT',{sz:S12,bold:true,cx:true});
+  ln(data.court_city,{sz:S12,bold:true,cx:true});
+  gap(0.6);
+
+  // Simplified caption for order page
+  setF(S11,false);
+  hline(L,mid,0.012); y+=0.1;
+  doc.text(')',mid,y); y+=S11*0.019;
+  doc.text('In the Matter of:',L,y); doc.text(')',mid,y); y+=S11*0.019;
+  doc.text(')  File No. '+data.anumber, mid, y); y+=S11*0.019;
+  setF(S11,true); doc.text(data.respondent,L,y); setF(S11,false);
+  doc.text(')',mid,y); y+=S11*0.019;
+  doc.text(')',mid,y); y+=S11*0.019;
+  doc.text('IN REMOVAL PROCEEDINGS',L,y); doc.text(')',mid,y); y+=S11*0.019;
+  hline(L,mid,0.012); y+=0.14;
+  gap(0.5);
+
+  ln('ORDER OF THE IMMIGRATION JUDGE',{sz:S12,bold:true,cx:true}); gap(0.5);
+  ln('Upon consideration of the Motion to withdraw',{sz:S11}); gap(0.4);
+  ln('It is HEREBY ORDERED that the Motion be ( ) GRANTED   ( ) DENIED because:',{sz:S11}); gap(0.3);
+  ln('[ ] DHS does not oppose the motion.',{sz:S11,indent:0.3}); gap(0.2);
+  ln('[ ] the Respondent does not oppose the motion.',{sz:S11,indent:0.3}); gap(0.2);
+  ln('[ ] A response to the motion has not been filed with the court / BIA.',{sz:S11,indent:0.3}); gap(0.2);
+  ln('[ ] Good cause has been shown.',{sz:S11,indent:0.3}); gap(0.2);
+  ln('[ ] The court agrees with the reason stated in the opposition of the motion.',{sz:S11,indent:0.3}); gap(0.2);
+  ln('[ ] The motion fails to comply with the requirements of 8 C.F.R.',{sz:S11,indent:0.3}); gap(0.2);
+  ln('[ ] Other: _______________________________________________',{sz:S11,indent:0.3}); gap(0.5);
+  ln('Deadlines:',{sz:S11,bold:true}); gap(0.3);
+  ln('[ ] The application(s) for relief or support document must be filed by: ____________',{sz:S11,indent:0.3}); gap(0.2);
+  ln('[ ] The respondent must comply with DHS biometrics instructions by: _______________',{sz:S11,indent:0.3}); gap(1.5);
+  setF(S11,false);
+  doc.text('Date: ___________________', L, y); doc.text('Name: _______________________', L+3.5, y); y+=S11*0.022;
+  gap(0.4);
+  ln('Immigration Judge: _______________________________',{sz:S11}); gap(1.0);
+
+  // Certificate of Service on Order page
+  hline(L,R,0.01); y+=0.12;
+  ln('Certificate of Service:',{sz:S11,bold:true}); gap(0.3);
+  ln('This document was served by:  [ ] Mail   [ ] Personal Service   [ ] DHS / The Service',{sz:S10}); gap(0.2);
+  ln('To:  [ ] Alien   [ ] Alien c/o custodial officer',{sz:S10}); gap(0.8);
+  setF(S10,false);
+  doc.text('Date: ______________________', L, y);
+  doc.text('By: Court Staff', R, y, {align:'right'});
+
+  // ─────────────────────────────────────────────────────────────────
+  // PAGE 5 — Certificate of Service (ECAS)
+  // ─────────────────────────────────────────────────────────────────
+  doc.addPage([8.5,14]); y=0.9;
+  ln('CERTIFICATE OF SERVICE',{sz:S13,bold:true,cx:true}); gap(1.0);
+  ln('CASE NAME: In re:   '+data.respondent+'        A- '+data.adigits,{sz:S11,bold:true}); gap(0.8);
+  ln('This document was electronically filed through ECAS, and both parties are participating in ECAS. Therefore, no separate service was completed.',{sz:S11});
+  gap(3.0);
+  setF(S11,false);
+  doc.text('/s/ '+data.attorney, R, y, {align:'right'}); y+=S11*0.022;
+  doc.text(data.attorney+', Esq.', R, y, {align:'right'});
+
   return doc.output('arraybuffer');
 }
+
 
 // ── Generate ──────────────────────────────────────────────────────
 async function generate() {
