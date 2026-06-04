@@ -549,7 +549,7 @@ function makePdf(data) {
   var L = 0.75, R = 7.75, W = R - L;
   var y = 0.9;
   var mid = L + 2.75;
-  var LS = 0.036; // double-spaced line step for 11pt
+  var LS = 0.026; // line step for 11pt
 
   function setF(sz,bold){ doc.setFont('Times',bold?'bold':'normal'); doc.setFontSize(sz||11); }
   function gap(n){ y+=(n||1)*0.18; }
@@ -572,7 +572,7 @@ function makePdf(data) {
       y+=ls;
     });
   }
-  function blankLine(sz){ y+=(sz||11)*0.036; }
+  function blankLine(sz){ y+=(sz||11)*LS; }
 
   // ─────────────────────────────────────────────────────────────────
   // PAGE 1 — Caption
@@ -600,7 +600,7 @@ function makePdf(data) {
   doc.text(')',mid,y); y+=11*LS;
   doc.text('IN REMOVAL PROCEEDINGS',L,y); doc.text(')',mid,y); y+=11*LS;
   hline(L,mid,0.012); y+=0.08;
-  gap(2.2);
+  gap(1.5);
   setF(12,true); doc.text('MOTION TO WITHDRAW AS A COUNSEL',L+W/2,y,{align:'center'});
 
   // ─────────────────────────────────────────────────────────────────
@@ -614,9 +614,7 @@ function makePdf(data) {
   y+=13*LS; blankLine(11);
 
   block('Honorable Immigration Judge:',{sz:11}); blankLine(11);
-  blankLine(11);
   block('I, '+data.attorney+', respectfully move to withdraw as counsel of record in the above-referenced matter. As grounds for this Motion, undersigned counsel states as follows:',{sz:11,lind:0,wind:0}); blankLine(11);
-  blankLine(11);
 
   // 6 numbered paragraphs with hanging indent
   var body=[
@@ -631,7 +629,6 @@ function makePdf(data) {
     setF(11,false);
     doc.text((i+1)+'.', L+0.3, y);
     block(p,{sz:11,lind:0.7,wind:0.7});
-    blankLine(11);
     blankLine(11);
   });
 
