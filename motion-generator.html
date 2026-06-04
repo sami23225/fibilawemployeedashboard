@@ -572,15 +572,23 @@ function makePdf(data) {
   ln('IMMIGRATION COURT', {sz:12, bold:true, cx:true}); gap(0.3);
   ln(data.court_city, {sz:12, bold:true, cx:true}); gap(1.0);
 
-  var cy = y;
+  var mid = L + 2.75;
   doc.setFont('Times','normal'); doc.setFontSize(11);
-  doc.text('In the Matter of:', L, cy); doc.text(')', L + W * 0.55, cy); y = cy + 11 * 0.019;
-  doc.text(')', L + W * 0.55, y); y += 11 * 0.019;
-  doc.setFont('Times','bold'); doc.text(data.respondent, L, y); doc.setFont('Times','normal');
-  doc.text(') File No: ' + data.anumber, L + W * 0.55, y); y += 11 * 0.019;
-  doc.text(')', L + W * 0.55, y); y += 11 * 0.019;
-  doc.text(')', L + W * 0.55, y); doc.text('IN REMOVAL PROCEEDINGS', L + W * 0.57, y); y += 11 * 0.019;
-  doc.text(')', L + W * 0.55, y); doc.text('MOTION TO WITHDRAW AS A COUNSEL', L + W * 0.57, y); gap(2.0);
+  doc.setLineWidth(0.012); doc.line(L, y, mid, y); y += 0.14;
+  doc.text(')', mid, y); y += 11 * 0.019;
+  doc.text('In the Matter of:', L, y); doc.text(')', mid, y); y += 11 * 0.019;
+  doc.text(')  File No: ' + data.anumber, mid, y); y += 11 * 0.019;
+  doc.setFont('Times','bold'); doc.text(data.respondent, (L + mid) / 2, y, {align:'center'}); doc.setFont('Times','normal');
+  doc.text(')', mid, y); y += 11 * 0.019;
+  doc.text(')', mid, y); y += 11 * 0.019;
+  doc.text(')', mid, y); y += 11 * 0.019;
+  doc.text('IN REMOVAL PROCEEDINGS', L, y); doc.text(')', mid, y); y += 11 * 0.019;
+  doc.setLineWidth(0.012); doc.line(L, y, mid, y); y += 0.1;
+  gap(2.5);
+  doc.setFont('Times','bold'); doc.setFontSize(12);
+  doc.text('MOTION TO WITHDRAW AS A COUNSEL', L + W / 2, y, {align:'center'});
+  doc.setFont('Times','normal'); doc.setFontSize(11);
+  gap(0.8);
 
   doc.addPage([8.5,14]); y = 0.9;
   doc.setFont('Times','bold'); doc.setFontSize(13);
