@@ -638,8 +638,7 @@ function makePdf(data) {
   // PAGE 3 — Signature
   // ─────────────────────────────────────────────────────────────────
   doc.addPage([8.5,14]); y=0.9;
-  blankLine(11);
-  block('Respectfully submitted,',{sz:11,rx:true}); blankLine(11); blankLine(11);
+  block('Respectfully submitted,',{sz:11,rx:true}); gap(0.3);
   setF(11,false);
   doc.text('/s/ '+data.attorney, R, y, {align:'right'}); y+=11*0.022;
   doc.text(data.attorney+', Esq.', R, y, {align:'right'}); y+=11*0.022;
