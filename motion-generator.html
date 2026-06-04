@@ -126,6 +126,10 @@
     .res-sub{font-size:11px;color:#888;font-family:Arial,sans-serif;margin-top:2px;}
     .badge{display:inline-block;padding:3px 9px;border-radius:12px;font-size:11px;font-weight:700;font-family:Arial,sans-serif;}
     .b-ok{background:#d6f4ee;color:#1a6e50;} .b-warn{background:#fff8e1;color:#7a5700;} .b-err{background:#fce4ec;color:#a00030;}
+    .dl-ind-btn{padding:5px 11px;border:none;border-radius:4px;font-size:11px;font-family:Arial,sans-serif;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px;background:var(--dark);color:#fff;transition:background .15s;}
+    .dl-ind-btn:hover{background:#001e2e;}
+    .dl-pdf-btn{background:var(--teal2);}
+    .dl-pdf-btn:hover{background:var(--teal);}
 
     /* Misc */
     .sel-bar{display:flex;align-items:center;gap:14px;margin-bottom:12px;flex-wrap:wrap;}
@@ -627,10 +631,10 @@ async function generate() {
     await new Promise(function(r){ setTimeout(r, 8); });
     var safe = safeName(data.respondent || data.anumber || 'case_' + i);
     var folder = outputZip.folder(safe);
-    var entry = {lbl: data.respondent || data.anumber, docx:'—', pdf:'—'};
-    try { var b = await makeDocx(data); if (b) { folder.file(safe + '_motion.docx', b); entry.docx = 'Done'; } else entry.docx = 'Failed'; }
+    var entry = {lbl: data.respondent || data.anumber, safe: safe, docx:'—', pdf:'—', docxBlob:null, pdfBlob:null};
+    try { var b = await makeDocx(data); if (b) { folder.file(safe + '_motion.docx', b); entry.docxBlob = new Blob([b], {type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}); entry.docx = 'Done'; } else entry.docx = 'Failed'; }
     catch(e) { entry.docx = 'Error: ' + e.message; }
-    try { folder.file(safe + '_motion.pdf', makePdf(data)); entry.pdf = 'Done'; }
+    try { var pb = makePdf(data); folder.file(safe + '_motion.pdf', pb); entry.pdfBlob = new Blob([pb], {type:'application/pdf'}); entry.pdf = 'Done'; }
     catch(e) { entry.pdf = 'Error: ' + e.message; }
     results.push(entry);
   }
@@ -641,17 +645,36 @@ async function generate() {
 
 function setProgress(p, l) { document.getElementById('prog-fill').style.width = p + '%'; document.getElementById('prog-lbl').textContent = l; }
 
+var _results = [];
 function showResults(results) {
-  document.getElementById('results-list').innerHTML = results.map(function(r) {
+  _results = results;
+  document.getElementById('results-list').innerHTML = results.map(function(r, i) {
     var ok = r.docx === 'Done' && r.pdf === 'Done';
     var err = r.docx.indexOf('Error') === 0 || r.pdf.indexOf('Error') === 0;
-    return '<div class="res-row"><div><div class="res-name">' + esc(r.lbl) + '</div>'
+    var btns = '';
+    if (r.docxBlob) btns += '<button class="dl-ind-btn" onclick="dlIndividual(' + i + ',\'docx\')" title="Download Word doc"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Word</button>';
+    if (r.pdfBlob)  btns += '<button class="dl-ind-btn dl-pdf-btn" onclick="dlIndividual(' + i + ',\'pdf\')" title="Download PDF"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> PDF</button>';
+    return '<div class="res-row">'
+      + '<div><div class="res-name">' + esc(r.lbl) + '</div>'
       + '<div class="res-sub">DOCX: ' + esc(r.docx) + ' &middot; PDF: ' + esc(r.pdf) + '</div></div>'
-      + '<span class="badge ' + (ok ? 'b-ok' : err ? 'b-err' : 'b-warn') + '">' + (ok ? 'Ready' : err ? 'Error' : 'Partial') + '</span></div>';
+      + '<div style="display:flex;align-items:center;gap:8px;">' + btns
+      + '<span class="badge ' + (ok ? 'b-ok' : err ? 'b-err' : 'b-warn') + '">' + (ok ? 'Ready' : err ? 'Error' : 'Partial') + '</span></div>'
+      + '</div>';
   }).join('');
   document.getElementById('results-card').style.display = 'block';
   document.getElementById('results-card').scrollIntoView({behavior:'smooth'});
   document.getElementById('dl-hint').textContent = results.filter(function(r){ return r.pdf === 'Done'; }).length + ' motion(s) ready';
+}
+
+function dlIndividual(i, type) {
+  var r = _results[i];
+  var blob = type === 'docx' ? r.docxBlob : r.pdfBlob;
+  var ext  = type === 'docx' ? '.docx' : '.pdf';
+  if (!blob) return;
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = r.safe + '_motion' + ext;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(a.href);
 }
 
 async function downloadZip() {
