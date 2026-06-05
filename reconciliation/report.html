@@ -117,7 +117,6 @@
   <div class="stat-card"><div class="stat-val" id="s-hl">&#8212;</div><div class="stat-lbl">HL Outstanding</div></div>
   <div class="stat-card"><div class="stat-val" id="s-dw">&#8212;</div><div class="stat-lbl">DW Outstanding</div></div>
   <div class="stat-card"><div class="stat-val" id="s-sol">&#8212;</div><div class="stat-lbl">Within Collection Window</div></div>
-  <div class="stat-card"><div class="stat-val" id="s-agree">&#8212;</div><div class="stat-lbl">In New System %</div></div>
   <div class="stat-card"><div class="stat-val" id="s-visible">&#8212;</div><div class="stat-lbl">Showing</div></div>
 </div>
 
@@ -155,14 +154,6 @@
       <option value="expired">Time Limit Passed</option>
     </select>
   </div>
-  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-    <span class="filter-label">System:</span>
-    <select class="select-filter" id="agree-filter" onchange="applyFilters()">
-      <option value="">All</option>
-      <option value="possible">In New System</option>
-      <option value="none">Old System Only</option>
-    </select>
-  </div>
 </div>
 
 <div class="table-wrap">
@@ -179,7 +170,6 @@
         <th style="text-align:right">Delta</th>
         <th>Last Payment</th>
         <th>Can Still Collect?<span class="tip-wrap"><span class="tip-icon">&#8505;</span><span class="tip-box">Based on each state&#8217;s time limit to sue for unpaid fees. NY &amp; GA: 6 years. PA: 4 years. Filter by state above to see which clients you can still pursue.</span></span></th>
-        <th>In New System<span class="tip-wrap"><span class="tip-icon">&#8505;</span><span class="tip-box">Shows whether this client appears in your current Docketwise system. &#8220;Old System Only&#8221; clients are from Heartland and haven&#8217;t been migrated.</span></span></th>
         <th>Invoices</th>
       </tr>
     </thead>
@@ -250,7 +240,6 @@ function updateColWindowBanner(){
 function applyFilters(){
   var q=document.getElementById('search-input').value.toLowerCase().trim();
   var solFilt=document.getElementById('sol-filter').value;
-  var agreeFil=document.getElementById('agree-filter').value;
   VISIBLE=ALL_ROWS.filter(function(r){
     if(activeTab!=='all'&&r._section!==activeTab)return false;
     if(q){
@@ -266,8 +255,6 @@ function applyFilters(){
       var status2=(r.sol_status&&r.sol_status['ny'])||'unknown';
       if(status2!==solFilt)return false;
     }
-    if(agreeFil==='possible'&&r.has_agreement!=='possible')return false;
-    if(agreeFil==='none'&&r.has_agreement==='possible')return false;
     return true;
   });
   renderTable();
@@ -278,7 +265,7 @@ function renderTable(){
   var tbody=document.getElementById('table-body');
   tbody.innerHTML='';
   if(!VISIBLE.length){
-    tbody.innerHTML='<tr class="empty-row"><td colspan="11">No records match the current filters.</td></tr>';
+    tbody.innerHTML='<tr class="empty-row"><td colspan="10">No records match the current filters.</td></tr>';
     return;
   }
   VISIBLE.forEach(function(r,idx){
@@ -300,14 +287,6 @@ function renderTable(){
     else if(solSt==='expiring_soon')collectBadge='<span class="badge be" title="Expires '+solExpiry+'">&#9888; Expiring</span>';
     else if(solSt==='expired')collectBadge='<span class="badge bx" title="'+solExpiry+'">&#10007; Time Limit Passed</span>';
     else collectBadge='<span class="badge bu" style="color:#d1d5db;font-weight:400">&mdash;</span>';
-
-    // In New System badge (was Agreement)
-    var systemBadge='';
-    if(r.has_agreement==='possible'){
-      systemBadge='<span class="badge bv">&#10003; Active</span>';
-    }else{
-      systemBadge='<span class="badge bn" style="color:#9ca3af">Old System Only</span>';
-    }
 
     var hasLinks=r.view_links&&r.view_links.length>0;
     var invBtn=hasLinks?'<button class="expand-btn" id="ebtn-'+idx+'" onclick="toggleExpand('+idx+')">&#128196; '+r.view_links.length+'</button>':'<span style="color:var(--gray);font-size:11px">&mdash;</span>';
@@ -331,14 +310,13 @@ function renderTable(){
       +'<td class="td-money '+deltaCls+'">'+deltaSign+deltaStr+'</td>'
       +'<td class="td-date">'+(r.last_payment_date?r.last_payment_date:'<span style="color:var(--gray)">Never</span>')+'</td>'
       +'<td>'+collectBadge+'</td>'
-      +'<td>'+systemBadge+'</td>'
       +'<td>'+invBtn+'</td>';
     tbody.appendChild(tr);
     if(hasLinks){
       var panelTr=document.createElement('tr');
       panelTr.id='panel-'+idx;
       panelTr.className='invoice-panel'+(expandedRows.has(idx)?' open':'');
-      panelTr.innerHTML='<td colspan="11"><div class="invoice-inner">'+buildInvoiceCards(r.view_links)+'</div></td>';
+      panelTr.innerHTML='<td colspan="10"><div class="invoice-inner">'+buildInvoiceCards(r.view_links)+'</div></td>';
       tbody.appendChild(panelTr);
       if(expandedRows.has(idx)){
         tr.classList.add('expanded');
@@ -360,8 +338,7 @@ function buildInvoiceCards(links){
   return links.map(function(inv){
     var s=(inv.status||'').toLowerCase();
     var sc=s.includes('paid')?'paid':(inv.balance>0&&inv.amount>inv.balance?'partial':(inv.balance>0?'unpaid':'sent'));
-    // Use /download/ link (already updated in data)
-    var dlBtn=inv.view_link?'<a class="inv-dl-btn" href="'+inv.view_link+'" target="_blank" rel="noopener">&#8659; Download PDF</a>':'';
+    var dlBtn=inv.view_link?'<a class="inv-dl-btn" href="'+inv.view_link+'" target="_blank" rel="noopener">View Invoice</a>':'';
     return '<div class="inv-card"><div class="inv-card-top"><div><div class="inv-num">Invoice #'+esc(inv.invoice_number||'&mdash;')+'</div><div class="inv-date">'+(inv.date||'&mdash;')+'</div></div><span class="inv-status '+sc+'">'+esc(inv.status||'Unknown')+'</span></div>'
       +'<div class="inv-amounts"><div class="inv-amt-item"><span>Amount</span><br>'+(inv.amount!=null?fmt(inv.amount):'&mdash;')+'</div><div class="inv-amt-item"><span>Balance</span><br>'+(inv.balance!=null?fmt(inv.balance):'&mdash;')+'</div>'+(inv.account?'<div class="inv-amt-item"><span>Account</span><br>'+esc(inv.account)+'</div>':'')+'</div>'+dlBtn+'</div>';
   }).join('');
@@ -386,25 +363,22 @@ function updateSummaryBar(){
   var solValid=rows.filter(function(r){return r.sol_status&&r.sol_status[solState]==='valid';}).length;
   var solKnown=rows.filter(function(r){return r.sol_status&&(r.sol_status[solState]||'unknown')!=='unknown';}).length;
   var solPct=solKnown?Math.round(solValid/solKnown*100):0;
-  var withAgree=rows.filter(function(r){return r.has_agreement==='possible';}).length;
-  var agreePct=total?Math.round(withAgree/total*100):0;
   document.getElementById('s-total').textContent=ALL_ROWS.length.toLocaleString();
   document.getElementById('s-hl').textContent='$'+abbr(hlTot);
   document.getElementById('s-dw').textContent='$'+abbr(dwTot);
   document.getElementById('s-sol').textContent=solPct+'%';
-  document.getElementById('s-agree').textContent=agreePct+'%';
   document.getElementById('s-visible').textContent=total.toLocaleString();
 }
 
 function exportCSV(){
   var solState=activeSolState||'ny';
-  var headers=['Client Name','Email','Phone','Account','Section','Original Amount','HL Balance','DW Balance','Delta','Last Payment','Can Still Collect?','In New System','Invoice Date','Invoice Links'];
+  var headers=['Client Name','Email','Phone','Account','Section','Original Amount','HL Balance','DW Balance','Delta','Last Payment','Can Still Collect?','Invoice Date','Invoice Links'];
   var rows=VISIBLE.map(function(r){
     var delta=(r.heartland_balance||0)-(r.docketwise_balance||0);
     var links=(r.view_links||[]).map(function(v){return v.view_link||'';}).filter(Boolean).join('; ');
     var solSt=(r.sol_status&&r.sol_status[solState])||'';
     var solLabel=solSt==='valid'?'Yes':solSt==='expiring_soon'?'Expiring':solSt==='expired'?'Time Limit Passed':'';
-    return [r.client_name||'',cleanContact(r.email)||'',cleanContact(r.phone)||'',r.heartland_account||'',r._section||'',r.original_amount||0,r.heartland_balance||0,r.docketwise_balance||0,delta,r.last_payment_date||'',solLabel,r.has_agreement==='possible'?'Active':'Old System Only',r.invoice_date||'',links].map(function(v){return '"'+String(v).replace(/"/g,'""')+'"';}).join(',');
+    return [r.client_name||'',cleanContact(r.email)||'',cleanContact(r.phone)||'',r.heartland_account||'',r._section||'',r.original_amount||0,r.heartland_balance||0,r.docketwise_balance||0,delta,r.last_payment_date||'',solLabel,r.invoice_date||'',links].map(function(v){return '"'+String(v).replace(/"/g,'""')+'"';}).join(',');
   });
   var csv=[headers.join(',')].concat(rows).join('\n');
   var blob=new Blob([csv],{type:'text/csv'});
