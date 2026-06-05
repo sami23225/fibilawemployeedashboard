@@ -26,8 +26,8 @@
     .stat-card:last-child { border-right:none; }
     .stat-val { font-size:22px;font-weight:800;color:var(--teal);line-height:1; }
     .stat-lbl { font-size:10px;text-transform:uppercase;letter-spacing:.07em;opacity:.7;margin-top:4px; }
-    #sol-banner { display:none;background:linear-gradient(90deg,#7c3aed,#5b21b6);color:#fff;padding:10px 24px;font-size:13px;font-weight:500; }
-    #sol-banner strong { color:#ddd6fe; }
+    #col-window-banner { display:none;background:linear-gradient(90deg,#7c3aed,#5b21b6);color:#fff;padding:10px 24px;font-size:13px;font-weight:500; }
+    #col-window-banner strong { color:#ddd6fe; }
     .filters-bar { background:var(--white);border-bottom:2px solid var(--border);padding:12px 24px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;position:sticky;top:68px;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.06); }
     .search-wrap { position:relative;flex:1;min-width:200px;max-width:320px; }
     .search-wrap input { width:100%;padding:8px 12px 8px 34px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;outline:none;background:var(--gray-bg);transition:border-color .15s; }
@@ -81,8 +81,8 @@
     .inv-amounts { display:flex;gap:14px;flex-wrap:wrap; }
     .inv-amt-item { font-size:12px; }
     .inv-amt-item span { color:var(--gray);font-size:10px;text-transform:uppercase; }
-    .inv-view-btn { margin-top:6px;align-self:flex-start;background:var(--teal);color:var(--navy);border:none;border-radius:5px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block; }
-    .inv-view-btn:hover { opacity:.85; }
+    .inv-dl-btn { margin-top:6px;align-self:flex-start;background:var(--teal);color:var(--navy);border:none;border-radius:5px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block; }
+    .inv-dl-btn:hover { opacity:.85; }
     .inv-status { font-size:10px;border-radius:4px;padding:2px 6px;font-weight:600; }
     .inv-status.paid { background:var(--green-bg);color:var(--green); }
     .inv-status.partial { background:var(--amber-bg);color:var(--amber); }
@@ -93,6 +93,12 @@
     #loading { text-align:center;padding:80px 20px;color:var(--gray);font-size:16px; }
     .spinner { width:40px;height:40px;margin:0 auto 16px;border:4px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin .8s linear infinite; }
     @keyframes spin { to{transform:rotate(360deg);} }
+    /* Tooltip */
+    .tip-wrap { display:inline-block;position:relative;cursor:help;margin-left:4px; }
+    .tip-icon { font-size:11px;color:rgba(255,255,255,.55);vertical-align:middle; }
+    .tip-box { display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1e293b;color:#f1f5f9;font-size:11px;font-weight:400;padding:7px 10px;border-radius:6px;width:260px;line-height:1.5;white-space:normal;z-index:500;text-transform:none;letter-spacing:0; }
+    .tip-box::after { content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1e293b; }
+    .tip-wrap:hover .tip-box { display:block; }
     @media(max-width:768px){header{padding:10px 14px;}.summary-bar{padding:8px 14px;}.stat-card{min-width:100px;padding:6px 10px;}.stat-val{font-size:18px;}.filters-bar{padding:10px 14px;top:60px;}.table-wrap{padding:10px 8px 30px;}.brand-name{font-size:13px;}}
   </style>
 </head>
@@ -110,12 +116,12 @@
   <div class="stat-card"><div class="stat-val" id="s-total">&#8212;</div><div class="stat-lbl">Total Clients</div></div>
   <div class="stat-card"><div class="stat-val" id="s-hl">&#8212;</div><div class="stat-lbl">HL Outstanding</div></div>
   <div class="stat-card"><div class="stat-val" id="s-dw">&#8212;</div><div class="stat-lbl">DW Outstanding</div></div>
-  <div class="stat-card"><div class="stat-val" id="s-sol">&#8212;</div><div class="stat-lbl">SOL Valid %</div></div>
-  <div class="stat-card"><div class="stat-val" id="s-agree">&#8212;</div><div class="stat-lbl">Fee Agreement %</div></div>
+  <div class="stat-card"><div class="stat-val" id="s-sol">&#8212;</div><div class="stat-lbl">Within Collection Window</div></div>
+  <div class="stat-card"><div class="stat-val" id="s-agree">&#8212;</div><div class="stat-lbl">In New System %</div></div>
   <div class="stat-card"><div class="stat-val" id="s-visible">&#8212;</div><div class="stat-lbl">Showing</div></div>
 </div>
 
-<div id="sol-banner"></div>
+<div id="col-window-banner"></div>
 
 <div class="filters-bar">
   <div class="search-wrap">
@@ -132,7 +138,7 @@
     </div>
   </div>
   <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-    <span class="filter-label">SOL State:</span>
+    <span class="filter-label">State:</span>
     <select class="select-filter" id="sol-state" onchange="setSolState(this.value)">
       <option value="">All States</option>
       <option value="ny">New York (6yr)</option>
@@ -141,20 +147,20 @@
     </select>
   </div>
   <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-    <span class="filter-label">SOL Filter:</span>
+    <span class="filter-label">Collection Window:</span>
     <select class="select-filter" id="sol-filter" onchange="applyFilters()">
       <option value="">All Records</option>
-      <option value="valid">Valid Only</option>
+      <option value="valid">Can Still Collect</option>
       <option value="expiring_soon">Expiring Soon</option>
-      <option value="expired">Expired</option>
+      <option value="expired">Time Limit Passed</option>
     </select>
   </div>
   <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-    <span class="filter-label">Agreement:</span>
+    <span class="filter-label">System:</span>
     <select class="select-filter" id="agree-filter" onchange="applyFilters()">
       <option value="">All</option>
-      <option value="possible">Has Agreement</option>
-      <option value="none">No Agreement</option>
+      <option value="possible">In New System</option>
+      <option value="none">Old System Only</option>
     </select>
   </div>
 </div>
@@ -172,8 +178,8 @@
         <th style="text-align:right">DW Balance</th>
         <th style="text-align:right">Delta</th>
         <th>Last Payment</th>
-        <th>SOL Status</th>
-        <th>Agreement</th>
+        <th>Can Still Collect?<span class="tip-wrap"><span class="tip-icon">&#8505;</span><span class="tip-box">Based on each state&#8217;s time limit to sue for unpaid fees. NY &amp; GA: 6 years. PA: 4 years. Filter by state above to see which clients you can still pursue.</span></span></th>
+        <th>In New System<span class="tip-wrap"><span class="tip-icon">&#8505;</span><span class="tip-box">Shows whether this client appears in your current Docketwise system. &#8220;Old System Only&#8221; clients are from Heartland and haven&#8217;t been migrated.</span></span></th>
         <th>Invoices</th>
       </tr>
     </thead>
@@ -225,12 +231,12 @@ function setTab(btn){
 
 function setSolState(val){
   activeSolState=val;
-  updateSolBanner();
+  updateColWindowBanner();
   applyFilters();
 }
 
-function updateSolBanner(){
-  var banner=document.getElementById('sol-banner');
+function updateColWindowBanner(){
+  var banner=document.getElementById('col-window-banner');
   if(!activeSolState){banner.style.display='none';return;}
   var labels={ny:'New York',pa:'Pennsylvania',ga:'Georgia'};
   var years={ny:6,pa:4,ga:6};
@@ -238,7 +244,7 @@ function updateSolBanner(){
   cutoff.setFullYear(cutoff.getFullYear()-years[activeSolState]);
   var cutStr=cutoff.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
   banner.style.display='block';
-  banner.innerHTML='&#128203; <strong>'+labels[activeSolState]+' Statute of Limitations ('+years[activeSolState]+'-year window)</strong> &nbsp;&mdash;&nbsp; Invoices dated before <strong>'+cutStr+'</strong> may be time-barred. Expired records are flagged below.';
+  banner.innerHTML='&#128203; <strong>'+labels[activeSolState]+' Collection Window ('+years[activeSolState]+'-year)</strong> &nbsp;&mdash;&nbsp; Invoices dated before <strong>'+cutStr+'</strong> may be outside the collection window. Flagged records are shown below.';
 }
 
 function applyFilters(){
@@ -287,27 +293,45 @@ function renderTable(){
     var deltaSign=delta>0?'&#9650; ':(delta<0?'&#9660; ':'');
     var secLabel={matched:'Matched',heartland_only:'HL Only',docketwise_only:'DW Only'}[r._section];
     var secCls={matched:'bm',heartland_only:'bh',docketwise_only:'bd'}[r._section];
-    var solBadge='';
-    if(solSt==='valid')solBadge='<span class="badge bv">&#10003; Valid</span>';
-    else if(solSt==='expiring_soon')solBadge='<span class="badge be" title="Expires '+solExpiry+'">&#9888; Expiring</span>';
-    else if(solSt==='expired')solBadge='<span class="badge bx" title="Expired '+solExpiry+'">&#10007; Expired</span>';
-    else solBadge='<span class="badge bu">&mdash; N/A</span>';
-    var agreeBadge=r.has_agreement==='possible'?'<span class="badge bp">&#10003; Possible</span>':'<span class="badge bn">&mdash; None</span>';
+
+    // Can Still Collect badge (was SOL Status)
+    var collectBadge='';
+    if(solSt==='valid')collectBadge='<span class="badge bv">&#10003; Yes</span>';
+    else if(solSt==='expiring_soon')collectBadge='<span class="badge be" title="Expires '+solExpiry+'">&#9888; Expiring</span>';
+    else if(solSt==='expired')collectBadge='<span class="badge bx" title="'+solExpiry+'">&#10007; Time Limit Passed</span>';
+    else collectBadge='<span class="badge bu" style="color:#d1d5db;font-weight:400">&mdash;</span>';
+
+    // In New System badge (was Agreement)
+    var systemBadge='';
+    if(r.has_agreement==='possible'){
+      systemBadge='<span class="badge bv">&#10003; Active</span>';
+    }else{
+      systemBadge='<span class="badge bn" style="color:#9ca3af">Old System Only</span>';
+    }
+
     var hasLinks=r.view_links&&r.view_links.length>0;
     var invBtn=hasLinks?'<button class="expand-btn" id="ebtn-'+idx+'" onclick="toggleExpand('+idx+')">&#128196; '+r.view_links.length+'</button>':'<span style="color:var(--gray);font-size:11px">&mdash;</span>';
     var acct=r.heartland_account||'&mdash;';
+
+    // Fix 1: Email/phone display — show blank if null/empty/N/A/undefined
+    var emailVal=cleanContact(r.email);
+    var phoneVal=cleanContact(r.phone);
+    var emailHtml=emailVal?'<div style="font-size:12px">'+esc(emailVal)+'</div>':'';
+    var phoneHtml=phoneVal?'<div class="td-sub">'+esc(phoneVal)+'</div>':'';
+    var contactCell=(emailHtml||phoneHtml)?(emailHtml+phoneHtml):'<span style="color:#e5e7eb;font-size:11px">&mdash;</span>';
+
     var tr=document.createElement('tr');
     tr.id='row-'+idx;
     tr.innerHTML='<td><div class="td-name">'+esc(r.client_name||'&mdash;')+'</div><div class="td-sub"><span class="badge '+secCls+'" style="font-size:9px;padding:1px 5px">'+secLabel+'</span></div></td>'
-      +'<td><div style="font-size:12px">'+esc(r.email||'&mdash;')+'</div><div class="td-sub">'+esc(r.phone||'')+'</div></td>'
+      +'<td>'+contactCell+'</td>'
       +'<td class="td-account">'+esc(acct)+'</td>'
       +'<td class="td-money">'+(r.original_amount?fmt(r.original_amount):'&mdash;')+'</td>'
       +'<td class="td-money '+(hlBal>0?'neg':'')+'">'+( hlBal?fmt(hlBal):'&mdash;')+'</td>'
       +'<td class="td-money '+(dwBal>0?'neg':'')+'">'+( dwBal?fmt(dwBal):'&mdash;')+'</td>'
       +'<td class="td-money '+deltaCls+'">'+deltaSign+deltaStr+'</td>'
       +'<td class="td-date">'+(r.last_payment_date?r.last_payment_date:'<span style="color:var(--gray)">Never</span>')+'</td>'
-      +'<td>'+solBadge+'</td>'
-      +'<td>'+agreeBadge+'</td>'
+      +'<td>'+collectBadge+'</td>'
+      +'<td>'+systemBadge+'</td>'
       +'<td>'+invBtn+'</td>';
     tbody.appendChild(tr);
     if(hasLinks){
@@ -325,13 +349,21 @@ function renderTable(){
   });
 }
 
+function cleanContact(val){
+  if(!val)return '';
+  var s=String(val).trim();
+  if(!s||s==='N/A'||s==='n/a'||s==='N/M'||s==='n/m'||s==='-'||s==='—'||s==='undefined'||s==='null')return '';
+  return s;
+}
+
 function buildInvoiceCards(links){
   return links.map(function(inv){
     var s=(inv.status||'').toLowerCase();
     var sc=s.includes('paid')?'paid':(inv.balance>0&&inv.amount>inv.balance?'partial':(inv.balance>0?'unpaid':'sent'));
-    var viewBtn=inv.view_link?'<a class="inv-view-btn" href="'+inv.view_link+'" target="_blank" rel="noopener">View PDF &#8599;</a>':'';
+    // Use /download/ link (already updated in data)
+    var dlBtn=inv.view_link?'<a class="inv-dl-btn" href="'+inv.view_link+'" target="_blank" rel="noopener">&#8659; Download PDF</a>':'';
     return '<div class="inv-card"><div class="inv-card-top"><div><div class="inv-num">Invoice #'+esc(inv.invoice_number||'&mdash;')+'</div><div class="inv-date">'+(inv.date||'&mdash;')+'</div></div><span class="inv-status '+sc+'">'+esc(inv.status||'Unknown')+'</span></div>'
-      +'<div class="inv-amounts"><div class="inv-amt-item"><span>Amount</span><br>'+(inv.amount!=null?fmt(inv.amount):'&mdash;')+'</div><div class="inv-amt-item"><span>Balance</span><br>'+(inv.balance!=null?fmt(inv.balance):'&mdash;')+'</div>'+(inv.account?'<div class="inv-amt-item"><span>Account</span><br>'+esc(inv.account)+'</div>':'')+'</div>'+viewBtn+'</div>';
+      +'<div class="inv-amounts"><div class="inv-amt-item"><span>Amount</span><br>'+(inv.amount!=null?fmt(inv.amount):'&mdash;')+'</div><div class="inv-amt-item"><span>Balance</span><br>'+(inv.balance!=null?fmt(inv.balance):'&mdash;')+'</div>'+(inv.account?'<div class="inv-amt-item"><span>Account</span><br>'+esc(inv.account)+'</div>':'')+'</div>'+dlBtn+'</div>';
   }).join('');
 }
 
@@ -366,11 +398,13 @@ function updateSummaryBar(){
 
 function exportCSV(){
   var solState=activeSolState||'ny';
-  var headers=['Client Name','Email','Phone','Account','Section','Original Amount','HL Balance','DW Balance','Delta','Last Payment','SOL Status','Has Agreement','Invoice Date','Invoice Links'];
+  var headers=['Client Name','Email','Phone','Account','Section','Original Amount','HL Balance','DW Balance','Delta','Last Payment','Can Still Collect?','In New System','Invoice Date','Invoice Links'];
   var rows=VISIBLE.map(function(r){
     var delta=(r.heartland_balance||0)-(r.docketwise_balance||0);
     var links=(r.view_links||[]).map(function(v){return v.view_link||'';}).filter(Boolean).join('; ');
-    return [r.client_name||'',r.email||'',r.phone||'',r.heartland_account||'',r._section||'',r.original_amount||0,r.heartland_balance||0,r.docketwise_balance||0,delta,r.last_payment_date||'',(r.sol_status&&r.sol_status[solState])||'',r.has_agreement||'',r.invoice_date||'',links].map(function(v){return '"'+String(v).replace(/"/g,'""')+'"';}).join(',');
+    var solSt=(r.sol_status&&r.sol_status[solState])||'';
+    var solLabel=solSt==='valid'?'Yes':solSt==='expiring_soon'?'Expiring':solSt==='expired'?'Time Limit Passed':'';
+    return [r.client_name||'',cleanContact(r.email)||'',cleanContact(r.phone)||'',r.heartland_account||'',r._section||'',r.original_amount||0,r.heartland_balance||0,r.docketwise_balance||0,delta,r.last_payment_date||'',solLabel,r.has_agreement==='possible'?'Active':'Old System Only',r.invoice_date||'',links].map(function(v){return '"'+String(v).replace(/"/g,'""')+'"';}).join(',');
   });
   var csv=[headers.join(',')].concat(rows).join('\n');
   var blob=new Blob([csv],{type:'text/csv'});
