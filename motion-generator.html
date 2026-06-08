@@ -756,6 +756,10 @@ function makePdfNonPrimary(data) {
   var mid = L + 2.75;
   var LS = 0.026;
 
+  // Extract last name of withdrawing attorney for "Attorney Senanayake" references
+  var waParts = (data.withdrawingAttorney || '').trim().split(' ');
+  var waLastName = waParts[waParts.length - 1];
+
   function setF(sz,bold){ doc.setFont('Times',bold?'bold':'normal'); doc.setFontSize(sz||11); }
   function gap(n){ y+=(n||1)*0.18; }
   function hline(x1,x2,w){ doc.setLineWidth(w||0.01); doc.line(x1,y,x2,y); }
@@ -801,26 +805,26 @@ function makePdfNonPrimary(data) {
   doc.text('IN REMOVAL PROCEEDINGS',L,y); doc.text(')',mid,y); y+=11*LS;
   hline(L,mid,0.012); y+=0.08;
   gap(1.5);
-  setF(12,true); doc.text('MOTION TO WITHDRAW NON-PRIMARY COUNSEL',L+W/2,y,{align:'center'});
+  setF(12,true); doc.text('MOTION TO WITHDRAW AS A COUNSEL',L+W/2,y,{align:'center'});
 
   // PAGE 2 — Motion Body
   doc.addPage([8.5,14]); y=0.9;
   setF(13,true);
-  var tw=doc.getTextWidth('MOTION TO WITHDRAW NON-PRIMARY COUNSEL');
-  doc.text('MOTION TO WITHDRAW NON-PRIMARY COUNSEL',L+W/2,y,{align:'center'});
+  var tw=doc.getTextWidth('MOTION TO WITHDRAW AS A COUNSEL');
+  doc.text('MOTION TO WITHDRAW AS A COUNSEL',L+W/2,y,{align:'center'});
   doc.setLineWidth(0.006); doc.line(L+W/2-tw/2,y+0.04,L+W/2+tw/2,y+0.04);
   y+=13*LS; blankLine(11);
 
   block('Honorable Immigration Judge:',{sz:11}); blankLine(11);
-  block('I, '+data.attorney+', respectfully move to withdraw attorney '+data.withdrawingAttorney+' as co-counsel of record in the above-referenced matter. As grounds for this Motion, undersigned counsel states as follows:',{sz:11,lind:0,wind:0}); blankLine(11);
+  block('I, '+data.attorney+', respectfully move to withdraw attorney '+data.withdrawingAttorney+' as counsel of record in the above-referenced matter. As grounds for this Motion, counsel states as follows:',{sz:11,lind:0,wind:0}); blankLine(11);
 
   var body=[
-    data.withdrawingAttorney+' previously entered an appearance in this matter through Form EOIR-28 while associated with FIBI Law Firm.',
-    data.withdrawingAttorney+' is no longer employed by, affiliated with, or associated with FIBI Law Firm and therefore is no longer in a position to represent the Respondent in this matter.',
-    'The Respondent will continue to be represented by the primary attorney of record, '+data.attorney+', whose appearance remains valid and effective before this Court.',
-    'The Respondent has been notified of this Motion and does not object to the withdrawal of '+data.withdrawingAttorney+' as co-counsel of record.',
-    'Accordingly, the withdrawal of '+data.withdrawingAttorney+' will not prejudice the Respondent, as representation by the primary attorney of record will continue uninterrupted.',
-    'Any existing EOIR-28 filed by '+data.withdrawingAttorney+' should be withdrawn, while the EOIR-28 filed by the primary attorney of record, '+data.attorney+', should remain in full force and effect, and all future notices and correspondence should continue to be directed to that attorney.',
+    'The Respondent is currently represented by FIBI Law Firm, through the undersigned, '+data.attorney+', who remains the principal attorney of record in this matter.',
+    'Attorney '+data.withdrawingAttorney+' previously entered an appearance in this matter through Form EOIR-28 while employed by and associated with FIBI Law Firm.',
+    'Attorney '+data.withdrawingAttorney+' is no longer employed by, affiliated with, or associated with FIBI Law Firm and is therefore no longer authorized to represent the Respondent in this matter.',
+    'The Respondent has been advised of Attorney '+waLastName+''s departure from the firm and has been informed that representation by FIBI Law Firm, through the undersigned principal attorney, will continue without interruption.',
+    'The withdrawal of Attorney '+waLastName+' will not prejudice the Respondent, as the undersigned remains counsel of record and will continue to represent the Respondent in all proceedings before this Court.',
+    'Any existing Form EOIR-28 filed by the undersigned principal attorney should remain in full force and effect, and all future notices, correspondence, and communications should continue to be directed to the undersigned.',
   ];
   body.forEach(function(p,i){
     setF(11,false);
@@ -829,16 +833,15 @@ function makePdfNonPrimary(data) {
     blankLine(11);
   });
 
-  block('             WHEREFORE, undersigned respectfully requests that the Court grant this Motion and permit the withdrawal of '+data.withdrawingAttorney+', as co-counsel of record in this matter, while maintaining the appearance of '+data.attorney+', as the primary attorney of record associated with FIBI Law Firm.',{sz:11});
+  blankLine(11);
+  block('WHEREFORE, undersigned respectfully requests that the Court grant this Motion and permit the withdrawal of '+data.withdrawingAttorney+', as counsel of record in this matter, while maintaining the appearance of the principal attorney associated with FIBI Law Firm.',{sz:11});
 
   // PAGE 3 — Signature
   doc.addPage([8.5,14]); y=0.9;
   block('Respectfully submitted,',{sz:11,rx:true}); gap(0.3);
   setF(11,false);
   doc.text('/s/ '+data.attorney, R, y, {align:'right'}); y+=11*0.022;
-  doc.text(data.attorney+', Esq.', R, y, {align:'right'}); y+=11*0.022;
-  if(data.bar){ doc.text('Bar No. '+data.bar, R, y, {align:'right'}); y+=11*0.022; }
-  if(data.date){ doc.text(data.date, R, y, {align:'right'}); }
+  doc.text(data.attorney+', Esq.', R, y, {align:'right'});
 
   // PAGE 4 — Order of the Immigration Judge
   doc.addPage([8.5,14]); y=0.9;
@@ -859,25 +862,25 @@ function makePdfNonPrimary(data) {
   hline(L,mid,0.012); y+=0.12;
   gap(0.3);
   block('ORDER OF THE IMMIGRATION JUDGE',{sz:12,bold:true,cx:true}); gap(0.3);
-  block('Upon consideration of the Motion to withdraw non-primary counsel',{sz:11}); gap(0.2);
-  block('It is HEREBY ORDERED that the Motion be  ( ) GRANTED    ( ) DENIED  because:',{sz:11}); gap(0.2);
-  block('[ ] DHS does not oppose the motion.',{sz:11,lind:0.3,wind:0.3}); gap(0.15);
-  block('[ ] the Respondent does not oppose the motion.',{sz:11,lind:0.3,wind:0.3}); gap(0.15);
-  block('[ ] A response to the motion has not been filed with the court / BIA.',{sz:11,lind:0.3,wind:0.3}); gap(0.15);
-  block('[ ] Good cause has been shown.',{sz:11,lind:0.3,wind:0.3}); gap(0.15);
-  block('[ ] The court agrees with the reason stated in the opposition of the motion.',{sz:11,lind:0.3,wind:0.3}); gap(0.15);
-  block('[ ] The motion fails to comply with the requirements of 8 C.F.R.',{sz:11,lind:0.3,wind:0.3}); gap(0.15);
-  block('[ ] Other: _______________________________________________',{sz:11,lind:0.3,wind:0.3}); gap(0.4);
-  block('Deadlines:',{sz:11,bold:true}); gap(0.15);
-  block('[ ] The application(s) for relief or support documents must be filed by: _______________',{sz:11,lind:0.3,wind:0.3}); gap(0.15);
-  block('[ ] The respondent must comply with DHS biometrics instructions by: _______________',{sz:11,lind:0.3,wind:0.3}); gap(1.2);
+  block('Upon consideration of the Motion to withdraw',{sz:11}); gap(0.2);
+  block('It is HEREBY ORDERED that the Motion be  ( ) GRANTED    ( ) DENIED  because:',{sz:11}); gap(0.15);
+  block('[ ] DHS does not oppose the motion.',{sz:11,lind:0.3,wind:0.3}); gap(0.1);
+  block('[ ] the Respondent does not oppose the motion.',{sz:11,lind:0.3,wind:0.3}); gap(0.1);
+  block('[ ] A response to the motion has not been filed with the court/ BIA.',{sz:11,lind:0.3,wind:0.3}); gap(0.1);
+  block('[ ] Good cause has been established for the motion.',{sz:11,lind:0.3,wind:0.3}); gap(0.1);
+  block('[ ] The court agrees with the reason stated in the opposition of the motion.',{sz:11,lind:0.3,wind:0.3}); gap(0.1);
+  block('[ ] The motion is untimely.',{sz:11,lind:0.3,wind:0.3}); gap(0.1);
+  block('[ ] Other: _______________________________________________',{sz:11,lind:0.3,wind:0.3}); gap(0.3);
+  block('Deadlines:',{sz:11,bold:true}); gap(0.1);
+  block('[ ] The application(s) for relief or support document must be filed by: _______________',{sz:11,lind:0.3,wind:0.3}); gap(0.1);
+  block('[ ] The respondent must comply with DHS biometrics instructed by: _______________',{sz:11,lind:0.3,wind:0.3}); gap(1.0);
   setF(11,false);
-  doc.text('Date: ___________________', L, y); doc.text('Name: _________________________', L+3.5, y); y+=11*0.028;
-  gap(0.3); block('Immigration Judge: ________________________________',{sz:11}); gap(0.8);
+  doc.text('Date: ___________________', L, y); doc.text('Name: _________________________', L+3.5, y); y+=11*0.032;
+  block('Immigration Judge: ________________________________',{sz:11}); gap(0.6);
   hline(L,R,0.01); y+=0.12;
-  block('Certificate of Service:',{sz:11,bold:true}); gap(0.2);
-  block('This document was served by:  [ ] Mail   [ ] Personal Service   [ ] DHS / The Service',{sz:10}); gap(0.15);
-  block('To:  [ ] Alien   [ ] Alien c/o custodial officer',{sz:10}); gap(0.6);
+  block('Certificate of Service:',{sz:11,bold:true}); gap(0.15);
+  block('This document was served by:  [ ] Mail   [ ] Personal Service   [ ] DHS/ The Service',{sz:10}); gap(0.1);
+  block('To:  [ ] Alien   [ ] Alien c/o custodial officer',{sz:10}); gap(0.5);
   setF(10,false);
   doc.text('Date: ______________________', L, y);
   doc.text('By: Court Staff', R, y, {align:'right'});
