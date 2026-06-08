@@ -203,7 +203,9 @@
       <div><h2>Select Attorney</h2><p>Their name and bar number will fill every placeholder in the motion</p></div>
     </div>
     <div class="card-body">
-      <div class="atty-grid" id="atty-grid"></div>
+      <div id="signing-atty-section">
+        <div class="atty-grid" id="atty-grid"></div>
+      </div>
       <div id="withdrawing-atty-section" style="display:none;margin-top:18px;border-top:1px solid var(--border);padding-top:14px;">
         <div style="font-weight:600;font-size:13px;color:var(--text);margin-bottom:8px;">Attorney Being Withdrawn</div>
         <div class="atty-grid" id="withdrawing-atty-grid"></div>
@@ -340,6 +342,7 @@ function pickMotion(i) {
   renderMotions();
   var isNonPrimary = MOTION_TYPES[i].id === 'withdraw_nonprimary';
   document.getElementById('withdrawing-atty-section').style.display = isNonPrimary ? 'block' : 'none';
+  document.getElementById('signing-atty-section').style.display = isNonPrimary ? 'none' : 'block';
 }
 
 // ── Attorneys ─────────────────────────────────────────────────────
@@ -533,7 +536,10 @@ function rowData(idx) {
     var e = document.getElementById('mp_' + fld);
     return (e && e.value !== '') ? String(row[parseInt(e.value)] || '').trim() : '';
   };
-  var atty = attorneys[selAtty] || attorneys[0];
+  var isNonPrimary = MOTION_TYPES[selMotion] && MOTION_TYPES[selMotion].id === 'withdraw_nonprimary';
+  var atty = isNonPrimary
+    ? (attorneys.find(function(a){ return a.name === 'Kodwo Ewusi'; }) || attorneys[0])
+    : (attorneys[selAtty] || attorneys[0]);
   var rawDate = document.getElementById('motion-date').value;
   var fmtDate = rawDate
     ? new Date(rawDate + 'T12:00:00').toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'})
