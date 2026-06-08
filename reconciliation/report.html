@@ -83,6 +83,8 @@
     .inv-amt-item span { color:var(--gray);font-size:10px;text-transform:uppercase; }
     .inv-dl-btn { margin-top:6px;align-self:flex-start;background:var(--teal);color:var(--navy);border:none;border-radius:5px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block; }
     .inv-dl-btn:hover { opacity:.85; }
+    .dw-btn { background:#5b21b6;color:#fff;border:none;border-radius:5px;padding:4px 8px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;margin-right:4px;vertical-align:middle; }
+    .dw-btn:hover { opacity:.85; }
     .inv-status { font-size:10px;border-radius:4px;padding:2px 6px;font-weight:600; }
     .inv-status.paid { background:var(--green-bg);color:var(--green); }
     .inv-status.partial { background:var(--amber-bg);color:var(--amber); }
@@ -288,8 +290,9 @@ function renderTable(){
     else if(solSt==='expired')collectBadge='<span class="badge bx" title="'+solExpiry+'">&#10007; Time Limit Passed</span>';
     else collectBadge='<span class="badge bu" style="color:#d1d5db;font-weight:400">&mdash;</span>';
 
-    var hasLinks=r.view_links&&r.view_links.length>0;
-    var invBtn=hasLinks?'<button class="expand-btn" id="ebtn-'+idx+'" onclick="toggleExpand('+idx+')">&#128196; '+r.view_links.length+'</button>':'<span style="color:var(--gray);font-size:11px">&mdash;</span>';
+    var hasLinks=r.view_links&&r.view_links.some(function(v){return !!v.view_link;});
+    var realLinkCount=(r.view_links||[]).filter(function(v){return !!v.view_link;}).length;
+    var invBtn=hasLinks?'<button class="expand-btn" id="ebtn-'+idx+'" onclick="toggleExpand('+idx+')">&#128196; '+realLinkCount+'</button>':'<span style="color:var(--gray);font-size:11px">&mdash;</span>';
     var acct=r.heartland_account||'&mdash;';
 
     // Fix 1: Email/phone display — show blank if null/empty/N/A/undefined
@@ -310,7 +313,7 @@ function renderTable(){
       +'<td class="td-money '+deltaCls+'">'+deltaSign+deltaStr+'</td>'
       +'<td class="td-date">'+(r.last_payment_date?r.last_payment_date:'<span style="color:var(--gray)">Never</span>')+'</td>'
       +'<td>'+collectBadge+'</td>'
-      +'<td>'+invBtn+'</td>';
+      +'<td style="white-space:nowrap">'+(r.docketwise_contact_id?'<a class="dw-btn" href="https://app.docketwise.com/contacts/'+r.docketwise_contact_id+'" target="_blank" rel="noopener">DW</a>':'')+invBtn+'</td>';
     tbody.appendChild(tr);
     if(hasLinks){
       var panelTr=document.createElement('tr');
