@@ -448,12 +448,11 @@ async function pickOffice(id){
 }
 
 async function fetchAllClients(baseId){
-  const flds=["Client Name","First Name","Last Name","A-Number","CASE STATUS","Email","Number"];
   const fe=encodeURIComponent;
   let all=[], offset="";
   for(let pg=0;pg<10;pg++){
     let url="https://api.airtable.com/v0/"+baseId+"/"+AT_BASE_TABLE
-      +"?pageSize=100"+flds.map(x=>"&fields[]="+fe(x)).join("")
+      +"?pageSize=100"
       +(offset?"&offset="+fe(offset):"");
     const r=await fetch(url,{headers:{Authorization:"Bearer "+AT_TOKEN}});
     if(!r.ok){const e=await r.json();throw new Error((e.error&&e.error.message)||"HTTP "+r.status);}
