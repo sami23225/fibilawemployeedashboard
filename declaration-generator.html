@@ -1,276 +1,378 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIBI Law — Declaration Generator</title>
-<style>
-:root{--bg:#f8f7f4;--card:#fff;--border:#e5e2d9;--accent:#1a3a5c;--gold:#c8a95e;
-  --text:#1a1a1a;--muted:#6b6b6b;--green:#2d6a4f;--red:#c0392b;--inp:#fafafa;--r:10px;}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/png" href="data:image/png;base64,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"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Declaration Generator &mdash; FIBI Law Firm</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--dark:#012e44;--mid:#135766;--teal:#34acaa;--teal2:#25878d;--light:#ace4e1;
+      --xlight:#e3f6f5;--bright:#3cbfba;--border:#c8e8e6;--green:#29a87d;}
+    body{font-family:'Georgia','Times New Roman',serif;background:var(--xlight);color:#111;line-height:1.55;}
 
-/* settings bar */
-#sbar{background:#112b44;padding:9px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-#sbar label{color:rgba(255,255,255,.75);font-size:11px;white-space:nowrap;}
-#sbar input,#sbar select{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);
-  color:#fff;padding:5px 10px;border-radius:6px;font-size:12px;}
-#sbar input::placeholder{color:rgba(255,255,255,.4);}
-#sbar select option{background:#112b44;}
-.sbtn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;
-  padding:5px 12px;border-radius:6px;cursor:pointer;font-size:12px;}
-.sbtn:hover{background:rgba(255,255,255,.25);}
-#ssaved{color:#7fba8a;font-size:11px;display:none;}
+    /* Header */
+    header{background:var(--dark);display:flex;align-items:center;padding:0 24px 0 0;
+      box-shadow:0 2px 12px rgba(1,46,68,.4);}
+    .hdr-logo{height:68px;padding:10px 18px;display:flex;align-items:center;
+      border-right:1px solid rgba(255,255,255,.12);}
+    .hdr-logo img{height:44px;width:auto;}
+    .hdr-text{padding:0 16px;}
+    .hdr-text h1{font-size:17px;letter-spacing:.3px;color:#fff;}
+    .hdr-text p{font-size:11px;color:var(--light);margin-top:2px;font-family:Arial,sans-serif;}
+    .hdr-right{margin-left:auto;display:flex;gap:8px;}
+    .hdr-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+      color:rgba(255,255,255,.75);padding:7px 13px;border-radius:5px;cursor:pointer;
+      font-size:12px;font-family:Arial,sans-serif;display:flex;align-items:center;
+      gap:6px;transition:all .15s;}
+    .hdr-btn:hover{background:rgba(255,255,255,.15);color:#fff;}
 
-/* header */
-header{background:var(--accent);color:#fff;padding:13px 22px;display:flex;align-items:center;
-  gap:13px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);}
-header img{height:34px;}
-header h1{font-size:16px;font-weight:600;}
-header p{font-size:11px;opacity:.7;margin-top:1px;}
-.hspace{flex:1;}
-.hbtn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.28);color:#fff;
-  padding:6px 13px;border-radius:6px;cursor:pointer;font-size:12px;}
-.hbtn:hover{background:rgba(255,255,255,.25);}
+    /* Modals */
+    .overlay{position:fixed;inset:0;background:rgba(1,46,68,.6);backdrop-filter:blur(3px);
+      z-index:200;display:none;align-items:center;justify-content:center;}
+    .overlay.open{display:flex;}
+    .modal{background:#fff;border-radius:10px;padding:28px;width:460px;max-width:92vw;
+      box-shadow:0 20px 60px rgba(0,0,0,.3);}
+    .modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;}
+    .modal h3{font-size:16px;color:var(--dark);}
+    .modal-close{background:none;border:none;cursor:pointer;color:#aaa;font-size:22px;
+      line-height:1;padding:0;}
+    .modal-close:hover{color:#444;}
+    .modal-sub{font-size:13px;color:#777;font-family:Arial,sans-serif;margin-bottom:18px;}
 
-/* layout */
-main{max-width:880px;margin:0 auto;padding:22px 16px 80px;}
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);
-  margin-bottom:16px;overflow:hidden;}
-.card-h{display:flex;align-items:center;gap:12px;padding:15px 20px;
-  border-bottom:1px solid var(--border);}
-.card-h h2{font-size:15px;font-weight:600;}
-.card-h p{font-size:12px;color:var(--muted);margin-top:2px;}
-.card-b{padding:20px;}
-.sdot{width:27px;height:27px;border-radius:50%;background:var(--accent);color:#fff;
-  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
-.sdot.ok{background:var(--green);}
+    /* Layout */
+    .container{max-width:960px;margin:0 auto;padding:28px 20px 60px;}
 
-/* draft banner */
-#dbanner{background:#fff8e6;border:1px solid #f0d080;border-radius:9px;
-  padding:10px 14px;margin-bottom:14px;display:none;}
-#dbanner .dt{font-size:12px;font-weight:600;color:#8a6800;margin-bottom:7px;}
-.dpills{display:flex;flex-wrap:wrap;gap:6px;}
-.dpill{background:#fff;border:1px solid #f0d080;border-radius:20px;padding:4px 12px;
-  font-size:11px;cursor:pointer;color:#6b5000;}
-.dpill:hover{background:#fffbe8;}
-.dpill .dt2{color:#aaa;margin-left:3px;}
-.dno-pill{background:none;border:1px dashed #f0d080;border-radius:20px;padding:4px 12px;
-  font-size:11px;color:#bbb;cursor:pointer;}
-.dno-pill:hover{border-color:#e0b010;color:#a08000;}
+    /* Cards */
+    .card{background:#fff;border-radius:7px;border:1px solid var(--border);
+      box-shadow:0 1px 5px rgba(1,46,68,.06);margin-bottom:20px;overflow:hidden;}
+    .card-hdr{background:linear-gradient(135deg,var(--dark) 0%,var(--mid) 100%);
+      padding:13px 22px;display:flex;align-items:center;gap:11px;}
+    .step-dot{width:26px;height:26px;border-radius:50%;background:var(--teal);color:#fff;
+      font-family:Arial,sans-serif;font-size:12px;font-weight:700;display:flex;
+      align-items:center;justify-content:center;flex-shrink:0;}
+    .step-dot.done{background:var(--green);}
+    .card-hdr h2{font-size:14px;color:#fff;font-weight:normal;letter-spacing:.2px;}
+    .card-hdr p{font-size:11px;color:var(--light);font-family:Arial,sans-serif;
+      margin-top:1px;opacity:.8;}
+    .card-hdr-right{margin-left:auto;}
+    .card-body{padding:20px 24px;}
 
-/* office */
-.off-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:15px;}
-.off-c{border:1px solid var(--border);border-radius:8px;padding:9px 6px;text-align:center;
-  cursor:pointer;font-size:11px;color:var(--muted);transition:all .15s;}
-.off-c:hover{border-color:var(--accent);color:var(--accent);}
-.off-c.sel{background:var(--accent);color:#fff;border-color:var(--accent);}
-.off-c .oi{font-size:17px;margin-bottom:3px;}
+    /* Office grid */
+    .office-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;}
+    .off-c{border:2px solid var(--border);border-radius:6px;padding:11px 8px;text-align:center;
+      cursor:pointer;transition:all .15s;background:#fafdfd;}
+    .off-c:hover{border-color:var(--teal);background:var(--xlight);}
+    .off-c.sel{border-color:var(--teal);background:var(--xlight);
+      box-shadow:0 0 0 3px rgba(52,172,170,.18);}
+    .off-c .off-name{font-size:12px;font-weight:700;color:var(--dark);font-family:Arial,sans-serif;}
+    .off-c .off-loc{font-size:10px;color:var(--mid);font-family:Arial,sans-serif;margin-top:3px;}
 
-/* search */
-.sw{position:relative;}
-.sw input{width:100%;padding:9px 13px 9px 35px;border:1px solid var(--border);border-radius:8px;
-  font-size:13px;background:var(--inp);}
-.sw input:focus{outline:none;border-color:var(--accent);}
-.si{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;}
-#sr{border:1px solid var(--border);border-radius:8px;margin-top:5px;overflow:hidden;display:none;}
-.sri{padding:10px 13px;cursor:pointer;display:flex;justify-content:space-between;
-  align-items:center;border-bottom:1px solid var(--border);}
-.sri:last-child{border-bottom:none;}
-.sri:hover{background:#f0f4f8;}
-.sn{font-weight:600;font-size:13px;}
-.sm{font-size:11px;color:var(--muted);}
-.selbox{background:#f0f7f0;border:1px solid #b8d8b8;border-radius:8px;padding:12px 15px;
-  display:none;margin-top:10px;}
-.selbox .cn{font-weight:700;font-size:15px;color:var(--accent);}
-.selbox .cm{font-size:12px;color:var(--muted);margin-top:3px;}
+    /* Search */
+    .search-wrap{position:relative;margin-bottom:10px;}
+    .search-wrap input{width:100%;padding:9px 13px 9px 35px;border:1.5px solid #ccd8d8;
+      border-radius:5px;font-size:14px;font-family:inherit;background:#fafefe;transition:border-color .15s;}
+    .search-wrap input:focus{outline:none;border-color:var(--teal);}
+    .search-wrap input:disabled{background:#f5f5f5;color:#999;cursor:not-allowed;}
+    .search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);
+      color:var(--teal2);pointer-events:none;}
+    #sr{border:1px solid var(--border);border-radius:5px;overflow:hidden;display:none;
+      box-shadow:0 4px 12px rgba(1,46,68,.08);}
+    .sri{padding:10px 13px;cursor:pointer;display:flex;justify-content:space-between;
+      align-items:center;border-bottom:1px solid #edf5f5;transition:background .1s;}
+    .sri:last-child{border-bottom:none;}
+    .sri:hover{background:var(--xlight);}
+    .sri-name{font-weight:700;font-size:13px;color:var(--dark);}
+    .sri-meta{font-size:11px;color:#888;font-family:Arial,sans-serif;margin-top:2px;}
+    .sri-office{font-size:11px;color:var(--mid);font-family:Arial,sans-serif;}
 
-/* decl type */
-.dt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-.dtc{border:2px solid var(--border);border-radius:8px;padding:13px;cursor:pointer;transition:all .15s;}
-.dtc:hover:not(.locked){border-color:var(--accent);}
-.dtc.sel{border-color:var(--accent);background:#f0f4f8;}
-.dtc.locked{opacity:.45;cursor:not-allowed;}
-.dtc .di{font-size:21px;margin-bottom:5px;}
-.dtc .dn{font-weight:600;font-size:13px;}
-.dtc .ds{font-size:11px;color:var(--muted);margin-top:2px;}
-.badge{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;margin-top:5px;}
-.badge.av{background:#d4edda;color:#1a6630;}
-.badge.cs{background:#e8e8e8;color:#666;}
+    /* Selected client */
+    .sel-client{background:#f0faf7;border:1px solid #a8ddd0;border-radius:5px;
+      padding:12px 16px;display:none;margin-top:8px;}
+    .sel-client .cli-name{font-weight:700;font-size:15px;color:var(--dark);}
+    .sel-client .cli-meta{font-size:12px;color:#666;font-family:Arial,sans-serif;margin-top:3px;}
 
-/* questionnaire */
-.qsec{border:1px solid var(--border);border-radius:8px;margin-bottom:9px;overflow:hidden;}
-.qsh{display:flex;align-items:center;justify-content:space-between;padding:11px 15px;
-  cursor:pointer;background:#f9f8f6;user-select:none;}
-.qsh:hover{background:#f0eee8;}
-.qst{font-weight:600;font-size:13px;}
-.qsb{padding:15px;display:none;}
-.qsec.open .qsb{display:block;}
-.qsec.open .qsh{background:#eef2f6;}
+    /* Declaration type cards */
+    .decl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+    .dtc{border:2px solid var(--border);border-radius:6px;padding:16px;cursor:pointer;
+      transition:all .15s;background:#fafdfd;position:relative;text-align:center;}
+    .dtc:hover:not(.locked){border-color:var(--teal);background:var(--xlight);}
+    .dtc.sel{border-color:var(--teal);background:var(--xlight);
+      box-shadow:0 0 0 3px rgba(52,172,170,.18);}
+    .dtc.locked{opacity:.45;cursor:not-allowed;}
+    .dtc .dt-icon{color:var(--teal2);display:flex;justify-content:center;margin-bottom:8px;}
+    .dtc .dt-name{font-size:13px;font-weight:700;color:var(--dark);}
+    .dtc .dt-sub{font-size:11px;color:#777;font-family:Arial,sans-serif;margin-top:4px;}
+    .badge{display:inline-block;padding:3px 9px;border-radius:12px;font-size:11px;
+      font-weight:700;font-family:Arial,sans-serif;margin-top:8px;}
+    .b-av{background:#d6f4ee;color:#1a6e50;}
+    .b-cs{background:#f0f0f0;color:#888;}
 
-/* form */
-.fr{margin-bottom:13px;}
-.fr label{display:block;font-size:12px;font-weight:600;margin-bottom:4px;}
-.fr input,.fr textarea,.fr select{width:100%;padding:8px 11px;border:1px solid var(--border);
-  border-radius:6px;font-size:13px;background:var(--inp);font-family:inherit;}
-.fr input:focus,.fr textarea:focus,.fr select:focus{outline:none;border-color:var(--accent);}
-.fr textarea{resize:vertical;min-height:75px;}
-.hint{font-size:11px;color:var(--muted);margin-top:3px;font-weight:400;}
-.fr2{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
-.yn{display:flex;gap:11px;margin-top:3px;}
-.yn label{display:flex;align-items:center;gap:5px;font-size:13px;cursor:pointer;}
-.cond{margin-top:9px;padding:11px;background:#f8f6f0;border-radius:6px;
-  border-left:3px solid var(--gold);display:none;}
-.cond.vis{display:block;}
+    /* Draft banner */
+    #dbanner{background:#fff8e6;border:1px solid #e8cc6a;border-radius:6px;
+      padding:12px 16px;margin-bottom:18px;display:none;}
+    .db-title{font-size:12px;font-weight:700;color:#7a5f00;font-family:Arial,sans-serif;
+      margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+    .dpills{display:flex;flex-wrap:wrap;gap:7px;}
+    .dpill{background:#fff;border:1px solid #e8cc6a;border-radius:20px;padding:5px 13px;
+      font-size:12px;cursor:pointer;color:#5a4500;font-family:Arial,sans-serif;
+      display:flex;align-items:center;gap:5px;transition:background .1s;}
+    .dpill:hover{background:#fffbe8;}
+    .dpill-date{color:#bbb;font-size:10px;}
+    .dpill-clear{background:none;border:1px dashed #e8cc6a;border-radius:20px;
+      padding:5px 13px;font-size:12px;cursor:pointer;color:#bbb;
+      font-family:Arial,sans-serif;transition:all .1s;}
+    .dpill-clear:hover{border-color:#c8a030;color:#9a7000;}
 
-/* evidence */
-.ev-g{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
-.ev-i{display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;}
+    /* Questionnaire */
+    .qsec{border:1px solid var(--border);border-radius:6px;margin-bottom:10px;overflow:hidden;}
+    .qsh{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;
+      cursor:pointer;background:#fafdfd;user-select:none;transition:background .1s;}
+    .qsh:hover{background:var(--xlight);}
+    .qst{font-weight:700;font-size:13px;color:var(--dark);font-family:Arial,sans-serif;}
+    .q-arrow{color:var(--teal2);font-size:12px;font-family:Arial,sans-serif;}
+    .qsb{padding:16px;display:none;border-top:1px solid var(--border);}
+    .qsec.open .qsb{display:block;}
+    .qsec.open .qsh{background:var(--xlight);}
 
-/* tables */
-.rt{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:7px;}
-.rt th{background:#f0f0f0;padding:6px 8px;border:1px solid var(--border);font-weight:600;text-align:left;}
-.rt td{padding:3px;border:1px solid var(--border);}
-.rt td input{width:100%;border:none;padding:4px 6px;background:transparent;font-size:12px;font-family:inherit;}
-.rt td input:focus{outline:none;background:#fff8;}
-.arb{font-size:11px;color:var(--accent);background:none;border:1px dashed var(--accent);
-  padding:4px 9px;border-radius:4px;cursor:pointer;}
-.arb:hover{background:#f0f4f8;}
+    /* Form fields */
+    .fr{margin-bottom:14px;}
+    .fr label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;
+      font-weight:700;color:var(--mid);font-family:Arial,sans-serif;margin-bottom:4px;}
+    .fr input,.fr textarea,.fr select{padding:9px 12px;border:1.5px solid #ccd8d8;
+      border-radius:5px;font-size:13px;font-family:inherit;background:#fafefe;
+      width:100%;transition:border-color .15s;}
+    .fr input:focus,.fr textarea:focus,.fr select:focus{outline:none;border-color:var(--teal);}
+    .fr textarea{resize:vertical;min-height:80px;}
+    .fr-hint{font-size:11px;color:#888;margin-top:3px;font-family:Arial,sans-serif;}
+    .fr2{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+    .yn{display:flex;gap:14px;margin-top:4px;}
+    .yn label{display:flex;align-items:center;gap:5px;font-size:13px;
+      font-family:Arial,sans-serif;cursor:pointer;font-weight:normal;text-transform:none;
+      letter-spacing:0;color:#333;}
+    .cond{margin-top:10px;padding:13px;background:#f5fbfa;border-radius:5px;
+      border-left:3px solid var(--teal);display:none;}
+    .cond.vis{display:block;}
 
-/* buttons */
-.btn{padding:9px 18px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;transition:all .15s;}
-.btn-p{background:var(--accent);color:#fff;}
-.btn-p:hover{background:#142d4a;}
-.btn-p:disabled{opacity:.5;cursor:not-allowed;}
-.btn-s{background:#f0f0f0;color:var(--text);border:1px solid var(--border);}
-.btn-s:hover{background:#e8e8e8;}
-.btn-g{background:var(--green);color:#fff;}
-.btn-g:hover{background:#1e5238;}
-.bsm{padding:6px 13px;font-size:12px;}
+    /* Evidence checklist */
+    .ev-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+    .ev-item{display:flex;align-items:flex-start;gap:7px;font-size:12px;
+      font-family:Arial,sans-serif;cursor:pointer;line-height:1.4;}
+    .ev-item input{margin-top:2px;cursor:pointer;flex-shrink:0;}
 
-/* generate */
-.genbox{background:#f9f8f6;border-radius:8px;padding:15px;margin-bottom:15px;}
-.genc{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.spin{width:21px;height:21px;border:3px solid #ddd;border-top-color:var(--accent);
-  border-radius:50%;animation:sp .7s linear infinite;display:none;}
-@keyframes sp{to{transform:rotate(360deg);}}
-#gstat{font-size:13px;color:var(--muted);margin-top:7px;display:none;}
-#decl-out{width:100%;min-height:420px;padding:15px;border:1px solid var(--border);
-  border-radius:8px;font-family:'Times New Roman',serif;font-size:13px;line-height:1.75;
-  resize:vertical;background:#fff;}
-.wc{font-size:11px;color:var(--muted);margin-top:4px;text-align:right;}
+    /* Row tables */
+    .rt{width:100%;border-collapse:collapse;font-size:12px;font-family:Arial,sans-serif;
+      margin-bottom:8px;}
+    .rt th{background:var(--dark);color:#fff;padding:7px 9px;text-align:left;
+      font-weight:normal;font-size:11px;}
+    .rt td{padding:3px;border-bottom:1px solid var(--border);}
+    .rt td input{width:100%;border:none;padding:5px 7px;background:transparent;
+      font-size:12px;font-family:inherit;}
+    .rt td input:focus{outline:none;background:#f5fbfa;border-radius:3px;}
+    .rt-add{font-size:11px;color:var(--teal2);background:none;border:1px dashed var(--teal);
+      padding:4px 10px;border-radius:4px;cursor:pointer;font-family:Arial,sans-serif;
+      display:flex;align-items:center;gap:5px;}
+    .rt-add:hover{background:var(--xlight);}
 
-/* download */
-.dl-g{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.dlc{border:1px solid var(--border);border-radius:8px;padding:15px;text-align:center;}
-.dlc .dli{font-size:27px;margin-bottom:7px;}
-.dlc .dln{font-weight:600;font-size:14px;margin-bottom:3px;}
-.dlc .dls{font-size:11px;color:var(--muted);margin-bottom:11px;}
+    /* Buttons */
+    .btn{padding:10px 20px;border:none;border-radius:5px;font-size:13px;
+      font-family:Arial,sans-serif;font-weight:700;cursor:pointer;transition:all .15s;
+      display:inline-flex;align-items:center;gap:7px;}
+    .btn-primary{background:var(--dark);color:#fff;}
+    .btn-primary:hover:not(:disabled){background:#001e2e;}
+    .btn-primary:disabled{background:#aaa;cursor:not-allowed;}
+    .btn-teal{background:var(--teal);color:#fff;}
+    .btn-teal:hover:not(:disabled){background:var(--teal2);}
+    .btn-teal:disabled{background:#aaa;cursor:not-allowed;}
+    .btn-sm{padding:7px 14px;font-size:12px;}
+    .btn-ghost{background:none;border:1px solid var(--border);color:#555;
+      font-family:Arial,sans-serif;font-size:12px;padding:6px 13px;}
+    .btn-ghost:hover{background:var(--xlight);border-color:var(--teal);color:var(--dark);}
 
-/* toast */
-.toast{position:fixed;bottom:22px;right:22px;background:#1a3a5c;color:#fff;
-  padding:11px 18px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;
-  transition:opacity .3s;z-index:999;}
-.toast.on{opacity:1;}
+    /* Info box */
+    .info{background:var(--xlight);border:1px solid var(--light);border-radius:5px;
+      padding:11px 15px;font-size:13px;font-family:Arial,sans-serif;color:var(--dark);
+      margin-bottom:14px;line-height:1.6;}
 
-@media(max-width:600px){
-  .off-grid{grid-template-columns:repeat(3,1fr);}
-  .dt-grid{grid-template-columns:1fr;}
-  .fr2{grid-template-columns:1fr;}
-  .dl-g{grid-template-columns:1fr;}
-  .ev-g{grid-template-columns:1fr;}
-}
-</style>
+    /* Generate section */
+    .gen-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+      background:#f5fbfa;border-radius:6px;padding:14px;margin-bottom:14px;
+      border:1px solid var(--border);}
+    .spin{width:20px;height:20px;border:3px solid var(--border);border-top-color:var(--teal);
+      border-radius:50%;animation:sp .7s linear infinite;display:none;}
+    @keyframes sp{to{transform:rotate(360deg);}}
+    #gstat{font-size:13px;color:#666;margin-top:8px;font-family:Arial,sans-serif;
+      display:none;padding:0 2px;}
+    #decl-out{width:100%;min-height:440px;padding:16px;
+      border:1.5px solid #ccd8d8;border-radius:5px;
+      font-family:'Georgia','Times New Roman',serif;font-size:13px;
+      line-height:1.75;resize:vertical;background:#fefefe;}
+    #decl-out:focus{outline:none;border-color:var(--teal);}
+    .wc-bar{display:flex;justify-content:space-between;align-items:center;
+      margin-top:6px;font-size:11px;color:#888;font-family:Arial,sans-serif;}
+
+    /* Download */
+    .dl-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .dlc{border:1px solid var(--border);border-radius:6px;padding:20px;text-align:center;}
+    .dlc .dl-icon{color:var(--teal2);display:flex;justify-content:center;margin-bottom:10px;}
+    .dlc .dl-name{font-weight:700;font-size:14px;color:var(--dark);margin-bottom:4px;}
+    .dlc .dl-sub{font-size:11px;color:#888;font-family:Arial,sans-serif;margin-bottom:14px;}
+
+    /* Auto-save status */
+    #asstat{font-size:11px;color:var(--teal2);font-family:Arial,sans-serif;}
+
+    /* Progress bar */
+    .prog-wrap{margin-top:12px;}
+    .prog-bar{background:#dff0ee;border-radius:4px;height:7px;overflow:hidden;}
+    .prog-fill{background:linear-gradient(90deg,var(--teal2),var(--bright));height:100%;
+      transition:width .3s;border-radius:4px;width:0%;}
+
+    /* Toast */
+    .toast{position:fixed;bottom:24px;right:24px;background:var(--dark);color:#fff;
+      padding:11px 18px;border-radius:6px;font-size:13px;font-family:Arial,sans-serif;
+      opacity:0;pointer-events:none;transition:opacity .3s;z-index:999;
+      display:flex;align-items:center;gap:8px;}
+    .toast.on{opacity:1;}
+
+    /* Form labels in modals */
+    .fg{display:flex;flex-direction:column;gap:4px;margin-bottom:12px;}
+    .fg label{font-size:11px;text-transform:uppercase;letter-spacing:.4px;font-weight:700;
+      color:var(--mid);font-family:Arial,sans-serif;}
+    .fg input,.fg select{padding:9px 12px;border:1.5px solid #ccd8d8;border-radius:5px;
+      font-size:14px;font-family:inherit;background:#fafefe;transition:border-color .15s;}
+    .fg input:focus,.fg select:focus{outline:none;border-color:var(--teal);}
+
+    /* Model selector row */
+    .model-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+    @media(max-width:640px){
+      .office-grid{grid-template-columns:repeat(3,1fr);}
+      .decl-grid{grid-template-columns:1fr;}
+      .fr2{grid-template-columns:1fr;}
+      .dl-grid{grid-template-columns:1fr;}
+      .ev-grid{grid-template-columns:1fr;}
+      .model-row{grid-template-columns:1fr;}
+    }
+  </style>
 </head>
 <body>
 
-<!-- Settings bar -->
-<div id="sbar">
-  <label>AI Provider</label>
-  <select id="prov-sel" onchange="provChange()">
-    <option value="deepseek">DeepSeek (Default)</option>
-    <option value="claude">Claude (Anthropic)</option>
-  </select>
-  <label id="key-lbl">API Key</label>
-  <input type="password" id="api-key" placeholder="Auto-filled" style="width:200px;">
-  <label>Model</label>
-  <select id="model-sel">
-    <option value="deepseek-chat">DeepSeek V3 (Best)</option>
-    <option value="deepseek-reasoner">DeepSeek R1 (Reasoning)</option>
-  </select>
-  <button class="sbtn" onclick="saveSettings()">Save</button>
-  <span id="ssaved">✓ Saved</span>
+<!-- API Settings Modal -->
+<div class="overlay" id="api-overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>AI Generation Settings</h3>
+      <button class="modal-close" onclick="closeApi()">&#215;</button>
+    </div>
+    <div class="modal-sub">Configure the AI provider and API key for declaration generation</div>
+    <div class="fg">
+      <label>AI Provider</label>
+      <select id="prov-sel" onchange="provChange()">
+        <option value="deepseek">DeepSeek (Default &mdash; pre-configured)</option>
+        <option value="claude">Claude (Anthropic)</option>
+      </select>
+    </div>
+    <div class="model-row">
+      <div class="fg">
+        <label id="key-lbl">API Key</label>
+        <input type="password" id="api-key" placeholder="Auto-filled">
+      </div>
+      <div class="fg">
+        <label>Model</label>
+        <select id="model-sel">
+          <option value="deepseek-chat">DeepSeek V3 (Best)</option>
+          <option value="deepseek-reasoner">DeepSeek R1 (Reasoning)</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-teal" style="width:100%;justify-content:center;" onclick="saveApiSettings()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Save Settings
+    </button>
+  </div>
 </div>
 
 <!-- Header -->
 <header>
-  <img src="https://raw.githubusercontent.com/sami23225/fibilawemployeedashboard/main/FIBI_LAW_LOGO.png"
-       onerror="this.style.display='none'">
-  <div>
-    <h1>FIBI Law — Declaration Generator</h1>
-    <p>VAWA &amp; Asylum Declaration Drafting Tool</p>
+  <div class="hdr-logo">
+    <img src="data:image/webp;base64,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" alt="FIBI Law"/>
   </div>
-  <div class="hspace"></div>
-  <button class="hbtn" onclick="toggleDrafts()">📋 Saved Drafts</button>
+  <div class="hdr-text">
+    <h1>Declaration Generator</h1>
+    <p>FIBI Law Firm &middot; VAWA &amp; Asylum Declaration Drafting Tool</p>
+  </div>
+  <div class="hdr-right">
+    <button class="hdr-btn" onclick="toggleDrafts()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Saved Drafts
+    </button>
+    <button class="hdr-btn" onclick="document.getElementById('api-overlay').classList.add('open')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> AI Settings
+    </button>
+  </div>
 </header>
 
-<main>
+<div class="container">
 
 <!-- Draft banner -->
 <div id="dbanner">
-  <div class="dt">Saved Drafts — click to resume</div>
+  <div class="db-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Saved Drafts &mdash; click to resume</div>
   <div class="dpills" id="dpills"></div>
 </div>
 
 <!-- Step 1: Office & Client -->
 <div class="card">
-  <div class="card-h">
-    <div class="sdot" id="d1">1</div>
-    <div><h2>Select Office &amp; Client</h2>
-         <p>Choose an office, then search by name or A-Number</p></div>
+  <div class="card-hdr">
+    <div class="step-dot" id="d1">1</div>
+    <div>
+      <h2>Select Office &amp; Client</h2>
+      <p>Choose an office, then search for the client by name or A-Number</p>
+    </div>
   </div>
-  <div class="card-b">
-    <div class="off-grid" id="off-grid"></div>
-    <div class="sw">
-      <span class="si">🔍</span>
-      <input type="text" id="csearch" placeholder="Select an office first…"
+  <div class="card-body">
+    <div class="office-grid" id="off-grid"></div>
+    <div class="search-wrap">
+      <span class="search-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+      <input type="text" id="csearch" placeholder="Select an office first&hellip;"
              oninput="onSearch(this.value)" disabled>
     </div>
     <div id="sr"></div>
-    <div class="selbox" id="selbox">
-      <div class="cn" id="sel-cn">—</div>
-      <div class="cm" id="sel-cm">—</div>
-      <button class="btn btn-s bsm" style="margin-top:8px" onclick="clearClient()">Change Client</button>
+    <div class="sel-client" id="selbox">
+      <div class="cli-name" id="sel-cn">&mdash;</div>
+      <div class="cli-meta" id="sel-cm">&mdash;</div>
+      <button class="btn btn-ghost btn-sm" style="margin-top:10px;" onclick="clearClient()">Change Client</button>
     </div>
   </div>
 </div>
 
 <!-- Step 2: Declaration Type -->
 <div class="card">
-  <div class="card-h">
-    <div class="sdot" id="d2">2</div>
-    <div><h2>Select Declaration Type</h2>
-         <p>VAWA is available now; other types coming soon</p></div>
+  <div class="card-hdr">
+    <div class="step-dot" id="d2">2</div>
+    <div>
+      <h2>Select Declaration Type</h2>
+      <p>VAWA is available now &mdash; additional types coming soon</p>
+    </div>
   </div>
-  <div class="card-b">
-    <div class="dt-grid">
+  <div class="card-body">
+    <div class="decl-grid">
       <div class="dtc sel" id="dt-vawa" onclick="pickDecl('vawa')">
-        <div class="di">⚖️</div>
-        <div class="dn">VAWA Self-Petition</div>
-        <div class="ds">I-360 Personal Declaration</div>
-        <span class="badge av">Available</span>
+        <div class="dt-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v18"/><path d="M3 9l9-6 9 6"/><path d="M5 9l7 12M19 9l-7 12"/></svg></div>
+        <div class="dt-name">VAWA Self-Petition</div>
+        <div class="dt-sub">I-360 Personal Declaration</div>
+        <div><span class="badge b-av">Available</span></div>
       </div>
       <div class="dtc locked">
-        <div class="di">🏛️</div>
-        <div class="dn">Asylum — Political</div>
-        <div class="ds">Political persecution declaration</div>
-        <span class="badge cs">Coming Soon</span>
+        <div class="dt-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="15"/><path d="M2 7l10-5 10 5"/><path d="M9 22V12h6v10"/></svg></div>
+        <div class="dt-name">Asylum &mdash; Political</div>
+        <div class="dt-sub">Political persecution declaration</div>
+        <div><span class="badge b-cs"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Coming Soon</span></div>
       </div>
       <div class="dtc locked">
-        <div class="di">✝️</div>
-        <div class="dn">Asylum — Religious</div>
-        <div class="ds">Religious persecution declaration</div>
-        <span class="badge cs">Coming Soon</span>
+        <div class="dt-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <div class="dt-name">Asylum &mdash; Religious</div>
+        <div class="dt-sub">Religious persecution declaration</div>
+        <div><span class="badge b-cs"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Coming Soon</span></div>
       </div>
     </div>
   </div>
@@ -278,119 +380,133 @@ main{max-width:880px;margin:0 auto;padding:22px 16px 80px;}
 
 <!-- Step 3: Questionnaire -->
 <div class="card">
-  <div class="card-h" style="justify-content:space-between;">
-    <div style="display:flex;align-items:center;gap:12px;">
-      <div class="sdot" id="d3">3</div>
-      <div><h2>VAWA Declaration Questionnaire</h2>
-           <p>Complete as many sections as possible — drafts auto-save every 30 s</p></div>
+  <div class="card-hdr" style="justify-content:space-between;">
+    <div style="display:flex;align-items:center;gap:11px;">
+      <div class="step-dot" id="d3">3</div>
+      <div>
+        <h2>VAWA Declaration Questionnaire</h2>
+        <p>Complete as many sections as possible &mdash; drafts save automatically</p>
+      </div>
     </div>
-    <div id="asstat" style="font-size:11px;color:var(--muted);white-space:nowrap;"></div>
+    <div id="asstat"></div>
   </div>
-  <div class="card-b" id="qbody"></div>
+  <div class="card-body" id="qbody"></div>
 </div>
 
 <!-- Step 4: Generate -->
 <div class="card">
-  <div class="card-h">
-    <div class="sdot" id="d4">4</div>
-    <div><h2>Generate Declaration</h2>
-         <p>AI drafts a complete declaration from your responses</p></div>
-  </div>
-  <div class="card-b">
-    <div class="genbox">
-      <div class="genc">
-        <button class="btn btn-p" id="gbtn" onclick="generate()">✨ Generate Declaration</button>
-        <div class="spin" id="gspin"></div>
-        <div class="hspace"></div>
-        <button class="btn btn-s bsm" onclick="saveDraft()">💾 Save Draft</button>
-      </div>
-      <div id="gstat"></div>
+  <div class="card-hdr">
+    <div class="step-dot" id="d4">4</div>
+    <div>
+      <h2>Generate Declaration</h2>
+      <p>AI drafts a complete declaration from the questionnaire responses</p>
     </div>
+  </div>
+  <div class="card-body">
+    <div class="gen-toolbar">
+      <button class="btn btn-primary" id="gbtn" onclick="generate()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Generate Declaration
+      </button>
+      <div class="spin" id="gspin"></div>
+      <div style="flex:1;"></div>
+      <button class="btn btn-ghost btn-sm" onclick="saveDraft()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save Draft
+      </button>
+    </div>
+    <div id="gstat"></div>
     <div id="outsec" style="display:none;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-        <b style="font-size:13px;">Generated Declaration — Review &amp; Edit</b>
+        <span style="font-size:13px;font-weight:700;color:var(--dark);font-family:Arial,sans-serif;">
+          Generated Declaration &mdash; Review &amp; Edit
+        </span>
         <div style="display:flex;gap:8px;">
-          <button class="btn btn-s bsm" onclick="copyText()">📋 Copy</button>
-          <button class="btn btn-s bsm" onclick="regen()">↩ Regenerate</button>
+          <button class="btn btn-ghost btn-sm" onclick="copyText()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+          <button class="btn btn-ghost btn-sm" onclick="regen()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg> Regenerate</button>
         </div>
       </div>
       <textarea id="decl-out" spellcheck="true" oninput="wcUpdate()"></textarea>
-      <div class="wc" id="wc">0 words</div>
+      <div class="wc-bar">
+        <span id="wc" style="color:#888;">0 words</span>
+        <span style="color:#bbb;">Edit freely &mdash; changes save automatically with the draft</span>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- Step 5: Download -->
 <div class="card" id="dlcard" style="display:none;">
-  <div class="card-h">
-    <div class="sdot" id="d5">5</div>
-    <div><h2>Download Declaration</h2>
-         <p>Download as editable Word document or print-ready PDF</p></div>
+  <div class="card-hdr">
+    <div class="step-dot" id="d5">5</div>
+    <div>
+      <h2>Download Declaration</h2>
+      <p>Download as an editable Word document or print-ready PDF</p>
+    </div>
   </div>
-  <div class="card-b">
-    <div class="dl-g">
+  <div class="card-body">
+    <div class="dl-grid">
       <div class="dlc">
-        <div class="dli">📄</div>
-        <div class="dln">Word Document</div>
-        <div class="dls">Editable .docx for final review and signing</div>
-        <button class="btn btn-p" onclick="dlDocx()">Download .docx</button>
+        <div class="dl-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
+        <div class="dl-name">Word Document</div>
+        <div class="dl-sub">Editable .docx for final review and attorney signature</div>
+        <button class="btn btn-primary" onclick="dlDocx()">Download .docx</button>
       </div>
       <div class="dlc">
-        <div class="dli">📕</div>
-        <div class="dln">PDF</div>
-        <div class="dls">Print-ready PDF for USCIS submission</div>
-        <button class="btn btn-g" onclick="dlPdf()">Download PDF</button>
+        <div class="dl-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15v-4m0 4h2a2 2 0 0 0 0-4H9"/><path d="M15 11h1a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-1v2"/></svg></div>
+        <div class="dl-name">PDF</div>
+        <div class="dl-sub">Print-ready PDF for USCIS submission package</div>
+        <button class="btn btn-teal" onclick="dlPdf()">Download PDF</button>
       </div>
     </div>
   </div>
 </div>
 
-</main>
-<div class="toast" id="toast"></div>
+</div><!-- .container -->
+<div class="toast" id="toast"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg><span id="toast-msg"></span></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 
-const AT_TOKEN   = "patOAyEdjEbm4u2dD" + ".6f53165fbc70c722787dada24d18211a01c39f75cf99eb55e49f160080d4ca39";
-const DS_KEY     = "sk-88759f71b448" + "4551b7de027e2cc21064";
-const AT_TABLE   = "tbld2XGAtTlPCXedQ";
-const OFFICES = [
-  {id:"bronx",      name:"Bronx",        baseId:"app6RPeZDscKTejWB", icon:"🏙️"},
-  {id:"woodland",   name:"Woodland",     baseId:"appCFrrBWJle2TE3S", icon:"🌲"},
-  {id:"harlem",     name:"Harlem",       baseId:"appmRIsWBthV1ybwY", icon:"🎷"},
-  {id:"stonemt",    name:"Stone Mtn",    baseId:"appKkHFU2tH5hkArB", icon:"⛰️"},
-  {id:"collpark",   name:"College Park", baseId:"appZDWnhWcaCRPjAm", icon:"🎓"},
+const AT_TOKEN = "patOAyEdjEbm4u2" + "dD.6f53165fbc70c722787dada24d18211a01c39f75cf99eb55e49f160080d4ca39";
+const DS_KEY   = "sk-88759f71b448" + "4551b7de027e2cc21064";
+const AT_TABLE = "tbld2XGAtTlPCXedQ";
+const OFFICES  = [
+  {id:"bronx",    name:"Bronx",        state:"NY", baseId:"app6RPeZDscKTejWB"},
+  {id:"woodland", name:"Woodland",     state:"CA", baseId:"appCFrrBWJle2TE3S"},
+  {id:"harlem",   name:"Harlem",       state:"NY", baseId:"appmRIsWBthV1ybwY"},
+  {id:"stonemt",  name:"Stone Mtn",    state:"GA", baseId:"appKkHFU2tH5hkArB"},
+  {id:"collpark", name:"College Park", state:"GA", baseId:"appZDWnhWcaCRPjAm"},
 ];
 
-// ── State ─────────────────────────────────────────────────────────
+// ── State ──────────────────────────────────────────────────────────
 let selOffice=null, selClient=null, selDecl="vawa";
 let srCache=[], searchTmr=null, asTmr=null;
 
-// ── Settings ──────────────────────────────────────────────────────
+// ── API settings modal ─────────────────────────────────────────────
+function closeApi(){document.getElementById("api-overlay").classList.remove("open");}
 function provChange(){
   const p=document.getElementById("prov-sel").value;
   const ms=document.getElementById("model-sel");
-  document.getElementById("key-lbl").textContent = p==="deepseek" ? "DeepSeek Key" : "Claude API Key";
+  document.getElementById("key-lbl").textContent = p==="deepseek" ? "DeepSeek API Key" : "Claude API Key";
   ms.innerHTML = p==="deepseek"
     ? '<option value="deepseek-chat">DeepSeek V3 (Best)</option><option value="deepseek-reasoner">DeepSeek R1 (Reasoning)</option>'
-    : '<option value="claude-opus-4-6">Claude Opus 4 (Best)</option><option value="claude-sonnet-4-6" selected>Claude Sonnet 4</option><option value="claude-haiku-4-5-20251001">Claude Haiku 4 (Fast)</option>';
-  const saved = p==="deepseek" ? sessionStorage.getItem("fibi_ds_key") : sessionStorage.getItem("fibi_cl_key");
+    : '<option value="claude-opus-4-6">Claude Opus 4 (Best)</option><option value="claude-sonnet-4-6" selected>Claude Sonnet 4</option><option value="claude-haiku-4-5-20251001">Claude Haiku 4</option>';
+  const saved = sessionStorage.getItem("fibi_key_"+p);
   document.getElementById("api-key").value = saved || (p==="deepseek" ? DS_KEY : "");
-  document.getElementById("model-sel").value = sessionStorage.getItem("fibi_model_"+p) || (p==="deepseek" ? "deepseek-chat" : "claude-sonnet-4-6");
+  const sm = sessionStorage.getItem("fibi_model_"+p);
+  if(sm) document.getElementById("model-sel").value = sm;
 }
-function saveSettings(){
+function saveApiSettings(){
   const p=document.getElementById("prov-sel").value;
   const k=document.getElementById("api-key").value.trim();
   const m=document.getElementById("model-sel").value;
-  if(k) sessionStorage.setItem(p==="deepseek" ? "fibi_ds_key" : "fibi_cl_key", k);
+  if(k) sessionStorage.setItem("fibi_key_"+p, k);
   sessionStorage.setItem("fibi_model_"+p, m);
-  const s=document.getElementById("ssaved");
-  s.style.display="inline"; setTimeout(()=>s.style.display="none",1800);
+  sessionStorage.setItem("fibi_prov", p);
+  closeApi();
+  toast("Settings saved");
 }
-function loadSettings(){
-  // pre-fill DeepSeek key
-  const ds = sessionStorage.getItem("fibi_ds_key") || DS_KEY;
-  document.getElementById("api-key").value = ds;
+function loadApiSettings(){
+  document.getElementById("api-key").value = sessionStorage.getItem("fibi_key_deepseek") || DS_KEY;
   const m = sessionStorage.getItem("fibi_model_deepseek");
   if(m) document.getElementById("model-sel").value = m;
 }
@@ -399,7 +515,9 @@ function loadSettings(){
 function renderOffices(){
   document.getElementById("off-grid").innerHTML = OFFICES.map(o=>
     `<div class="off-c" id="off-${o.id}" onclick="pickOffice('${o.id}')">
-       <div class="oi">${o.icon}</div><div>${o.name}</div></div>`
+       <div class="off-name">${o.name}</div>
+       <div class="off-loc">${o.state}</div>
+     </div>`
   ).join("");
 }
 function pickOffice(id){
@@ -408,12 +526,12 @@ function pickOffice(id){
   document.querySelectorAll(".off-c").forEach(e=>e.classList.remove("sel"));
   if(!selOffice) return;
   document.getElementById("off-"+id).classList.add("sel");
-  const cs = document.getElementById("csearch");
+  const cs=document.getElementById("csearch");
   cs.disabled=false; cs.placeholder="Search "+selOffice.name+" clients…"; cs.focus();
   refreshDraftBanner();
 }
 
-// ── Client Search ─────────────────────────────────────────────────
+// ── Client search ──────────────────────────────────────────────────
 function onSearch(v){
   clearTimeout(searchTmr);
   const sr=document.getElementById("sr");
@@ -423,7 +541,8 @@ function onSearch(v){
 async function doSearch(q){
   if(!selOffice) return;
   const f=encodeURIComponent;
-  const formula=`OR(SEARCH(LOWER("${q.toLowerCase()}"),LOWER({Client Name})),SEARCH(LOWER("${q.toLowerCase()}"),LOWER({A-Number})))`;
+  const ql=q.toLowerCase();
+  const formula=`OR(SEARCH(LOWER("${ql}"),LOWER({Client Name})),SEARCH(LOWER("${ql}"),LOWER({A-Number})))`;
   const flds=["Client Name","First Name","Last Name","A-Number","CASE STATUS","Email","Number"];
   const url="https://api.airtable.com/v0/"+selOffice.baseId+"/"+AT_TABLE
     +"?filterByFormula="+f(formula)+"&maxRecords=15"
@@ -439,7 +558,7 @@ function renderSR(recs){
   const sr=document.getElementById("sr");
   if(!recs.length){
     sr.style.display="block";
-    sr.innerHTML='<div style="padding:11px;color:var(--muted);font-size:13px;">No clients found</div>';
+    sr.innerHTML='<div style="padding:11px;color:#888;font-size:13px;font-family:Arial,sans-serif;">No clients found</div>';
     return;
   }
   sr.style.display="block";
@@ -449,9 +568,12 @@ function renderSR(recs){
     const anum=f["A-Number"]||"";
     const stat=f["CASE STATUS"]||"";
     return `<div class="sri" onclick="pickClient(${i})">
-      <div><div class="sn">${xe(name)}</div>
-      <div class="sm">${anum?"A-"+anum:"No A-Number"}${stat?" · "+stat:""}</div></div>
-      <div style="font-size:11px;color:var(--muted);">${selOffice.name}</div></div>`;
+      <div>
+        <div class="sri-name">${xe(name)}</div>
+        <div class="sri-meta">${anum?"A-"+anum:"No A-Number"}${stat?" &middot; "+stat:""}</div>
+      </div>
+      <div class="sri-office">${selOffice.name}</div>
+    </div>`;
   }).join("");
 }
 function pickClient(i){
@@ -465,12 +587,11 @@ function pickClient(i){
   document.getElementById("sel-cn").textContent=selClient.name;
   document.getElementById("sel-cm").textContent=[selClient.anumber?"A-"+selClient.anumber:null,selClient.caseType,selOffice.name].filter(Boolean).join(" · ");
   document.getElementById("selbox").style.display="block";
-  document.getElementById("d1").classList.add("ok");
-  // autofill Section A
-  setFv("A_fullname", selClient.name);
-  setFv("A_anumber", selClient.anumber ? "A-"+selClient.anumber : "");
-  setFv("A_email", selClient.email);
-  setFv("A_phone", selClient.phone);
+  document.getElementById("d1").classList.add("done");
+  setFv("A_fullname",selClient.name);
+  setFv("A_anumber",selClient.anumber?"A-"+selClient.anumber:"");
+  setFv("A_email",selClient.email);
+  setFv("A_phone",selClient.phone);
   refreshDraftBanner();
 }
 function setFv(id,v){const e=document.getElementById(id);if(e&&!e.value)e.value=v;}
@@ -479,7 +600,7 @@ function clearClient(quiet){
   document.getElementById("selbox").style.display="none";
   document.getElementById("csearch").value="";
   document.getElementById("sr").style.display="none";
-  document.getElementById("d1").classList.remove("ok");
+  document.getElementById("d1").classList.remove("done");
   if(!quiet) refreshDraftBanner();
 }
 function xe(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
@@ -487,130 +608,130 @@ function xe(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").repla
 // ── Declaration type ───────────────────────────────────────────────
 function pickDecl(t){
   selDecl=t;
-  document.querySelectorAll(".dtc").forEach(e=>e.classList.remove("sel"));
+  document.querySelectorAll(".dtc:not(.locked)").forEach(e=>e.classList.remove("sel"));
   document.getElementById("dt-"+t).classList.add("sel");
 }
 
 // ── Questionnaire definition ───────────────────────────────────────
 const QS=[
   {id:"A",title:"Section A — Client Identification",fields:[
-    {id:"A_fullname",  label:"Full Legal Name",                          t:"text",  hint:"First / Middle / Last"},
-    {id:"A_othernames",label:"Other Names Used",                         t:"text",  hint:"Maiden, nicknames, prior married name"},
-    {id:"A_dob",       label:"Date of Birth",                            t:"date"},
-    {id:"A_cob",       label:"Country of Birth",                         t:"text"},
-    {id:"A_citizen",   label:"Country of Citizenship",                   t:"text"},
-    {id:"A_immstat",   label:"Current Immigration Status",               t:"text",  hint:"If known"},
-    {id:"A_anumber",   label:"A-Number",                                 t:"text",  hint:"If any"},
-    {id:"A_address",   label:"Current Mailing Address",                  t:"text"},
-    {id:"A_phone",     label:"Best Phone Number",                        t:"tel"},
-    {id:"A_email",     label:"Email Address",                            t:"email"},
-    {id:"A_language",  label:"Preferred Language",                       t:"text"},
+    {id:"A_fullname",   label:"Full Legal Name",                               t:"text",  hint:"First / Middle / Last"},
+    {id:"A_othernames", label:"Other Names Used",                              t:"text",  hint:"Maiden name, nicknames, prior married name"},
+    {id:"A_dob",        label:"Date of Birth",                                 t:"date"},
+    {id:"A_cob",        label:"Country of Birth",                              t:"text"},
+    {id:"A_citizen",    label:"Country of Citizenship",                        t:"text"},
+    {id:"A_immstat",    label:"Current Immigration Status",                    t:"text",  hint:"If known"},
+    {id:"A_anumber",    label:"A-Number",                                      t:"text",  hint:"If any"},
+    {id:"A_address",    label:"Current Mailing Address",                       t:"text"},
+    {id:"A_phone",      label:"Best Phone Number",                             t:"tel"},
+    {id:"A_email",      label:"Email Address",                                 t:"email"},
+    {id:"A_language",   label:"Preferred Language",                            t:"text"},
   ]},
   {id:"B",title:"Section B — The Abusive Spouse / Parent",fields:[
-    {id:"B_aname",  label:"Abuser’s Full Legal Name",               t:"text"},
-    {id:"B_aaliases",label:"Other Names Used by Abuser",                 t:"text"},
-    {id:"B_adob",   label:"Abuser’s Date of Birth",                 t:"date"},
-    {id:"B_acob",   label:"Abuser’s Country of Birth",              t:"text"},
-    {id:"B_astat",  label:"Abuser’s Immigration Status",            t:"text"},
-    {id:"B_aanum",  label:"Abuser’s A-Number (if known)",           t:"text"},
-    {id:"B_aaddr",  label:"Abuser’s Last Known Address",            t:"text"},
-    {id:"B_rel",    label:"Nature of Qualifying Relationship",           t:"select",
+    {id:"B_aname",    label:"Abuser Full Legal Name",                          t:"text"},
+    {id:"B_aaliases", label:"Other Names Used by Abuser",                      t:"text"},
+    {id:"B_adob",     label:"Abuser Date of Birth",                            t:"date"},
+    {id:"B_acob",     label:"Abuser Country of Birth",                         t:"text"},
+    {id:"B_astat",    label:"Abuser Immigration Status",                       t:"text"},
+    {id:"B_aanum",    label:"Abuser A-Number (if known)",                      t:"text"},
+    {id:"B_aaddr",    label:"Abuser Last Known Address",                       t:"text"},
+    {id:"B_rel",      label:"Nature of Qualifying Relationship",               t:"select",
       opts:["Spouse (married to abuser)","Child of abuser","Parent of abuser","Filing on behalf of child"]},
-    {id:"B_met",    label:"When / where did you first meet the abuser? How did the relationship begin?", t:"ta"},
-    {id:"B_married",label:"When / where did you marry the abuser?",      t:"ta",   hint:"City, State/Country, Date"},
-    {id:"B_priormar",label:"Were you previously married? Provide details if yes.", t:"ta"},
-    {id:"B_uscyn",  label:"Is the abuser a U.S. citizen or LPR?",        t:"yn",   cond:"B_uscdet"},
-    {id:"B_uscdet", label:"How do you know? (passport, certificate, green card)", t:"ta",   iscond:true},
-    {id:"B_how",    label:"How / when did the abuser obtain USC or LPR status?", t:"ta"},
+    {id:"B_met",      label:"When and where did you first meet the abuser? How did the relationship begin?", t:"ta"},
+    {id:"B_married",  label:"When and where did you marry the abuser?",        t:"ta",  hint:"City, State/Country, Date"},
+    {id:"B_priormar", label:"Were you previously married? Provide details if yes.",     t:"ta"},
+    {id:"B_uscyn",    label:"Is the abuser a U.S. Citizen or LPR?",            t:"yn",  cond:"B_uscdet"},
+    {id:"B_uscdet",   label:"How do you know? (passport, certificate, green card)",    t:"ta",  iscond:true},
+    {id:"B_how",      label:"How and when did the abuser obtain USC or LPR status?",   t:"ta"},
   ]},
   {id:"C",title:"Section C — Shared Residence",fields:[
     {id:"C_addrs",  label:"All addresses where you lived together with the abuser", t:"addrtbl"},
-    {id:"C_proof",  label:"What documents prove you lived together?",    t:"ta",
-      hint:"Lease, utility bills, bank statements, mail, school/medical records"},
+    {id:"C_proof",  label:"What documents prove you lived together?",          t:"ta",
+      hint:"Lease, utility bills, bank statements, mail, school or medical records"},
   ]},
   {id:"D",title:"Section D — Good Moral Character",fields:[
-    {id:"D1",       label:"Have you ever been arrested, cited, or charged with any crime?", t:"yn", cond:"D1d"},
-    {id:"D1d",      label:"Date, location, charge, and disposition for each incident", t:"ta", iscond:true},
-    {id:"D2",       label:"Have you ever been convicted of any crime?",  t:"yn", cond:"D2d"},
-    {id:"D2d",      label:"Describe each conviction, sentence, and date", t:"ta", iscond:true},
-    {id:"D3",       label:"Have you ever been ordered removed or deported from the U.S.?", t:"yn", cond:"D3d"},
-    {id:"D3d",      label:"When and where?",                             t:"text", iscond:true},
-    {id:"D4",       label:"Have you ever entered the U.S. without inspection?", t:"yn", cond:"D4d"},
-    {id:"D4d",      label:"Approximate date and location",               t:"text", iscond:true},
-    {id:"D5",       label:"Have you ever used a false identity or misrepresented yourself to a U.S. agency?", t:"yn", cond:"D5d"},
-    {id:"D5d",      label:"Provide details",                             t:"ta",   iscond:true},
+    {id:"D1",   label:"Have you ever been arrested, cited, or charged with any crime?", t:"yn", cond:"D1d"},
+    {id:"D1d",  label:"Date, location, charge, and disposition for each incident",      t:"ta", iscond:true},
+    {id:"D2",   label:"Have you ever been convicted of any crime?",                     t:"yn", cond:"D2d"},
+    {id:"D2d",  label:"Describe each conviction, sentence, and date",                  t:"ta", iscond:true},
+    {id:"D3",   label:"Have you ever been ordered removed or deported from the U.S.?", t:"yn", cond:"D3d"},
+    {id:"D3d",  label:"When and where?",                                                t:"text", iscond:true},
+    {id:"D4",   label:"Have you ever entered the U.S. without inspection?",             t:"yn", cond:"D4d"},
+    {id:"D4d",  label:"Approximate date and location",                                  t:"text", iscond:true},
+    {id:"D5",   label:"Have you ever used a false identity with a U.S. government agency?", t:"yn", cond:"D5d"},
+    {id:"D5d",  label:"Provide details",                                                t:"ta",   iscond:true},
   ]},
   {id:"E",title:"Section E — History of Abuse",fields:[
-    {id:"E_start",  label:"When did the abuse first start? Describe the first incident you recall.", t:"ta"},
-    {id:"E_escal",  label:"How did the abuse change or escalate over time?",        t:"ta"},
-    {id:"E_freq",   label:"How often did abuse occur?",                             t:"text", hint:"Daily, weekly, monthly, specific periods"},
-    {id:"E_types",  label:"Describe the different forms of abuse you experienced.", t:"ta"},
-    {id:"E_phys",   label:"Did the abuser ever physically hurt you?",               t:"yn", cond:"E_physd"},
-    {id:"E_physd",  label:"Describe the most serious physical incident (date, what happened, injuries, witnesses, medical care)", t:"ta", rows:5, iscond:true},
-    {id:"E_physo",  label:"Describe 2-3 other significant physical incidents",      t:"ta", rows:4, iscond:true},
-    {id:"E_hosp",   label:"Were you ever hospitalized or treated by a doctor due to the abuse?", t:"yn", cond:"E_hospd"},
-    {id:"E_hospd",  label:"Dates, facilities, and types of treatment",              t:"ta", iscond:true},
+    {id:"E_start",  label:"When did the abuse first start? Describe the first incident you recall.",  t:"ta"},
+    {id:"E_escal",  label:"How did the abuse change or escalate over time?",                          t:"ta"},
+    {id:"E_freq",   label:"How often did abuse occur?",                                               t:"text", hint:"Daily, weekly, monthly, or specific periods"},
+    {id:"E_types",  label:"Describe the different forms of abuse you experienced.",                   t:"ta"},
+    {id:"E_phys",   label:"Did the abuser ever physically hurt you?",                                 t:"yn", cond:"E_physd"},
+    {id:"E_physd",  label:"Describe the most serious physical incident in detail (date, what happened, injuries, witnesses, medical care)", t:"ta", rows:5, iscond:true},
+    {id:"E_physo",  label:"Describe 2-3 other significant physical incidents",                        t:"ta", rows:4, iscond:true},
+    {id:"E_hosp",   label:"Were you ever hospitalized or treated by a doctor due to the abuse?",      t:"yn", cond:"E_hospd"},
+    {id:"E_hospd",  label:"Dates, facilities, and types of treatment",                                t:"ta", iscond:true},
     {id:"E_insult", label:"Did the abuser insult, demean, or humiliate you? Give specific examples.", t:"ta"},
     {id:"E_ctrl",   label:"Did the abuser control your daily life (clothing, money, phone, who you saw)? Give examples.", t:"ta"},
-    {id:"E_threats",label:"Did the abuser make threats (harm to you, children, family, pets)? Describe.", t:"ta"},
-    {id:"E_psych",  label:"How did the psychological abuse affect your daily life, work, and mental health?", t:"ta"},
-    {id:"E_imm",    label:"Did the abuser threaten to report you to immigration (ICE/USCIS)?", t:"yn", cond:"E_immd"},
-    {id:"E_immd",   label:"Describe specific incidents",                            t:"ta", iscond:true},
+    {id:"E_threats",label:"Did the abuser make threats to harm you, your children, family, or pets? Describe.", t:"ta"},
+    {id:"E_psych",  label:"How did the psychological abuse affect your daily life, work, and mental health?",  t:"ta"},
+    {id:"E_imm",    label:"Did the abuser threaten to report you to immigration (ICE/USCIS)?",        t:"yn", cond:"E_immd"},
+    {id:"E_immd",   label:"Describe specific incidents",                                              t:"ta", iscond:true},
     {id:"E_ictrl",  label:"Did the abuser use your immigration status to prevent you from leaving or seeking help?", t:"yn", cond:"E_ictrld"},
-    {id:"E_ictrld", label:"Explain how",                                            t:"ta", iscond:true},
-    {id:"E_docs",   label:"Did the abuser confiscate your passport, visa, or identity documents?", t:"yn", cond:"E_docsd"},
-    {id:"E_docsd",  label:"What happened to them?",                                 t:"ta", iscond:true},
-    {id:"E_sex",    label:"Did the abuser force you into sexual acts against your will? (Optional)", t:"yn", cond:"E_sexd"},
-    {id:"E_sexd",   label:"You do not need to describe in detail — your attorney will guide you", t:"ta", iscond:true},
+    {id:"E_ictrld", label:"Explain how",                                                              t:"ta", iscond:true},
+    {id:"E_docs",   label:"Did the abuser confiscate your passport, visa, or identity documents?",   t:"yn", cond:"E_docsd"},
+    {id:"E_docsd",  label:"What happened to them?",                                                   t:"ta", iscond:true},
+    {id:"E_sex",    label:"Did the abuser force you into sexual acts against your will? (Optional)",  t:"yn", cond:"E_sexd"},
+    {id:"E_sexd",   label:"Your attorney will guide you — a brief note is sufficient here",     t:"ta", iscond:true},
   ]},
   {id:"F",title:"Section F — Impact on Children",fields:[
-    {id:"F_kids",   label:"List children affected",                      t:"childtbl"},
-    {id:"F1",       label:"Did the abuser ever abuse your children?",    t:"yn", cond:"F1d"},
-    {id:"F1d",      label:"Describe specific incidents",                 t:"ta", iscond:true},
-    {id:"F2",       label:"Did your children witness the abuse? How did it affect them?", t:"ta"},
-    {id:"F3",       label:"Did the abuser threaten to take the children or report you to CPS?", t:"yn", cond:"F3d"},
-    {id:"F3d",      label:"Explain",                                     t:"ta", iscond:true},
+    {id:"F_kids",  label:"List children affected",                                                    t:"childtbl"},
+    {id:"F1",      label:"Did the abuser ever abuse your children?",                                  t:"yn", cond:"F1d"},
+    {id:"F1d",     label:"Describe specific incidents",                                               t:"ta", iscond:true},
+    {id:"F2",      label:"Did your children witness the abuse? How did it affect them?",              t:"ta"},
+    {id:"F3",      label:"Did the abuser threaten to take the children or report you to CPS?",        t:"yn", cond:"F3d"},
+    {id:"F3d",     label:"Explain",                                                                   t:"ta", iscond:true},
   ]},
   {id:"G",title:"Section G — Attempts to Seek Help",fields:[
-    {id:"G1",       label:"Did you ever call the police?",               t:"yn", cond:"G1d"},
-    {id:"G1d",      label:"When, what happened, was a report filed?",   t:"ta", iscond:true},
-    {id:"G2",       label:"Did police ever come without you calling?",   t:"yn", cond:"G2d"},
-    {id:"G2d",      label:"Describe what happened",                      t:"ta", iscond:true},
-    {id:"G3",       label:"Did you ever obtain a restraining or protective order?", t:"yn", cond:"G3d"},
-    {id:"G3d",      label:"Case number, court, and dates",               t:"ta", iscond:true},
-    {id:"G4",       label:"Did you go to a domestic violence shelter or hotline?", t:"yn", cond:"G4d"},
-    {id:"G4d",      label:"Name of organization and approximate date",   t:"text", iscond:true},
-    {id:"G5",       label:"Did you speak with a counselor, therapist, or social worker?", t:"yn", cond:"G5d"},
-    {id:"G5d",      label:"Name, organization, and dates if possible",   t:"text", iscond:true},
-    {id:"G6",       label:"Why did you not report the abuse sooner, or why did you stay?", t:"ta",
+    {id:"G1",  label:"Did you ever call the police?",                                                 t:"yn", cond:"G1d"},
+    {id:"G1d", label:"When, what happened, was a report filed?",                                      t:"ta", iscond:true},
+    {id:"G2",  label:"Did police ever come to your home without you calling?",                        t:"yn", cond:"G2d"},
+    {id:"G2d", label:"Describe what happened",                                                        t:"ta", iscond:true},
+    {id:"G3",  label:"Did you ever obtain a restraining or protective order?",                        t:"yn", cond:"G3d"},
+    {id:"G3d", label:"Case number, court, and dates",                                                 t:"ta", iscond:true},
+    {id:"G4",  label:"Did you go to a domestic violence shelter or hotline?",                         t:"yn", cond:"G4d"},
+    {id:"G4d", label:"Name of organization and approximate date",                                     t:"text", iscond:true},
+    {id:"G5",  label:"Did you speak with a counselor, therapist, or social worker about the abuse?", t:"yn", cond:"G5d"},
+    {id:"G5d", label:"Name, organization, and dates if possible",                                     t:"text", iscond:true},
+    {id:"G6",  label:"Why did you not report the abuse sooner, or why did you stay in the relationship?", t:"ta",
       hint:"Fear, finances, children, immigration status, love, cultural reasons"},
   ]},
   {id:"H",title:"Section H — Witnesses &amp; Evidence",fields:[
-    {id:"H_wit",    label:"Witnesses who can corroborate the abuse",     t:"wittbl"},
-    {id:"H_ev",     label:"Evidence you have or can obtain",             t:"chklist",
+    {id:"H_wit",  label:"Witnesses who can corroborate the abuse",                                    t:"wittbl"},
+    {id:"H_ev",   label:"Evidence you have or can obtain",                                            t:"chklist",
       opts:["Police reports / incident reports","Restraining or protective orders",
-            "Medical records / ER records / injury photos","Counseling / therapy records",
+            "Medical records / ER records / injury photographs","Counseling or therapy records",
             "Domestic violence shelter records","Text messages, emails, or voicemails from abuser",
             "Witness letters or affidavits","Marriage certificate / divorce decree",
-            "Proof of joint residence","Proof of abuser’s U.S. citizenship or LPR status",
+            "Proof of joint residence","Proof of abuser U.S. citizenship or LPR status",
             "Court records","Other photographs or videos"]},
-    {id:"H_other",  label:"Other evidence not listed above",             t:"ta"},
+    {id:"H_other",label:"Other evidence not listed above",                                            t:"ta"},
   ]},
   {id:"I",title:"Section I — Separation / Current Situation",fields:[
-    {id:"I1",       label:"Are you currently living with the abuser?",   t:"yn"},
-    {id:"I2",       label:"When and how did you leave? What finally prompted you to leave?", t:"ta"},
-    {id:"I3",       label:"Did you ever return to the abuser after leaving?", t:"yn", cond:"I3d"},
-    {id:"I3d",      label:"How many times, and why did you go back?",    t:"ta", iscond:true},
-    {id:"I4",       label:"Are you divorced, legally separated, or in the process of divorce?", t:"yn", cond:"I4d"},
-    {id:"I4d",      label:"Case number, court, and status",              t:"text", iscond:true},
-    {id:"I5",       label:"Do you have ongoing safety concerns? Is the abuser still contacting or threatening you?", t:"ta"},
-    {id:"I6",       label:"Where are you currently living, and with whom?", t:"ta"},
+    {id:"I1",  label:"Are you currently living with the abuser?",                                     t:"yn"},
+    {id:"I2",  label:"When and how did you leave? What finally prompted you to leave?",               t:"ta"},
+    {id:"I3",  label:"Did you ever return to the abuser after leaving?",                              t:"yn", cond:"I3d"},
+    {id:"I3d", label:"How many times, and why did you go back?",                                      t:"ta", iscond:true},
+    {id:"I4",  label:"Are you divorced, legally separated, or in the process of divorce?",            t:"yn", cond:"I4d"},
+    {id:"I4d", label:"Case number, court, and current status",                                        t:"text", iscond:true},
+    {id:"I5",  label:"Do you have ongoing safety concerns? Is the abuser still contacting or threatening you?", t:"ta"},
+    {id:"I6",  label:"Where are you currently living, and with whom?",                                t:"ta"},
   ]},
   {id:"J",title:"Section J — Relief Sought &amp; Personal Statement",fields:[
-    {id:"J1",       label:"In your own words, why are you filing for VAWA? What do you hope to achieve?", t:"ta"},
-    {id:"J2",       label:"What would happen to you if required to return to your country of origin?", t:"ta"},
-    {id:"J3",       label:"What are your goals for yourself and your children in the U.S.?", t:"ta"},
-    {id:"J4",       label:"Is there anything else you want USCIS to know that has not been covered?", t:"ta"},
+    {id:"J1",  label:"In your own words, why are you filing for VAWA? What do you hope to achieve?", t:"ta"},
+    {id:"J2",  label:"What would happen to you if required to return to your country of origin?",     t:"ta"},
+    {id:"J3",  label:"What are your goals for yourself and your children in the U.S.?",               t:"ta"},
+    {id:"J4",  label:"Is there anything else you want USCIS to know that has not been covered?",      t:"ta"},
   ]},
 ];
 
@@ -622,14 +743,13 @@ function renderQ(){
     return `<div class="qsec" id="qs-${sec.id}">
       <div class="qsh" onclick="toggleSec('${sec.id}')">
         <span class="qst">${sec.title}</span>
-        <span id="qa-${sec.id}">▶</span>
+        <span class="q-arrow" id="qa-${sec.id}">&#9654;</span>
       </div>
-      <div class="qsb">${rows}</div></div>`;
+      <div class="qsb">${rows}</div>
+    </div>`;
   }).join("");
-  // Open first section
   document.querySelector(".qsec").classList.add("open");
-  document.getElementById("qa-A").textContent="▼";
-  // Autosave on any change
+  document.getElementById("qa-A").innerHTML="&#9660;";
   body.addEventListener("input",()=>{
     document.getElementById("asstat").textContent="Unsaved…";
     clearTimeout(asTmr); asTmr=setTimeout(silentSave,3000);
@@ -640,23 +760,23 @@ function renderQ(){
 function renderF(f){
   if(f.iscond){
     return `<div class="cond" id="cnd-${f.id}">
-      <div class="fr"><label>${f.label}${f.hint?`<br><span class="hint">${f.hint}</span>`:""}</label>
+      <div class="fr"><label>${f.label}${f.hint?`<div class="fr-hint">${f.hint}</div>`:""}</label>
       ${rinput(f)}</div></div>`;
   }
   if(f.t==="addrtbl") return `<div class="fr"><label>${f.label}</label>${mkAddrTbl(f.id)}</div>`;
   if(f.t==="childtbl") return `<div class="fr"><label>${f.label}</label>${mkChildTbl(f.id)}</div>`;
   if(f.t==="wittbl")  return `<div class="fr"><label>${f.label}</label>${mkWitTbl(f.id)}</div>`;
   if(f.t==="chklist") return `<div class="fr"><label>${f.label}</label>${mkChk(f.id,f.opts)}</div>`;
-  return `<div class="fr"><label>${f.label}${f.hint?`<br><span class="hint">${f.hint}</span>`:""}</label>
+  return `<div class="fr"><label>${f.label}${f.hint?`<div class="fr-hint">${f.hint}</div>`:""}</label>
     ${rinput(f)}</div>`;
 }
 function rinput(f){
   if(f.t==="text"||f.t==="email"||f.t==="tel"||f.t==="date")
-    return `<input type="${f.t}" id="${f.id}" class="fi">`;
+    return `<input type="${f.t}" id="${f.id}">`;
   if(f.t==="ta")
-    return `<textarea id="${f.id}" class="fi" rows="${f.rows||3}"></textarea>`;
+    return `<textarea id="${f.id}" rows="${f.rows||3}"></textarea>`;
   if(f.t==="select")
-    return `<select id="${f.id}" class="fi"><option value="">-- Select --</option>${f.opts.map(o=>`<option>${o}</option>`).join("")}</select>`;
+    return `<select id="${f.id}"><option value="">-- Select --</option>${f.opts.map(o=>`<option>${xe(o)}</option>`).join("")}</select>`;
   if(f.t==="yn"){
     const oc=f.cond ? ` onchange="tcond('${f.cond}',this.value)"` : "";
     return `<div class="yn"><label><input type="radio" name="${f.id}" value="Yes"${oc}> Yes</label>
@@ -664,27 +784,40 @@ function rinput(f){
   }
   return "";
 }
+
 function mkAddrTbl(id){
   return `<table class="rt" id="${id}-t">
-    <tr><th>Address</th><th>Move-In</th><th>Move-Out</th><th>Who Else Lived There?</th></tr>
+    <tr><th>Address</th><th>Move-In Date</th><th>Move-Out Date</th><th>Others Who Lived There</th></tr>
     <tr><td><input type="text" placeholder="Street, City, State"></td><td><input type="date"></td><td><input type="date"></td><td><input type="text"></td></tr>
-  </table><button class="arb" onclick="addRow('${id}-t',4)">+ Add Address</button>`;
+  </table>
+  <button class="rt-add" onclick="addRow('${id}-t',4)">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    Add Address
+  </button>`;
 }
 function mkChildTbl(id){
   return `<table class="rt" id="${id}-t">
     <tr><th>Full Name</th><th>Date of Birth</th><th>Country of Birth</th><th>Relationship to Abuser</th></tr>
     <tr><td><input type="text"></td><td><input type="date"></td><td><input type="text"></td><td><input type="text"></td></tr>
-  </table><button class="arb" onclick="addRow('${id}-t',4)">+ Add Child</button>`;
+  </table>
+  <button class="rt-add" onclick="addRow('${id}-t',4)">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    Add Child
+  </button>`;
 }
 function mkWitTbl(id){
   return `<table class="rt" id="${id}-t">
     <tr><th>Full Name</th><th>Relationship</th><th>Phone / Email</th><th>What Did They Witness?</th></tr>
     <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-  </table><button class="arb" onclick="addRow('${id}-t',4)">+ Add Witness</button>`;
+  </table>
+  <button class="rt-add" onclick="addRow('${id}-t',4)">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    Add Witness
+  </button>`;
 }
 function mkChk(id,opts){
-  return `<div class="ev-g">${opts.map(o=>
-    `<label class="ev-i"><input type="checkbox" name="${id}" value="${xe(o)}"> ${xe(o)}</label>`
+  return `<div class="ev-grid">${opts.map(o=>
+    `<label class="ev-item"><input type="checkbox" name="${id}" value="${xe(o)}"> ${xe(o)}</label>`
   ).join("")}</div>`;
 }
 function addRow(tid,cols){
@@ -695,7 +828,7 @@ function addRow(tid,cols){
 function toggleSec(id){
   const s=document.getElementById("qs-"+id);
   const open=s.classList.toggle("open");
-  document.getElementById("qa-"+id).textContent=open?"▼":"▶";
+  document.getElementById("qa-"+id).innerHTML=open?"&#9660;":"&#9654;";
 }
 function tcond(id,v){
   const el=document.getElementById("cnd-"+id);
@@ -708,7 +841,10 @@ function dkey(){
 }
 function collectFD(){
   const d={};
-  document.querySelectorAll(".fi").forEach(e=>{if(e.id)d[e.id]=e.value;});
+  document.querySelectorAll("input[id],textarea[id],select[id]").forEach(e=>{
+    if(e.id&&(e.tagName==="TEXTAREA"||(e.tagName==="INPUT"&&e.type!=="radio"&&e.type!=="checkbox")||e.tagName==="SELECT"))
+      d[e.id]=e.value;
+  });
   QS.forEach(sec=>sec.fields.forEach(f=>{
     if(f.t==="yn"){const c=document.querySelector(`input[name="${f.id}"]:checked`);if(c)d[f.id]=c.value;}
   }));
@@ -754,7 +890,7 @@ function saveDraft(){
   const t=document.getElementById("decl-out").value;
   if(t) d._text=t;
   localStorage.setItem(dkey(),JSON.stringify(d));
-  document.getElementById("asstat").textContent="Saved ✓";
+  document.getElementById("asstat").textContent="Saved";
   toast("Draft saved");
   refreshDraftBanner();
 }
@@ -766,13 +902,12 @@ function silentSave(){
   const t=document.getElementById("decl-out").value;
   if(t) d._text=t;
   localStorage.setItem(dkey(),JSON.stringify(d));
-  document.getElementById("asstat").textContent="Auto-saved ✓";
+  document.getElementById("asstat").textContent="Auto-saved";
 }
 function refreshDraftBanner(){
   const keys=[];
   for(let i=0;i<localStorage.length;i++){
-    const k=localStorage.key(i);
-    if(k&&k.startsWith("fibi_"))keys.push(k);
+    const k=localStorage.key(i);if(k&&k.startsWith("fibi_"))keys.push(k);
   }
   const banner=document.getElementById("dbanner");
   const pills=document.getElementById("dpills");
@@ -782,23 +917,26 @@ function refreshDraftBanner(){
     try{
       const d=JSON.parse(localStorage.getItem(k)||"{}");
       const dt=d._at?new Date(d._at).toLocaleDateString():"";
-      const cn=d._cn||"Unknown";
-      const on=d._on||"";
-      return `<span class="dpill" onclick="loadDraft('${k}')">${xe(cn)}${on?" · "+xe(on):""}<span class="dt2">${dt}</span></span>`;
+      return `<span class="dpill" onclick="loadDraft('${k}')">${xe(d._cn||"Unknown")}${d._on?" · "+xe(d._on):""}<span class="dpill-date">${dt}</span></span>`;
     }catch(e){return "";}
   }).join("")
-  + `<span class="dno-pill" onclick="clearAllDrafts()">Clear All</span>`;
+  +`<button class="dpill-clear" onclick="clearAllDrafts()">Clear All</button>`;
 }
 function toggleDrafts(){
   const b=document.getElementById("dbanner");
-  if(b.style.display==="none"){refreshDraftBanner();}
-  else{b.style.display="none";}
+  if(b.style.display==="none"){refreshDraftBanner();}else{b.style.display="none";}
 }
 function loadDraft(key){
   try{
     const d=JSON.parse(localStorage.getItem(key)||"{}");
     restoreFD(d);
-    QS.forEach(s=>{const sec=document.getElementById("qs-"+s.id);if(sec&&!sec.classList.contains("open")){sec.classList.add("open");document.getElementById("qa-"+s.id).textContent="▼";}});
+    QS.forEach(s=>{
+      const sec=document.getElementById("qs-"+s.id);
+      if(sec&&!sec.classList.contains("open")){
+        sec.classList.add("open");
+        document.getElementById("qa-"+s.id).innerHTML="&#9660;";
+      }
+    });
     toast("Draft loaded: "+(d._cn||"Unknown"));
   }catch(e){toast("Could not load draft");}
 }
@@ -811,26 +949,26 @@ function clearAllDrafts(){
   toast("All drafts cleared");
 }
 
-// ── VAWA Reference (for AI prompt) ────────────────────────────────
-const VAWA_REF = `Declaration of Ogunbayo Labeeb Ayodeji in Support of VAWA Self-Petition
+// ── VAWA reference style ───────────────────────────────────────────
+const VAWA_REF=`Declaration of Ogunbayo Labeeb Ayodeji in Support of VAWA Self-Petition
 
 1. Introduction and Background
 My name is Ogunbayo Labeeb Ayodeji, born November 14, 1999, in Lagos, Nigeria. I am submitting this declaration in support of my VAWA self-petition. I am seeking protection as a result of the abuse I experienced in my marriage to Keeyahna Aliyah Jordan, a U.S. citizen. What started as a hopeful relationship slowly transformed into one filled with fear, emotional distress, and suffering.
 
 2. Meeting Keeyahna - A False Beginning
-I met my wife, Keeyahna, in the Bronx, New York, in February 2020, during the early months of the COVID-19 pandemic. We began dating in June 2020 and got married on October 20, 2020, in the Bronx, New York.
+I met my wife, Keeyahna, in the Bronx, New York, in February 2020. We began dating in June 2020 and got married on October 20, 2020, in the Bronx, New York.
 
 3. Life After Marriage
-After we got married, we rented an apartment together in the Bronx. At first, things felt balanced as we adjusted to living together. However, after some months, things started to change drastically.
+After we got married, we rented an apartment together in the Bronx. At first things felt balanced, but after some months they changed drastically.
 
 4. Abuse Experienced
-After we got married, things slowly started to change. It began with refusals to help with basic household chores. She had multiple debts. She repeatedly threatened me with deportation, saying things like "I will make sure immigration gets you," or "You will see what happens if you do not send me money." These threats made me feel trapped and powerless.
+After we got married, things slowly started to change. She repeatedly threatened me with deportation, saying "I will make sure immigration gets you." These threats made me feel trapped and powerless. She controlled our finances and refused to fulfill basic responsibilities.
 
 5. Impact on My Mental and Emotional Health
-Because of everything I went through in the marriage, I became deeply sad and emotionally drained. I lived in constant fear, always worried she might call the police or immigration on me. I lost my sense of self-worth, my confidence, and my hope for the future.
+I became deeply sad and emotionally drained. I lived in constant fear. I lost my sense of self-worth, my confidence, and my hope for the future.
 
 6. Why I Am Filing for VAWA
-I am filing this VAWA petition not to get revenge, but to protect myself and find peace. I entered this marriage with love and good intentions. I just want a chance to move forward with my life in safety and dignity.`;
+I am filing this VAWA petition to protect myself and find peace. I entered this marriage with love and good intentions. I just want a chance to move forward with my life in safety and dignity.`;
 
 // ── Prompt builder ─────────────────────────────────────────────────
 function buildPrompt(){
@@ -847,12 +985,8 @@ function buildPrompt(){
         if(f.t==="addrtbl"||f.t==="childtbl"||f.t==="wittbl"){
           const rows=v.filter(r=>r.some(c=>c));
           if(rows.length) lines.push(f.label+": "+rows.map(r=>r.join(" | ")).join("; "));
-        }else if(v.length){
-          lines.push(f.label+": "+v.join(", "));
-        }
-      }else{
-        lines.push(f.label+": "+v.trim());
-      }
+        }else if(v.length){lines.push(f.label+": "+v.join(", "));}
+      }else if(v.toString().trim()){lines.push(f.label+": "+v.toString().trim());}
     });
     if(lines.length) qa+="\n"+sec.title+":\n"+lines.join("\n")+"\n";
   });
@@ -869,7 +1003,7 @@ IMPORTANT INSTRUCTIONS:
 - Do NOT include a signature block or certification
 - Write approximately 1800-2500 words
 
-REFERENCE DECLARATION STYLE (match this structure and tone exactly):
+REFERENCE DECLARATION STYLE (match this structure and tone):
 ---
 ${VAWA_REF}
 ---
@@ -883,26 +1017,26 @@ ${qa}`;
 
 // ── AI Generation ──────────────────────────────────────────────────
 async function generate(){
-  const prov=document.getElementById("prov-sel").value;
-  const model=document.getElementById("model-sel").value;
-  const rawKey=document.getElementById("api-key").value.trim();
-  const apiKey= rawKey || (prov==="deepseek" ? DS_KEY : sessionStorage.getItem("fibi_cl_key") || "");
-  if(!apiKey){toast("Please enter an API key in the settings bar");return;}
-
+  const prov = sessionStorage.getItem("fibi_prov") || "deepseek";
+  const model = sessionStorage.getItem("fibi_model_"+prov) || (prov==="deepseek"?"deepseek-chat":"claude-sonnet-4-6");
+  const apiKey = sessionStorage.getItem("fibi_key_"+prov) || (prov==="deepseek" ? DS_KEY : "");
+  if(!apiKey){
+    toast("Enter an API key in AI Settings");
+    document.getElementById("api-overlay").classList.add("open");
+    return;
+  }
   document.getElementById("gbtn").disabled=true;
   document.getElementById("gspin").style.display="block";
   const stat=document.getElementById("gstat");
   stat.style.display="block";
-  stat.textContent="Sending to "+model+"...";
-
+  stat.textContent="Sending to "+model+"…";
   try{
     let text="";
     if(prov==="deepseek"){
       const r=await fetch("https://api.deepseek.com/v1/chat/completions",{
         method:"POST",
         headers:{"Authorization":"Bearer "+apiKey,"Content-Type":"application/json"},
-        body:JSON.stringify({model,max_tokens:8192,
-          messages:[{role:"user",content:buildPrompt()}]})
+        body:JSON.stringify({model,max_tokens:8192,messages:[{role:"user",content:buildPrompt()}]})
       });
       if(!r.ok){const e=await r.json();throw new Error((e.error&&e.error.message)||("HTTP "+r.status));}
       const data=await r.json();
@@ -923,39 +1057,32 @@ async function generate(){
     document.getElementById("outsec").style.display="block";
     document.getElementById("dlcard").style.display="block";
     wcUpdate();
-    stat.textContent="Generated ✓ ("+text.split(/\s+/).filter(Boolean).length+" words)";
+    stat.textContent="Generated — "+text.split(/\s+/).filter(Boolean).length+" words";
     silentSave();
-    toast("Declaration generated!");
+    toast("Declaration generated");
   }catch(e){
     stat.textContent="Error: "+e.message;
-    toast("Generation failed: "+e.message.slice(0,60));
+    toast("Generation failed");
   }finally{
     document.getElementById("gbtn").disabled=false;
     document.getElementById("gspin").style.display="none";
   }
 }
-function regen(){if(confirm("Regenerate? This will replace the current text.")) generate();}
-function copyText(){
-  navigator.clipboard.writeText(document.getElementById("decl-out").value)
-    .then(()=>toast("Copied to clipboard"));
-}
+function regen(){if(confirm("Regenerate? This will replace the current draft.")) generate();}
+function copyText(){navigator.clipboard.writeText(document.getElementById("decl-out").value).then(()=>toast("Copied to clipboard"));}
 function wcUpdate(){
-  const w=document.getElementById("decl-out").value.split(/\s+/).filter(Boolean).length;
-  document.getElementById("wc").textContent=w+" words";
+  document.getElementById("wc").textContent=document.getElementById("decl-out").value.split(/\s+/).filter(Boolean).length+" words";
 }
 
 // ── DOCX generation ────────────────────────────────────────────────
 function xd(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");}
 function makeDocx(title,text){
-  const paras=text.split("\n");
-  const isHdr=t=>/^\d+\.\s/.test(t)||(t===t.toUpperCase()&&t.trim().length>4);
-  let body="";
-  // Title
-  body+=`<w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>${xd(title)}</w:t></w:r></w:p><w:p/>`;
-  paras.forEach(p=>{
+  const isHdr=t=>/^\d+\.\s/.test(t)||(t.trim()===t.trim().toUpperCase()&&t.trim().length>4);
+  let body=`<w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>${xd(title)}</w:t></w:r></w:p><w:p/>`;
+  text.split("\n").forEach(p=>{
     if(!p.trim()){body+="<w:p/>";return;}
     const h=isHdr(p);
-    const rpr=h?"<w:rPr><w:b/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr>":"<w:rPr><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr>";
+    const rpr=h?`<w:rPr><w:b/><w:sz w:val="22"/><w:szCs w:val="22"/></w:rPr>`:`<w:rPr><w:sz w:val="22"/><w:szCs w:val="22"/></w:rPr>`;
     body+=`<w:p><w:r>${rpr}<w:t xml:space="preserve">${xd(p)}</w:t></w:r></w:p>`;
     if(h) body+="<w:p/>";
   });
@@ -1012,16 +1139,19 @@ function dlPdf(){
   doc.save(safe+"_VAWA_Declaration.pdf");
 }
 
-// ── Toast ─────────────────────────────────────────────────────────
+// ── Toast ──────────────────────────────────────────────────────────
 function toast(msg){
+  document.getElementById("toast-msg").textContent=msg;
   const el=document.getElementById("toast");
-  el.textContent=msg;el.classList.add("on");
+  el.classList.add("on");
   setTimeout(()=>el.classList.remove("on"),2800);
 }
 
-// ── Init ──────────────────────────────────────────────────────────
-loadSettings();renderOffices();renderQ();refreshDraftBanner();
+// ── Init ───────────────────────────────────────────────────────────
+loadApiSettings();
+renderOffices();
+renderQ();
+refreshDraftBanner();
 </script>
-
 </body>
 </html>
