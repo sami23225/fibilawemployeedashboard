@@ -1029,20 +1029,16 @@ function buildPrompt(){
   });
   return `You are a professional immigration paralegal at FIBI Law Firm. Write a complete, compelling VAWA self-petition personal declaration for this client.
 
-INSTRUCTIONS:
+CRITICAL FORMATTING RULES — follow these exactly:
 - Write entirely in first person from the client's perspective
-- Use numbered section headers matching the reference style below
-- Be specific and emotionally compelling using every detail from the questionnaire
-- Show the full progression of abuse and its impact
-- Include all VAWA legal elements: qualifying relationship, shared residence, battery/extreme cruelty, good moral character
-- Maintain a professional but personal, authentic tone
+- Use ONLY plain text — absolutely NO markdown symbols whatsoever
+- Section headers must be formatted exactly like: "1. INTRODUCTION AND PERSONAL BACKGROUND" — a number, period, space, then ALL CAPS title — nothing else before or after
+- Do NOT use pound signs (#), asterisks (*), underscores (_), tildes, backticks, or any other markdown
+- Do NOT use em dashes (—) or en dashes (–) anywhere — use a regular hyphen (-) or a comma instead
+- Each section header must be on its own line with a blank line before and after it
+- Body paragraphs are plain prose, no bullet points, no bold, no italics
 - Do NOT include a signature block or certification
 - Approximately 1800-2500 words
-
-REFERENCE DECLARATION STYLE:
----
-${VAWA_REF}
----
 
 CLIENT: ${cn}
 ABUSER: ${ab}
@@ -1090,18 +1086,25 @@ function wcUpdate(){
   document.getElementById("wc").textContent=document.getElementById("decl-out").value.split(/\s+/).filter(Boolean).length+" words";
 }
 
-// ── Markdown parser for PDF/DOCX ──────────────────────────────────
-// Returns array of {text, level, bold} where level: 0=body,1=h1,2=h2,3=h3
+// ── Text cleaner + line parser for PDF/DOCX ───────────────────────
+// Strips markdown symbols, em/en dashes, returns array of {text,level,bold,hr}
+function cleanText(s){
+  return s
+    .replace(/—/g,"-").replace(/–/g,"-").replace(/‒/g,"-")  // dashes
+    .replace(/\*\*\*(.+?)\*\*\*/g,"$1").replace(/\*\*(.+?)\*\*/g,"$1") // bold/italic
+    .replace(/\*(.+?)\*/g,"$1").replace(/__(.+?)__/g,"$1").replace(/_(.+?)_/g,"$1");
+}
 function parseMd(raw){
   const lines=[];
   raw.split("\n").forEach(ln=>{
-    const h3=/^###\s+(.*)/.exec(ln); if(h3){lines.push({text:h3[1].trim(),level:3,bold:true});return;}
-    const h2=/^##\s+(.*)/.exec(ln);  if(h2){lines.push({text:h2[1].trim(),level:2,bold:true});return;}
-    const h1=/^#\s+(.*)/.exec(ln);   if(h1){lines.push({text:h1[1].trim(),level:1,bold:true});return;}
+    const h3=/^###\s+(.*)/.exec(ln); if(h3){lines.push({text:cleanText(h3[1].trim()),level:3,bold:true});return;}
+    const h2=/^##\s+(.*)/.exec(ln);  if(h2){lines.push({text:cleanText(h2[1].trim()),level:2,bold:true});return;}
+    const h1=/^#\s+(.*)/.exec(ln);   if(h1){lines.push({text:cleanText(h1[1].trim()),level:1,bold:true});return;}
     if(/^---+$/.test(ln.trim())){lines.push({text:"",level:0,bold:false,hr:true});return;}
-    // strip inline bold/italic markers
-    const clean=ln.replace(/\*\*\*(.+?)\*\*\*/g,"$1").replace(/\*\*(.+?)\*\*/g,"$1").replace(/\*(.+?)\*/g,"$1").replace(/__(.+?)__/g,"$1").replace(/_(.+?)_/g,"$1");
-    lines.push({text:clean,level:0,bold:false});
+    // Detect plain numbered section headers like "1. SECTION TITLE" (all caps after number)
+    const nh=/^(\d+\.\s+[A-Z][A-Z\s,&'-]{4,})$/.exec(ln.trim());
+    if(nh){lines.push({text:cleanText(nh[1]),level:3,bold:true});return;}
+    lines.push({text:cleanText(ln),level:0,bold:false});
   });
   return lines;
 }
