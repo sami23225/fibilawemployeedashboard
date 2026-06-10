@@ -1,475 +1,383 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <link rel="icon" type="image/png" href="data:image/png;base64,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"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Declaration Generator &mdash; FIBI Law Firm</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{--dark:#012e44;--mid:#135766;--teal:#34acaa;--teal2:#25878d;--light:#ace4e1;
-      --xlight:#e3f6f5;--bright:#3cbfba;--border:#c8e8e6;--green:#29a87d;}
-    body{font-family:'Georgia','Times New Roman',serif;background:var(--xlight);color:#111;line-height:1.55;}
-
-    /* Header */
-    header{background:var(--dark);display:flex;align-items:center;padding:0 24px 0 0;
-      box-shadow:0 2px 12px rgba(1,46,68,.4);}
-    .hdr-logo{height:68px;padding:10px 18px;display:flex;align-items:center;
-      border-right:1px solid rgba(255,255,255,.12);}
-    .hdr-logo img{height:44px;width:auto;}
-    .hdr-text{padding:0 16px;}
-    .hdr-text h1{font-size:17px;letter-spacing:.3px;color:#fff;}
-    .hdr-text p{font-size:11px;color:var(--light);margin-top:2px;font-family:Arial,sans-serif;}
-    .hdr-right{margin-left:auto;display:flex;gap:8px;}
-    .hdr-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
-      color:rgba(255,255,255,.75);padding:7px 13px;border-radius:5px;cursor:pointer;
-      font-size:12px;font-family:Arial,sans-serif;display:flex;align-items:center;
-      gap:6px;transition:all .15s;}
-    .hdr-btn:hover{background:rgba(255,255,255,.15);color:#fff;}
-
-    /* Modals */
-    .overlay{position:fixed;inset:0;background:rgba(1,46,68,.6);backdrop-filter:blur(3px);
-      z-index:200;display:none;align-items:center;justify-content:center;}
-    .overlay.open{display:flex;}
-    .modal{background:#fff;border-radius:10px;padding:28px;width:460px;max-width:92vw;
-      box-shadow:0 20px 60px rgba(0,0,0,.3);}
-    .modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;}
-    .modal h3{font-size:16px;color:var(--dark);}
-    .modal-close{background:none;border:none;cursor:pointer;color:#aaa;font-size:22px;
-      line-height:1;padding:0;}
-    .modal-close:hover{color:#444;}
-    .modal-sub{font-size:13px;color:#777;font-family:Arial,sans-serif;margin-bottom:18px;}
-
-    /* Layout */
-    .container{max-width:960px;margin:0 auto;padding:28px 20px 60px;}
-
-    /* Cards */
-    .card{background:#fff;border-radius:7px;border:1px solid var(--border);
-      box-shadow:0 1px 5px rgba(1,46,68,.06);margin-bottom:20px;overflow:hidden;}
-    .card-hdr{background:linear-gradient(135deg,var(--dark) 0%,var(--mid) 100%);
-      padding:13px 22px;display:flex;align-items:center;gap:11px;}
-    .step-dot{width:26px;height:26px;border-radius:50%;background:var(--teal);color:#fff;
-      font-family:Arial,sans-serif;font-size:12px;font-weight:700;display:flex;
-      align-items:center;justify-content:center;flex-shrink:0;}
-    .step-dot.done{background:var(--green);}
-    .card-hdr h2{font-size:14px;color:#fff;font-weight:normal;letter-spacing:.2px;}
-    .card-hdr p{font-size:11px;color:var(--light);font-family:Arial,sans-serif;
-      margin-top:1px;opacity:.8;}
-    .card-hdr-right{margin-left:auto;}
-    .card-body{padding:20px 24px;}
-
-    /* Office grid */
-    .office-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;}
-    .off-c{border:2px solid var(--border);border-radius:6px;padding:11px 8px;text-align:center;
-      cursor:pointer;transition:all .15s;background:#fafdfd;}
-    .off-c:hover{border-color:var(--teal);background:var(--xlight);}
-    .off-c.sel{border-color:var(--teal);background:var(--xlight);
-      box-shadow:0 0 0 3px rgba(52,172,170,.18);}
-    .off-c .off-name{font-size:12px;font-weight:700;color:var(--dark);font-family:Arial,sans-serif;}
-    .off-c .off-loc{font-size:10px;color:var(--mid);font-family:Arial,sans-serif;margin-top:3px;}
-
-    /* Search */
-    .search-wrap{position:relative;margin-bottom:10px;}
-    .search-wrap input{width:100%;padding:9px 13px 9px 35px;border:1.5px solid #ccd8d8;
-      border-radius:5px;font-size:14px;font-family:inherit;background:#fafefe;transition:border-color .15s;}
-    .search-wrap input:focus{outline:none;border-color:var(--teal);}
-    .search-wrap input:disabled{background:#f5f5f5;color:#999;cursor:not-allowed;}
-    .search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);
-      color:var(--teal2);pointer-events:none;}
-    #sr{border:1px solid var(--border);border-radius:5px;overflow:hidden;display:none;
-      box-shadow:0 4px 12px rgba(1,46,68,.08);}
-    .sri{padding:10px 13px;cursor:pointer;display:flex;justify-content:space-between;
-      align-items:center;border-bottom:1px solid #edf5f5;transition:background .1s;}
-    .sri:last-child{border-bottom:none;}
-    .sri:hover{background:var(--xlight);}
-    .sri-name{font-weight:700;font-size:13px;color:var(--dark);}
-    .sri-meta{font-size:11px;color:#888;font-family:Arial,sans-serif;margin-top:2px;}
-    .sri-office{font-size:11px;color:var(--mid);font-family:Arial,sans-serif;}
-
-    /* Selected client */
-    .sel-client{background:#f0faf7;border:1px solid #a8ddd0;border-radius:5px;
-      padding:12px 16px;display:none;margin-top:8px;}
-    .sel-client .cli-name{font-weight:700;font-size:15px;color:var(--dark);}
-    .sel-client .cli-meta{font-size:12px;color:#666;font-family:Arial,sans-serif;margin-top:3px;}
-
-    /* Declaration type cards */
-    .decl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-    .dtc{border:2px solid var(--border);border-radius:6px;padding:16px;cursor:pointer;
-      transition:all .15s;background:#fafdfd;position:relative;text-align:center;}
-    .dtc:hover:not(.locked){border-color:var(--teal);background:var(--xlight);}
-    .dtc.sel{border-color:var(--teal);background:var(--xlight);
-      box-shadow:0 0 0 3px rgba(52,172,170,.18);}
-    .dtc.locked{opacity:.45;cursor:not-allowed;}
-    .dtc .dt-icon{color:var(--teal2);display:flex;justify-content:center;margin-bottom:8px;}
-    .dtc .dt-name{font-size:13px;font-weight:700;color:var(--dark);}
-    .dtc .dt-sub{font-size:11px;color:#777;font-family:Arial,sans-serif;margin-top:4px;}
-    .badge{display:inline-block;padding:3px 9px;border-radius:12px;font-size:11px;
-      font-weight:700;font-family:Arial,sans-serif;margin-top:8px;}
-    .b-av{background:#d6f4ee;color:#1a6e50;}
-    .b-cs{background:#f0f0f0;color:#888;}
-
-    /* Draft banner */
-    #dbanner{background:#fff8e6;border:1px solid #e8cc6a;border-radius:6px;
-      padding:12px 16px;margin-bottom:18px;display:none;}
-    .db-title{font-size:12px;font-weight:700;color:#7a5f00;font-family:Arial,sans-serif;
-      margin-bottom:8px;display:flex;align-items:center;gap:6px;}
-    .dpills{display:flex;flex-wrap:wrap;gap:7px;}
-    .dpill{background:#fff;border:1px solid #e8cc6a;border-radius:20px;padding:5px 13px;
-      font-size:12px;cursor:pointer;color:#5a4500;font-family:Arial,sans-serif;
-      display:flex;align-items:center;gap:5px;transition:background .1s;}
-    .dpill:hover{background:#fffbe8;}
-    .dpill-date{color:#bbb;font-size:10px;}
-    .dpill-clear{background:none;border:1px dashed #e8cc6a;border-radius:20px;
-      padding:5px 13px;font-size:12px;cursor:pointer;color:#bbb;
-      font-family:Arial,sans-serif;transition:all .1s;}
-    .dpill-clear:hover{border-color:#c8a030;color:#9a7000;}
-
-    /* Questionnaire */
-    .qsec{border:1px solid var(--border);border-radius:6px;margin-bottom:10px;overflow:hidden;}
-    .qsh{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;
-      cursor:pointer;background:#fafdfd;user-select:none;transition:background .1s;}
-    .qsh:hover{background:var(--xlight);}
-    .qst{font-weight:700;font-size:13px;color:var(--dark);font-family:Arial,sans-serif;}
-    .q-arrow{color:var(--teal2);font-size:12px;font-family:Arial,sans-serif;}
-    .qsb{padding:16px;display:none;border-top:1px solid var(--border);}
-    .qsec.open .qsb{display:block;}
-    .qsec.open .qsh{background:var(--xlight);}
-
-    /* Form fields */
-    .fr{margin-bottom:14px;}
-    .fr label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;
-      font-weight:700;color:var(--mid);font-family:Arial,sans-serif;margin-bottom:4px;}
-    .fr input,.fr textarea,.fr select{padding:9px 12px;border:1.5px solid #ccd8d8;
-      border-radius:5px;font-size:13px;font-family:inherit;background:#fafefe;
-      width:100%;transition:border-color .15s;}
-    .fr input:focus,.fr textarea:focus,.fr select:focus{outline:none;border-color:var(--teal);}
-    .fr textarea{resize:vertical;min-height:80px;}
-    .fr-hint{font-size:11px;color:#888;margin-top:3px;font-family:Arial,sans-serif;}
-    .fr2{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
-    .yn{display:flex;gap:14px;margin-top:4px;}
-    .yn label{display:flex;align-items:center;gap:5px;font-size:13px;
-      font-family:Arial,sans-serif;cursor:pointer;font-weight:normal;text-transform:none;
-      letter-spacing:0;color:#333;}
-    .cond{margin-top:10px;padding:13px;background:#f5fbfa;border-radius:5px;
-      border-left:3px solid var(--teal);display:none;}
-    .cond.vis{display:block;}
-
-    /* Evidence checklist */
-    .ev-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
-    .ev-item{display:flex;align-items:flex-start;gap:7px;font-size:12px;
-      font-family:Arial,sans-serif;cursor:pointer;line-height:1.4;}
-    .ev-item input{margin-top:2px;cursor:pointer;flex-shrink:0;}
-
-    /* Row tables */
-    .rt{width:100%;border-collapse:collapse;font-size:12px;font-family:Arial,sans-serif;
-      margin-bottom:8px;}
-    .rt th{background:var(--dark);color:#fff;padding:7px 9px;text-align:left;
-      font-weight:normal;font-size:11px;}
-    .rt td{padding:3px;border-bottom:1px solid var(--border);}
-    .rt td input{width:100%;border:none;padding:5px 7px;background:transparent;
-      font-size:12px;font-family:inherit;}
-    .rt td input:focus{outline:none;background:#f5fbfa;border-radius:3px;}
-    .rt-add{font-size:11px;color:var(--teal2);background:none;border:1px dashed var(--teal);
-      padding:4px 10px;border-radius:4px;cursor:pointer;font-family:Arial,sans-serif;
-      display:flex;align-items:center;gap:5px;}
-    .rt-add:hover{background:var(--xlight);}
-
-    /* Buttons */
-    .btn{padding:10px 20px;border:none;border-radius:5px;font-size:13px;
-      font-family:Arial,sans-serif;font-weight:700;cursor:pointer;transition:all .15s;
-      display:inline-flex;align-items:center;gap:7px;}
-    .btn-primary{background:var(--dark);color:#fff;}
-    .btn-primary:hover:not(:disabled){background:#001e2e;}
-    .btn-primary:disabled{background:#aaa;cursor:not-allowed;}
-    .btn-teal{background:var(--teal);color:#fff;}
-    .btn-teal:hover:not(:disabled){background:var(--teal2);}
-    .btn-teal:disabled{background:#aaa;cursor:not-allowed;}
-    .btn-sm{padding:7px 14px;font-size:12px;}
-    .btn-ghost{background:none;border:1px solid var(--border);color:#555;
-      font-family:Arial,sans-serif;font-size:12px;padding:6px 13px;}
-    .btn-ghost:hover{background:var(--xlight);border-color:var(--teal);color:var(--dark);}
-
-    /* Info box */
-    .info{background:var(--xlight);border:1px solid var(--light);border-radius:5px;
-      padding:11px 15px;font-size:13px;font-family:Arial,sans-serif;color:var(--dark);
-      margin-bottom:14px;line-height:1.6;}
-
-    /* Generate section */
-    .gen-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-      background:#f5fbfa;border-radius:6px;padding:14px;margin-bottom:14px;
-      border:1px solid var(--border);}
-    .spin{width:20px;height:20px;border:3px solid var(--border);border-top-color:var(--teal);
-      border-radius:50%;animation:sp .7s linear infinite;display:none;}
-    @keyframes sp{to{transform:rotate(360deg);}}
-    #gstat{font-size:13px;color:#666;margin-top:8px;font-family:Arial,sans-serif;
-      display:none;padding:0 2px;}
-    #decl-out{width:100%;min-height:440px;padding:16px;
-      border:1.5px solid #ccd8d8;border-radius:5px;
-      font-family:'Georgia','Times New Roman',serif;font-size:13px;
-      line-height:1.75;resize:vertical;background:#fefefe;}
-    #decl-out:focus{outline:none;border-color:var(--teal);}
-    .wc-bar{display:flex;justify-content:space-between;align-items:center;
-      margin-top:6px;font-size:11px;color:#888;font-family:Arial,sans-serif;}
-
-    /* Download */
-    .dl-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-    .dlc{border:1px solid var(--border);border-radius:6px;padding:20px;text-align:center;}
-    .dlc .dl-icon{color:var(--teal2);display:flex;justify-content:center;margin-bottom:10px;}
-    .dlc .dl-name{font-weight:700;font-size:14px;color:var(--dark);margin-bottom:4px;}
-    .dlc .dl-sub{font-size:11px;color:#888;font-family:Arial,sans-serif;margin-bottom:14px;}
-
-    /* Auto-save status */
-    #asstat{font-size:11px;color:var(--teal2);font-family:Arial,sans-serif;}
-
-    /* Progress bar */
-    .prog-wrap{margin-top:12px;}
-    .prog-bar{background:#dff0ee;border-radius:4px;height:7px;overflow:hidden;}
-    .prog-fill{background:linear-gradient(90deg,var(--teal2),var(--bright));height:100%;
-      transition:width .3s;border-radius:4px;width:0%;}
-
-    /* Toast */
-    .toast{position:fixed;bottom:24px;right:24px;background:var(--dark);color:#fff;
-      padding:11px 18px;border-radius:6px;font-size:13px;font-family:Arial,sans-serif;
-      opacity:0;pointer-events:none;transition:opacity .3s;z-index:999;
-      display:flex;align-items:center;gap:8px;}
-    .toast.on{opacity:1;}
-
-    /* Form labels in modals */
-    .fg{display:flex;flex-direction:column;gap:4px;margin-bottom:12px;}
-    .fg label{font-size:11px;text-transform:uppercase;letter-spacing:.4px;font-weight:700;
-      color:var(--mid);font-family:Arial,sans-serif;}
-    .fg input,.fg select{padding:9px 12px;border:1.5px solid #ccd8d8;border-radius:5px;
-      font-size:14px;font-family:inherit;background:#fafefe;transition:border-color .15s;}
-    .fg input:focus,.fg select:focus{outline:none;border-color:var(--teal);}
-
-    /* Model selector row */
-    .model-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-
-    @media(max-width:640px){
-      .office-grid{grid-template-columns:repeat(3,1fr);}
-      .decl-grid{grid-template-columns:1fr;}
-      .fr2{grid-template-columns:1fr;}
-      .dl-grid{grid-template-columns:1fr;}
-      .ev-grid{grid-template-columns:1fr;}
-      .model-row{grid-template-columns:1fr;}
-    }
-  </style>
+<meta charset="UTF-8"/>
+<link rel="icon" type="image/png" href="data:image/png;base64,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"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Declaration Generator — FIBI Law</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--dark:#012e44;--mid:#135766;--teal:#34acaa;--teal2:#25878d;
+  --light:#ace4e1;--xlight:#e3f6f5;--bright:#3cbfba;--border:#c8e8e6;
+  --green:#27ae60;--amber:#e8a020;--red:#c0392b}
+body{font-family:'Georgia','Times New Roman',serif;background:var(--xlight);color:#111;line-height:1.55;min-height:100vh}
+header{background:var(--dark);display:flex;align-items:center;padding:0 22px 0 0;
+  box-shadow:0 2px 14px rgba(1,46,68,.45);position:sticky;top:0;z-index:100}
+.hdr-logo{height:66px;padding:10px 18px;display:flex;align-items:center;border-right:1px solid rgba(255,255,255,.12)}
+.hdr-logo img{height:42px;width:auto}
+.hdr-text{padding:0 16px}
+.hdr-text h1{font-size:16px;letter-spacing:.3px;color:#fff}
+.hdr-text p{font-size:11px;color:var(--light);margin-top:2px;font-family:Arial,sans-serif}
+.hdr-right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.hdr-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+  color:rgba(255,255,255,.75);padding:7px 14px;border-radius:5px;cursor:pointer;
+  font-size:12px;font-family:Arial,sans-serif;display:flex;align-items:center;gap:6px;transition:all .15s}
+.hdr-btn:hover{background:rgba(255,255,255,.16);color:#fff}
+.wizard{background:var(--dark);border-top:1px solid rgba(255,255,255,.08);
+  padding:12px 24px;display:flex;align-items:center;gap:0;overflow-x:auto}
+.wz-step{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.wz-dot{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.12);
+  border:2px solid rgba(255,255,255,.25);color:rgba(255,255,255,.5);
+  font-family:Arial,sans-serif;font-size:12px;font-weight:700;display:flex;
+  align-items:center;justify-content:center;transition:all .3s;flex-shrink:0}
+.wz-dot.active{background:var(--teal);border-color:var(--teal);color:#fff;box-shadow:0 0 0 3px rgba(52,172,170,.3)}
+.wz-dot.done{background:var(--green);border-color:var(--green);color:#fff}
+.wz-label{font-size:11px;font-family:Arial,sans-serif;color:rgba(255,255,255,.45);white-space:nowrap;transition:color .3s}
+.wz-label.active{color:rgba(255,255,255,.9)}
+.wz-label.done{color:var(--light)}
+.wz-line{width:32px;height:2px;background:rgba(255,255,255,.1);flex-shrink:0;margin:0 4px}
+.wz-line.done{background:var(--green)}
+.container{max-width:940px;margin:0 auto;padding:26px 18px 70px}
+.card{background:#fff;border-radius:8px;border:1px solid var(--border);
+  box-shadow:0 1px 6px rgba(1,46,68,.06);margin-bottom:22px;overflow:hidden}
+.card-hdr{background:linear-gradient(135deg,var(--dark) 0%,var(--mid) 100%);
+  padding:14px 22px;display:flex;align-items:center;gap:12px}
+.card-icon{color:rgba(255,255,255,.7);flex-shrink:0}
+.card-hdr-text h2{font-size:14px;color:#fff;font-weight:600;letter-spacing:.2px}
+.card-hdr-text p{font-size:11px;color:var(--light);margin-top:2px;font-family:Arial,sans-serif;opacity:.8}
+.card-hdr-right{margin-left:auto}
+.card-body{padding:22px 24px}
+.off-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.off-card{border:2px solid var(--border);border-radius:7px;padding:13px 8px 11px;
+  text-align:center;cursor:pointer;transition:all .15s;background:#fafdfd}
+.off-card:hover{border-color:var(--teal2);background:var(--xlight)}
+.off-card.sel{border-color:var(--teal);background:#e8f9f8;box-shadow:0 0 0 3px rgba(52,172,170,.2)}
+.off-card .off-icon{color:var(--teal2);display:flex;justify-content:center;margin-bottom:6px}
+.off-card .off-name{font-size:12px;font-weight:700;color:var(--dark);font-family:Arial,sans-serif}
+.off-card .off-state{font-size:10px;color:var(--mid);font-family:Arial,sans-serif;margin-top:2px}
+.off-load{display:none;font-size:11px;color:var(--teal2);font-family:Arial,sans-serif;margin-top:8px;text-align:center}
+.search-wrap{position:relative;margin-top:14px}
+.search-wrap input{width:100%;padding:10px 13px 10px 37px;border:1.5px solid #ccd8d8;
+  border-radius:6px;font-size:14px;font-family:inherit;background:#fafefe;transition:border-color .15s}
+.search-wrap input:focus{outline:none;border-color:var(--teal)}
+.search-wrap input:disabled{background:#f3f3f3;color:#bbb;cursor:not-allowed}
+.s-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--teal2);pointer-events:none}
+.s-count{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:11px;color:#aaa;font-family:Arial,sans-serif}
+#sr{border:1px solid var(--border);border-radius:6px;overflow:hidden;
+  display:none;box-shadow:0 4px 16px rgba(1,46,68,.1);max-height:260px;overflow-y:auto;margin-top:4px}
+.sri{padding:11px 14px;cursor:pointer;display:flex;justify-content:space-between;
+  align-items:center;border-bottom:1px solid #f0f7f7;transition:background .1s}
+.sri:last-child{border-bottom:none}
+.sri:hover{background:#f2fbfa}
+.sri-name{font-weight:700;font-size:13px;color:var(--dark)}
+.sri-meta{font-size:11px;color:#888;font-family:Arial,sans-serif;margin-top:2px}
+.sri-badge{font-size:10px;font-family:Arial,sans-serif;background:var(--xlight);
+  color:var(--mid);border:1px solid var(--border);border-radius:3px;padding:2px 7px;white-space:nowrap}
+.no-res{padding:14px;text-align:center;color:#aaa;font-size:13px;font-family:Arial,sans-serif}
+.cli-panel{background:linear-gradient(135deg,#e8faf8 0%,#f0fdfc 100%);
+  border:1.5px solid var(--teal);border-radius:7px;padding:14px 18px;
+  display:none;margin-top:10px;position:relative}
+.cli-panel .cli-name{font-size:16px;font-weight:700;color:var(--dark)}
+.cli-panel .cli-meta{font-size:12px;color:#555;font-family:Arial,sans-serif;margin-top:4px}
+.cli-change{position:absolute;top:12px;right:14px;background:none;
+  border:1px solid var(--border);border-radius:4px;padding:5px 11px;
+  font-size:11px;cursor:pointer;color:#666;font-family:Arial,sans-serif;transition:all .1s}
+.cli-change:hover{border-color:var(--teal);color:var(--teal2)}
+.decl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.dtc{border:2px solid var(--border);border-radius:7px;padding:18px 14px;
+  cursor:pointer;transition:all .15s;background:#fafdfd;text-align:center}
+.dtc:hover:not(.locked){border-color:var(--teal2);background:var(--xlight)}
+.dtc.sel{border-color:var(--teal);background:#e8faf8;box-shadow:0 0 0 3px rgba(52,172,170,.2)}
+.dtc.locked{opacity:.4;cursor:not-allowed}
+.dtc .dt-icon{color:var(--teal2);display:flex;justify-content:center;margin-bottom:9px}
+.dtc .dt-name{font-size:13px;font-weight:700;color:var(--dark)}
+.dtc .dt-sub{font-size:11px;color:#777;font-family:Arial,sans-serif;margin-top:4px}
+.badge{display:inline-block;padding:3px 9px;border-radius:10px;font-size:11px;font-weight:700;font-family:Arial,sans-serif;margin-top:8px}
+.b-av{background:#d5f3eb;color:#1a6e50}
+.b-cs{background:#f0f0f0;color:#999}
+.draft-panel{background:#fff;border:1px solid var(--border);border-radius:7px;overflow:hidden;display:none;margin-bottom:22px}
+.draft-panel.open{display:block}
+.draft-hdr{background:var(--dark);padding:11px 16px;display:flex;align-items:center;justify-content:space-between}
+.draft-hdr span{color:#fff;font-size:13px;font-family:Arial,sans-serif;font-weight:700;display:flex;align-items:center;gap:7px}
+.draft-hdr .dhclose{background:none;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:18px;line-height:1;padding:0}
+.draft-hdr .dhclose:hover{color:#fff}
+.draft-search{padding:10px 12px;border-bottom:1px solid var(--border);position:relative}
+.draft-search input{width:100%;padding:7px 10px 7px 30px;border:1.5px solid #ccd8d8;border-radius:5px;font-size:12px;font-family:Arial,sans-serif}
+.draft-search input:focus{outline:none;border-color:var(--teal)}
+.ds-icon{position:absolute;left:22px;top:50%;transform:translateY(-50%);color:var(--teal2)}
+.draft-body{max-height:320px;overflow-y:auto}
+.draft-item{padding:11px 16px;border-bottom:1px solid #f0f7f7;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:flex-start;transition:background .1s}
+.draft-item:last-child{border-bottom:none}
+.draft-item:hover{background:#f2fbfa}
+.di-name{font-size:13px;font-weight:700;color:var(--dark)}
+.di-meta{font-size:11px;color:#888;font-family:Arial,sans-serif;margin-top:2px}
+.di-date{font-size:10px;color:#bbb;font-family:Arial,sans-serif;white-space:nowrap;margin-left:10px;flex-shrink:0}
+.draft-empty{padding:20px;text-align:center;color:#aaa;font-size:13px;font-family:Arial,sans-serif}
+.qsec{border:1px solid var(--border);border-radius:6px;margin-bottom:8px;overflow:hidden}
+.qsh{display:flex;align-items:center;padding:11px 16px;cursor:pointer;
+  background:#fafdfd;user-select:none;transition:background .1s;gap:10px}
+.qsh:hover{background:var(--xlight)}
+.qsec.open .qsh{background:var(--xlight)}
+.qsh-num{width:22px;height:22px;border-radius:50%;background:var(--border);
+  color:var(--mid);font-size:11px;font-weight:700;font-family:Arial,sans-serif;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.qsec.open .qsh-num{background:var(--teal);color:#fff}
+.qsh-title{font-size:13px;font-weight:700;color:var(--dark);font-family:Arial,sans-serif;flex:1}
+.qsh-arrow{color:var(--teal2);font-size:12px;font-family:Arial,sans-serif;flex-shrink:0}
+.qsb{padding:16px 20px;display:none;border-top:1px solid var(--border)}
+.qsec.open .qsb{display:block}
+.fr{margin-bottom:14px}
+.fr label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.4px;
+  font-weight:700;color:var(--mid);font-family:Arial,sans-serif;margin-bottom:4px}
+.fr input,.fr textarea,.fr select{
+  padding:9px 12px;border:1.5px solid #ccd8d8;border-radius:5px;
+  font-size:13px;font-family:inherit;background:#fafefe;width:100%;transition:border-color .15s}
+.fr input:focus,.fr textarea:focus,.fr select:focus{outline:none;border-color:var(--teal)}
+.fr textarea{resize:vertical;min-height:80px}
+.fr-hint{font-size:11px;color:#999;margin-top:3px;font-family:Arial,sans-serif}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.yn{display:flex;gap:16px;margin-top:4px}
+.yn label{display:flex;align-items:center;gap:5px;font-size:13px;
+  font-family:Arial,sans-serif;cursor:pointer;font-weight:normal;text-transform:none;letter-spacing:0;color:#333}
+.cond{margin-top:8px;padding:13px 14px;background:#f5fbfa;border-radius:5px;border-left:3px solid var(--teal);display:none}
+.cond.vis{display:block}
+.rt{width:100%;border-collapse:collapse;font-size:12px;font-family:Arial,sans-serif;margin-bottom:6px}
+.rt th{background:var(--dark);color:#fff;padding:7px 9px;text-align:left;font-weight:600;font-size:11px}
+.rt td{padding:3px;border-bottom:1px solid var(--border)}
+.rt td input{width:100%;border:none;padding:5px 7px;background:transparent;font-size:12px;font-family:inherit}
+.rt td input:focus{outline:none;background:#f3fbfa;border-radius:3px}
+.rt-add{font-size:11px;color:var(--teal2);background:none;border:1px dashed var(--teal);
+  padding:4px 10px;border-radius:4px;cursor:pointer;font-family:Arial,sans-serif;
+  display:inline-flex;align-items:center;gap:5px;transition:all .1s}
+.rt-add:hover{background:var(--xlight)}
+.ev-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.ev-item{display:flex;align-items:flex-start;gap:7px;font-size:12px;
+  font-family:Arial,sans-serif;cursor:pointer;line-height:1.4;padding:4px 6px;border-radius:4px;transition:background .1s}
+.ev-item:hover{background:#f5fbfa}
+.ev-item input{margin-top:2px;flex-shrink:0;cursor:pointer}
+.gen-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  background:#f5fbfa;border-radius:6px;padding:14px 16px;margin-bottom:14px;border:1px solid var(--border)}
+.spin{width:20px;height:20px;border:3px solid var(--border);border-top-color:var(--teal);
+  border-radius:50%;animation:sp .7s linear infinite;display:none;flex-shrink:0}
+@keyframes sp{to{transform:rotate(360deg)}}
+#gstat{font-size:12px;color:#666;font-family:Arial,sans-serif;padding:0 2px}
+#decl-out{width:100%;min-height:440px;padding:16px;border:1.5px solid #ccd8d8;border-radius:5px;
+  font-family:'Georgia','Times New Roman',serif;font-size:13px;line-height:1.8;resize:vertical;background:#fefefe}
+#decl-out:focus{outline:none;border-color:var(--teal)}
+.wc-row{display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:#aaa;font-family:Arial,sans-serif}
+.dl-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dlc{border:1px solid var(--border);border-radius:7px;padding:20px;text-align:center}
+.dlc .dl-icon{color:var(--teal2);display:flex;justify-content:center;margin-bottom:10px}
+.dlc .dl-name{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.dlc .dl-sub{font-size:11px;color:#888;font-family:Arial,sans-serif;margin-bottom:14px}
+#as-stat{font-size:11px;font-family:Arial,sans-serif;display:flex;align-items:center;gap:5px}
+#as-stat.saving{color:var(--teal2)}
+#as-stat.saved{color:var(--green)}
+#as-stat.unsaved{color:var(--amber)}
+.btn{padding:10px 20px;border:none;border-radius:5px;font-size:13px;
+  font-family:Arial,sans-serif;font-weight:700;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:7px}
+.btn-primary{background:var(--dark);color:#fff}
+.btn-primary:hover:not(:disabled){background:#011e30}
+.btn-primary:disabled{background:#aaa;cursor:not-allowed}
+.btn-teal{background:var(--teal);color:#fff}
+.btn-teal:hover:not(:disabled){background:var(--teal2)}
+.btn-teal:disabled{background:#aaa;cursor:not-allowed}
+.btn-sm{padding:7px 13px;font-size:12px}
+.btn-ghost{background:none;border:1px solid #d0e0e0;color:#555;font-family:Arial,sans-serif;font-size:12px;padding:7px 13px}
+.btn-ghost:hover{background:var(--xlight);border-color:var(--teal);color:var(--dark)}
+.btn-danger{background:none;border:1px solid #fcc;color:var(--red);font-family:Arial,sans-serif;font-size:12px;padding:7px 13px}
+.btn-danger:hover{background:#fff5f5}
+.toast{position:fixed;bottom:22px;right:22px;background:var(--dark);color:#fff;
+  padding:11px 18px;border-radius:6px;font-size:13px;font-family:Arial,sans-serif;
+  opacity:0;pointer-events:none;transition:opacity .3s;z-index:999;
+  display:flex;align-items:center;gap:8px;min-width:200px}
+.toast.on{opacity:1}
+.toast.err{background:var(--red)}
+@media(max-width:640px){
+  .off-grid{grid-template-columns:repeat(3,1fr)}
+  .decl-grid{grid-template-columns:1fr}
+  .fr2{grid-template-columns:1fr}
+  .dl-grid{grid-template-columns:1fr}
+  .ev-grid{grid-template-columns:1fr}
+  .wizard{padding:10px 14px}
+  .wz-label{display:none}
+  .wz-line{width:20px}
+}
+</style>
 </head>
 <body>
-
-<!-- API Settings Modal -->
-<div class="overlay" id="api-overlay">
-  <div class="modal">
-    <div class="modal-head">
-      <h3>AI Generation Settings</h3>
-      <button class="modal-close" onclick="closeApi()">&#215;</button>
-    </div>
-    <div class="modal-sub">Configure the AI provider and API key for declaration generation</div>
-    <div class="fg">
-      <label>AI Provider</label>
-      <select id="prov-sel" onchange="provChange()">
-        <option value="deepseek">DeepSeek (Default &mdash; pre-configured)</option>
-        <option value="claude">Claude (Anthropic)</option>
-      </select>
-    </div>
-    <div class="model-row">
-      <div class="fg">
-        <label id="key-lbl">API Key</label>
-        <input type="password" id="api-key" placeholder="Auto-filled">
-      </div>
-      <div class="fg">
-        <label>Model</label>
-        <select id="model-sel">
-          <option value="deepseek-chat">DeepSeek V3 (Best)</option>
-          <option value="deepseek-reasoner">DeepSeek R1 (Reasoning)</option>
-        </select>
-      </div>
-    </div>
-    <button class="btn btn-teal" style="width:100%;justify-content:center;" onclick="saveApiSettings()">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Save Settings
-    </button>
-  </div>
-</div>
-
-<!-- Header -->
 <header>
-  <div class="hdr-logo">
-    <img src="data:image/webp;base64,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" alt="FIBI Law"/>
-  </div>
+  <div class="hdr-logo"><img src="data:image/webp;base64,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" alt="FIBI Law"/></div>
   <div class="hdr-text">
     <h1>Declaration Generator</h1>
-    <p>FIBI Law Firm &middot; VAWA &amp; Asylum Declaration Drafting Tool</p>
+    <p>FIBI Law Firm &middot; VAWA &amp; Asylum Declaration Drafting</p>
   </div>
   <div class="hdr-right">
-    <button class="hdr-btn" onclick="toggleDrafts()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Saved Drafts
-    </button>
-    <button class="hdr-btn" onclick="document.getElementById('api-overlay').classList.add('open')">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> AI Settings
+    <button class="hdr-btn" id="drafts-btn" onclick="toggleDraftPanel()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+      Saved Drafts
+      <span id="draft-count" style="background:var(--teal);color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;display:none"></span>
     </button>
   </div>
 </header>
-
-<div class="container">
-
-<!-- Draft banner -->
-<div id="dbanner">
-  <div class="db-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg> Saved Drafts &mdash; click to resume</div>
-  <div class="dpills" id="dpills"></div>
+<div class="wizard">
+  <div class="wz-step"><div class="wz-dot active" id="wz1">1</div><span class="wz-label active" id="wzl1">Office &amp; Client</span></div>
+  <div class="wz-line" id="wzline1"></div>
+  <div class="wz-step"><div class="wz-dot" id="wz2">2</div><span class="wz-label" id="wzl2">Declaration Type</span></div>
+  <div class="wz-line" id="wzline2"></div>
+  <div class="wz-step"><div class="wz-dot" id="wz3">3</div><span class="wz-label" id="wzl3">Questionnaire</span></div>
+  <div class="wz-line" id="wzline3"></div>
+  <div class="wz-step"><div class="wz-dot" id="wz4">4</div><span class="wz-label" id="wzl4">Generate</span></div>
+  <div class="wz-line" id="wzline4"></div>
+  <div class="wz-step"><div class="wz-dot" id="wz5">5</div><span class="wz-label" id="wzl5">Download</span></div>
 </div>
-
-<!-- Step 1: Office & Client -->
+<div class="container">
+<div class="draft-panel" id="draft-panel">
+  <div class="draft-hdr">
+    <span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+      Saved Drafts &mdash; All Offices
+    </span>
+    <button class="dhclose" onclick="toggleDraftPanel()">&times;</button>
+  </div>
+  <div class="draft-search">
+    <svg class="ds-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="ds-search" placeholder="Search drafts by client name&hellip;" oninput="filterDrafts(this.value)">
+  </div>
+  <div class="draft-body" id="draft-body"><div class="draft-empty" id="draft-empty">Loading&hellip;</div></div>
+</div>
 <div class="card">
   <div class="card-hdr">
-    <div class="step-dot" id="d1">1</div>
-    <div>
-      <h2>Select Office &amp; Client</h2>
-      <p>Choose an office, then search for the client by name or A-Number</p>
-    </div>
+    <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+    <div class="card-hdr-text"><h2>Select Office &amp; Client</h2><p>Choose your office, then search for the client</p></div>
   </div>
   <div class="card-body">
-    <div class="office-grid" id="off-grid"></div>
+    <div class="off-grid" id="off-grid"></div>
+    <p class="off-load" id="off-load">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:sp .7s linear infinite;display:inline-block"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
+      Loading clients&hellip;
+    </p>
     <div class="search-wrap">
-      <span class="search-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-      <input type="text" id="csearch" placeholder="Select an office first&hellip;"
-             oninput="onSearch(this.value)" disabled>
+      <svg class="s-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="csearch" placeholder="Select an office first&hellip;" disabled oninput="onSearch(this.value)">
+      <span class="s-count" id="s-count"></span>
     </div>
     <div id="sr"></div>
-    <div class="sel-client" id="selbox">
-      <div class="cli-name" id="sel-cn">&mdash;</div>
-      <div class="cli-meta" id="sel-cm">&mdash;</div>
-      <button class="btn btn-ghost btn-sm" style="margin-top:10px;" onclick="clearClient()">Change Client</button>
+    <div class="cli-panel" id="cli-panel">
+      <div class="cli-name" id="cli-name">&mdash;</div>
+      <div class="cli-meta" id="cli-meta">&mdash;</div>
+      <button class="cli-change" onclick="clearClient()">Change</button>
     </div>
   </div>
 </div>
-
-<!-- Step 2: Declaration Type -->
 <div class="card">
   <div class="card-hdr">
-    <div class="step-dot" id="d2">2</div>
-    <div>
-      <h2>Select Declaration Type</h2>
-      <p>VAWA is available now &mdash; additional types coming soon</p>
-    </div>
+    <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v18"/><path d="M3 9l9-6 9 6"/><path d="M5 9l7 12M19 9l-7 12"/></svg></div>
+    <div class="card-hdr-text"><h2>Declaration Type</h2><p>VAWA is available now &mdash; additional types coming soon</p></div>
   </div>
   <div class="card-body">
     <div class="decl-grid">
       <div class="dtc sel" id="dt-vawa" onclick="pickDecl('vawa')">
-        <div class="dt-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v18"/><path d="M3 9l9-6 9 6"/><path d="M5 9l7 12M19 9l-7 12"/></svg></div>
-        <div class="dt-name">VAWA Self-Petition</div>
-        <div class="dt-sub">I-360 Personal Declaration</div>
-        <div><span class="badge b-av">Available</span></div>
+        <div class="dt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v18"/><path d="M3 9l9-6 9 6"/><path d="M5 9l7 12M19 9l-7 12"/></svg></div>
+        <div class="dt-name">VAWA Self-Petition</div><div class="dt-sub">I-360 Personal Declaration</div>
+        <span class="badge b-av">Available</span>
       </div>
       <div class="dtc locked">
-        <div class="dt-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="15"/><path d="M2 7l10-5 10 5"/><path d="M9 22V12h6v10"/></svg></div>
-        <div class="dt-name">Asylum &mdash; Political</div>
-        <div class="dt-sub">Political persecution declaration</div>
-        <div><span class="badge b-cs"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Coming Soon</span></div>
+        <div class="dt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="15"/><path d="M2 7l10-5 10 5"/><path d="M9 22V12h6v10"/></svg></div>
+        <div class="dt-name">Asylum &mdash; Political</div><div class="dt-sub">Political persecution</div>
+        <span class="badge b-cs">Coming Soon</span>
       </div>
       <div class="dtc locked">
-        <div class="dt-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
-        <div class="dt-name">Asylum &mdash; Religious</div>
-        <div class="dt-sub">Religious persecution declaration</div>
-        <div><span class="badge b-cs"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Coming Soon</span></div>
+        <div class="dt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <div class="dt-name">Asylum &mdash; Religious</div><div class="dt-sub">Religious persecution</div>
+        <span class="badge b-cs">Coming Soon</span>
       </div>
     </div>
   </div>
 </div>
-
-<!-- Step 3: Questionnaire -->
 <div class="card">
-  <div class="card-hdr" style="justify-content:space-between;">
-    <div style="display:flex;align-items:center;gap:11px;">
-      <div class="step-dot" id="d3">3</div>
-      <div>
-        <h2>VAWA Declaration Questionnaire</h2>
-        <p>Complete as many sections as possible &mdash; drafts save automatically</p>
-      </div>
+  <div class="card-hdr" style="justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
+      <div class="card-hdr-text"><h2>VAWA Questionnaire</h2><p>Complete all sections &mdash; drafts save to Airtable automatically</p></div>
     </div>
-    <div id="asstat"></div>
-  </div>
-  <div class="card-body" id="qbody"></div>
-</div>
-
-<!-- Step 4: Generate -->
-<div class="card">
-  <div class="card-hdr">
-    <div class="step-dot" id="d4">4</div>
-    <div>
-      <h2>Generate Declaration</h2>
-      <p>AI drafts a complete declaration from the questionnaire responses</p>
-    </div>
+    <div class="card-hdr-right"><div id="as-stat" class="saved"></div></div>
   </div>
   <div class="card-body">
-    <div class="gen-toolbar">
-      <button class="btn btn-primary" id="gbtn" onclick="generate()">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Generate Declaration
+    <div id="qbody"></div>
+    <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-ghost" onclick="saveCloudDraft()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save Draft
       </button>
-      <div class="spin" id="gspin"></div>
-      <div style="flex:1;"></div>
-      <button class="btn btn-ghost btn-sm" onclick="saveDraft()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save Draft
+      <button class="btn btn-danger btn-sm" onclick="deleteCurrentDraft()" id="del-btn" style="display:none">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+        Delete Draft
       </button>
-    </div>
-    <div id="gstat"></div>
-    <div id="outsec" style="display:none;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-        <span style="font-size:13px;font-weight:700;color:var(--dark);font-family:Arial,sans-serif;">
-          Generated Declaration &mdash; Review &amp; Edit
-        </span>
-        <div style="display:flex;gap:8px;">
-          <button class="btn btn-ghost btn-sm" onclick="copyText()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
-          <button class="btn btn-ghost btn-sm" onclick="regen()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg> Regenerate</button>
-        </div>
-      </div>
-      <textarea id="decl-out" spellcheck="true" oninput="wcUpdate()"></textarea>
-      <div class="wc-bar">
-        <span id="wc" style="color:#888;">0 words</span>
-        <span style="color:#bbb;">Edit freely &mdash; changes save automatically with the draft</span>
-      </div>
     </div>
   </div>
 </div>
-
-<!-- Step 5: Download -->
-<div class="card" id="dlcard" style="display:none;">
+<div class="card">
   <div class="card-hdr">
-    <div class="step-dot" id="d5">5</div>
-    <div>
-      <h2>Download Declaration</h2>
-      <p>Download as an editable Word document or print-ready PDF</p>
+    <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+    <div class="card-hdr-text"><h2>Generate Declaration</h2><p>AI drafts a complete declaration from questionnaire responses</p></div>
+  </div>
+  <div class="card-body">
+    <div class="gen-bar">
+      <button class="btn btn-primary" id="gbtn" onclick="generate()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Generate Declaration
+      </button>
+      <div class="spin" id="gspin"></div>
+      <span id="gstat"></span>
+      <div style="flex:1"></div>
+      <button class="btn btn-ghost btn-sm" id="regen-btn" onclick="regen()" style="display:none">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>Regenerate
+      </button>
+      <button class="btn btn-ghost btn-sm" id="copy-btn" onclick="copyText()" style="display:none">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy
+      </button>
     </div>
+    <div id="outsec" style="display:none">
+      <textarea id="decl-out" spellcheck="true" oninput="wcUpdate()"></textarea>
+      <div class="wc-row"><span id="wc">0 words</span><span>Edit freely &mdash; changes auto-save</span></div>
+    </div>
+  </div>
+</div>
+<div class="card" id="card5" style="display:none">
+  <div class="card-hdr">
+    <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+    <div class="card-hdr-text"><h2>Download Declaration</h2><p>Word document for editing &mdash; PDF for USCIS submission</p></div>
   </div>
   <div class="card-body">
     <div class="dl-grid">
       <div class="dlc">
-        <div class="dl-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
-        <div class="dl-name">Word Document</div>
-        <div class="dl-sub">Editable .docx for final review and attorney signature</div>
+        <div class="dl-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
+        <div class="dl-name">Word Document</div><div class="dl-sub">Editable .docx for attorney review</div>
         <button class="btn btn-primary" onclick="dlDocx()">Download .docx</button>
       </div>
       <div class="dlc">
-        <div class="dl-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15v-4m0 4h2a2 2 0 0 0 0-4H9"/><path d="M15 11h1a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-1v2"/></svg></div>
-        <div class="dl-name">PDF</div>
-        <div class="dl-sub">Print-ready PDF for USCIS submission package</div>
+        <div class="dl-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15v-4m0 4h2a2 2 0 0 0 0-4H9"/><path d="M15 11h1a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-1v2"/></svg></div>
+        <div class="dl-name">PDF</div><div class="dl-sub">Print-ready for submission packet</div>
         <button class="btn btn-teal" onclick="dlPdf()">Download PDF</button>
       </div>
     </div>
   </div>
 </div>
-
-</div><!-- .container -->
-<div class="toast" id="toast"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg><span id="toast-msg"></span></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</div>
+<div class="toast" id="toast">
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toast-msg"></span>
+</div>
 <script>
-
 const AT_TOKEN = "patOAyEdjEbm4u2" + "dD.6f53165fbc70c722787dada24d18211a01c39f75cf99eb55e49f160080d4ca39";
 const DS_KEY   = "sk-88759f71b448" + "4551b7de027e2cc21064";
-const AT_TABLE = "tbld2XGAtTlPCXedQ";
-const OFFICES  = [
+const AT_BASE_TABLE = "tbld2XGAtTlPCXedQ";
+const DRAFTS_TBL = "Declaration Drafts";
+const OFFICES = [
   {id:"bronx",    name:"Bronx",        state:"NY", baseId:"app6RPeZDscKTejWB"},
   {id:"woodland", name:"Woodland",     state:"CA", baseId:"appCFrrBWJle2TE3S"},
   {id:"harlem",   name:"Harlem",       state:"NY", baseId:"appmRIsWBthV1ybwY"},
@@ -477,368 +385,566 @@ const OFFICES  = [
   {id:"collpark", name:"College Park", state:"GA", baseId:"appZDWnhWcaCRPjAm"},
 ];
 
-// ── State ──────────────────────────────────────────────────────────
+// State
 let selOffice=null, selClient=null, selDecl="vawa";
-let srCache=[], searchTmr=null, asTmr=null;
+let allClients=[], searchTmr=null, asTmr=null;
+let currentDraftId=null, currentDraftBaseId=null;
+let draftsCache=[];
 
-// ── API settings modal ─────────────────────────────────────────────
-function closeApi(){document.getElementById("api-overlay").classList.remove("open");}
-function provChange(){
-  const p=document.getElementById("prov-sel").value;
-  const ms=document.getElementById("model-sel");
-  document.getElementById("key-lbl").textContent = p==="deepseek" ? "DeepSeek API Key" : "Claude API Key";
-  ms.innerHTML = p==="deepseek"
-    ? '<option value="deepseek-chat">DeepSeek V3 (Best)</option><option value="deepseek-reasoner">DeepSeek R1 (Reasoning)</option>'
-    : '<option value="claude-opus-4-6">Claude Opus 4 (Best)</option><option value="claude-sonnet-4-6" selected>Claude Sonnet 4</option><option value="claude-haiku-4-5-20251001">Claude Haiku 4</option>';
-  const saved = sessionStorage.getItem("fibi_key_"+p);
-  document.getElementById("api-key").value = saved || (p==="deepseek" ? DS_KEY : "");
-  const sm = sessionStorage.getItem("fibi_model_"+p);
-  if(sm) document.getElementById("model-sel").value = sm;
-}
-function saveApiSettings(){
-  const p=document.getElementById("prov-sel").value;
-  const k=document.getElementById("api-key").value.trim();
-  const m=document.getElementById("model-sel").value;
-  if(k) sessionStorage.setItem("fibi_key_"+p, k);
-  sessionStorage.setItem("fibi_model_"+p, m);
-  sessionStorage.setItem("fibi_prov", p);
-  closeApi();
-  toast("Settings saved");
-}
-function loadApiSettings(){
-  document.getElementById("api-key").value = sessionStorage.getItem("fibi_key_deepseek") || DS_KEY;
-  const m = sessionStorage.getItem("fibi_model_deepseek");
-  if(m) document.getElementById("model-sel").value = m;
+// Wizard
+function setStep(n){
+  for(let i=1;i<=5;i++){
+    const dot=document.getElementById("wz"+i);
+    const lbl=document.getElementById("wzl"+i);
+    const ln=document.getElementById("wzline"+i);
+    if(i<n){dot.className="wz-dot done";lbl.className="wz-label done";}
+    else if(i===n){dot.className="wz-dot active";lbl.className="wz-label active";}
+    else{dot.className="wz-dot";lbl.className="wz-label";}
+    if(ln) ln.className="wz-line"+(i<n?" done":"");
+  }
 }
 
-// ── Offices ────────────────────────────────────────────────────────
+// Office icons (inline SVG, no emojis)
+const OFF_ICONS = {
+  bronx:   '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="15"/><path d="M2 7l10-5 10 5"/><path d="M9 22V12h6v10"/></svg>',
+  woodland:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21l-5-8-5 8"/><path d="M12 3v10"/></svg>',
+  harlem:  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/><path d="M3 17.5L8 5l4 4 4-4 5 12.5"/></svg>',
+  stonemt: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 18l9-15 9 15H3z"/></svg>',
+  collpark:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-7 10 7"/><path d="M6 10v8M18 10v8M2 18h20"/><path d="M10 18v-5h4v5"/></svg>',
+};
+
 function renderOffices(){
   document.getElementById("off-grid").innerHTML = OFFICES.map(o=>
-    `<div class="off-c" id="off-${o.id}" onclick="pickOffice('${o.id}')">
+    `<div class="off-card" id="off-${o.id}" onclick="pickOffice('${o.id}')">
+       <div class="off-icon">${OFF_ICONS[o.id]||""}</div>
        <div class="off-name">${o.name}</div>
-       <div class="off-loc">${o.state}</div>
+       <div class="off-state">${o.state}</div>
      </div>`
   ).join("");
 }
-function pickOffice(id){
+
+async function pickOffice(id){
   selOffice = OFFICES.find(o=>o.id===id)||null;
   clearClient(true);
-  document.querySelectorAll(".off-c").forEach(e=>e.classList.remove("sel"));
+  document.querySelectorAll(".off-card").forEach(e=>e.classList.remove("sel"));
   if(!selOffice) return;
   document.getElementById("off-"+id).classList.add("sel");
   const cs=document.getElementById("csearch");
-  cs.disabled=false; cs.placeholder="Search "+selOffice.name+" clients…"; cs.focus();
-  refreshDraftBanner();
+  cs.disabled=true; cs.placeholder="Loading clients…";
+  document.getElementById("off-load").style.display="block";
+  document.getElementById("s-count").textContent="";
+  try{
+    allClients=await fetchAllClients(selOffice.baseId);
+    cs.disabled=false;
+    cs.placeholder="Search "+selOffice.name+" clients ("+allClients.length+" loaded)…";
+    document.getElementById("s-count").textContent=allClients.length;
+  }catch(e){
+    cs.disabled=false;
+    cs.placeholder="Error loading clients — check connection";
+    toast("Failed to load clients: "+e.message,"err");
+  }
+  document.getElementById("off-load").style.display="none";
+  setStep(selClient?2:1);
 }
 
-// ── Client search ──────────────────────────────────────────────────
+async function fetchAllClients(baseId){
+  const flds=["Client Name","First Name","Last Name","A-Number","CASE STATUS","Email","Number"];
+  const fe=encodeURIComponent;
+  let all=[], offset="";
+  for(let pg=0;pg<10;pg++){
+    let url="https://api.airtable.com/v0/"+baseId+"/"+AT_BASE_TABLE
+      +"?pageSize=100"+flds.map(x=>"&fields[]="+fe(x)).join("")
+      +(offset?"&offset="+fe(offset):"");
+    const r=await fetch(url,{headers:{Authorization:"Bearer "+AT_TOKEN}});
+    if(!r.ok){const e=await r.json();throw new Error((e.error&&e.error.message)||"HTTP "+r.status);}
+    const d=await r.json();
+    all=all.concat(d.records||[]);
+    if(!d.offset) break;
+    offset=d.offset;
+  }
+  return all;
+}
+
 function onSearch(v){
   clearTimeout(searchTmr);
   const sr=document.getElementById("sr");
   if(!v||v.length<2){sr.style.display="none";return;}
-  searchTmr=setTimeout(()=>doSearch(v),320);
+  searchTmr=setTimeout(()=>doSearch(v),200);
 }
-async function doSearch(q){
-  if(!selOffice) return;
-  const f=encodeURIComponent;
-  const ql=q.toLowerCase();
-  const formula=`OR(SEARCH(LOWER("${ql}"),LOWER({Client Name})),SEARCH(LOWER("${ql}"),LOWER({A-Number})))`;
-  const flds=["Client Name","First Name","Last Name","A-Number","CASE STATUS","Email","Number"];
-  const url="https://api.airtable.com/v0/"+selOffice.baseId+"/"+AT_TABLE
-    +"?filterByFormula="+f(formula)+"&maxRecords=15"
-    +flds.map(x=>"&fields[]="+f(x)).join("");
-  try{
-    const r=await fetch(url,{headers:{Authorization:"Bearer "+AT_TOKEN}});
-    const d=await r.json();
-    srCache=d.records||[];
-    renderSR(srCache);
-  }catch(e){console.error("AT search",e);}
+function doSearch(q){
+  const ql=q.toLowerCase().trim();
+  const matches=allClients.filter(r=>{
+    const f=r.fields;
+    const name=(f["Client Name"]||((f["First Name"]||"")+" "+(f["Last Name"]||"")).trim()||"").toLowerCase();
+    const anum=(f["A-Number"]||"").toLowerCase();
+    const email=(f["Email"]||"").toLowerCase();
+    return name.includes(ql)||anum.includes(ql)||email.includes(ql);
+  }).slice(0,15);
+  renderSR(matches);
 }
 function renderSR(recs){
   const sr=document.getElementById("sr");
   if(!recs.length){
     sr.style.display="block";
-    sr.innerHTML='<div style="padding:11px;color:#888;font-size:13px;font-family:Arial,sans-serif;">No clients found</div>';
+    sr.innerHTML='<div class="no-res">No clients found matching your search</div>';
     return;
   }
   sr.style.display="block";
   sr.innerHTML=recs.map((r,i)=>{
     const f=r.fields;
     const name=f["Client Name"]||((f["First Name"]||"")+" "+(f["Last Name"]||"")).trim()||"Unknown";
-    const anum=f["A-Number"]||"";
+    const anum=f["A-Number"]?"A-"+f["A-Number"]:"";
     const stat=f["CASE STATUS"]||"";
-    return `<div class="sri" onclick="pickClient(${i})">
+    const rid=JSON.stringify({id:r.id,name,anumber:f["A-Number"]||"",email:f["Email"]||"",phone:f["Number"]||"",caseType:stat}).replace(/"/g,"&quot;");
+    return `<div class="sri" onclick='pickClient(${JSON.stringify({id:r.id,name,anumber:f["A-Number"]||"",email:f["Email"]||"",phone:f["Number"]||"",caseType:stat})})'>
       <div>
         <div class="sri-name">${xe(name)}</div>
-        <div class="sri-meta">${anum?"A-"+anum:"No A-Number"}${stat?" &middot; "+stat:""}</div>
+        <div class="sri-meta">${anum||"No A-Number"}${stat?" &middot; "+xe(stat):""}</div>
       </div>
-      <div class="sri-office">${selOffice.name}</div>
+      <div class="sri-badge">${xe(selOffice.name)}</div>
     </div>`;
   }).join("");
 }
-function pickClient(i){
-  const r=srCache[i];
-  if(!r) return;
-  const f=r.fields;
-  const name=f["Client Name"]||((f["First Name"]||"")+" "+(f["Last Name"]||"")).trim()||"Unknown";
-  selClient={id:r.id,name,anumber:f["A-Number"]||"",email:f["Email"]||"",phone:f["Number"]||"",caseType:f["CASE STATUS"]||""};
+function pickClient(obj){
+  const c=typeof obj==="string"?JSON.parse(obj):obj;
+  selClient=c;
   document.getElementById("sr").style.display="none";
   document.getElementById("csearch").value="";
-  document.getElementById("sel-cn").textContent=selClient.name;
-  document.getElementById("sel-cm").textContent=[selClient.anumber?"A-"+selClient.anumber:null,selClient.caseType,selOffice.name].filter(Boolean).join(" · ");
-  document.getElementById("selbox").style.display="block";
-  document.getElementById("d1").classList.add("done");
-  setFv("A_fullname",selClient.name);
-  setFv("A_anumber",selClient.anumber?"A-"+selClient.anumber:"");
-  setFv("A_email",selClient.email);
-  setFv("A_phone",selClient.phone);
-  refreshDraftBanner();
+  document.getElementById("cli-name").textContent=c.name;
+  document.getElementById("cli-meta").textContent=
+    [c.anumber?"A-"+c.anumber:null,c.caseType,selOffice&&selOffice.name].filter(Boolean).join(" · ");
+  document.getElementById("cli-panel").style.display="block";
+  setFv("A_fullname",c.name);
+  setFv("A_anumber",c.anumber?"A-"+c.anumber:"");
+  setFv("A_email",c.email);
+  setFv("A_phone",c.phone);
+  setStep(2);
+  loadDraftForClient();
 }
 function setFv(id,v){const e=document.getElementById(id);if(e&&!e.value)e.value=v;}
 function clearClient(quiet){
-  selClient=null;
-  document.getElementById("selbox").style.display="none";
+  selClient=null;currentDraftId=null;currentDraftBaseId=null;
+  document.getElementById("cli-panel").style.display="none";
   document.getElementById("csearch").value="";
   document.getElementById("sr").style.display="none";
-  document.getElementById("d1").classList.remove("done");
-  if(!quiet) refreshDraftBanner();
+  document.getElementById("del-btn").style.display="none";
+  if(!quiet)setStep(1);
 }
-function xe(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
-
-// ── Declaration type ───────────────────────────────────────────────
+function xe(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
 function pickDecl(t){
   selDecl=t;
   document.querySelectorAll(".dtc:not(.locked)").forEach(e=>e.classList.remove("sel"));
   document.getElementById("dt-"+t).classList.add("sel");
 }
 
-// ── Questionnaire definition ───────────────────────────────────────
+// ── Cloud Drafts (Airtable) ────────────────────────────────────────
+async function atReq(method,baseId,table,data,id){
+  const url="https://api.airtable.com/v0/"+baseId+"/"+encodeURIComponent(table)+(id?"/"+id:"");
+  const opts={method,headers:{Authorization:"Bearer "+AT_TOKEN,"Content-Type":"application/json"}};
+  if(data) opts.body=JSON.stringify(data);
+  const r=await fetch(url,opts);
+  const j=await r.json();
+  if(!r.ok) throw new Error((j.error&&(j.error.message||j.error.type))||"HTTP "+r.status);
+  return j;
+}
+async function ensureDraftsTable(baseId){
+  try{
+    const r=await fetch("https://api.airtable.com/v0/meta/bases/"+baseId+"/tables",
+      {headers:{Authorization:"Bearer "+AT_TOKEN}});
+    const d=await r.json();
+    if((d.tables||[]).find(t=>t.name===DRAFTS_TBL)) return true;
+    const cr=await fetch("https://api.airtable.com/v0/meta/bases/"+baseId+"/tables",{
+      method:"POST",
+      headers:{Authorization:"Bearer "+AT_TOKEN,"Content-Type":"application/json"},
+      body:JSON.stringify({name:DRAFTS_TBL,fields:[
+        {name:"Client Record ID",type:"singleLineText"},
+        {name:"Client Name",type:"singleLineText"},
+        {name:"Office ID",type:"singleLineText"},
+        {name:"Office Name",type:"singleLineText"},
+        {name:"Decl Type",type:"singleLineText"},
+        {name:"Form Data",type:"multilineText"},
+        {name:"Generated Text",type:"multilineText"},
+        {name:"Updated At",type:"singleLineText"}
+      ]})
+    });
+    return cr.ok;
+  }catch(e){console.warn("ensureDraftsTable:",e);return false;}
+}
+async function saveCloudDraft(){
+  if(!selOffice||!selClient){toast("Select an office and client first","err");return;}
+  const stat=document.getElementById("as-stat");
+  stat.className="saving";
+  stat.innerHTML='<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:sp .7s linear infinite"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg> Saving…';
+  try{
+    await ensureDraftsTable(selOffice.baseId);
+    const payload={
+      "Client Record ID":selClient.id,
+      "Client Name":selClient.name,
+      "Office ID":selOffice.id,
+      "Office Name":selOffice.name,
+      "Decl Type":selDecl,
+      "Form Data":JSON.stringify(collectFD()),
+      "Generated Text":document.getElementById("decl-out").value||"",
+      "Updated At":new Date().toISOString()
+    };
+    if(currentDraftId&&currentDraftBaseId===selOffice.baseId){
+      await atReq("PATCH",selOffice.baseId,DRAFTS_TBL,{fields:payload},currentDraftId);
+    }else{
+      const ex=await findExistingDraft(selOffice.baseId,selClient.id,selDecl);
+      if(ex){
+        currentDraftId=ex.id;currentDraftBaseId=selOffice.baseId;
+        await atReq("PATCH",selOffice.baseId,DRAFTS_TBL,{fields:payload},currentDraftId);
+      }else{
+        const res=await atReq("POST",selOffice.baseId,DRAFTS_TBL,{records:[{fields:payload}]});
+        currentDraftId=(res.records&&res.records[0]&&res.records[0].id)||null;
+        currentDraftBaseId=selOffice.baseId;
+      }
+    }
+    document.getElementById("del-btn").style.display="inline-flex";
+    stat.className="saved";
+    stat.innerHTML='<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Saved to cloud';
+    toast("Draft saved");
+    loadAllDrafts();
+  }catch(e){
+    stat.className="unsaved";
+    stat.innerHTML='Failed to save — '+e.message;
+    toast("Save failed: "+e.message,"err");
+  }
+}
+function silentAutoSave(){
+  clearTimeout(asTmr);
+  const stat=document.getElementById("as-stat");
+  stat.className="unsaved";
+  stat.innerHTML='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Unsaved changes';
+  asTmr=setTimeout(saveCloudDraft,6000);
+}
+async function findExistingDraft(baseId,clientId,declType){
+  try{
+    const f=encodeURIComponent;
+    const formula=`AND({Client Record ID}="${clientId}",{Decl Type}="${declType}")`;
+    const url="https://api.airtable.com/v0/"+baseId+"/"+f(DRAFTS_TBL)+"?filterByFormula="+f(formula)+"&maxRecords=1";
+    const r=await fetch(url,{headers:{Authorization:"Bearer "+AT_TOKEN}});
+    const d=await r.json();
+    return(d.records&&d.records[0])||null;
+  }catch(e){return null;}
+}
+async function loadDraftForClient(){
+  if(!selOffice||!selClient) return;
+  try{
+    const rec=await findExistingDraft(selOffice.baseId,selClient.id,selDecl);
+    if(!rec) return;
+    currentDraftId=rec.id;currentDraftBaseId=selOffice.baseId;
+    try{restoreFD(JSON.parse(rec.fields["Form Data"]||"{}"));}catch(e){}
+    const gt=rec.fields["Generated Text"]||"";
+    if(gt){
+      document.getElementById("decl-out").value=gt;
+      document.getElementById("outsec").style.display="block";
+      document.getElementById("card5").style.display="block";
+      document.getElementById("regen-btn").style.display="inline-flex";
+      document.getElementById("copy-btn").style.display="inline-flex";
+      wcUpdate();setStep(5);
+    }
+    document.getElementById("del-btn").style.display="inline-flex";
+    const stat=document.getElementById("as-stat");
+    stat.className="saved";
+    stat.innerHTML='<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Draft loaded from cloud';
+    toast("Draft resumed for "+selClient.name);
+  }catch(e){console.warn("loadDraftForClient:",e);}
+}
+async function loadAllDrafts(){
+  draftsCache=[];
+  const results=await Promise.allSettled(OFFICES.map(async o=>{
+    try{
+      const fe=encodeURIComponent;
+      const url="https://api.airtable.com/v0/"+o.baseId+"/"+fe(DRAFTS_TBL)
+        +"?maxRecords=50&sort[0][field]=Updated At&sort[0][direction]=desc";
+      const r=await fetch(url,{headers:{Authorization:"Bearer "+AT_TOKEN}});
+      if(!r.ok) return [];
+      const d=await r.json();
+      return(d.records||[]).map(rec=>{
+        const fld=rec.fields||{};
+        return{id:rec.id,baseId:o.baseId,officeId:o.id,officeName:o.name,
+          clientName:fld["Client Name"]||"Unknown",
+          clientRecId:fld["Client Record ID"]||"",
+          declType:fld["Decl Type"]||"vawa",
+          updatedAt:fld["Updated At"]||"",
+          hasText:!!(fld["Generated Text"]&&fld["Generated Text"].length>20),
+          formData:fld["Form Data"]||"{}",
+          generatedText:fld["Generated Text"]||""};
+      });
+    }catch(e){return [];}
+  }));
+  results.forEach(r=>{if(r.status==="fulfilled")draftsCache=draftsCache.concat(r.value);});
+  draftsCache.sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt));
+  renderDraftList(draftsCache);
+  const cnt=document.getElementById("draft-count");
+  if(draftsCache.length){cnt.style.display="inline";cnt.textContent=draftsCache.length;}
+  else cnt.style.display="none";
+}
+function renderDraftList(list){
+  const body=document.getElementById("draft-body");
+  const empty=document.getElementById("draft-empty");
+  if(!list.length){
+    body.innerHTML='';
+    empty.textContent="No saved drafts found";
+    empty.style.display="block";
+    return;
+  }
+  empty.style.display="none";
+  body.innerHTML=list.map(d=>{
+    const dt=d.updatedAt?new Date(d.updatedAt).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):"";
+    const enc=encodeURIComponent(JSON.stringify(d));
+    return `<div class="draft-item" onclick="resumeDraft(decodeURIComponent('${enc}'))">
+      <div>
+        <div class="di-name">${xe(d.clientName)}</div>
+        <div class="di-meta">${xe(d.officeName)} &middot; VAWA${d.hasText?' &middot; <span style="color:var(--green)">Generated</span>':"" }</div>
+      </div>
+      <div class="di-date">${dt}</div>
+    </div>`;
+  }).join("");
+}
+function filterDrafts(q){
+  const ql=q.toLowerCase();
+  renderDraftList(ql?draftsCache.filter(d=>d.clientName.toLowerCase().includes(ql)||d.officeName.toLowerCase().includes(ql)):draftsCache);
+}
+function toggleDraftPanel(){
+  const p=document.getElementById("draft-panel");
+  const open=p.classList.toggle("open");
+  if(open) loadAllDrafts();
+}
+async function resumeDraft(dOrStr){
+  const d=typeof dOrStr==="string"?JSON.parse(dOrStr):dOrStr;
+  const off=OFFICES.find(o=>o.id===d.officeId);
+  if(!off) return;
+  if(!selOffice||selOffice.id!==off.id) await pickOffice(off.id);
+  selClient={id:d.clientRecId||d.clientName,name:d.clientName,anumber:"",email:"",phone:"",caseType:""};
+  currentDraftId=d.id;currentDraftBaseId=d.baseId;
+  document.getElementById("cli-name").textContent=d.clientName;
+  document.getElementById("cli-meta").textContent=d.officeName+" · VAWA";
+  document.getElementById("cli-panel").style.display="block";
+  try{restoreFD(JSON.parse(d.formData));}catch(e){}
+  if(d.generatedText){
+    document.getElementById("decl-out").value=d.generatedText;
+    document.getElementById("outsec").style.display="block";
+    document.getElementById("card5").style.display="block";
+    document.getElementById("regen-btn").style.display="inline-flex";
+    document.getElementById("copy-btn").style.display="inline-flex";
+    wcUpdate();setStep(5);
+  }else{setStep(3);}
+  document.getElementById("del-btn").style.display="inline-flex";
+  document.getElementById("draft-panel").classList.remove("open");
+  QS.forEach(s=>{
+    const sec=document.getElementById("qs-"+s.id);
+    if(sec&&!sec.classList.contains("open")){
+      sec.classList.add("open");
+      document.getElementById("qa-"+s.id).innerHTML="&#9660;";
+    }
+  });
+  const stat=document.getElementById("as-stat");
+  stat.className="saved";
+  stat.innerHTML='<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Draft loaded';
+  toast("Draft loaded: "+d.clientName);
+}
+async function deleteCurrentDraft(){
+  if(!currentDraftId||!currentDraftBaseId) return;
+  if(!confirm("Delete this draft? Cannot be undone.")) return;
+  try{
+    await fetch("https://api.airtable.com/v0/"+currentDraftBaseId+"/"+encodeURIComponent(DRAFTS_TBL)+"/"+currentDraftId,
+      {method:"DELETE",headers:{Authorization:"Bearer "+AT_TOKEN}});
+    currentDraftId=null;currentDraftBaseId=null;
+    document.getElementById("del-btn").style.display="none";
+    const stat=document.getElementById("as-stat");stat.className="";stat.innerHTML="";
+    toast("Draft deleted");loadAllDrafts();
+  }catch(e){toast("Delete failed: "+e.message,"err");}
+}
+
+// ── Questionnaire ──────────────────────────────────────────────────
 const QS=[
-  {id:"A",title:"Section A — Client Identification",fields:[
-    {id:"A_fullname",   label:"Full Legal Name",                               t:"text",  hint:"First / Middle / Last"},
-    {id:"A_othernames", label:"Other Names Used",                              t:"text",  hint:"Maiden name, nicknames, prior married name"},
-    {id:"A_dob",        label:"Date of Birth",                                 t:"date"},
-    {id:"A_cob",        label:"Country of Birth",                              t:"text"},
-    {id:"A_citizen",    label:"Country of Citizenship",                        t:"text"},
-    {id:"A_immstat",    label:"Current Immigration Status",                    t:"text",  hint:"If known"},
-    {id:"A_anumber",    label:"A-Number",                                      t:"text",  hint:"If any"},
-    {id:"A_address",    label:"Current Mailing Address",                       t:"text"},
-    {id:"A_phone",      label:"Best Phone Number",                             t:"tel"},
-    {id:"A_email",      label:"Email Address",                                 t:"email"},
-    {id:"A_language",   label:"Preferred Language",                            t:"text"},
+  {id:"A",title:"A — Client Identification",fields:[
+    {id:"A_fullname",  label:"Full Legal Name",             t:"text", hint:"First / Middle / Last"},
+    {id:"A_othernames",label:"Other Names Used",            t:"text", hint:"Maiden name, prior married name, nicknames"},
+    {id:"A_dob",       label:"Date of Birth",               t:"date"},
+    {id:"A_cob",       label:"Country of Birth",            t:"text"},
+    {id:"A_citizen",   label:"Country of Citizenship",      t:"text"},
+    {id:"A_immstat",   label:"Current Immigration Status",  t:"text", hint:"If known"},
+    {id:"A_anumber",   label:"A-Number",                    t:"text", hint:"If any"},
+    {id:"A_address",   label:"Current Mailing Address",     t:"text"},
+    {id:"A_phone",     label:"Phone Number",                t:"tel"},
+    {id:"A_email",     label:"Email Address",               t:"email"},
+    {id:"A_language",  label:"Preferred Language",          t:"text"},
   ]},
-  {id:"B",title:"Section B — The Abusive Spouse / Parent",fields:[
-    {id:"B_aname",    label:"Abuser Full Legal Name",                          t:"text"},
-    {id:"B_aaliases", label:"Other Names Used by Abuser",                      t:"text"},
-    {id:"B_adob",     label:"Abuser Date of Birth",                            t:"date"},
-    {id:"B_acob",     label:"Abuser Country of Birth",                         t:"text"},
-    {id:"B_astat",    label:"Abuser Immigration Status",                       t:"text"},
-    {id:"B_aanum",    label:"Abuser A-Number (if known)",                      t:"text"},
-    {id:"B_aaddr",    label:"Abuser Last Known Address",                       t:"text"},
-    {id:"B_rel",      label:"Nature of Qualifying Relationship",               t:"select",
+  {id:"B",title:"B — The Abusive Spouse / Parent",fields:[
+    {id:"B_aname",   label:"Abuser Full Legal Name",                              t:"text"},
+    {id:"B_aaliases",label:"Other Names Used by Abuser",                          t:"text"},
+    {id:"B_adob",    label:"Abuser Date of Birth",                                t:"date"},
+    {id:"B_acob",    label:"Abuser Country of Birth",                             t:"text"},
+    {id:"B_astat",   label:"Abuser Immigration Status",                           t:"text"},
+    {id:"B_rel",     label:"Qualifying Relationship",                             t:"select",
       opts:["Spouse (married to abuser)","Child of abuser","Parent of abuser","Filing on behalf of child"]},
-    {id:"B_met",      label:"When and where did you first meet the abuser? How did the relationship begin?", t:"ta"},
-    {id:"B_married",  label:"When and where did you marry the abuser?",        t:"ta",  hint:"City, State/Country, Date"},
-    {id:"B_priormar", label:"Were you previously married? Provide details if yes.",     t:"ta"},
-    {id:"B_uscyn",    label:"Is the abuser a U.S. Citizen or LPR?",            t:"yn",  cond:"B_uscdet"},
-    {id:"B_uscdet",   label:"How do you know? (passport, certificate, green card)",    t:"ta",  iscond:true},
-    {id:"B_how",      label:"How and when did the abuser obtain USC or LPR status?",   t:"ta"},
+    {id:"B_met",     label:"How and when did you meet the abuser?",               t:"ta"},
+    {id:"B_married", label:"When and where did you marry? (city, state, date)",   t:"ta"},
+    {id:"B_priormar",label:"Were you previously married? Details if yes.",        t:"ta"},
+    {id:"B_uscyn",   label:"Is the abuser a U.S. Citizen or LPR?",               t:"yn", cond:"B_uscdet"},
+    {id:"B_uscdet",  label:"How do you know? (passport, certificate, green card)",t:"ta", iscond:true},
+    {id:"B_how",     label:"How and when did the abuser obtain USC/LPR status?",  t:"ta"},
   ]},
-  {id:"C",title:"Section C — Shared Residence",fields:[
-    {id:"C_addrs",  label:"All addresses where you lived together with the abuser", t:"addrtbl"},
-    {id:"C_proof",  label:"What documents prove you lived together?",          t:"ta",
-      hint:"Lease, utility bills, bank statements, mail, school or medical records"},
+  {id:"C",title:"C — Shared Residence",fields:[
+    {id:"C_addrs",label:"All addresses where you lived together",                 t:"addrtbl"},
+    {id:"C_proof",label:"Documents that prove you lived together",                t:"ta",
+      hint:"Lease, utility bills, bank statements, mail, school/medical records"},
   ]},
-  {id:"D",title:"Section D — Good Moral Character",fields:[
-    {id:"D1",   label:"Have you ever been arrested, cited, or charged with any crime?", t:"yn", cond:"D1d"},
-    {id:"D1d",  label:"Date, location, charge, and disposition for each incident",      t:"ta", iscond:true},
-    {id:"D2",   label:"Have you ever been convicted of any crime?",                     t:"yn", cond:"D2d"},
-    {id:"D2d",  label:"Describe each conviction, sentence, and date",                  t:"ta", iscond:true},
-    {id:"D3",   label:"Have you ever been ordered removed or deported from the U.S.?", t:"yn", cond:"D3d"},
-    {id:"D3d",  label:"When and where?",                                                t:"text", iscond:true},
-    {id:"D4",   label:"Have you ever entered the U.S. without inspection?",             t:"yn", cond:"D4d"},
-    {id:"D4d",  label:"Approximate date and location",                                  t:"text", iscond:true},
-    {id:"D5",   label:"Have you ever used a false identity with a U.S. government agency?", t:"yn", cond:"D5d"},
-    {id:"D5d",  label:"Provide details",                                                t:"ta",   iscond:true},
+  {id:"D",title:"D — Good Moral Character",fields:[
+    {id:"D1",  label:"Ever arrested, cited, or charged with any crime?",          t:"yn", cond:"D1d"},
+    {id:"D1d", label:"Date, location, charge, and disposition for each",          t:"ta", iscond:true},
+    {id:"D2",  label:"Ever convicted of any crime?",                              t:"yn", cond:"D2d"},
+    {id:"D2d", label:"Each conviction, sentence, and date",                       t:"ta", iscond:true},
+    {id:"D3",  label:"Ever ordered removed or deported?",                         t:"yn", cond:"D3d"},
+    {id:"D3d", label:"When and where?",                                           t:"text", iscond:true},
+    {id:"D4",  label:"Ever entered the U.S. without inspection?",                 t:"yn", cond:"D4d"},
+    {id:"D4d", label:"Approximate date and location",                             t:"text", iscond:true},
+    {id:"D5",  label:"Ever used a false identity with a U.S. agency?",            t:"yn", cond:"D5d"},
+    {id:"D5d", label:"Provide details",                                           t:"ta",  iscond:true},
   ]},
-  {id:"E",title:"Section E — History of Abuse",fields:[
-    {id:"E_start",  label:"When did the abuse first start? Describe the first incident you recall.",  t:"ta"},
-    {id:"E_escal",  label:"How did the abuse change or escalate over time?",                          t:"ta"},
-    {id:"E_freq",   label:"How often did abuse occur?",                                               t:"text", hint:"Daily, weekly, monthly, or specific periods"},
-    {id:"E_types",  label:"Describe the different forms of abuse you experienced.",                   t:"ta"},
-    {id:"E_phys",   label:"Did the abuser ever physically hurt you?",                                 t:"yn", cond:"E_physd"},
-    {id:"E_physd",  label:"Describe the most serious physical incident in detail (date, what happened, injuries, witnesses, medical care)", t:"ta", rows:5, iscond:true},
-    {id:"E_physo",  label:"Describe 2-3 other significant physical incidents",                        t:"ta", rows:4, iscond:true},
-    {id:"E_hosp",   label:"Were you ever hospitalized or treated by a doctor due to the abuse?",      t:"yn", cond:"E_hospd"},
-    {id:"E_hospd",  label:"Dates, facilities, and types of treatment",                                t:"ta", iscond:true},
-    {id:"E_insult", label:"Did the abuser insult, demean, or humiliate you? Give specific examples.", t:"ta"},
-    {id:"E_ctrl",   label:"Did the abuser control your daily life (clothing, money, phone, who you saw)? Give examples.", t:"ta"},
-    {id:"E_threats",label:"Did the abuser make threats to harm you, your children, family, or pets? Describe.", t:"ta"},
-    {id:"E_psych",  label:"How did the psychological abuse affect your daily life, work, and mental health?",  t:"ta"},
-    {id:"E_imm",    label:"Did the abuser threaten to report you to immigration (ICE/USCIS)?",        t:"yn", cond:"E_immd"},
-    {id:"E_immd",   label:"Describe specific incidents",                                              t:"ta", iscond:true},
-    {id:"E_ictrl",  label:"Did the abuser use your immigration status to prevent you from leaving or seeking help?", t:"yn", cond:"E_ictrld"},
-    {id:"E_ictrld", label:"Explain how",                                                              t:"ta", iscond:true},
-    {id:"E_docs",   label:"Did the abuser confiscate your passport, visa, or identity documents?",   t:"yn", cond:"E_docsd"},
-    {id:"E_docsd",  label:"What happened to them?",                                                   t:"ta", iscond:true},
-    {id:"E_sex",    label:"Did the abuser force you into sexual acts against your will? (Optional)",  t:"yn", cond:"E_sexd"},
-    {id:"E_sexd",   label:"Your attorney will guide you — a brief note is sufficient here",     t:"ta", iscond:true},
+  {id:"E",title:"E — History of Abuse",fields:[
+    {id:"E_start",  label:"When did the abuse first start? Describe the first incident.",  t:"ta"},
+    {id:"E_escal",  label:"How did the abuse change or escalate over time?",               t:"ta"},
+    {id:"E_freq",   label:"How often did abuse occur?",                                    t:"text", hint:"Daily, weekly, monthly, or specific periods"},
+    {id:"E_types",  label:"Describe the different forms of abuse you experienced.",        t:"ta"},
+    {id:"E_phys",   label:"Did the abuser ever physically hurt you?",                      t:"yn", cond:"E_physd"},
+    {id:"E_physd",  label:"Describe the most serious physical incident (date, injuries, witnesses, medical care)", t:"ta", rows:5, iscond:true},
+    {id:"E_physo",  label:"Describe 2-3 other significant physical incidents",             t:"ta", rows:4, iscond:true},
+    {id:"E_hosp",   label:"Were you ever hospitalized due to the abuse?",                  t:"yn", cond:"E_hospd"},
+    {id:"E_hospd",  label:"Dates, facilities, and types of treatment",                     t:"ta", iscond:true},
+    {id:"E_insult", label:"Did the abuser insult, demean, or humiliate you? Give examples.",t:"ta"},
+    {id:"E_ctrl",   label:"Did the abuser control your daily life? Give examples.",        t:"ta"},
+    {id:"E_threats",label:"Did the abuser make threats to harm you or others?",            t:"ta"},
+    {id:"E_psych",  label:"How did the psychological abuse affect your daily life?",       t:"ta"},
+    {id:"E_imm",    label:"Did the abuser threaten to report you to immigration?",         t:"yn", cond:"E_immd"},
+    {id:"E_immd",   label:"Describe specific incidents",                                   t:"ta", iscond:true},
+    {id:"E_ictrl",  label:"Did the abuser use your immigration status to control you?",    t:"yn", cond:"E_ictrld"},
+    {id:"E_ictrld", label:"Explain how",                                                   t:"ta", iscond:true},
+    {id:"E_docs",   label:"Did the abuser take your passport or immigration documents?",   t:"yn", cond:"E_docsd"},
+    {id:"E_docsd",  label:"What happened to them?",                                        t:"ta", iscond:true},
+    {id:"E_sex",    label:"Did the abuser force you into sexual acts against your will? (Optional)", t:"yn", cond:"E_sexd"},
+    {id:"E_sexd",   label:"A brief note is sufficient — your attorney will guide you",t:"ta", iscond:true},
   ]},
-  {id:"F",title:"Section F — Impact on Children",fields:[
-    {id:"F_kids",  label:"List children affected",                                                    t:"childtbl"},
-    {id:"F1",      label:"Did the abuser ever abuse your children?",                                  t:"yn", cond:"F1d"},
-    {id:"F1d",     label:"Describe specific incidents",                                               t:"ta", iscond:true},
-    {id:"F2",      label:"Did your children witness the abuse? How did it affect them?",              t:"ta"},
-    {id:"F3",      label:"Did the abuser threaten to take the children or report you to CPS?",        t:"yn", cond:"F3d"},
-    {id:"F3d",     label:"Explain",                                                                   t:"ta", iscond:true},
+  {id:"F",title:"F — Impact on Children",fields:[
+    {id:"F_kids",label:"Children affected",                                               t:"childtbl"},
+    {id:"F1",    label:"Did the abuser ever abuse your children?",                        t:"yn", cond:"F1d"},
+    {id:"F1d",   label:"Describe specific incidents",                                     t:"ta", iscond:true},
+    {id:"F2",    label:"Did your children witness the abuse? How did it affect them?",    t:"ta"},
+    {id:"F3",    label:"Did the abuser threaten to take the children or report you to CPS?", t:"yn", cond:"F3d"},
+    {id:"F3d",   label:"Explain",                                                         t:"ta", iscond:true},
   ]},
-  {id:"G",title:"Section G — Attempts to Seek Help",fields:[
-    {id:"G1",  label:"Did you ever call the police?",                                                 t:"yn", cond:"G1d"},
-    {id:"G1d", label:"When, what happened, was a report filed?",                                      t:"ta", iscond:true},
-    {id:"G2",  label:"Did police ever come to your home without you calling?",                        t:"yn", cond:"G2d"},
-    {id:"G2d", label:"Describe what happened",                                                        t:"ta", iscond:true},
-    {id:"G3",  label:"Did you ever obtain a restraining or protective order?",                        t:"yn", cond:"G3d"},
-    {id:"G3d", label:"Case number, court, and dates",                                                 t:"ta", iscond:true},
-    {id:"G4",  label:"Did you go to a domestic violence shelter or hotline?",                         t:"yn", cond:"G4d"},
-    {id:"G4d", label:"Name of organization and approximate date",                                     t:"text", iscond:true},
-    {id:"G5",  label:"Did you speak with a counselor, therapist, or social worker about the abuse?", t:"yn", cond:"G5d"},
-    {id:"G5d", label:"Name, organization, and dates if possible",                                     t:"text", iscond:true},
-    {id:"G6",  label:"Why did you not report the abuse sooner, or why did you stay in the relationship?", t:"ta",
+  {id:"G",title:"G — Attempts to Seek Help",fields:[
+    {id:"G1",  label:"Did you ever call the police?",                                     t:"yn", cond:"G1d"},
+    {id:"G1d", label:"When, what happened, was a report filed?",                          t:"ta", iscond:true},
+    {id:"G2",  label:"Did police ever come to your home without you calling?",            t:"yn", cond:"G2d"},
+    {id:"G2d", label:"Describe what happened",                                            t:"ta", iscond:true},
+    {id:"G3",  label:"Did you ever obtain a restraining or protective order?",            t:"yn", cond:"G3d"},
+    {id:"G3d", label:"Case number, court, and dates",                                     t:"ta", iscond:true},
+    {id:"G4",  label:"Did you go to a domestic violence shelter or hotline?",             t:"yn", cond:"G4d"},
+    {id:"G4d", label:"Name of organization and approximate date",                         t:"text", iscond:true},
+    {id:"G5",  label:"Did you speak with a counselor or social worker?",                  t:"yn", cond:"G5d"},
+    {id:"G5d", label:"Name, organization, and dates if possible",                         t:"text", iscond:true},
+    {id:"G6",  label:"Why did you not report sooner, or why did you stay?",               t:"ta",
       hint:"Fear, finances, children, immigration status, love, cultural reasons"},
   ]},
-  {id:"H",title:"Section H — Witnesses &amp; Evidence",fields:[
-    {id:"H_wit",  label:"Witnesses who can corroborate the abuse",                                    t:"wittbl"},
-    {id:"H_ev",   label:"Evidence you have or can obtain",                                            t:"chklist",
+  {id:"H",title:"H — Witnesses &amp; Evidence",fields:[
+    {id:"H_wit",  label:"Witnesses who can corroborate the abuse",                        t:"wittbl"},
+    {id:"H_ev",   label:"Evidence you have or can obtain",                                t:"chklist",
       opts:["Police reports / incident reports","Restraining or protective orders",
             "Medical records / ER records / injury photographs","Counseling or therapy records",
             "Domestic violence shelter records","Text messages, emails, or voicemails from abuser",
             "Witness letters or affidavits","Marriage certificate / divorce decree",
-            "Proof of joint residence","Proof of abuser U.S. citizenship or LPR status",
+            "Proof of joint residence","Proof of abuser USC/LPR status",
             "Court records","Other photographs or videos"]},
-    {id:"H_other",label:"Other evidence not listed above",                                            t:"ta"},
+    {id:"H_other",label:"Other evidence not listed above",                                t:"ta"},
   ]},
-  {id:"I",title:"Section I — Separation / Current Situation",fields:[
-    {id:"I1",  label:"Are you currently living with the abuser?",                                     t:"yn"},
-    {id:"I2",  label:"When and how did you leave? What finally prompted you to leave?",               t:"ta"},
-    {id:"I3",  label:"Did you ever return to the abuser after leaving?",                              t:"yn", cond:"I3d"},
-    {id:"I3d", label:"How many times, and why did you go back?",                                      t:"ta", iscond:true},
-    {id:"I4",  label:"Are you divorced, legally separated, or in the process of divorce?",            t:"yn", cond:"I4d"},
-    {id:"I4d", label:"Case number, court, and current status",                                        t:"text", iscond:true},
-    {id:"I5",  label:"Do you have ongoing safety concerns? Is the abuser still contacting or threatening you?", t:"ta"},
-    {id:"I6",  label:"Where are you currently living, and with whom?",                                t:"ta"},
+  {id:"I",title:"I — Separation / Current Situation",fields:[
+    {id:"I1",  label:"Are you currently living with the abuser?",                         t:"yn"},
+    {id:"I2",  label:"When and how did you leave? What finally prompted you?",            t:"ta"},
+    {id:"I3",  label:"Did you ever return to the abuser after leaving?",                  t:"yn", cond:"I3d"},
+    {id:"I3d", label:"How many times, and why did you go back?",                          t:"ta", iscond:true},
+    {id:"I4",  label:"Are you divorced, separated, or in the process?",                   t:"yn", cond:"I4d"},
+    {id:"I4d", label:"Case number, court, and current status",                            t:"text", iscond:true},
+    {id:"I5",  label:"Ongoing safety concerns? Is the abuser still contacting you?",      t:"ta"},
+    {id:"I6",  label:"Where are you currently living, and with whom?",                    t:"ta"},
   ]},
-  {id:"J",title:"Section J — Relief Sought &amp; Personal Statement",fields:[
-    {id:"J1",  label:"In your own words, why are you filing for VAWA? What do you hope to achieve?", t:"ta"},
-    {id:"J2",  label:"What would happen to you if required to return to your country of origin?",     t:"ta"},
-    {id:"J3",  label:"What are your goals for yourself and your children in the U.S.?",               t:"ta"},
-    {id:"J4",  label:"Is there anything else you want USCIS to know that has not been covered?",      t:"ta"},
+  {id:"J",title:"J — Relief Sought &amp; Personal Statement",fields:[
+    {id:"J1",  label:"In your own words, why are you filing for VAWA?",                   t:"ta"},
+    {id:"J2",  label:"What would happen if required to return to your country?",          t:"ta"},
+    {id:"J3",  label:"What are your goals for yourself and your children in the U.S.?",   t:"ta"},
+    {id:"J4",  label:"Anything else you want USCIS to know?",                             t:"ta"},
   ]},
 ];
 
-// ── Render questionnaire ───────────────────────────────────────────
 function renderQ(){
   const body=document.getElementById("qbody");
-  body.innerHTML=QS.map(sec=>{
+  const alpha="ABCDEFGHIJ";
+  body.innerHTML=QS.map((sec,si)=>{
     const rows=sec.fields.map(f=>renderF(f)).join("");
     return `<div class="qsec" id="qs-${sec.id}">
       <div class="qsh" onclick="toggleSec('${sec.id}')">
-        <span class="qst">${sec.title}</span>
-        <span class="q-arrow" id="qa-${sec.id}">&#9654;</span>
+        <div class="qsh-num">${alpha[si]}</div>
+        <span class="qsh-title">${sec.title}</span>
+        <span class="qsh-arrow" id="qa-${sec.id}">&#9654;</span>
       </div>
       <div class="qsb">${rows}</div>
     </div>`;
   }).join("");
   document.querySelector(".qsec").classList.add("open");
   document.getElementById("qa-A").innerHTML="&#9660;";
-  body.addEventListener("input",()=>{
-    document.getElementById("asstat").textContent="Unsaved…";
-    clearTimeout(asTmr); asTmr=setTimeout(silentSave,3000);
-  });
-  body.addEventListener("change",()=>{clearTimeout(asTmr);asTmr=setTimeout(silentSave,3000);});
+  body.addEventListener("input",silentAutoSave);
+  body.addEventListener("change",silentAutoSave);
 }
-
 function renderF(f){
-  if(f.iscond){
-    return `<div class="cond" id="cnd-${f.id}">
-      <div class="fr"><label>${f.label}${f.hint?`<div class="fr-hint">${f.hint}</div>`:""}</label>
-      ${rinput(f)}</div></div>`;
-  }
+  if(f.iscond) return `<div class="cond" id="cnd-${f.id}"><div class="fr"><label>${f.label}${f.hint?`<div class="fr-hint">${f.hint}</div>`:""}</label>${rinput(f)}</div></div>`;
   if(f.t==="addrtbl") return `<div class="fr"><label>${f.label}</label>${mkAddrTbl(f.id)}</div>`;
   if(f.t==="childtbl") return `<div class="fr"><label>${f.label}</label>${mkChildTbl(f.id)}</div>`;
-  if(f.t==="wittbl")  return `<div class="fr"><label>${f.label}</label>${mkWitTbl(f.id)}</div>`;
+  if(f.t==="wittbl") return `<div class="fr"><label>${f.label}</label>${mkWitTbl(f.id)}</div>`;
   if(f.t==="chklist") return `<div class="fr"><label>${f.label}</label>${mkChk(f.id,f.opts)}</div>`;
-  return `<div class="fr"><label>${f.label}${f.hint?`<div class="fr-hint">${f.hint}</div>`:""}</label>
-    ${rinput(f)}</div>`;
+  return `<div class="fr"><label>${f.label}${f.hint?`<div class="fr-hint">${f.hint}</div>`:""}</label>${rinput(f)}</div>`;
 }
 function rinput(f){
-  if(f.t==="text"||f.t==="email"||f.t==="tel"||f.t==="date")
-    return `<input type="${f.t}" id="${f.id}">`;
-  if(f.t==="ta")
-    return `<textarea id="${f.id}" rows="${f.rows||3}"></textarea>`;
-  if(f.t==="select")
-    return `<select id="${f.id}"><option value="">-- Select --</option>${f.opts.map(o=>`<option>${xe(o)}</option>`).join("")}</select>`;
+  if(f.t==="text"||f.t==="email"||f.t==="tel"||f.t==="date") return `<input type="${f.t}" id="${f.id}">`;
+  if(f.t==="ta") return `<textarea id="${f.id}" rows="${f.rows||3}"></textarea>`;
+  if(f.t==="select") return `<select id="${f.id}"><option value="">-- Select --</option>${f.opts.map(o=>`<option>${xe(o)}</option>`).join("")}</select>`;
   if(f.t==="yn"){
-    const oc=f.cond ? ` onchange="tcond('${f.cond}',this.value)"` : "";
-    return `<div class="yn"><label><input type="radio" name="${f.id}" value="Yes"${oc}> Yes</label>
-      <label><input type="radio" name="${f.id}" value="No"${oc}> No</label></div>`;
+    const oc=f.cond?` onchange="tcond('${f.cond}',this.value)"`:"";
+    return `<div class="yn"><label><input type="radio" name="${f.id}" value="Yes"${oc}> Yes</label><label><input type="radio" name="${f.id}" value="No"${oc}> No</label></div>`;
   }
   return "";
 }
-
 function mkAddrTbl(id){
-  return `<table class="rt" id="${id}-t">
-    <tr><th>Address</th><th>Move-In Date</th><th>Move-Out Date</th><th>Others Who Lived There</th></tr>
-    <tr><td><input type="text" placeholder="Street, City, State"></td><td><input type="date"></td><td><input type="date"></td><td><input type="text"></td></tr>
-  </table>
-  <button class="rt-add" onclick="addRow('${id}-t',4)">
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-    Add Address
-  </button>`;
+  return `<table class="rt" id="${id}-t"><tr><th>Address</th><th>Move-In Date</th><th>Move-Out Date</th><th>Others Who Lived There</th></tr>
+    <tr><td><input type="text" placeholder="Street, City, State"></td><td><input type="date"></td><td><input type="date"></td><td><input type="text"></td></tr></table>
+    <button class="rt-add" onclick="addRow('${id}-t',4,2)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Address</button>`;
 }
 function mkChildTbl(id){
-  return `<table class="rt" id="${id}-t">
-    <tr><th>Full Name</th><th>Date of Birth</th><th>Country of Birth</th><th>Relationship to Abuser</th></tr>
-    <tr><td><input type="text"></td><td><input type="date"></td><td><input type="text"></td><td><input type="text"></td></tr>
-  </table>
-  <button class="rt-add" onclick="addRow('${id}-t',4)">
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-    Add Child
-  </button>`;
+  return `<table class="rt" id="${id}-t"><tr><th>Full Name</th><th>Date of Birth</th><th>Country of Birth</th><th>Relationship</th></tr>
+    <tr><td><input type="text"></td><td><input type="date"></td><td><input type="text"></td><td><input type="text"></td></tr></table>
+    <button class="rt-add" onclick="addRow('${id}-t',4,1)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Child</button>`;
 }
 function mkWitTbl(id){
-  return `<table class="rt" id="${id}-t">
-    <tr><th>Full Name</th><th>Relationship</th><th>Phone / Email</th><th>What Did They Witness?</th></tr>
-    <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-  </table>
-  <button class="rt-add" onclick="addRow('${id}-t',4)">
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-    Add Witness
-  </button>`;
+  return `<table class="rt" id="${id}-t"><tr><th>Full Name</th><th>Relationship</th><th>Phone / Email</th><th>What They Witnessed</th></tr>
+    <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr></table>
+    <button class="rt-add" onclick="addRow('${id}-t',4,-1)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Witness</button>`;
 }
 function mkChk(id,opts){
-  return `<div class="ev-grid">${opts.map(o=>
-    `<label class="ev-item"><input type="checkbox" name="${id}" value="${xe(o)}"> ${xe(o)}</label>`
-  ).join("")}</div>`;
+  return `<div class="ev-grid">${opts.map(o=>`<label class="ev-item"><input type="checkbox" name="${id}" value="${xe(o)}"> ${xe(o)}</label>`).join("")}</div>`;
 }
-function addRow(tid,cols){
-  const t=document.getElementById(tid);
-  const r=t.insertRow(-1);
-  for(let i=0;i<cols;i++){const td=r.insertCell(-1);td.innerHTML=`<input type="${i===1?"date":"text"}">`;}
+function addRow(tid,cols,dateCol){
+  const tbl=document.getElementById(tid);
+  const row=tbl.insertRow(-1);
+  for(let i=0;i<cols;i++){const td=row.insertCell(-1);td.innerHTML=`<input type="${i===dateCol?"date":"text"}">`;}
 }
 function toggleSec(id){
   const s=document.getElementById("qs-"+id);
   const open=s.classList.toggle("open");
   document.getElementById("qa-"+id).innerHTML=open?"&#9660;":"&#9654;";
 }
-function tcond(id,v){
-  const el=document.getElementById("cnd-"+id);
-  if(el) el.classList.toggle("vis",v==="Yes");
-}
-
-// ── Draft management ───────────────────────────────────────────────
-function dkey(){
-  return "fibi_"+((selOffice&&selOffice.id)||"xx")+"_"+((selClient&&selClient.id)||"nc")+"_"+selDecl;
-}
+function tcond(id,v){const el=document.getElementById("cnd-"+id);if(el)el.classList.toggle("vis",v==="Yes");}
 function collectFD(){
   const d={};
   document.querySelectorAll("input[id],textarea[id],select[id]").forEach(e=>{
@@ -875,94 +981,22 @@ function restoreFD(d){
   document.querySelectorAll("input[type=checkbox]").forEach(cb=>{
     const g=d[cb.name];if(Array.isArray(g))cb.checked=g.includes(cb.value);
   });
-  if(d._text){
-    document.getElementById("decl-out").value=d._text;
-    document.getElementById("outsec").style.display="block";
-    document.getElementById("dlcard").style.display="block";
-    wcUpdate();
-  }
-}
-function saveDraft(){
-  const d=collectFD();
-  d._at=new Date().toISOString();
-  d._cn=selClient?selClient.name:"Unknown";
-  d._on=selOffice?selOffice.name:"";
-  const t=document.getElementById("decl-out").value;
-  if(t) d._text=t;
-  localStorage.setItem(dkey(),JSON.stringify(d));
-  document.getElementById("asstat").textContent="Saved";
-  toast("Draft saved");
-  refreshDraftBanner();
-}
-function silentSave(){
-  const d=collectFD();
-  d._at=new Date().toISOString();
-  d._cn=selClient?selClient.name:"Unknown";
-  d._on=selOffice?selOffice.name:"";
-  const t=document.getElementById("decl-out").value;
-  if(t) d._text=t;
-  localStorage.setItem(dkey(),JSON.stringify(d));
-  document.getElementById("asstat").textContent="Auto-saved";
-}
-function refreshDraftBanner(){
-  const keys=[];
-  for(let i=0;i<localStorage.length;i++){
-    const k=localStorage.key(i);if(k&&k.startsWith("fibi_"))keys.push(k);
-  }
-  const banner=document.getElementById("dbanner");
-  const pills=document.getElementById("dpills");
-  if(!keys.length){banner.style.display="none";return;}
-  banner.style.display="block";
-  pills.innerHTML=keys.map(k=>{
-    try{
-      const d=JSON.parse(localStorage.getItem(k)||"{}");
-      const dt=d._at?new Date(d._at).toLocaleDateString():"";
-      return `<span class="dpill" onclick="loadDraft('${k}')">${xe(d._cn||"Unknown")}${d._on?" · "+xe(d._on):""}<span class="dpill-date">${dt}</span></span>`;
-    }catch(e){return "";}
-  }).join("")
-  +`<button class="dpill-clear" onclick="clearAllDrafts()">Clear All</button>`;
-}
-function toggleDrafts(){
-  const b=document.getElementById("dbanner");
-  if(b.style.display==="none"){refreshDraftBanner();}else{b.style.display="none";}
-}
-function loadDraft(key){
-  try{
-    const d=JSON.parse(localStorage.getItem(key)||"{}");
-    restoreFD(d);
-    QS.forEach(s=>{
-      const sec=document.getElementById("qs-"+s.id);
-      if(sec&&!sec.classList.contains("open")){
-        sec.classList.add("open");
-        document.getElementById("qa-"+s.id).innerHTML="&#9660;";
-      }
-    });
-    toast("Draft loaded: "+(d._cn||"Unknown"));
-  }catch(e){toast("Could not load draft");}
-}
-function clearAllDrafts(){
-  if(!confirm("Delete all saved drafts?")) return;
-  const keys=[];
-  for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith("fibi_"))keys.push(k);}
-  keys.forEach(k=>localStorage.removeItem(k));
-  document.getElementById("dbanner").style.display="none";
-  toast("All drafts cleared");
 }
 
-// ── VAWA reference style ───────────────────────────────────────────
+// ── AI Generation (DeepSeek only, staff cannot change) ────────────
 const VAWA_REF=`Declaration of Ogunbayo Labeeb Ayodeji in Support of VAWA Self-Petition
 
 1. Introduction and Background
 My name is Ogunbayo Labeeb Ayodeji, born November 14, 1999, in Lagos, Nigeria. I am submitting this declaration in support of my VAWA self-petition. I am seeking protection as a result of the abuse I experienced in my marriage to Keeyahna Aliyah Jordan, a U.S. citizen. What started as a hopeful relationship slowly transformed into one filled with fear, emotional distress, and suffering.
 
-2. Meeting Keeyahna - A False Beginning
-I met my wife, Keeyahna, in the Bronx, New York, in February 2020. We began dating in June 2020 and got married on October 20, 2020, in the Bronx, New York.
+2. Meeting My Spouse
+I met my wife in the Bronx, New York, in February 2020. We began dating in June 2020 and got married on October 20, 2020.
 
 3. Life After Marriage
-After we got married, we rented an apartment together in the Bronx. At first things felt balanced, but after some months they changed drastically.
+After we got married, we rented an apartment together. At first things felt balanced, but after some months they changed drastically.
 
 4. Abuse Experienced
-After we got married, things slowly started to change. She repeatedly threatened me with deportation, saying "I will make sure immigration gets you." These threats made me feel trapped and powerless. She controlled our finances and refused to fulfill basic responsibilities.
+She repeatedly threatened me with deportation, saying "I will make sure immigration gets you." These threats made me feel trapped and powerless. She controlled our finances and refused to fulfill basic responsibilities.
 
 5. Impact on My Mental and Emotional Health
 I became deeply sad and emotionally drained. I lived in constant fear. I lost my sense of self-worth, my confidence, and my hope for the future.
@@ -970,7 +1004,6 @@ I became deeply sad and emotionally drained. I lived in constant fear. I lost my
 6. Why I Am Filing for VAWA
 I am filing this VAWA petition to protect myself and find peace. I entered this marriage with love and good intentions. I just want a chance to move forward with my life in safety and dignity.`;
 
-// ── Prompt builder ─────────────────────────────────────────────────
 function buildPrompt(){
   const fd=collectFD();
   const cn=selClient?selClient.name:(fd.A_fullname||"the client");
@@ -982,28 +1015,26 @@ function buildPrompt(){
       const v=fd[f.id];
       if(!v||(typeof v==="string"&&!v.trim())) return;
       if(Array.isArray(v)){
-        if(f.t==="addrtbl"||f.t==="childtbl"||f.t==="wittbl"){
-          const rows=v.filter(r=>r.some(c=>c));
-          if(rows.length) lines.push(f.label+": "+rows.map(r=>r.join(" | ")).join("; "));
-        }else if(v.length){lines.push(f.label+": "+v.join(", "));}
-      }else if(v.toString().trim()){lines.push(f.label+": "+v.toString().trim());}
+        const rows=v.filter(r=>r.some(c=>c));
+        if(rows.length) lines.push(f.label+": "+rows.map(r=>r.join(" | ")).join("; "));
+      }else if(v.toString().trim()) lines.push(f.label+": "+v.toString().trim());
     });
-    if(lines.length) qa+="\n"+sec.title+":\n"+lines.join("\n")+"\n";
+    const plain=sec.title.replace(/&[a-z]+;|—/g," ").replace(/<[^>]+>/g,"");
+    if(lines.length) qa+="\n"+plain+":\n"+lines.join("\n")+"\n";
   });
   return `You are a professional immigration paralegal at FIBI Law Firm. Write a complete, compelling VAWA self-petition personal declaration for this client.
 
-IMPORTANT INSTRUCTIONS:
+INSTRUCTIONS:
 - Write entirely in first person from the client's perspective
 - Use numbered section headers matching the reference style below
-- Be specific and emotionally compelling, using every detail from the questionnaire
-- Show the full progression of abuse and its impact on the client's life
+- Be specific and emotionally compelling using every detail from the questionnaire
+- Show the full progression of abuse and its impact
 - Include all VAWA legal elements: qualifying relationship, shared residence, battery/extreme cruelty, good moral character
-- Maintain a professional but personal, authentic tone throughout
-- End with a strong statement about why protection is needed
+- Maintain a professional but personal, authentic tone
 - Do NOT include a signature block or certification
-- Write approximately 1800-2500 words
+- Approximately 1800-2500 words
 
-REFERENCE DECLARATION STYLE (match this structure and tone):
+REFERENCE DECLARATION STYLE:
 ---
 ${VAWA_REF}
 ---
@@ -1014,144 +1045,112 @@ ABUSER: ${ab}
 QUESTIONNAIRE RESPONSES:
 ${qa}`;
 }
-
-// ── AI Generation ──────────────────────────────────────────────────
 async function generate(){
-  const prov = sessionStorage.getItem("fibi_prov") || "deepseek";
-  const model = sessionStorage.getItem("fibi_model_"+prov) || (prov==="deepseek"?"deepseek-chat":"claude-sonnet-4-6");
-  const apiKey = sessionStorage.getItem("fibi_key_"+prov) || (prov==="deepseek" ? DS_KEY : "");
-  if(!apiKey){
-    toast("Enter an API key in AI Settings");
-    document.getElementById("api-overlay").classList.add("open");
-    return;
-  }
   document.getElementById("gbtn").disabled=true;
-  document.getElementById("gspin").style.display="block";
+  document.getElementById("gspin").style.display="inline-block";
   const stat=document.getElementById("gstat");
-  stat.style.display="block";
-  stat.textContent="Sending to "+model+"…";
+  stat.textContent="Sending to DeepSeek V3…";
   try{
-    let text="";
-    if(prov==="deepseek"){
-      const r=await fetch("https://api.deepseek.com/v1/chat/completions",{
-        method:"POST",
-        headers:{"Authorization":"Bearer "+apiKey,"Content-Type":"application/json"},
-        body:JSON.stringify({model,max_tokens:8192,messages:[{role:"user",content:buildPrompt()}]})
-      });
-      if(!r.ok){const e=await r.json();throw new Error((e.error&&e.error.message)||("HTTP "+r.status));}
-      const data=await r.json();
-      text=data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content||"";
-    }else{
-      const r=await fetch("https://api.anthropic.com/v1/messages",{
-        method:"POST",
-        headers:{"x-api-key":apiKey,"anthropic-version":"2023-06-01",
-          "content-type":"application/json","anthropic-dangerous-direct-browser-access":"true"},
-        body:JSON.stringify({model,max_tokens:8000,messages:[{role:"user",content:buildPrompt()}]})
-      });
-      if(!r.ok){const e=await r.json();throw new Error((e.error&&e.error.message)||("HTTP "+r.status));}
-      const data=await r.json();
-      text=data.content&&data.content[0]&&data.content[0].text||"";
-    }
+    const r=await fetch("https://api.deepseek.com/v1/chat/completions",{
+      method:"POST",
+      headers:{Authorization:"Bearer "+DS_KEY,"Content-Type":"application/json"},
+      body:JSON.stringify({model:"deepseek-chat",max_tokens:8192,
+        messages:[{role:"user",content:buildPrompt()}]})
+    });
+    if(!r.ok){const e=await r.json();throw new Error((e.error&&e.error.message)||"HTTP "+r.status);}
+    const data=await r.json();
+    const text=(data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content)||"";
     if(!text) throw new Error("No text returned");
     document.getElementById("decl-out").value=text;
     document.getElementById("outsec").style.display="block";
-    document.getElementById("dlcard").style.display="block";
+    document.getElementById("card5").style.display="block";
+    document.getElementById("regen-btn").style.display="inline-flex";
+    document.getElementById("copy-btn").style.display="inline-flex";
     wcUpdate();
-    stat.textContent="Generated — "+text.split(/\s+/).filter(Boolean).length+" words";
-    silentSave();
+    stat.textContent="Done — "+text.split(/\s+/).filter(Boolean).length+" words";
+    setStep(5);
+    saveCloudDraft();
     toast("Declaration generated");
   }catch(e){
     stat.textContent="Error: "+e.message;
-    toast("Generation failed");
+    toast("Generation failed: "+e.message,"err");
   }finally{
     document.getElementById("gbtn").disabled=false;
     document.getElementById("gspin").style.display="none";
   }
 }
-function regen(){if(confirm("Regenerate? This will replace the current draft.")) generate();}
-function copyText(){navigator.clipboard.writeText(document.getElementById("decl-out").value).then(()=>toast("Copied to clipboard"));}
+function regen(){if(confirm("Regenerate? This replaces the current draft.")) generate();}
+function copyText(){navigator.clipboard.writeText(document.getElementById("decl-out").value).then(()=>toast("Copied"));}
 function wcUpdate(){
   document.getElementById("wc").textContent=document.getElementById("decl-out").value.split(/\s+/).filter(Boolean).length+" words";
 }
 
-// ── DOCX generation ────────────────────────────────────────────────
+// ── DOCX ──────────────────────────────────────────────────────────
 function xd(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");}
-function makeDocx(title,text){
-  const isHdr=t=>/^\d+\.\s/.test(t)||(t.trim()===t.trim().toUpperCase()&&t.trim().length>4);
-  let body=`<w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>${xd(title)}</w:t></w:r></w:p><w:p/>`;
-  text.split("\n").forEach(p=>{
-    if(!p.trim()){body+="<w:p/>";return;}
-    const h=isHdr(p);
-    const rpr=h?`<w:rPr><w:b/><w:sz w:val="22"/><w:szCs w:val="22"/></w:rPr>`:`<w:rPr><w:sz w:val="22"/><w:szCs w:val="22"/></w:rPr>`;
-    body+=`<w:p><w:r>${rpr}<w:t xml:space="preserve">${xd(p)}</w:t></w:r></w:p>`;
-    if(h) body+="<w:p/>";
-  });
-  const docXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${body}<w:sectPr><w:pgSz w:w="12240" w:h="15840"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440"/></w:sectPr></w:body></w:document>`;
-  const ct=`<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>`;
-  const rels=`<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`;
-  const wrels=`<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`;
-  const styles=`<?xml version="1.0" encoding="UTF-8"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="22"/></w:rPr></w:rPrDefault></w:docDefaults></w:styles>`;
-  const zip=new JSZip();
-  zip.file("[Content_Types].xml",ct);
-  zip.file("_rels/.rels",rels);
-  zip.file("word/document.xml",docXml);
-  zip.file("word/_rels/document.xml.rels",wrels);
-  zip.file("word/styles.xml",styles);
-  return zip.generateAsync({type:"blob",mimeType:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"});
-}
 function dlDocx(){
   const t=document.getElementById("decl-out").value;
-  if(!t){toast("No declaration to download");return;}
+  if(!t){toast("No declaration yet","err");return;}
   const cn=selClient?selClient.name:"Client";
   const title="DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF VAWA SELF-PETITION";
   const safe=cn.replace(/[^a-zA-Z0-9 ]/g,"").replace(/\s+/g,"_");
-  makeDocx(title,t).then(blob=>{
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement("a");
-    a.href=url;a.download=safe+"_VAWA_Declaration.docx";a.click();
-    URL.revokeObjectURL(url);
+  let body=`<w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="26"/></w:rPr><w:t>${xd(title)}</w:t></w:r></w:p><w:p/>`;
+  t.split("\n").forEach(p=>{
+    if(!p.trim()){body+="<w:p/>";return;}
+    const h=/^\d+\.\s/.test(p);
+    const rpr=h?"<w:rPr><w:b/><w:sz w:val=\"22\"/></w:rPr>":"<w:rPr><w:sz w:val=\"22\"/></w:rPr>";
+    body+=`<w:p><w:r>${rpr}<w:t xml:space="preserve">${xd(p)}</w:t></w:r></w:p>`;
+    if(h)body+="<w:p/>";
   });
+  const docXml=`<?xml version="1.0" encoding="UTF-8"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${body}<w:sectPr><w:pgSz w:w="12240" w:h="15840"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440"/></w:sectPr></w:body></w:document>`;
+  const ct=`<?xml version="1.0"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>`;
+  const rels=`<?xml version="1.0"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`;
+  const styles=`<?xml version="1.0"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="22"/></w:rPr></w:rPrDefault></w:docDefaults></w:styles>`;
+  const wrels=`<?xml version="1.0"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`;
+  const zip=new JSZip();
+  zip.file("[Content_Types].xml",ct);zip.file("_rels/.rels",rels);
+  zip.file("word/document.xml",docXml);zip.file("word/_rels/document.xml.rels",wrels);
+  zip.file("word/styles.xml",styles);
+  zip.generateAsync({type:"blob",mimeType:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"})
+    .then(blob=>{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=safe+"_VAWA.docx";a.click();});
 }
 
-// ── PDF generation ─────────────────────────────────────────────────
+// ── PDF ───────────────────────────────────────────────────────────
 function dlPdf(){
   const t=document.getElementById("decl-out").value;
-  if(!t){toast("No declaration to download");return;}
+  if(!t){toast("No declaration yet","err");return;}
   const cn=selClient?selClient.name:"Client";
   const title="DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF VAWA SELF-PETITION";
   const safe=cn.replace(/[^a-zA-Z0-9 ]/g,"").replace(/\s+/g,"_");
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF({orientation:"portrait",unit:"in",format:[8.5,11]});
-  const L=1.0,R=7.5,W=R-L;
-  let y=1.0;
-  const chk=()=>{if(y>10.2){doc.addPage();y=1.0;}};
-  const sf=(sz,bold)=>{doc.setFont("Times",bold?"bold":"normal");doc.setFontSize(sz);};
-  sf(13,true);
+  const L=1.0,W=6.5;let y=1.0;
+  const chk=()=>{if(y>10.3){doc.addPage();y=1.0;}};
+  doc.setFont("Times","bold");doc.setFontSize(13);
   doc.splitTextToSize(title,W).forEach(l=>{chk();doc.text(l,L+W/2,y,{align:"center"});y+=0.22;});
   y+=0.18;
   t.split("\n").forEach(p=>{
     if(!p.trim()){y+=0.14;return;}
-    const h=/^\d+\.\s/.test(p)||(p===p.toUpperCase()&&p.trim().length>4);
-    sf(h?12:11,h);
-    doc.splitTextToSize(p,W).forEach(l=>{chk();doc.text(l,L,y);y+=(h?12:11)*0.0185;});
-    if(h) y+=0.08;
+    const h=/^\d+\.\s/.test(p);
+    doc.setFont("Times",h?"bold":"normal");doc.setFontSize(h?12:11);
+    doc.splitTextToSize(p,W).forEach(l=>{chk();doc.text(l,L,y);y+=(h?12:11)*0.019;});
+    if(h)y+=0.08;
   });
-  doc.save(safe+"_VAWA_Declaration.pdf");
+  doc.save(safe+"_VAWA.pdf");
 }
 
-// ── Toast ──────────────────────────────────────────────────────────
-function toast(msg){
-  document.getElementById("toast-msg").textContent=msg;
+// ── Toast ─────────────────────────────────────────────────────────
+function toast(msg,type){
   const el=document.getElementById("toast");
-  el.classList.add("on");
-  setTimeout(()=>el.classList.remove("on"),2800);
+  document.getElementById("toast-msg").textContent=msg;
+  el.className="toast"+(type==="err"?" err":"")+" on";
+  setTimeout(()=>el.classList.remove("on"),3000);
 }
 
-// ── Init ───────────────────────────────────────────────────────────
-loadApiSettings();
+// ── Init ──────────────────────────────────────────────────────────
 renderOffices();
 renderQ();
-refreshDraftBanner();
+setStep(1);
+loadAllDrafts();
 </script>
 </body>
 </html>
