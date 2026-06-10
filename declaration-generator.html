@@ -1090,6 +1090,22 @@ function wcUpdate(){
   document.getElementById("wc").textContent=document.getElementById("decl-out").value.split(/\s+/).filter(Boolean).length+" words";
 }
 
+// ── Markdown parser for PDF/DOCX ──────────────────────────────────
+// Returns array of {text, level, bold} where level: 0=body,1=h1,2=h2,3=h3
+function parseMd(raw){
+  const lines=[];
+  raw.split("\n").forEach(ln=>{
+    const h3=/^###\s+(.*)/.exec(ln); if(h3){lines.push({text:h3[1].trim(),level:3,bold:true});return;}
+    const h2=/^##\s+(.*)/.exec(ln);  if(h2){lines.push({text:h2[1].trim(),level:2,bold:true});return;}
+    const h1=/^#\s+(.*)/.exec(ln);   if(h1){lines.push({text:h1[1].trim(),level:1,bold:true});return;}
+    if(/^---+$/.test(ln.trim())){lines.push({text:"",level:0,bold:false,hr:true});return;}
+    // strip inline bold/italic markers
+    const clean=ln.replace(/\*\*\*(.+?)\*\*\*/g,"$1").replace(/\*\*(.+?)\*\*/g,"$1").replace(/\*(.+?)\*/g,"$1").replace(/__(.+?)__/g,"$1").replace(/_(.+?)_/g,"$1");
+    lines.push({text:clean,level:0,bold:false});
+  });
+  return lines;
+}
+
 // ── DOCX ──────────────────────────────────────────────────────────
 function xd(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");}
 function dlDocx(){
@@ -1098,13 +1114,17 @@ function dlDocx(){
   const cn=selClient?selClient.name:"Client";
   const title="DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF VAWA SELF-PETITION";
   const safe=cn.replace(/[^a-zA-Z0-9 ]/g,"").replace(/\s+/g,"_");
-  let body=`<w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="26"/></w:rPr><w:t>${xd(title)}</w:t></w:r></w:p><w:p/>`;
-  t.split("\n").forEach(p=>{
-    if(!p.trim()){body+="<w:p/>";return;}
-    const h=/^\d+\.\s/.test(p);
-    const rpr=h?"<w:rPr><w:b/><w:sz w:val=\"22\"/></w:rPr>":"<w:rPr><w:sz w:val=\"22\"/></w:rPr>";
-    body+=`<w:p><w:r>${rpr}<w:t xml:space="preserve">${xd(p)}</w:t></w:r></w:p>`;
-    if(h)body+="<w:p/>";
+  let body=`<w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="28"/></w:rPr><w:t>${xd(title)}</w:t></w:r></w:p><w:p/>`;
+  parseMd(t).forEach(({text,level,bold,hr})=>{
+    if(hr){body+="<w:p/>";return;}
+    if(!text.trim()){body+="<w:p/>";return;}
+    // font sizes: h1=26, h2=24, h3=22, body=22
+    const sz=level===1?"26":level===2?"24":"22";
+    const isBold=bold||level>0;
+    const jc=level>0?`<w:pPr><w:jc w:val="${level===1?"center":"left"}"/></w:pPr>`:"";
+    const rpr=`<w:rPr>${isBold?"<w:b/>":""}<w:sz w:val="${sz}"/><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/></w:rPr>`;
+    body+=`<w:p>${jc}<w:r>${rpr}<w:t xml:space="preserve">${xd(text)}</w:t></w:r></w:p>`;
+    if(level>0)body+="<w:p/>";
   });
   const docXml=`<?xml version="1.0" encoding="UTF-8"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${body}<w:sectPr><w:pgSz w:w="12240" w:h="15840"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440"/></w:sectPr></w:body></w:document>`;
   const ct=`<?xml version="1.0"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>`;
@@ -1129,16 +1149,26 @@ function dlPdf(){
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF({orientation:"portrait",unit:"in",format:[8.5,11]});
   const L=1.0,W=6.5;let y=1.0;
-  const chk=()=>{if(y>10.3){doc.addPage();y=1.0;}};
-  doc.setFont("Times","bold");doc.setFontSize(13);
-  doc.splitTextToSize(title,W).forEach(l=>{chk();doc.text(l,L+W/2,y,{align:"center"});y+=0.22;});
-  y+=0.18;
-  t.split("\n").forEach(p=>{
-    if(!p.trim()){y+=0.14;return;}
-    const h=/^\d+\.\s/.test(p);
-    doc.setFont("Times",h?"bold":"normal");doc.setFontSize(h?12:11);
-    doc.splitTextToSize(p,W).forEach(l=>{chk();doc.text(l,L,y);y+=(h?12:11)*0.019;});
-    if(h)y+=0.08;
+  const chk=(extra)=>{if(y+(extra||0)>10.3){doc.addPage();y=1.0;}};
+  // Title
+  doc.setFont("Times","bold");doc.setFontSize(14);
+  doc.splitTextToSize(title,W).forEach(l=>{chk();doc.text(l,L+W/2,y,{align:"center"});y+=0.24;});
+  y+=0.2;
+  // Body
+  parseMd(t).forEach(({text,level,bold,hr})=>{
+    if(hr){y+=0.08;return;}
+    if(!text.trim()){y+=0.12;return;}
+    const fs=level===1?14:level===2?13:level===3?12:11;
+    const fw=(bold||level>0)?"bold":"normal";
+    doc.setFont("Times",fw);doc.setFontSize(fs);
+    const lh=fs*0.0185;
+    const center=(level===1);
+    doc.splitTextToSize(text,W).forEach(l=>{
+      chk(lh);
+      doc.text(l,center?L+W/2:L,y,center?{align:"center"}:{});
+      y+=lh;
+    });
+    if(level>0)y+=0.1;
   });
   doc.save(safe+"_VAWA.pdf");
 }
