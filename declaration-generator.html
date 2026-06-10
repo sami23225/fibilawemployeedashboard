@@ -1173,7 +1173,20 @@ function dlPdf(){
     });
     if(level>0)y+=0.1;
   });
-  doc.save(safe+"_VAWA.pdf");
+  // Open PDF in new tab (visible preview) and also trigger download
+  const blob=doc.output("blob");
+  const url=URL.createObjectURL(blob);
+  // Open in new tab for preview
+  const a=document.createElement("a");
+  a.href=url; a.target="_blank";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  // Also queue a silent download
+  setTimeout(()=>{
+    const b=document.createElement("a");
+    b.href=url; b.download=safe+"_VAWA.pdf";
+    document.body.appendChild(b); b.click(); document.body.removeChild(b);
+    setTimeout(()=>URL.revokeObjectURL(url),5000);
+  },300);
 }
 
 // ── Toast ─────────────────────────────────────────────────────────
