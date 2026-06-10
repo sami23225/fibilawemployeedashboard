@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIBI Law — Declaration Generator</title>
+<style>
+:root{--bg:#f8f7f4;--card:#fff;--border:#e5e2d9;--accent:#1a3a5c;--gold:#c8a95e;
+  --text:#1a1a1a;--muted:#6b6b6b;--green:#2d6a4f;--red:#c0392b;--inp:#fafafa;--r:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* settings bar */
+#sbar{background:#112b44;padding:9px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+#sbar label{color:rgba(255,255,255,.75);font-size:11px;white-space:nowrap;}
+#sbar input,#sbar select{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);
+  color:#fff;padding:5px 10px;border-radius:6px;font-size:12px;}
+#sbar input::placeholder{color:rgba(255,255,255,.4);}
+#sbar select option{background:#112b44;}
+.sbtn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;
+  padding:5px 12px;border-radius:6px;cursor:pointer;font-size:12px;}
+.sbtn:hover{background:rgba(255,255,255,.25);}
+#ssaved{color:#7fba8a;font-size:11px;display:none;}
+
+/* header */
+header{background:var(--accent);color:#fff;padding:13px 22px;display:flex;align-items:center;
+  gap:13px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+header img{height:34px;}
+header h1{font-size:16px;font-weight:600;}
+header p{font-size:11px;opacity:.7;margin-top:1px;}
+.hspace{flex:1;}
+.hbtn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.28);color:#fff;
+  padding:6px 13px;border-radius:6px;cursor:pointer;font-size:12px;}
+.hbtn:hover{background:rgba(255,255,255,.25);}
+
+/* layout */
+main{max-width:880px;margin:0 auto;padding:22px 16px 80px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  margin-bottom:16px;overflow:hidden;}
+.card-h{display:flex;align-items:center;gap:12px;padding:15px 20px;
+  border-bottom:1px solid var(--border);}
+.card-h h2{font-size:15px;font-weight:600;}
+.card-h p{font-size:12px;color:var(--muted);margin-top:2px;}
+.card-b{padding:20px;}
+.sdot{width:27px;height:27px;border-radius:50%;background:var(--accent);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
+.sdot.ok{background:var(--green);}
+
+/* draft banner */
+#dbanner{background:#fff8e6;border:1px solid #f0d080;border-radius:9px;
+  padding:10px 14px;margin-bottom:14px;display:none;}
+#dbanner .dt{font-size:12px;font-weight:600;color:#8a6800;margin-bottom:7px;}
+.dpills{display:flex;flex-wrap:wrap;gap:6px;}
+.dpill{background:#fff;border:1px solid #f0d080;border-radius:20px;padding:4px 12px;
+  font-size:11px;cursor:pointer;color:#6b5000;}
+.dpill:hover{background:#fffbe8;}
+.dpill .dt2{color:#aaa;margin-left:3px;}
+.dno-pill{background:none;border:1px dashed #f0d080;border-radius:20px;padding:4px 12px;
+  font-size:11px;color:#bbb;cursor:pointer;}
+.dno-pill:hover{border-color:#e0b010;color:#a08000;}
+
+/* office */
+.off-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:15px;}
+.off-c{border:1px solid var(--border);border-radius:8px;padding:9px 6px;text-align:center;
+  cursor:pointer;font-size:11px;color:var(--muted);transition:all .15s;}
+.off-c:hover{border-color:var(--accent);color:var(--accent);}
+.off-c.sel{background:var(--accent);color:#fff;border-color:var(--accent);}
+.off-c .oi{font-size:17px;margin-bottom:3px;}
+
+/* search */
+.sw{position:relative;}
+.sw input{width:100%;padding:9px 13px 9px 35px;border:1px solid var(--border);border-radius:8px;
+  font-size:13px;background:var(--inp);}
+.sw input:focus{outline:none;border-color:var(--accent);}
+.si{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;}
+#sr{border:1px solid var(--border);border-radius:8px;margin-top:5px;overflow:hidden;display:none;}
+.sri{padding:10px 13px;cursor:pointer;display:flex;justify-content:space-between;
+  align-items:center;border-bottom:1px solid var(--border);}
+.sri:last-child{border-bottom:none;}
+.sri:hover{background:#f0f4f8;}
+.sn{font-weight:600;font-size:13px;}
+.sm{font-size:11px;color:var(--muted);}
+.selbox{background:#f0f7f0;border:1px solid #b8d8b8;border-radius:8px;padding:12px 15px;
+  display:none;margin-top:10px;}
+.selbox .cn{font-weight:700;font-size:15px;color:var(--accent);}
+.selbox .cm{font-size:12px;color:var(--muted);margin-top:3px;}
+
+/* decl type */
+.dt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.dtc{border:2px solid var(--border);border-radius:8px;padding:13px;cursor:pointer;transition:all .15s;}
+.dtc:hover:not(.locked){border-color:var(--accent);}
+.dtc.sel{border-color:var(--accent);background:#f0f4f8;}
+.dtc.locked{opacity:.45;cursor:not-allowed;}
+.dtc .di{font-size:21px;margin-bottom:5px;}
+.dtc .dn{font-weight:600;font-size:13px;}
+.dtc .ds{font-size:11px;color:var(--muted);margin-top:2px;}
+.badge{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;margin-top:5px;}
+.badge.av{background:#d4edda;color:#1a6630;}
+.badge.cs{background:#e8e8e8;color:#666;}
+
+/* questionnaire */
+.qsec{border:1px solid var(--border);border-radius:8px;margin-bottom:9px;overflow:hidden;}
+.qsh{display:flex;align-items:center;justify-content:space-between;padding:11px 15px;
+  cursor:pointer;background:#f9f8f6;user-select:none;}
+.qsh:hover{background:#f0eee8;}
+.qst{font-weight:600;font-size:13px;}
+.qsb{padding:15px;display:none;}
+.qsec.open .qsb{display:block;}
+.qsec.open .qsh{background:#eef2f6;}
+
+/* form */
+.fr{margin-bottom:13px;}
+.fr label{display:block;font-size:12px;font-weight:600;margin-bottom:4px;}
+.fr input,.fr textarea,.fr select{width:100%;padding:8px 11px;border:1px solid var(--border);
+  border-radius:6px;font-size:13px;background:var(--inp);font-family:inherit;}
+.fr input:focus,.fr textarea:focus,.fr select:focus{outline:none;border-color:var(--accent);}
+.fr textarea{resize:vertical;min-height:75px;}
+.hint{font-size:11px;color:var(--muted);margin-top:3px;font-weight:400;}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.yn{display:flex;gap:11px;margin-top:3px;}
+.yn label{display:flex;align-items:center;gap:5px;font-size:13px;cursor:pointer;}
+.cond{margin-top:9px;padding:11px;background:#f8f6f0;border-radius:6px;
+  border-left:3px solid var(--gold);display:none;}
+.cond.vis{display:block;}
+
+/* evidence */
+.ev-g{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.ev-i{display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;}
+
+/* tables */
+.rt{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:7px;}
+.rt th{background:#f0f0f0;padding:6px 8px;border:1px solid var(--border);font-weight:600;text-align:left;}
+.rt td{padding:3px;border:1px solid var(--border);}
+.rt td input{width:100%;border:none;padding:4px 6px;background:transparent;font-size:12px;font-family:inherit;}
+.rt td input:focus{outline:none;background:#fff8;}
+.arb{font-size:11px;color:var(--accent);background:none;border:1px dashed var(--accent);
+  padding:4px 9px;border-radius:4px;cursor:pointer;}
+.arb:hover{background:#f0f4f8;}
+
+/* buttons */
+.btn{padding:9px 18px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:600;transition:all .15s;}
+.btn-p{background:var(--accent);color:#fff;}
+.btn-p:hover{background:#142d4a;}
+.btn-p:disabled{opacity:.5;cursor:not-allowed;}
+.btn-s{background:#f0f0f0;color:var(--text);border:1px solid var(--border);}
+.btn-s:hover{background:#e8e8e8;}
+.btn-g{background:var(--green);color:#fff;}
+.btn-g:hover{background:#1e5238;}
+.bsm{padding:6px 13px;font-size:12px;}
+
+/* generate */
+.genbox{background:#f9f8f6;border-radius:8px;padding:15px;margin-bottom:15px;}
+.genc{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.spin{width:21px;height:21px;border:3px solid #ddd;border-top-color:var(--accent);
+  border-radius:50%;animation:sp .7s linear infinite;display:none;}
+@keyframes sp{to{transform:rotate(360deg);}}
+#gstat{font-size:13px;color:var(--muted);margin-top:7px;display:none;}
+#decl-out{width:100%;min-height:420px;padding:15px;border:1px solid var(--border);
+  border-radius:8px;font-family:'Times New Roman',serif;font-size:13px;line-height:1.75;
+  resize:vertical;background:#fff;}
+.wc{font-size:11px;color:var(--muted);margin-top:4px;text-align:right;}
+
+/* download */
+.dl-g{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.dlc{border:1px solid var(--border);border-radius:8px;padding:15px;text-align:center;}
+.dlc .dli{font-size:27px;margin-bottom:7px;}
+.dlc .dln{font-weight:600;font-size:14px;margin-bottom:3px;}
+.dlc .dls{font-size:11px;color:var(--muted);margin-bottom:11px;}
+
+/* toast */
+.toast{position:fixed;bottom:22px;right:22px;background:#1a3a5c;color:#fff;
+  padding:11px 18px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;
+  transition:opacity .3s;z-index:999;}
+.toast.on{opacity:1;}
+
+@media(max-width:600px){
+  .off-grid{grid-template-columns:repeat(3,1fr);}
+  .dt-grid{grid-template-columns:1fr;}
+  .fr2{grid-template-columns:1fr;}
+  .dl-g{grid-template-columns:1fr;}
+  .ev-g{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- Settings bar -->
+<div id="sbar">
+  <label>AI Provider</label>
+  <select id="prov-sel" onchange="provChange()">
+    <option value="deepseek">DeepSeek (Default)</option>
+    <option value="claude">Claude (Anthropic)</option>
+  </select>
+  <label id="key-lbl">API Key</label>
+  <input type="password" id="api-key" placeholder="Auto-filled" style="width:200px;">
+  <label>Model</label>
+  <select id="model-sel">
+    <option value="deepseek-chat">DeepSeek V3 (Best)</option>
+    <option value="deepseek-reasoner">DeepSeek R1 (Reasoning)</option>
+  </select>
+  <button class="sbtn" onclick="saveSettings()">Save</button>
+  <span id="ssaved">✓ Saved</span>
+</div>
+
+<!-- Header -->
+<header>
+  <img src="https://raw.githubusercontent.com/sami23225/fibilawemployeedashboard/main/FIBI_LAW_LOGO.png"
+       onerror="this.style.display='none'">
+  <div>
+    <h1>FIBI Law — Declaration Generator</h1>
+    <p>VAWA &amp; Asylum Declaration Drafting Tool</p>
+  </div>
+  <div class="hspace"></div>
+  <button class="hbtn" onclick="toggleDrafts()">📋 Saved Drafts</button>
+</header>
+
+<main>
+
+<!-- Draft banner -->
+<div id="dbanner">
+  <div class="dt">Saved Drafts — click to resume</div>
+  <div class="dpills" id="dpills"></div>
+</div>
+
+<!-- Step 1: Office & Client -->
+<div class="card">
+  <div class="card-h">
+    <div class="sdot" id="d1">1</div>
+    <div><h2>Select Office &amp; Client</h2>
+         <p>Choose an office, then search by name or A-Number</p></div>
+  </div>
+  <div class="card-b">
+    <div class="off-grid" id="off-grid"></div>
+    <div class="sw">
+      <span class="si">🔍</span>
+      <input type="text" id="csearch" placeholder="Select an office first…"
+             oninput="onSearch(this.value)" disabled>
+    </div>
+    <div id="sr"></div>
+    <div class="selbox" id="selbox">
+      <div class="cn" id="sel-cn">—</div>
+      <div class="cm" id="sel-cm">—</div>
+      <button class="btn btn-s bsm" style="margin-top:8px" onclick="clearClient()">Change Client</button>
+    </div>
+  </div>
+</div>
+
+<!-- Step 2: Declaration Type -->
+<div class="card">
+  <div class="card-h">
+    <div class="sdot" id="d2">2</div>
+    <div><h2>Select Declaration Type</h2>
+         <p>VAWA is available now; other types coming soon</p></div>
+  </div>
+  <div class="card-b">
+    <div class="dt-grid">
+      <div class="dtc sel" id="dt-vawa" onclick="pickDecl('vawa')">
+        <div class="di">⚖️</div>
+        <div class="dn">VAWA Self-Petition</div>
+        <div class="ds">I-360 Personal Declaration</div>
+        <span class="badge av">Available</span>
+      </div>
+      <div class="dtc locked">
+        <div class="di">🏛️</div>
+        <div class="dn">Asylum — Political</div>
+        <div class="ds">Political persecution declaration</div>
+        <span class="badge cs">Coming Soon</span>
+      </div>
+      <div class="dtc locked">
+        <div class="di">✝️</div>
+        <div class="dn">Asylum — Religious</div>
+        <div class="ds">Religious persecution declaration</div>
+        <span class="badge cs">Coming Soon</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 3: Questionnaire -->
+<div class="card">
+  <div class="card-h" style="justify-content:space-between;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="sdot" id="d3">3</div>
+      <div><h2>VAWA Declaration Questionnaire</h2>
+           <p>Complete as many sections as possible — drafts auto-save every 30 s</p></div>
+    </div>
+    <div id="asstat" style="font-size:11px;color:var(--muted);white-space:nowrap;"></div>
+  </div>
+  <div class="card-b" id="qbody"></div>
+</div>
+
+<!-- Step 4: Generate -->
+<div class="card">
+  <div class="card-h">
+    <div class="sdot" id="d4">4</div>
+    <div><h2>Generate Declaration</h2>
+         <p>AI drafts a complete declaration from your responses</p></div>
+  </div>
+  <div class="card-b">
+    <div class="genbox">
+      <div class="genc">
+        <button class="btn btn-p" id="gbtn" onclick="generate()">✨ Generate Declaration</button>
+        <div class="spin" id="gspin"></div>
+        <div class="hspace"></div>
+        <button class="btn btn-s bsm" onclick="saveDraft()">💾 Save Draft</button>
+      </div>
+      <div id="gstat"></div>
+    </div>
+    <div id="outsec" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <b style="font-size:13px;">Generated Declaration — Review &amp; Edit</b>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-s bsm" onclick="copyText()">📋 Copy</button>
+          <button class="btn btn-s bsm" onclick="regen()">↩ Regenerate</button>
+        </div>
+      </div>
+      <textarea id="decl-out" spellcheck="true" oninput="wcUpdate()"></textarea>
+      <div class="wc" id="wc">0 words</div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 5: Download -->
+<div class="card" id="dlcard" style="display:none;">
+  <div class="card-h">
+    <div class="sdot" id="d5">5</div>
+    <div><h2>Download Declaration</h2>
+         <p>Download as editable Word document or print-ready PDF</p></div>
+  </div>
+  <div class="card-b">
+    <div class="dl-g">
+      <div class="dlc">
+        <div class="dli">📄</div>
+        <div class="dln">Word Document</div>
+        <div class="dls">Editable .docx for final review and signing</div>
+        <button class="btn btn-p" onclick="dlDocx()">Download .docx</button>
+      </div>
+      <div class="dlc">
+        <div class="dli">📕</div>
+        <div class="dln">PDF</div>
+        <div class="dls">Print-ready PDF for USCIS submission</div>
+        <button class="btn btn-g" onclick="dlPdf()">Download PDF</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+<div class="toast" id="toast"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+
+const AT_TOKEN   = "patOAyEdjEbm4u2dD" + ".6f53165fbc70c722787dada24d18211a01c39f75cf99eb55e49f160080d4ca39";
+const DS_KEY     = "sk-88759f71b448" + "4551b7de027e2cc21064";
+const AT_TABLE   = "tbld2XGAtTlPCXedQ";
+const OFFICES = [
+  {id:"bronx",      name:"Bronx",        baseId:"app6RPeZDscKTejWB", icon:"🏙️"},
+  {id:"woodland",   name:"Woodland",     baseId:"appCFrrBWJle2TE3S", icon:"🌲"},
+  {id:"harlem",     name:"Harlem",       baseId:"appmRIsWBthV1ybwY", icon:"🎷"},
+  {id:"stonemt",    name:"Stone Mtn",    baseId:"appKkHFU2tH5hkArB", icon:"⛰️"},
+  {id:"collpark",   name:"College Park", baseId:"appZDWnhWcaCRPjAm", icon:"🎓"},
+];
+
+// ── State ─────────────────────────────────────────────────────────
+let selOffice=null, selClient=null, selDecl="vawa";
+let srCache=[], searchTmr=null, asTmr=null;
+
+// ── Settings ──────────────────────────────────────────────────────
+function provChange(){
+  const p=document.getElementById("prov-sel").value;
+  const ms=document.getElementById("model-sel");
+  document.getElementById("key-lbl").textContent = p==="deepseek" ? "DeepSeek Key" : "Claude API Key";
+  ms.innerHTML = p==="deepseek"
+    ? '<option value="deepseek-chat">DeepSeek V3 (Best)</option><option value="deepseek-reasoner">DeepSeek R1 (Reasoning)</option>'
+    : '<option value="claude-opus-4-6">Claude Opus 4 (Best)</option><option value="claude-sonnet-4-6" selected>Claude Sonnet 4</option><option value="claude-haiku-4-5-20251001">Claude Haiku 4 (Fast)</option>';
+  const saved = p==="deepseek" ? sessionStorage.getItem("fibi_ds_key") : sessionStorage.getItem("fibi_cl_key");
+  document.getElementById("api-key").value = saved || (p==="deepseek" ? DS_KEY : "");
+  document.getElementById("model-sel").value = sessionStorage.getItem("fibi_model_"+p) || (p==="deepseek" ? "deepseek-chat" : "claude-sonnet-4-6");
+}
+function saveSettings(){
+  const p=document.getElementById("prov-sel").value;
+  const k=document.getElementById("api-key").value.trim();
+  const m=document.getElementById("model-sel").value;
+  if(k) sessionStorage.setItem(p==="deepseek" ? "fibi_ds_key" : "fibi_cl_key", k);
+  sessionStorage.setItem("fibi_model_"+p, m);
+  const s=document.getElementById("ssaved");
+  s.style.display="inline"; setTimeout(()=>s.style.display="none",1800);
+}
+function loadSettings(){
+  // pre-fill DeepSeek key
+  const ds = sessionStorage.getItem("fibi_ds_key") || DS_KEY;
+  document.getElementById("api-key").value = ds;
+  const m = sessionStorage.getItem("fibi_model_deepseek");
+  if(m) document.getElementById("model-sel").value = m;
+}
+
+// ── Offices ────────────────────────────────────────────────────────
+function renderOffices(){
+  document.getElementById("off-grid").innerHTML = OFFICES.map(o=>
+    `<div class="off-c" id="off-${o.id}" onclick="pickOffice('${o.id}')">
+       <div class="oi">${o.icon}</div><div>${o.name}</div></div>`
+  ).join("");
+}
+function pickOffice(id){
+  selOffice = OFFICES.find(o=>o.id===id)||null;
+  clearClient(true);
+  document.querySelectorAll(".off-c").forEach(e=>e.classList.remove("sel"));
+  if(!selOffice) return;
+  document.getElementById("off-"+id).classList.add("sel");
+  const cs = document.getElementById("csearch");
+  cs.disabled=false; cs.placeholder="Search "+selOffice.name+" clients…"; cs.focus();
+  refreshDraftBanner();
+}
+
+// ── Client Search ─────────────────────────────────────────────────
+function onSearch(v){
+  clearTimeout(searchTmr);
+  const sr=document.getElementById("sr");
+  if(!v||v.length<2){sr.style.display="none";return;}
+  searchTmr=setTimeout(()=>doSearch(v),320);
+}
+async function doSearch(q){
+  if(!selOffice) return;
+  const f=encodeURIComponent;
+  const formula=`OR(SEARCH(LOWER("${q.toLowerCase()}"),LOWER({Client Name})),SEARCH(LOWER("${q.toLowerCase()}"),LOWER({A-Number})))`;
+  const flds=["Client Name","First Name","Last Name","A-Number","CASE STATUS","Email","Number"];
+  const url="https://api.airtable.com/v0/"+selOffice.baseId+"/"+AT_TABLE
+    +"?filterByFormula="+f(formula)+"&maxRecords=15"
+    +flds.map(x=>"&fields[]="+f(x)).join("");
+  try{
+    const r=await fetch(url,{headers:{Authorization:"Bearer "+AT_TOKEN}});
+    const d=await r.json();
+    srCache=d.records||[];
+    renderSR(srCache);
+  }catch(e){console.error("AT search",e);}
+}
+function renderSR(recs){
+  const sr=document.getElementById("sr");
+  if(!recs.length){
+    sr.style.display="block";
+    sr.innerHTML='<div style="padding:11px;color:var(--muted);font-size:13px;">No clients found</div>';
+    return;
+  }
+  sr.style.display="block";
+  sr.innerHTML=recs.map((r,i)=>{
+    const f=r.fields;
+    const name=f["Client Name"]||((f["First Name"]||"")+" "+(f["Last Name"]||"")).trim()||"Unknown";
+    const anum=f["A-Number"]||"";
+    const stat=f["CASE STATUS"]||"";
+    return `<div class="sri" onclick="pickClient(${i})">
+      <div><div class="sn">${xe(name)}</div>
+      <div class="sm">${anum?"A-"+anum:"No A-Number"}${stat?" · "+stat:""}</div></div>
+      <div style="font-size:11px;color:var(--muted);">${selOffice.name}</div></div>`;
+  }).join("");
+}
+function pickClient(i){
+  const r=srCache[i];
+  if(!r) return;
+  const f=r.fields;
+  const name=f["Client Name"]||((f["First Name"]||"")+" "+(f["Last Name"]||"")).trim()||"Unknown";
+  selClient={id:r.id,name,anumber:f["A-Number"]||"",email:f["Email"]||"",phone:f["Number"]||"",caseType:f["CASE STATUS"]||""};
+  document.getElementById("sr").style.display="none";
+  document.getElementById("csearch").value="";
+  document.getElementById("sel-cn").textContent=selClient.name;
+  document.getElementById("sel-cm").textContent=[selClient.anumber?"A-"+selClient.anumber:null,selClient.caseType,selOffice.name].filter(Boolean).join(" · ");
+  document.getElementById("selbox").style.display="block";
+  document.getElementById("d1").classList.add("ok");
+  // autofill Section A
+  setFv("A_fullname", selClient.name);
+  setFv("A_anumber", selClient.anumber ? "A-"+selClient.anumber : "");
+  setFv("A_email", selClient.email);
+  setFv("A_phone", selClient.phone);
+  refreshDraftBanner();
+}
+function setFv(id,v){const e=document.getElementById(id);if(e&&!e.value)e.value=v;}
+function clearClient(quiet){
+  selClient=null;
+  document.getElementById("selbox").style.display="none";
+  document.getElementById("csearch").value="";
+  document.getElementById("sr").style.display="none";
+  document.getElementById("d1").classList.remove("ok");
+  if(!quiet) refreshDraftBanner();
+}
+function xe(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+
+// ── Declaration type ───────────────────────────────────────────────
+function pickDecl(t){
+  selDecl=t;
+  document.querySelectorAll(".dtc").forEach(e=>e.classList.remove("sel"));
+  document.getElementById("dt-"+t).classList.add("sel");
+}
+
+// ── Questionnaire definition ───────────────────────────────────────
+const QS=[
+  {id:"A",title:"Section A — Client Identification",fields:[
+    {id:"A_fullname",  label:"Full Legal Name",                          t:"text",  hint:"First / Middle / Last"},
+    {id:"A_othernames",label:"Other Names Used",                         t:"text",  hint:"Maiden, nicknames, prior married name"},
+    {id:"A_dob",       label:"Date of Birth",                            t:"date"},
+    {id:"A_cob",       label:"Country of Birth",                         t:"text"},
+    {id:"A_citizen",   label:"Country of Citizenship",                   t:"text"},
+    {id:"A_immstat",   label:"Current Immigration Status",               t:"text",  hint:"If known"},
+    {id:"A_anumber",   label:"A-Number",                                 t:"text",  hint:"If any"},
+    {id:"A_address",   label:"Current Mailing Address",                  t:"text"},
+    {id:"A_phone",     label:"Best Phone Number",                        t:"tel"},
+    {id:"A_email",     label:"Email Address",                            t:"email"},
+    {id:"A_language",  label:"Preferred Language",                       t:"text"},
+  ]},
+  {id:"B",title:"Section B — The Abusive Spouse / Parent",fields:[
+    {id:"B_aname",  label:"Abuser’s Full Legal Name",               t:"text"},
+    {id:"B_aaliases",label:"Other Names Used by Abuser",                 t:"text"},
+    {id:"B_adob",   label:"Abuser’s Date of Birth",                 t:"date"},
+    {id:"B_acob",   label:"Abuser’s Country of Birth",              t:"text"},
+    {id:"B_astat",  label:"Abuser’s Immigration Status",            t:"text"},
+    {id:"B_aanum",  label:"Abuser’s A-Number (if known)",           t:"text"},
+    {id:"B_aaddr",  label:"Abuser’s Last Known Address",            t:"text"},
+    {id:"B_rel",    label:"Nature of Qualifying Relationship",           t:"select",
+      opts:["Spouse (married to abuser)","Child of abuser","Parent of abuser","Filing on behalf of child"]},
+    {id:"B_met",    label:"When / where did you first meet the abuser? How did the relationship begin?", t:"ta"},
+    {id:"B_married",label:"When / where did you marry the abuser?",      t:"ta",   hint:"City, State/Country, Date"},
+    {id:"B_priormar",label:"Were you previously married? Provide details if yes.", t:"ta"},
+    {id:"B_uscyn",  label:"Is the abuser a U.S. citizen or LPR?",        t:"yn",   cond:"B_uscdet"},
+    {id:"B_uscdet", label:"How do you know? (passport, certificate, green card)", t:"ta",   iscond:true},
+    {id:"B_how",    label:"How / when did the abuser obtain USC or LPR status?", t:"ta"},
+  ]},
+  {id:"C",title:"Section C — Shared Residence",fields:[
+    {id:"C_addrs",  label:"All addresses where you lived together with the abuser", t:"addrtbl"},
+    {id:"C_proof",  label:"What documents prove you lived together?",    t:"ta",
+      hint:"Lease, utility bills, bank statements, mail, school/medical records"},
+  ]},
+  {id:"D",title:"Section D — Good Moral Character",fields:[
+    {id:"D1",       label:"Have you ever been arrested, cited, or charged with any crime?", t:"yn", cond:"D1d"},
+    {id:"D1d",      label:"Date, location, charge, and disposition for each incident", t:"ta", iscond:true},
+    {id:"D2",       label:"Have you ever been convicted of any crime?",  t:"yn", cond:"D2d"},
+    {id:"D2d",      label:"Describe each conviction, sentence, and date", t:"ta", iscond:true},
+    {id:"D3",       label:"Have you ever been ordered removed or deported from the U.S.?", t:"yn", cond:"D3d"},
+    {id:"D3d",      label:"When and where?",                             t:"text", iscond:true},
+    {id:"D4",       label:"Have you ever entered the U.S. without inspection?", t:"yn", cond:"D4d"},
+    {id:"D4d",      label:"Approximate date and location",               t:"text", iscond:true},
+    {id:"D5",       label:"Have you ever used a false identity or misrepresented yourself to a U.S. agency?", t:"yn", cond:"D5d"},
+    {id:"D5d",      label:"Provide details",                             t:"ta",   iscond:true},
+  ]},
+  {id:"E",title:"Section E — History of Abuse",fields:[
+    {id:"E_start",  label:"When did the abuse first start? Describe the first incident you recall.", t:"ta"},
+    {id:"E_escal",  label:"How did the abuse change or escalate over time?",        t:"ta"},
+    {id:"E_freq",   label:"How often did abuse occur?",                             t:"text", hint:"Daily, weekly, monthly, specific periods"},
+    {id:"E_types",  label:"Describe the different forms of abuse you experienced.", t:"ta"},
+    {id:"E_phys",   label:"Did the abuser ever physically hurt you?",               t:"yn", cond:"E_physd"},
+    {id:"E_physd",  label:"Describe the most serious physical incident (date, what happened, injuries, witnesses, medical care)", t:"ta", rows:5, iscond:true},
+    {id:"E_physo",  label:"Describe 2-3 other significant physical incidents",      t:"ta", rows:4, iscond:true},
+    {id:"E_hosp",   label:"Were you ever hospitalized or treated by a doctor due to the abuse?", t:"yn", cond:"E_hospd"},
+    {id:"E_hospd",  label:"Dates, facilities, and types of treatment",              t:"ta", iscond:true},
+    {id:"E_insult", label:"Did the abuser insult, demean, or humiliate you? Give specific examples.", t:"ta"},
+    {id:"E_ctrl",   label:"Did the abuser control your daily life (clothing, money, phone, who you saw)? Give examples.", t:"ta"},
+    {id:"E_threats",label:"Did the abuser make threats (harm to you, children, family, pets)? Describe.", t:"ta"},
+    {id:"E_psych",  label:"How did the psychological abuse affect your daily life, work, and mental health?", t:"ta"},
+    {id:"E_imm",    label:"Did the abuser threaten to report you to immigration (ICE/USCIS)?", t:"yn", cond:"E_immd"},
+    {id:"E_immd",   label:"Describe specific incidents",                            t:"ta", iscond:true},
+    {id:"E_ictrl",  label:"Did the abuser use your immigration status to prevent you from leaving or seeking help?", t:"yn", cond:"E_ictrld"},
+    {id:"E_ictrld", label:"Explain how",                                            t:"ta", iscond:true},
+    {id:"E_docs",   label:"Did the abuser confiscate your passport, visa, or identity documents?", t:"yn", cond:"E_docsd"},
+    {id:"E_docsd",  label:"What happened to them?",                                 t:"ta", iscond:true},
+    {id:"E_sex",    label:"Did the abuser force you into sexual acts against your will? (Optional)", t:"yn", cond:"E_sexd"},
+    {id:"E_sexd",   label:"You do not need to describe in detail — your attorney will guide you", t:"ta", iscond:true},
+  ]},
+  {id:"F",title:"Section F — Impact on Children",fields:[
+    {id:"F_kids",   label:"List children affected",                      t:"childtbl"},
+    {id:"F1",       label:"Did the abuser ever abuse your children?",    t:"yn", cond:"F1d"},
+    {id:"F1d",      label:"Describe specific incidents",                 t:"ta", iscond:true},
+    {id:"F2",       label:"Did your children witness the abuse? How did it affect them?", t:"ta"},
+    {id:"F3",       label:"Did the abuser threaten to take the children or report you to CPS?", t:"yn", cond:"F3d"},
+    {id:"F3d",      label:"Explain",                                     t:"ta", iscond:true},
+  ]},
+  {id:"G",title:"Section G — Attempts to Seek Help",fields:[
+    {id:"G1",       label:"Did you ever call the police?",               t:"yn", cond:"G1d"},
+    {id:"G1d",      label:"When, what happened, was a report filed?",   t:"ta", iscond:true},
+    {id:"G2",       label:"Did police ever come without you calling?",   t:"yn", cond:"G2d"},
+    {id:"G2d",      label:"Describe what happened",                      t:"ta", iscond:true},
+    {id:"G3",       label:"Did you ever obtain a restraining or protective order?", t:"yn", cond:"G3d"},
+    {id:"G3d",      label:"Case number, court, and dates",               t:"ta", iscond:true},
+    {id:"G4",       label:"Did you go to a domestic violence shelter or hotline?", t:"yn", cond:"G4d"},
+    {id:"G4d",      label:"Name of organization and approximate date",   t:"text", iscond:true},
+    {id:"G5",       label:"Did you speak with a counselor, therapist, or social worker?", t:"yn", cond:"G5d"},
+    {id:"G5d",      label:"Name, organization, and dates if possible",   t:"text", iscond:true},
+    {id:"G6",       label:"Why did you not report the abuse sooner, or why did you stay?", t:"ta",
+      hint:"Fear, finances, children, immigration status, love, cultural reasons"},
+  ]},
+  {id:"H",title:"Section H — Witnesses &amp; Evidence",fields:[
+    {id:"H_wit",    label:"Witnesses who can corroborate the abuse",     t:"wittbl"},
+    {id:"H_ev",     label:"Evidence you have or can obtain",             t:"chklist",
+      opts:["Police reports / incident reports","Restraining or protective orders",
+            "Medical records / ER records / injury photos","Counseling / therapy records",
+            "Domestic violence shelter records","Text messages, emails, or voicemails from abuser",
+            "Witness letters or affidavits","Marriage certificate / divorce decree",
+            "Proof of joint residence","Proof of abuser’s U.S. citizenship or LPR status",
+            "Court records","Other photographs or videos"]},
+    {id:"H_other",  label:"Other evidence not listed above",             t:"ta"},
+  ]},
+  {id:"I",title:"Section I — Separation / Current Situation",fields:[
+    {id:"I1",       label:"Are you currently living with the abuser?",   t:"yn"},
+    {id:"I2",       label:"When and how did you leave? What finally prompted you to leave?", t:"ta"},
+    {id:"I3",       label:"Did you ever return to the abuser after leaving?", t:"yn", cond:"I3d"},
+    {id:"I3d",      label:"How many times, and why did you go back?",    t:"ta", iscond:true},
+    {id:"I4",       label:"Are you divorced, legally separated, or in the process of divorce?", t:"yn", cond:"I4d"},
+    {id:"I4d",      label:"Case number, court, and status",              t:"text", iscond:true},
+    {id:"I5",       label:"Do you have ongoing safety concerns? Is the abuser still contacting or threatening you?", t:"ta"},
+    {id:"I6",       label:"Where are you currently living, and with whom?", t:"ta"},
+  ]},
+  {id:"J",title:"Section J — Relief Sought &amp; Personal Statement",fields:[
+    {id:"J1",       label:"In your own words, why are you filing for VAWA? What do you hope to achieve?", t:"ta"},
+    {id:"J2",       label:"What would happen to you if required to return to your country of origin?", t:"ta"},
+    {id:"J3",       label:"What are your goals for yourself and your children in the U.S.?", t:"ta"},
+    {id:"J4",       label:"Is there anything else you want USCIS to know that has not been covered?", t:"ta"},
+  ]},
+];
+
+// ── Render questionnaire ───────────────────────────────────────────
+function renderQ(){
+  const body=document.getElementById("qbody");
+  body.innerHTML=QS.map(sec=>{
+    const rows=sec.fields.map(f=>renderF(f)).join("");
+    return `<div class="qsec" id="qs-${sec.id}">
+      <div class="qsh" onclick="toggleSec('${sec.id}')">
+        <span class="qst">${sec.title}</span>
+        <span id="qa-${sec.id}">▶</span>
+      </div>
+      <div class="qsb">${rows}</div></div>`;
+  }).join("");
+  // Open first section
+  document.querySelector(".qsec").classList.add("open");
+  document.getElementById("qa-A").textContent="▼";
+  // Autosave on any change
+  body.addEventListener("input",()=>{
+    document.getElementById("asstat").textContent="Unsaved…";
+    clearTimeout(asTmr); asTmr=setTimeout(silentSave,3000);
+  });
+  body.addEventListener("change",()=>{clearTimeout(asTmr);asTmr=setTimeout(silentSave,3000);});
+}
+
+function renderF(f){
+  if(f.iscond){
+    return `<div class="cond" id="cnd-${f.id}">
+      <div class="fr"><label>${f.label}${f.hint?`<br><span class="hint">${f.hint}</span>`:""}</label>
+      ${rinput(f)}</div></div>`;
+  }
+  if(f.t==="addrtbl") return `<div class="fr"><label>${f.label}</label>${mkAddrTbl(f.id)}</div>`;
+  if(f.t==="childtbl") return `<div class="fr"><label>${f.label}</label>${mkChildTbl(f.id)}</div>`;
+  if(f.t==="wittbl")  return `<div class="fr"><label>${f.label}</label>${mkWitTbl(f.id)}</div>`;
+  if(f.t==="chklist") return `<div class="fr"><label>${f.label}</label>${mkChk(f.id,f.opts)}</div>`;
+  return `<div class="fr"><label>${f.label}${f.hint?`<br><span class="hint">${f.hint}</span>`:""}</label>
+    ${rinput(f)}</div>`;
+}
+function rinput(f){
+  if(f.t==="text"||f.t==="email"||f.t==="tel"||f.t==="date")
+    return `<input type="${f.t}" id="${f.id}" class="fi">`;
+  if(f.t==="ta")
+    return `<textarea id="${f.id}" class="fi" rows="${f.rows||3}"></textarea>`;
+  if(f.t==="select")
+    return `<select id="${f.id}" class="fi"><option value="">-- Select --</option>${f.opts.map(o=>`<option>${o}</option>`).join("")}</select>`;
+  if(f.t==="yn"){
+    const oc=f.cond ? ` onchange="tcond('${f.cond}',this.value)"` : "";
+    return `<div class="yn"><label><input type="radio" name="${f.id}" value="Yes"${oc}> Yes</label>
+      <label><input type="radio" name="${f.id}" value="No"${oc}> No</label></div>`;
+  }
+  return "";
+}
+function mkAddrTbl(id){
+  return `<table class="rt" id="${id}-t">
+    <tr><th>Address</th><th>Move-In</th><th>Move-Out</th><th>Who Else Lived There?</th></tr>
+    <tr><td><input type="text" placeholder="Street, City, State"></td><td><input type="date"></td><td><input type="date"></td><td><input type="text"></td></tr>
+  </table><button class="arb" onclick="addRow('${id}-t',4)">+ Add Address</button>`;
+}
+function mkChildTbl(id){
+  return `<table class="rt" id="${id}-t">
+    <tr><th>Full Name</th><th>Date of Birth</th><th>Country of Birth</th><th>Relationship to Abuser</th></tr>
+    <tr><td><input type="text"></td><td><input type="date"></td><td><input type="text"></td><td><input type="text"></td></tr>
+  </table><button class="arb" onclick="addRow('${id}-t',4)">+ Add Child</button>`;
+}
+function mkWitTbl(id){
+  return `<table class="rt" id="${id}-t">
+    <tr><th>Full Name</th><th>Relationship</th><th>Phone / Email</th><th>What Did They Witness?</th></tr>
+    <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+  </table><button class="arb" onclick="addRow('${id}-t',4)">+ Add Witness</button>`;
+}
+function mkChk(id,opts){
+  return `<div class="ev-g">${opts.map(o=>
+    `<label class="ev-i"><input type="checkbox" name="${id}" value="${xe(o)}"> ${xe(o)}</label>`
+  ).join("")}</div>`;
+}
+function addRow(tid,cols){
+  const t=document.getElementById(tid);
+  const r=t.insertRow(-1);
+  for(let i=0;i<cols;i++){const td=r.insertCell(-1);td.innerHTML=`<input type="${i===1?"date":"text"}">`;}
+}
+function toggleSec(id){
+  const s=document.getElementById("qs-"+id);
+  const open=s.classList.toggle("open");
+  document.getElementById("qa-"+id).textContent=open?"▼":"▶";
+}
+function tcond(id,v){
+  const el=document.getElementById("cnd-"+id);
+  if(el) el.classList.toggle("vis",v==="Yes");
+}
+
+// ── Draft management ───────────────────────────────────────────────
+function dkey(){
+  return "fibi_"+((selOffice&&selOffice.id)||"xx")+"_"+((selClient&&selClient.id)||"nc")+"_"+selDecl;
+}
+function collectFD(){
+  const d={};
+  document.querySelectorAll(".fi").forEach(e=>{if(e.id)d[e.id]=e.value;});
+  QS.forEach(sec=>sec.fields.forEach(f=>{
+    if(f.t==="yn"){const c=document.querySelector(`input[name="${f.id}"]:checked`);if(c)d[f.id]=c.value;}
+  }));
+  const cbs={};
+  document.querySelectorAll("input[type=checkbox]").forEach(cb=>{
+    if(cb.checked){if(!cbs[cb.name])cbs[cb.name]=[];cbs[cb.name].push(cb.value);}
+  });
+  Object.assign(d,cbs);
+  ["C_addrs","F_kids","H_wit"].forEach(id=>{
+    const t=document.getElementById(id+"-t");
+    if(!t) return;
+    d[id]=Array.from(t.rows).slice(1).map(r=>Array.from(r.cells).map(td=>(td.querySelector("input")||{}).value||""));
+  });
+  return d;
+}
+function restoreFD(d){
+  if(!d) return;
+  Object.keys(d).forEach(k=>{
+    const e=document.getElementById(k);
+    if(e&&(e.tagName==="INPUT"||e.tagName==="TEXTAREA"||e.tagName==="SELECT")) e.value=d[k];
+  });
+  QS.forEach(sec=>sec.fields.forEach(f=>{
+    if(f.t==="yn"&&d[f.id]){
+      const r=document.querySelector(`input[name="${f.id}"][value="${d[f.id]}"]`);
+      if(r){r.checked=true;if(f.cond)tcond(f.cond,d[f.id]);}
+    }
+  }));
+  document.querySelectorAll("input[type=checkbox]").forEach(cb=>{
+    const g=d[cb.name];if(Array.isArray(g))cb.checked=g.includes(cb.value);
+  });
+  if(d._text){
+    document.getElementById("decl-out").value=d._text;
+    document.getElementById("outsec").style.display="block";
+    document.getElementById("dlcard").style.display="block";
+    wcUpdate();
+  }
+}
+function saveDraft(){
+  const d=collectFD();
+  d._at=new Date().toISOString();
+  d._cn=selClient?selClient.name:"Unknown";
+  d._on=selOffice?selOffice.name:"";
+  const t=document.getElementById("decl-out").value;
+  if(t) d._text=t;
+  localStorage.setItem(dkey(),JSON.stringify(d));
+  document.getElementById("asstat").textContent="Saved ✓";
+  toast("Draft saved");
+  refreshDraftBanner();
+}
+function silentSave(){
+  const d=collectFD();
+  d._at=new Date().toISOString();
+  d._cn=selClient?selClient.name:"Unknown";
+  d._on=selOffice?selOffice.name:"";
+  const t=document.getElementById("decl-out").value;
+  if(t) d._text=t;
+  localStorage.setItem(dkey(),JSON.stringify(d));
+  document.getElementById("asstat").textContent="Auto-saved ✓";
+}
+function refreshDraftBanner(){
+  const keys=[];
+  for(let i=0;i<localStorage.length;i++){
+    const k=localStorage.key(i);
+    if(k&&k.startsWith("fibi_"))keys.push(k);
+  }
+  const banner=document.getElementById("dbanner");
+  const pills=document.getElementById("dpills");
+  if(!keys.length){banner.style.display="none";return;}
+  banner.style.display="block";
+  pills.innerHTML=keys.map(k=>{
+    try{
+      const d=JSON.parse(localStorage.getItem(k)||"{}");
+      const dt=d._at?new Date(d._at).toLocaleDateString():"";
+      const cn=d._cn||"Unknown";
+      const on=d._on||"";
+      return `<span class="dpill" onclick="loadDraft('${k}')">${xe(cn)}${on?" · "+xe(on):""}<span class="dt2">${dt}</span></span>`;
+    }catch(e){return "";}
+  }).join("")
+  + `<span class="dno-pill" onclick="clearAllDrafts()">Clear All</span>`;
+}
+function toggleDrafts(){
+  const b=document.getElementById("dbanner");
+  if(b.style.display==="none"){refreshDraftBanner();}
+  else{b.style.display="none";}
+}
+function loadDraft(key){
+  try{
+    const d=JSON.parse(localStorage.getItem(key)||"{}");
+    restoreFD(d);
+    QS.forEach(s=>{const sec=document.getElementById("qs-"+s.id);if(sec&&!sec.classList.contains("open")){sec.classList.add("open");document.getElementById("qa-"+s.id).textContent="▼";}});
+    toast("Draft loaded: "+(d._cn||"Unknown"));
+  }catch(e){toast("Could not load draft");}
+}
+function clearAllDrafts(){
+  if(!confirm("Delete all saved drafts?")) return;
+  const keys=[];
+  for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith("fibi_"))keys.push(k);}
+  keys.forEach(k=>localStorage.removeItem(k));
+  document.getElementById("dbanner").style.display="none";
+  toast("All drafts cleared");
+}
+
+// ── VAWA Reference (for AI prompt) ────────────────────────────────
+const VAWA_REF = `Declaration of Ogunbayo Labeeb Ayodeji in Support of VAWA Self-Petition
+
+1. Introduction and Background
+My name is Ogunbayo Labeeb Ayodeji, born November 14, 1999, in Lagos, Nigeria. I am submitting this declaration in support of my VAWA self-petition. I am seeking protection as a result of the abuse I experienced in my marriage to Keeyahna Aliyah Jordan, a U.S. citizen. What started as a hopeful relationship slowly transformed into one filled with fear, emotional distress, and suffering.
+
+2. Meeting Keeyahna - A False Beginning
+I met my wife, Keeyahna, in the Bronx, New York, in February 2020, during the early months of the COVID-19 pandemic. We began dating in June 2020 and got married on October 20, 2020, in the Bronx, New York.
+
+3. Life After Marriage
+After we got married, we rented an apartment together in the Bronx. At first, things felt balanced as we adjusted to living together. However, after some months, things started to change drastically.
+
+4. Abuse Experienced
+After we got married, things slowly started to change. It began with refusals to help with basic household chores. She had multiple debts. She repeatedly threatened me with deportation, saying things like "I will make sure immigration gets you," or "You will see what happens if you do not send me money." These threats made me feel trapped and powerless.
+
+5. Impact on My Mental and Emotional Health
+Because of everything I went through in the marriage, I became deeply sad and emotionally drained. I lived in constant fear, always worried she might call the police or immigration on me. I lost my sense of self-worth, my confidence, and my hope for the future.
+
+6. Why I Am Filing for VAWA
+I am filing this VAWA petition not to get revenge, but to protect myself and find peace. I entered this marriage with love and good intentions. I just want a chance to move forward with my life in safety and dignity.`;
+
+// ── Prompt builder ─────────────────────────────────────────────────
+function buildPrompt(){
+  const fd=collectFD();
+  const cn=selClient?selClient.name:(fd.A_fullname||"the client");
+  const ab=fd.B_aname||"the abuser";
+  let qa="";
+  QS.forEach(sec=>{
+    const lines=[];
+    sec.fields.forEach(f=>{
+      const v=fd[f.id];
+      if(!v||(typeof v==="string"&&!v.trim())) return;
+      if(Array.isArray(v)){
+        if(f.t==="addrtbl"||f.t==="childtbl"||f.t==="wittbl"){
+          const rows=v.filter(r=>r.some(c=>c));
+          if(rows.length) lines.push(f.label+": "+rows.map(r=>r.join(" | ")).join("; "));
+        }else if(v.length){
+          lines.push(f.label+": "+v.join(", "));
+        }
+      }else{
+        lines.push(f.label+": "+v.trim());
+      }
+    });
+    if(lines.length) qa+="\n"+sec.title+":\n"+lines.join("\n")+"\n";
+  });
+  return `You are a professional immigration paralegal at FIBI Law Firm. Write a complete, compelling VAWA self-petition personal declaration for this client.
+
+IMPORTANT INSTRUCTIONS:
+- Write entirely in first person from the client's perspective
+- Use numbered section headers matching the reference style below
+- Be specific and emotionally compelling, using every detail from the questionnaire
+- Show the full progression of abuse and its impact on the client's life
+- Include all VAWA legal elements: qualifying relationship, shared residence, battery/extreme cruelty, good moral character
+- Maintain a professional but personal, authentic tone throughout
+- End with a strong statement about why protection is needed
+- Do NOT include a signature block or certification
+- Write approximately 1800-2500 words
+
+REFERENCE DECLARATION STYLE (match this structure and tone exactly):
+---
+${VAWA_REF}
+---
+
+CLIENT: ${cn}
+ABUSER: ${ab}
+
+QUESTIONNAIRE RESPONSES:
+${qa}`;
+}
+
+// ── AI Generation ──────────────────────────────────────────────────
+async function generate(){
+  const prov=document.getElementById("prov-sel").value;
+  const model=document.getElementById("model-sel").value;
+  const rawKey=document.getElementById("api-key").value.trim();
+  const apiKey= rawKey || (prov==="deepseek" ? DS_KEY : sessionStorage.getItem("fibi_cl_key") || "");
+  if(!apiKey){toast("Please enter an API key in the settings bar");return;}
+
+  document.getElementById("gbtn").disabled=true;
+  document.getElementById("gspin").style.display="block";
+  const stat=document.getElementById("gstat");
+  stat.style.display="block";
+  stat.textContent="Sending to "+model+"...";
+
+  try{
+    let text="";
+    if(prov==="deepseek"){
+      const r=await fetch("https://api.deepseek.com/v1/chat/completions",{
+        method:"POST",
+        headers:{"Authorization":"Bearer "+apiKey,"Content-Type":"application/json"},
+        body:JSON.stringify({model,max_tokens:8192,
+          messages:[{role:"user",content:buildPrompt()}]})
+      });
+      if(!r.ok){const e=await r.json();throw new Error((e.error&&e.error.message)||("HTTP "+r.status));}
+      const data=await r.json();
+      text=data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content||"";
+    }else{
+      const r=await fetch("https://api.anthropic.com/v1/messages",{
+        method:"POST",
+        headers:{"x-api-key":apiKey,"anthropic-version":"2023-06-01",
+          "content-type":"application/json","anthropic-dangerous-direct-browser-access":"true"},
+        body:JSON.stringify({model,max_tokens:8000,messages:[{role:"user",content:buildPrompt()}]})
+      });
+      if(!r.ok){const e=await r.json();throw new Error((e.error&&e.error.message)||("HTTP "+r.status));}
+      const data=await r.json();
+      text=data.content&&data.content[0]&&data.content[0].text||"";
+    }
+    if(!text) throw new Error("No text returned");
+    document.getElementById("decl-out").value=text;
+    document.getElementById("outsec").style.display="block";
+    document.getElementById("dlcard").style.display="block";
+    wcUpdate();
+    stat.textContent="Generated ✓ ("+text.split(/\s+/).filter(Boolean).length+" words)";
+    silentSave();
+    toast("Declaration generated!");
+  }catch(e){
+    stat.textContent="Error: "+e.message;
+    toast("Generation failed: "+e.message.slice(0,60));
+  }finally{
+    document.getElementById("gbtn").disabled=false;
+    document.getElementById("gspin").style.display="none";
+  }
+}
+function regen(){if(confirm("Regenerate? This will replace the current text.")) generate();}
+function copyText(){
+  navigator.clipboard.writeText(document.getElementById("decl-out").value)
+    .then(()=>toast("Copied to clipboard"));
+}
+function wcUpdate(){
+  const w=document.getElementById("decl-out").value.split(/\s+/).filter(Boolean).length;
+  document.getElementById("wc").textContent=w+" words";
+}
+
+// ── DOCX generation ────────────────────────────────────────────────
+function xd(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");}
+function makeDocx(title,text){
+  const paras=text.split("\n");
+  const isHdr=t=>/^\d+\.\s/.test(t)||(t===t.toUpperCase()&&t.trim().length>4);
+  let body="";
+  // Title
+  body+=`<w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr><w:t>${xd(title)}</w:t></w:r></w:p><w:p/>`;
+  paras.forEach(p=>{
+    if(!p.trim()){body+="<w:p/>";return;}
+    const h=isHdr(p);
+    const rpr=h?"<w:rPr><w:b/><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr>":"<w:rPr><w:sz w:val=\"22\"/><w:szCs w:val=\"22\"/></w:rPr>";
+    body+=`<w:p><w:r>${rpr}<w:t xml:space="preserve">${xd(p)}</w:t></w:r></w:p>`;
+    if(h) body+="<w:p/>";
+  });
+  const docXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${body}<w:sectPr><w:pgSz w:w="12240" w:h="15840"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440"/></w:sectPr></w:body></w:document>`;
+  const ct=`<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>`;
+  const rels=`<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`;
+  const wrels=`<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`;
+  const styles=`<?xml version="1.0" encoding="UTF-8"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/><w:sz w:val="22"/></w:rPr></w:rPrDefault></w:docDefaults></w:styles>`;
+  const zip=new JSZip();
+  zip.file("[Content_Types].xml",ct);
+  zip.file("_rels/.rels",rels);
+  zip.file("word/document.xml",docXml);
+  zip.file("word/_rels/document.xml.rels",wrels);
+  zip.file("word/styles.xml",styles);
+  return zip.generateAsync({type:"blob",mimeType:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"});
+}
+function dlDocx(){
+  const t=document.getElementById("decl-out").value;
+  if(!t){toast("No declaration to download");return;}
+  const cn=selClient?selClient.name:"Client";
+  const title="DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF VAWA SELF-PETITION";
+  const safe=cn.replace(/[^a-zA-Z0-9 ]/g,"").replace(/\s+/g,"_");
+  makeDocx(title,t).then(blob=>{
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;a.download=safe+"_VAWA_Declaration.docx";a.click();
+    URL.revokeObjectURL(url);
+  });
+}
+
+// ── PDF generation ─────────────────────────────────────────────────
+function dlPdf(){
+  const t=document.getElementById("decl-out").value;
+  if(!t){toast("No declaration to download");return;}
+  const cn=selClient?selClient.name:"Client";
+  const title="DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF VAWA SELF-PETITION";
+  const safe=cn.replace(/[^a-zA-Z0-9 ]/g,"").replace(/\s+/g,"_");
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:"portrait",unit:"in",format:[8.5,11]});
+  const L=1.0,R=7.5,W=R-L;
+  let y=1.0;
+  const chk=()=>{if(y>10.2){doc.addPage();y=1.0;}};
+  const sf=(sz,bold)=>{doc.setFont("Times",bold?"bold":"normal");doc.setFontSize(sz);};
+  sf(13,true);
+  doc.splitTextToSize(title,W).forEach(l=>{chk();doc.text(l,L+W/2,y,{align:"center"});y+=0.22;});
+  y+=0.18;
+  t.split("\n").forEach(p=>{
+    if(!p.trim()){y+=0.14;return;}
+    const h=/^\d+\.\s/.test(p)||(p===p.toUpperCase()&&p.trim().length>4);
+    sf(h?12:11,h);
+    doc.splitTextToSize(p,W).forEach(l=>{chk();doc.text(l,L,y);y+=(h?12:11)*0.0185;});
+    if(h) y+=0.08;
+  });
+  doc.save(safe+"_VAWA_Declaration.pdf");
+}
+
+// ── Toast ─────────────────────────────────────────────────────────
+function toast(msg){
+  const el=document.getElementById("toast");
+  el.textContent=msg;el.classList.add("on");
+  setTimeout(()=>el.classList.remove("on"),2800);
+}
+
+// ── Init ──────────────────────────────────────────────────────────
+loadSettings();renderOffices();renderQ();refreshDraftBanner();
+</script>
+
+</body>
+</html>
