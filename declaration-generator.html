@@ -1014,8 +1014,14 @@ function buildPrompt(){
       const v=fd[f.id];
       if(!v||(typeof v==="string"&&!v.trim())) return;
       if(Array.isArray(v)){
-        const rows=v.filter(r=>r.some(c=>c));
-        if(rows.length) lines.push(f.label+": "+rows.map(r=>r.join(" | ")).join("; "));
+        if(v.length&&Array.isArray(v[0])){
+          // table rows (array of arrays)
+          const rows=v.filter(r=>r.some(c=>c));
+          if(rows.length) lines.push(f.label+": "+rows.map(r=>r.filter(c=>c).join(" | ")).join("; "));
+        }else if(v.length){
+          // checkbox list (array of strings)
+          lines.push(f.label+": "+v.join(", "));
+        }
       }else if(v.toString().trim()) lines.push(f.label+": "+v.toString().trim());
     });
     const plain=sec.title.replace(/&[a-z]+;|—/g," ").replace(/<[^>]+>/g,"");
