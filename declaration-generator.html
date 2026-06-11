@@ -654,8 +654,62 @@ function pickClient(obj){
   setFv("A_phone",c.phone);
   setStep(2);
   loadDraftForClient();
+  const fullRec=allClients.find(r=>r.id===c.id);
+  if(fullRec) prefillFromIntake(fullRec);
 }
 function setFv(id,v){const e=document.getElementById(id);if(e&&!e.value)e.value=v;}
+async function prefillFromIntake(fullRecord){
+  const f=fullRecord.fields||{};
+  const lv=key=>{const v=f[key];return Array.isArray(v)?v.length?String(v[0]).trim():"":v?String(v).trim():"";};
+  const filled=[];
+  // Pre-fill from lookup columns already on Client Details
+  const dob=lv("DOB (from Client Intake Information)");
+  const pob=lv("POB (from Client Intake Information)");
+  const citizenship=lv("Citizenship (from Client Intake Information)");
+  const addr=[lv("Address (from Client Intake Information)"),lv("City (from Client Intake Information)"),lv("State (from Client Intake Information)"),lv("Zip (from Client Intake Information)")].filter(Boolean).join(", ");
+  if(dob){setFv("A_dob",dob);filled.push("date of birth");}
+  if(pob){setFv("A_cob",pob);filled.push("country of birth");}
+  if(citizenship){setFv("A_citizen",citizenship);filled.push("citizenship");}
+  if(addr){setFv("A_address",addr);filled.push("address");}
+  // Fetch full intake record for additional fields
+  const intakeLinks=f["Client Intake Information"];
+  if(Array.isArray(intakeLinks)&&intakeLinks.length&&selOffice){
+    const stat=document.getElementById("as-stat");
+    if(stat){stat.className="saving";stat.innerHTML="Loading intake...";}
+    try{
+      const rec=await atReq("GET",selOffice.baseId,"Client Intake Information",null,intakeLinks[0]);
+      const fi=rec.fields||{};
+      const usEntries=fi["U.S. Entries (include last DOE)"]||"";
+      const relatives=fi["Relatives in"]||"";
+      const criminal=fi["Criminal arrests or charges"]||"";
+      const removal=fi["Exclusion/Removal/Deportation"]||"";
+      // US entries → Asylum entry fields
+      if(usEntries){setFv("A_entrymethod",usEntries);filled.push("US entries");}
+      // Family → Asylum family field
+      if(relatives){setFv("A_family",relatives);filled.push("family info");}
+      // Good moral character — VAWA section D
+      const hasCriminal=criminal&&criminal.trim()&&!/^n\/?a$/i.test(criminal.trim())&&!/^none$/i.test(criminal.trim());
+      const hasRemoval=removal&&removal.trim()&&!/^n\/?a$/i.test(removal.trim())&&!/^none$/i.test(removal.trim());
+      if(hasCriminal){
+        const r=document.querySelector('input[name="D1"][value="Yes"]');
+        if(r){r.checked=true;tcond("D1d","Yes");setFv("D1d",criminal);filled.push("criminal history");}
+      }else if(criminal){
+        const r=document.querySelector('input[name="D1"][value="No"]');if(r)r.checked=true;
+      }
+      if(hasRemoval){
+        const r=document.querySelector('input[name="D3"][value="Yes"]');
+        if(r){r.checked=true;tcond("D3d","Yes");setFv("D3d",removal);filled.push("removal history");}
+      }else if(removal){
+        const r=document.querySelector('input[name="D3"][value="No"]');if(r)r.checked=true;
+      }
+      if(stat){stat.className="saved";stat.innerHTML='<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Intake loaded';}
+    }catch(e){
+      console.warn("Intake prefill failed:",e);
+      const stat=document.getElementById("as-stat");if(stat){stat.className="";stat.innerHTML="";}
+    }
+  }
+  if(filled.length) toast("Pre-filled from intake: "+filled.slice(0,4).join(", ")+(filled.length>4?"…":""));
+}
 function clearClient(quiet){
   selClient=null;currentDraftId=null;currentDraftBaseId=null;
   unlockNameField();
