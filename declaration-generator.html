@@ -1175,7 +1175,7 @@ async function generate(){
   try{
     const stat=document.getElementById("gstat");
     const provLabel=aiProvider==="claude"?"Claude Opus 4":aiProvider==="openai"?"ChatGPT GPT-4o":"DeepSeek V3";
-    stat.textContent="Sending to "+provLabel+"…";
+    stat.textContent="Generating declaration…";
     let text="";
     if(aiProvider==="claude"){
       // Anthropic Messages API
