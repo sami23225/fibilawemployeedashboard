@@ -612,7 +612,8 @@ function lockNameField(name){
   if(!el) return;
   el.value=name;
   el.readOnly=true;
-  el.style.cssText="background:#f0fdfc;border-color:var(--teal);color:var(--dark);font-weight:600;cursor:not-allowed";
+  el.setAttribute("readonly","");
+  el.style.cssText="background:#f0fdfc;border-color:var(--teal);color:var(--dark);font-weight:600;cursor:not-allowed;pointer-events:none;user-select:none";
   // Add lock badge next to field if not already there
   if(!document.getElementById("name-lock-badge")){
     const badge=document.createElement("div");
@@ -1105,6 +1106,7 @@ function renderQ(){
   document.getElementById("qa-A").innerHTML="&#9660;";
   body.addEventListener("input",silentAutoSave);
   body.addEventListener("change",silentAutoSave);
+  if(selClient) lockNameField(selClient.name);
 }
 function renderF(f){
   if(f.iscond) return `<div class="cond" id="cnd-${f.id}"><div class="fr"><label>${f.label}${f.hint?`<div class="fr-hint">${f.hint}</div>`:""}</label>${rinput(f)}</div></div>`;
