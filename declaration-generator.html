@@ -440,16 +440,21 @@ header{background:var(--dark);display:flex;align-items:center;padding:0 22px 0 0
         </div>
         <div class="admin-setting-row">
           <h4>AI Provider</h4>
-          <div class="provider-toggle">
-            <div class="prov-opt" id="prov-ds" onclick="setProvider('deepseek')">
-              <div class="prov-badge ds">DeepSeek</div>
-              <div class="prov-opt-name">DeepSeek V3</div>
-              <div class="prov-opt-sub">deepseek-chat &middot; Fast &amp; cost-efficient</div>
+          <div class="provider-toggle" style="grid-template-columns:1fr 1fr 1fr">
+            <div class="prov-opt" id="prov-claude" onclick="setProvider('claude')">
+              <div class="prov-badge" style="background:#f0eaff;color:#6b3fa0">Anthropic</div>
+              <div class="prov-opt-name">Claude Opus 4</div>
+              <div class="prov-opt-sub">claude-opus-4-6 &middot; Most capable</div>
             </div>
             <div class="prov-opt" id="prov-oa" onclick="setProvider('openai')">
               <div class="prov-badge oa">OpenAI</div>
               <div class="prov-opt-name">ChatGPT GPT-4o</div>
-              <div class="prov-opt-sub">gpt-4o &middot; Highest quality output</div>
+              <div class="prov-opt-sub">gpt-4o &middot; High quality</div>
+            </div>
+            <div class="prov-opt" id="prov-ds" onclick="setProvider('deepseek')">
+              <div class="prov-badge ds">DeepSeek</div>
+              <div class="prov-opt-name">DeepSeek V3</div>
+              <div class="prov-opt-sub">deepseek-chat &middot; Fast &amp; efficient</div>
             </div>
           </div>
           <div class="admin-active-label" id="admin-active-label"></div>
@@ -467,7 +472,8 @@ header{background:var(--dark);display:flex;align-items:center;padding:0 22px 0 0
 const AT_TOKEN = "patOAyEdjEbm4u2" + "dD.6f53165fbc70c722787dada24d18211a01c39f75cf99eb55e49f160080d4ca39";
 const DS_KEY   = "sk-88759f71b448" + "4551b7de027e2cc21064";
 const OA_KEY   = "sk-proj-YwJDkY4VlY7g2b-n3uwDVAbpR29yi6PaqcNK_j-q2icDIgWYjvJBs7PEgE8cZvP9UI" + "MXGN8AWoT3BlbkFJufG-HWkaaGZxwS5nt1IdhXLWS2C474h9q6r7pAEKpm-J9XxIG8jSNedBI_vTTXXtOEqz0RtcUA";
-let aiProvider = "openai"; // "deepseek" | "openai" — toggled in Admin panel only
+const ANT_KEY  = "sk-ant-api03-LJmt8YcZjQtR0PSgB7PZk7mXA9jBp9UQawa0GzWjkQWN0L41yge9Y_J6lpVy" + "QXNdb7JqwFTHw_3eKgl8bKFfYQ-3zEtIQAA";
+let aiProvider = "claude"; // "deepseek" | "openai" | "claude" — toggled in Admin panel only
 const AT_BASE_TABLE = "tbld2XGAtTlPCXedQ";
 const DRAFTS_TBL = "Declaration Drafts";
 const OFFICES = [
@@ -1143,21 +1149,36 @@ async function generate(){
   document.getElementById("gbtn").disabled=true;
   document.getElementById("gspin").style.display="inline-block";
   try{
-    const isOA=(aiProvider==="openai");
     const stat=document.getElementById("gstat");
-    stat.textContent="Sending to "+(isOA?"ChatGPT (GPT-4o)":"DeepSeek V3")+"…";
-    const endpoint=isOA?"https://api.openai.com/v1/chat/completions":"https://api.deepseek.com/v1/chat/completions";
-    const model=isOA?"gpt-4o":"deepseek-chat";
-    const apiKey=isOA?OA_KEY:DS_KEY;
-    const r=await fetch(endpoint,{
-      method:"POST",
-      headers:{Authorization:"Bearer "+apiKey,"Content-Type":"application/json"},
-      body:JSON.stringify({model:model,max_tokens:8192,
-        messages:[{role:"user",content:buildPrompt()}]})
-    });
-    if(!r.ok){const e=await r.json();throw new Error((e.error&&e.error.message)||"HTTP "+r.status);}
-    const data=await r.json();
-    const text=(data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content)||"";
+    const provLabel=aiProvider==="claude"?"Claude Opus 4":aiProvider==="openai"?"ChatGPT GPT-4o":"DeepSeek V3";
+    stat.textContent="Sending to "+provLabel+"…";
+    let text="";
+    if(aiProvider==="claude"){
+      // Anthropic Messages API
+      const r=await fetch("https://api.anthropic.com/v1/messages",{
+        method:"POST",
+        headers:{"x-api-key":ANT_KEY,"anthropic-version":"2023-06-01","content-type":"application/json"},
+        body:JSON.stringify({model:"claude-opus-4-6",max_tokens:8192,
+          messages:[{role:"user",content:buildPrompt()}]})
+      });
+      if(!r.ok){const e=await r.json();throw new Error((e.error&&e.error.message)||"HTTP "+r.status);}
+      const data=await r.json();
+      text=(data.content&&data.content[0]&&data.content[0].text)||"";
+    } else {
+      // OpenAI-compatible (OpenAI or DeepSeek)
+      const endpoint=aiProvider==="openai"?"https://api.openai.com/v1/chat/completions":"https://api.deepseek.com/v1/chat/completions";
+      const model=aiProvider==="openai"?"gpt-4o":"deepseek-chat";
+      const apiKey=aiProvider==="openai"?OA_KEY:DS_KEY;
+      const r=await fetch(endpoint,{
+        method:"POST",
+        headers:{Authorization:"Bearer "+apiKey,"Content-Type":"application/json"},
+        body:JSON.stringify({model:model,max_tokens:8192,
+          messages:[{role:"user",content:buildPrompt()}]})
+      });
+      if(!r.ok){const e=await r.json();throw new Error((e.error&&e.error.message)||"HTTP "+r.status);}
+      const data=await r.json();
+      text=(data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content)||"";
+    }
     if(!text) throw new Error("No text returned");
     document.getElementById("decl-out").value=preStrip(text);
     document.getElementById("outsec").style.display="block";
@@ -1352,8 +1373,9 @@ function setProvider(p){
 function refreshProviderUI(){
   document.getElementById("prov-ds").classList.toggle("active",aiProvider==="deepseek");
   document.getElementById("prov-oa").classList.toggle("active",aiProvider==="openai");
-  document.getElementById("admin-active-label").textContent=
-    "Active: "+(aiProvider==="openai"?"ChatGPT GPT-4o":"DeepSeek V3");
+  document.getElementById("prov-claude").classList.toggle("active",aiProvider==="claude");
+  const label=aiProvider==="claude"?"Claude Opus 4":aiProvider==="openai"?"ChatGPT GPT-4o":"DeepSeek V3";
+  document.getElementById("admin-active-label").textContent="Active: "+label;
 }
 
 // ── Demo Data Loader ──────────────────────────────────────────────
