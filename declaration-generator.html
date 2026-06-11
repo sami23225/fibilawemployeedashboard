@@ -350,7 +350,14 @@ header{background:var(--dark);display:flex;align-items:center;padding:0 22px 0 0
     </div>
     <div class="card-hdr-right"><div id="as-stat" class="saved"></div></div>
   </div>
-  <div class="card-body">
+  <div class="card-body" style="position:relative">
+    <div id="q-overlay" style="position:absolute;inset:0;background:rgba(243,250,250,0.96);z-index:20;display:flex;align-items:center;justify-content:center;border-radius:6px;border:2px dashed var(--border)">
+      <div style="text-align:center;font-family:Arial,sans-serif;color:var(--mid);padding:32px">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--teal2)" stroke-width="1.5" style="margin-bottom:12px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:6px">Select a client to begin</div>
+        <div style="font-size:12px;color:#888;max-width:260px;line-height:1.6">Choose an office and search for a client above. The form will unlock once a client is selected.</div>
+      </div>
+    </div>
     <div id="qbody"></div>
     <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn btn-ghost" onclick="saveCloudDraft()">
@@ -640,6 +647,7 @@ function pickClient(obj){
   document.getElementById("cli-meta").textContent=
     [c.anumber?"A-"+c.anumber:null,c.caseType,selOffice&&selOffice.name].filter(Boolean).join(" · ");
   document.getElementById("cli-panel").style.display="block";
+  setFormLocked(false);
   lockNameField(c.name);
   setFv("A_anumber",c.anumber?"A-"+c.anumber:"");
   setFv("A_email",c.email);
@@ -651,6 +659,7 @@ function setFv(id,v){const e=document.getElementById(id);if(e&&!e.value)e.value=
 function clearClient(quiet){
   selClient=null;currentDraftId=null;currentDraftBaseId=null;
   unlockNameField();
+  setFormLocked(true);
   document.getElementById("cli-panel").style.display="none";
   document.getElementById("csearch").value="";
   document.getElementById("sr").style.display="none";
@@ -658,6 +667,12 @@ function clearClient(quiet){
   if(!quiet)setStep(1);
 }
 function xe(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function setFormLocked(locked){
+  const ov=document.getElementById("q-overlay");
+  if(ov) ov.style.display=locked?"flex":"none";
+  document.getElementById("gbtn").disabled=locked;
+  if(!locked&&selClient) lockNameField(selClient.name);
+}
 function getQS(){return selDecl==="asylum"?QS_ASYLUM:QS;}
 function pickDecl(t){
   selDecl=t;
@@ -1106,7 +1121,7 @@ function renderQ(){
   document.getElementById("qa-A").innerHTML="&#9660;";
   body.addEventListener("input",silentAutoSave);
   body.addEventListener("change",silentAutoSave);
-  if(selClient) lockNameField(selClient.name);
+  setFormLocked(!selClient);
 }
 function renderF(f){
   if(f.iscond) return `<div class="cond" id="cnd-${f.id}"><div class="fr"><label>${f.label}${f.hint?`<div class="fr-hint">${f.hint}</div>`:""}</label>${rinput(f)}</div></div>`;
