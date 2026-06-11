@@ -320,7 +320,7 @@ header{background:var(--dark);display:flex;align-items:center;padding:0 22px 0 0
 <div class="card">
   <div class="card-hdr">
     <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v18"/><path d="M3 9l9-6 9 6"/><path d="M5 9l7 12M19 9l-7 12"/></svg></div>
-    <div class="card-hdr-text"><h2>Declaration Type</h2><p>VAWA is available now &mdash; additional types coming soon</p></div>
+    <div class="card-hdr-text"><h2>Declaration Type</h2><p>Select the type of declaration to generate</p></div>
   </div>
   <div class="card-body">
     <div class="decl-grid">
@@ -329,14 +329,14 @@ header{background:var(--dark);display:flex;align-items:center;padding:0 22px 0 0
         <div class="dt-name">VAWA Self-Petition</div><div class="dt-sub">I-360 Personal Declaration</div>
         <span class="badge b-av">Available</span>
       </div>
-      <div class="dtc locked">
-        <div class="dt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="15"/><path d="M2 7l10-5 10 5"/><path d="M9 22V12h6v10"/></svg></div>
-        <div class="dt-name">Asylum &mdash; Political</div><div class="dt-sub">Political persecution</div>
-        <span class="badge b-cs">Coming Soon</span>
+      <div class="dtc" id="dt-asylum" onclick="pickDecl('asylum')">
+        <div class="dt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-6 9 6v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="dt-name">Asylum</div><div class="dt-sub">Personal Declaration (I-589)</div>
+        <span class="badge b-av">Available</span>
       </div>
       <div class="dtc locked">
         <div class="dt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
-        <div class="dt-name">Asylum &mdash; Religious</div><div class="dt-sub">Religious persecution</div>
+        <div class="dt-name">U Visa</div><div class="dt-sub">Crime victim declaration</div>
         <span class="badge b-cs">Coming Soon</span>
       </div>
     </div>
@@ -346,7 +346,7 @@ header{background:var(--dark);display:flex;align-items:center;padding:0 22px 0 0
   <div class="card-hdr" style="justify-content:space-between">
     <div style="display:flex;align-items:center;gap:12px">
       <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
-      <div class="card-hdr-text"><h2>VAWA Questionnaire</h2><p>Complete all sections &mdash; drafts save to Airtable automatically</p></div>
+      <div class="card-hdr-text"><h2 id="qcard-title">VAWA Questionnaire</h2><p>Complete all sections &mdash; drafts save to Airtable automatically</p></div>
     </div>
     <div class="card-hdr-right"><div id="as-stat" class="saved"></div></div>
   </div>
@@ -657,10 +657,14 @@ function clearClient(quiet){
   if(!quiet)setStep(1);
 }
 function xe(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function getQS(){return selDecl==="asylum"?QS_ASYLUM:QS;}
 function pickDecl(t){
   selDecl=t;
   document.querySelectorAll(".dtc:not(.locked)").forEach(e=>e.classList.remove("sel"));
   document.getElementById("dt-"+t).classList.add("sel");
+  const title=document.getElementById("qcard-title");
+  if(title) title.textContent=t==="asylum"?"Asylum Questionnaire":"VAWA Questionnaire";
+  renderQ();
 }
 
 // ── Cloud Drafts (Airtable) ────────────────────────────────────────
@@ -823,7 +827,7 @@ function renderDraftList(list){
     return `<div class="draft-item" onclick="resumeDraft(decodeURIComponent('${enc}'))">
       <div>
         <div class="di-name">${xe(d.clientName)}</div>
-        <div class="di-meta">${xe(d.officeName)} &middot; VAWA${d.hasText?' &middot; <span style="color:var(--green)">Generated</span>':"" }</div>
+        <div class="di-meta">${xe(d.officeName)} &middot; ${xe(d.declType==="asylum"?"Asylum":"VAWA")}${d.hasText?' &middot; <span style="color:var(--green)">Generated</span>':"" }</div>
       </div>
       <div class="di-date">${dt}</div>
     </div>`;
@@ -846,7 +850,7 @@ async function resumeDraft(dOrStr){
   selClient={id:d.clientRecId||d.clientName,name:d.clientName,anumber:"",email:"",phone:"",caseType:""};
   currentDraftId=d.id;currentDraftBaseId=d.baseId;
   document.getElementById("cli-name").textContent=d.clientName;
-  document.getElementById("cli-meta").textContent=d.officeName+" · VAWA";
+  document.getElementById("cli-meta").textContent=d.officeName+" · "+(d.declType==="asylum"?"Asylum":"VAWA");
   document.getElementById("cli-panel").style.display="block";
   try{restoreFD(JSON.parse(d.formData));}catch(e){}
   if(d.generatedText){
@@ -1005,10 +1009,88 @@ const QS=[
   ]},
 ];
 
+const QS_ASYLUM=[
+  {id:"A",title:"A — Personal Background",fields:[
+    {id:"A_fullname",   label:"Full Legal Name",                                      t:"text",hint:"First / Middle / Last"},
+    {id:"A_dob",        label:"Date of Birth",                                        t:"date"},
+    {id:"A_cob",        label:"Country of Birth",                                     t:"text"},
+    {id:"A_citizen",    label:"Country of Citizenship",                               t:"text"},
+    {id:"A_marital",    label:"Marital Status",                                       t:"select",opts:["Single","Married","Divorced","Separated","Widowed"]},
+    {id:"A_kids",       label:"Do you have children?",                                t:"yn",cond:"A_kidstbl"},
+    {id:"A_kidstbl",    label:"Children",                                             t:"childtbl",iscond:true},
+    {id:"A_family",     label:"Family members remaining in your home country",        t:"ta",hint:"Who, where, relationship"},
+    {id:"A_usentry",    label:"US Entry Date",                                        t:"date"},
+    {id:"A_entrymethod",label:"How did you enter the United States?",                 t:"text",hint:"Visa type, border crossing, port of entry"},
+    {id:"A_immstat",    label:"Current Immigration Status",                           t:"text"},
+    {id:"A_anumber",    label:"A-Number (if any)",                                    t:"text"},
+  ]},
+  {id:"B",title:"B — Background &amp; Basis of Claim",fields:[
+    {id:"B_basis",      label:"What is the basis of your asylum claim?",              t:"select",
+      opts:["Religion","Political Opinion","Race/Ethnicity","Nationality","Particular Social Group"]},
+    {id:"B_background", label:"Describe your background with this religion, group, or belief before persecution began",t:"ta",rows:4},
+    {id:"B_community",  label:"What was the general attitude toward your group in your country and community?",t:"ta",rows:3},
+    {id:"B_earlyexp",   label:"Did you experience any tensions or discrimination growing up? Describe.",t:"ta",rows:3},
+  ]},
+  {id:"C",title:"C — What Put You at Risk",fields:[
+    {id:"C_change",     label:"What change, decision, or event put you at risk of persecution?",t:"ta",rows:4,
+      hint:"E.g. religious conversion, political activity, identity, group membership"},
+    {id:"C_when",       label:"When did this happen?",                                t:"text"},
+    {id:"C_keyrelat",   label:"Describe any key relationships or experiences that led to this change",t:"ta",rows:3},
+    {id:"C_whofound",   label:"Who first discovered your beliefs, identity, or activities?",t:"ta"},
+    {id:"C_reaction",   label:"What happened when they found out?",                   t:"ta",rows:3},
+  ]},
+  {id:"D",title:"D — First Incident of Persecution",fields:[
+    {id:"D_date1",      label:"Date of first incident",                               t:"text"},
+    {id:"D_what1",      label:"Describe in detail what happened",                     t:"ta",rows:4},
+    {id:"D_who1",       label:"Who was involved, and what is their relationship to you?",t:"ta"},
+    {id:"D_injury1",    label:"Were you physically harmed? Describe any injuries.",   t:"ta"},
+    {id:"D_wit1",       label:"Were there witnesses?",                                t:"text"},
+  ]},
+  {id:"E",title:"E — Additional Incidents",fields:[
+    {id:"E_inc2",       label:"Second incident: date and full description",            t:"ta",rows:4},
+    {id:"E_inc3",       label:"Third incident: date and full description",             t:"ta",rows:4},
+    {id:"E_more",       label:"Any other incidents, harassment, or harm not described above",t:"ta",rows:3},
+    {id:"E_threats",    label:"Describe any threats you received (who made them, when, what was said)",t:"ta",rows:3},
+    {id:"E_lostjob",    label:"Did you have to leave your job, school, or home because of threats?",t:"yn",cond:"E_lostjobd"},
+    {id:"E_lostjobd",   label:"Explain what happened",                                t:"ta",iscond:true},
+  ]},
+  {id:"F",title:"F — Unable to Seek Protection",fields:[
+    {id:"F_police",     label:"Did you try to report to police or government authorities?",t:"yn",cond:"F_policed"},
+    {id:"F_policed",    label:"What happened when you reported?",                      t:"ta",iscond:true},
+    {id:"F_whynot",     label:"Why could you not go to the police or why would they not help?",t:"ta",rows:3},
+    {id:"F_govtrel",    label:"What is the relationship between authorities and those targeting you?",t:"ta",rows:3},
+    {id:"F_law",        label:"Is there a law or government policy in your country targeting people like you?",t:"ta"},
+  ]},
+  {id:"G",title:"G — Unable to Relocate Internally",fields:[
+    {id:"G_reloc",      label:"Could you have moved to another region of your country for safety?",t:"yn"},
+    {id:"G_whyno",      label:"Why could you not safely relocate within your country?",t:"ta",rows:3},
+    {id:"G_reach",      label:"How far does the reach or power of those targeting you extend?",t:"ta",rows:3},
+  ]},
+  {id:"H",title:"H — How You Left Your Country",fields:[
+    {id:"H_leftdate",   label:"When did you leave your country?",                     t:"date"},
+    {id:"H_finalinc",   label:"What was the final incident or reason that caused you to leave when you did?",t:"ta",rows:4},
+    {id:"H_travel",     label:"How did you travel to the United States?",             t:"ta",hint:"Route, mode of travel, countries passed through"},
+    {id:"H_support",    label:"Did you have help or support leaving? If yes, from whom?",t:"ta"},
+  ]},
+  {id:"I",title:"I — Fear of Return",fields:[
+    {id:"I_return",     label:"What do you believe would happen if you returned to your home country?",t:"ta",rows:4},
+    {id:"I_whofind",    label:"Who specifically would target you, and how would they find you?",t:"ta",rows:3},
+    {id:"I_stillbelieve",label:"Are you still practicing or holding the same beliefs or identity that caused your persecution?",t:"ta",rows:3},
+    {id:"I_changed",    label:"Has anything changed in your home country that would make it safer for you now?",t:"ta"},
+    {id:"I_currentinfo",label:"What current information do you have about conditions there for people like you?",t:"ta"},
+  ]},
+  {id:"J",title:"J — Life in the US &amp; Relief Sought",fields:[
+    {id:"J_living",     label:"Where are you currently living and with whom?",        t:"ta"},
+    {id:"J_life",       label:"What have you been doing since arriving in the US?",   t:"ta",hint:"Work, school, community, English classes, etc."},
+    {id:"J_why",        label:"In your own words, why are you applying for asylum?",  t:"ta",rows:4},
+    {id:"J_goals",      label:"What are your goals and hopes in the United States?",  t:"ta",rows:3},
+  ]},
+];
+
 function renderQ(){
   const body=document.getElementById("qbody");
   const alpha="ABCDEFGHIJ";
-  body.innerHTML=QS.map((sec,si)=>{
+  body.innerHTML=getQS().map((sec,si)=>{
     const rows=sec.fields.map(f=>renderF(f)).join("");
     return `<div class="qsec" id="qs-${sec.id}">
       <div class="qsh" onclick="toggleSec('${sec.id}')">
@@ -1077,7 +1159,7 @@ function collectFD(){
     if(e.id&&(e.tagName==="TEXTAREA"||(e.tagName==="INPUT"&&e.type!=="radio"&&e.type!=="checkbox")||e.tagName==="SELECT"))
       d[e.id]=e.value;
   });
-  QS.forEach(sec=>sec.fields.forEach(f=>{
+  getQS().forEach(sec=>sec.fields.forEach(f=>{
     if(f.t==="yn"){const c=document.querySelector(`input[name="${f.id}"]:checked`);if(c)d[f.id]=c.value;}
   }));
   const cbs={};
@@ -1085,7 +1167,7 @@ function collectFD(){
     if(cb.checked){if(!cbs[cb.name])cbs[cb.name]=[];cbs[cb.name].push(cb.value);}
   });
   Object.assign(d,cbs);
-  ["C_addrs","F_kids","H_wit"].forEach(id=>{
+  ["C_addrs","F_kids","H_wit","A_kidstbl"].forEach(id=>{
     const t=document.getElementById(id+"-t");
     if(!t) return;
     d[id]=Array.from(t.rows).slice(1).map(r=>Array.from(r.cells).map(td=>(td.querySelector("input")||{}).value||""));
@@ -1098,7 +1180,7 @@ function restoreFD(d){
     const e=document.getElementById(k);
     if(e&&(e.tagName==="INPUT"||e.tagName==="TEXTAREA"||e.tagName==="SELECT")) e.value=d[k];
   });
-  QS.forEach(sec=>sec.fields.forEach(f=>{
+  getQS().forEach(sec=>sec.fields.forEach(f=>{
     if(f.t==="yn"&&d[f.id]){
       const r=document.querySelector(`input[name="${f.id}"][value="${d[f.id]}"]`);
       if(r){r.checked=true;if(f.cond)tcond(f.cond,d[f.id]);}
@@ -1130,23 +1212,19 @@ I became deeply sad and emotionally drained. I lived in constant fear. I lost my
 6. Why I Am Filing for VAWA
 I am filing this VAWA petition to protect myself and find peace. I entered this marriage with love and good intentions. I just want a chance to move forward with my life in safety and dignity.`;
 
-function buildPrompt(){
+function buildQA(qs){
   const fd=collectFD();
-  const cn=selClient?selClient.name:(fd.A_fullname||"the client");
-  const ab=fd.B_aname||"the abuser";
   let qa="";
-  QS.forEach(sec=>{
+  qs.forEach(sec=>{
     const lines=[];
     sec.fields.forEach(f=>{
       const v=fd[f.id];
       if(!v||(typeof v==="string"&&!v.trim())) return;
       if(Array.isArray(v)){
         if(v.length&&Array.isArray(v[0])){
-          // table rows (array of arrays)
           const rows=v.filter(r=>r.some(c=>c));
           if(rows.length) lines.push(f.label+": "+rows.map(r=>r.filter(c=>c).join(" | ")).join("; "));
         }else if(v.length){
-          // checkbox list (array of strings)
           lines.push(f.label+": "+v.join(", "));
         }
       }else if(v.toString().trim()) lines.push(f.label+": "+v.toString().trim());
@@ -1154,6 +1232,14 @@ function buildPrompt(){
     const plain=sec.title.replace(/&[a-z]+;|—/g," ").replace(/<[^>]+>/g,"");
     if(lines.length) qa+="\n"+plain+":\n"+lines.join("\n")+"\n";
   });
+  return qa;
+}
+function buildPrompt(){
+  if(selDecl==="asylum") return buildAsylumPrompt();
+  const fd=collectFD();
+  const cn=selClient?selClient.name:(fd.A_fullname||"the client");
+  const ab=fd.B_aname||"the abuser";
+  const qa=buildQA(QS);
   return `You are a professional immigration paralegal at FIBI Law Firm. Write a complete, compelling VAWA self-petition personal declaration for this client.
 
 CRITICAL FORMATTING RULES — follow these exactly:
@@ -1169,6 +1255,30 @@ CRITICAL FORMATTING RULES — follow these exactly:
 
 CLIENT: ${cn}
 ABUSER: ${ab}
+
+QUESTIONNAIRE RESPONSES:
+${qa}`;
+}
+function buildAsylumPrompt(){
+  const fd=collectFD();
+  const cn=selClient?selClient.name:(fd.A_fullname||"the client");
+  const qa=buildQA(QS_ASYLUM);
+  return `You are a professional immigration attorney at FIBI Law Firm. Write a complete, compelling personal declaration in support of an application for asylum for this client.
+
+CRITICAL FORMATTING RULES — follow these exactly:
+- Write entirely in first person from the client's perspective
+- Use ONLY plain text — absolutely NO markdown symbols whatsoever
+- Section headers must be formatted exactly like: "1. INTRODUCTION AND PERSONAL BACKGROUND" — a number, period, space, then ALL CAPS title — nothing else before or after
+- Do NOT use pound signs (#), asterisks (*), underscores (_), tildes, backticks, or any other markdown
+- Do NOT use em dashes (—) or en dashes (–) anywhere — use a regular hyphen (-) or a comma instead
+- Each section header must be on its own line with a blank line before and after it
+- Body paragraphs are plain prose, no bullet points, no bold, no italics
+- Do NOT include a signature block or certification
+- Approximately 2000-2800 words
+
+The declaration must establish: (1) the client's personal background and life in their home country, (2) the basis of persecution (religion, political opinion, race, nationality, or social group), (3) specific incidents of harm or threats with dates and details, (4) why authorities could not protect them, (5) why internal relocation was not possible, (6) fear of return, and (7) their life and goals in the United States.
+
+CLIENT: ${cn}
 
 QUESTIONNAIRE RESPONSES:
 ${qa}`;
@@ -1288,8 +1398,8 @@ function dlDocx(){
   const t=document.getElementById("decl-out").value;
   if(!t){toast("No declaration yet","err");return;}
   const cn=selClient?selClient.name:"Client";
-  const title="DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF VAWA SELF-PETITION";
-  const safe=cn.replace(/[^a-zA-Z0-9 ]/g,"").replace(/\s+/g,"_");
+  const title=selDecl==="asylum"?"DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF APPLICATION FOR ASYLUM AND WITHHOLDING OF REMOVAL":"DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF VAWA SELF-PETITION";
+  const safe=cn.replace(/[^a-zA-Z0-9 ]/g,"").replace(/\s+/g,"_")+(selDecl==="asylum"?"_Asylum":"_VAWA");
   let body=`<w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="28"/></w:rPr><w:t>${xd(title)}</w:t></w:r></w:p><w:p/>`;
   parseMd(t).forEach(({text,level,bold,hr})=>{
     if(hr){body+="<w:p/>";return;}
@@ -1312,7 +1422,7 @@ function dlDocx(){
   zip.file("word/document.xml",docXml);zip.file("word/_rels/document.xml.rels",wrels);
   zip.file("word/styles.xml",styles);
   zip.generateAsync({type:"blob",mimeType:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"})
-    .then(blob=>{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=safe+"_VAWA.docx";a.click();});
+    .then(blob=>{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=safe+".docx";a.click();});
 }
 
 // ── PDF ───────────────────────────────────────────────────────────
@@ -1320,8 +1430,8 @@ function dlPdf(){
   const t=document.getElementById("decl-out").value;
   if(!t){toast("No declaration yet","err");return;}
   const cn=selClient?selClient.name:"Client";
-  const title="DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF VAWA SELF-PETITION";
-  const safe=cn.replace(/[^a-zA-Z0-9 ]/g,"").replace(/\s+/g,"_");
+  const title=selDecl==="asylum"?"DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF APPLICATION FOR ASYLUM AND WITHHOLDING OF REMOVAL":"DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF VAWA SELF-PETITION";
+  const safe=cn.replace(/[^a-zA-Z0-9 ]/g,"").replace(/\s+/g,"_")+(selDecl==="asylum"?"_Asylum":"_VAWA");
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF({orientation:"portrait",unit:"in",format:[8.5,11]});
   const L=1.0,W=6.5;let y=1.0;
@@ -1356,7 +1466,7 @@ function dlPdf(){
   // Also queue a silent download
   setTimeout(()=>{
     const b=document.createElement("a");
-    b.href=url; b.download=safe+"_VAWA.pdf";
+    b.href=url; b.download=safe+".pdf";
     document.body.appendChild(b); b.click(); document.body.removeChild(b);
     setTimeout(()=>URL.revokeObjectURL(url),5000);
   },300);
