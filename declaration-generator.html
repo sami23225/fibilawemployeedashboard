@@ -1062,7 +1062,7 @@ async function generate(){
     const data=await r.json();
     const text=(data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content)||"";
     if(!text) throw new Error("No text returned");
-    document.getElementById("decl-out").value=text;
+    document.getElementById("decl-out").value=preStrip(text);
     document.getElementById("outsec").style.display="block";
     document.getElementById("card5").style.display="block";
     document.getElementById("regen-btn").style.display="inline-flex";
@@ -1086,13 +1086,38 @@ function wcUpdate(){
   document.getElementById("wc").textContent=document.getElementById("decl-out").value.split(/\s+/).filter(Boolean).length+" words";
 }
 
+// ── Pre-strip: removes all markdown BEFORE storing in textarea ────
+// Runs once on AI output so the textarea itself is always clean text
+function preStrip(raw){
+  return raw.split("\n").map(ln=>{
+    // Remove heading markers (# ## ###) at line start
+    ln=ln.replace(/^#+\s*/,"");
+    // Collapse horizontal rules to blank
+    if(/^[-=*_]{3,}$/.test(ln.trim()))return "";
+    // Strip bold/italic markers (* _ `)
+    ln=ln.replace(/\*\*\*(.+?)\*\*\*/g,"$1")
+         .replace(/\*\*(.+?)\*\*/g,"$1")
+         .replace(/\*(.+?)\*/g,"$1")
+         .replace(/__(.+?)__/g,"$1")
+         .replace(/_(.+?)_/g,"$1")
+         .replace(/`/g,"");
+    // Replace all dash types with regular hyphen
+    ln=ln.replace(/—/g,"-").replace(/–/g,"-").replace(/‒/g,"-");
+    // Strip blockquote markers
+    ln=ln.replace(/^>\s*/,"");
+    return ln;
+  }).join("\n");
+}
+
 // ── Text cleaner + line parser for PDF/DOCX ───────────────────────
-// Strips markdown symbols, em/en dashes, returns array of {text,level,bold,hr}
+// Secondary safety net — strips any remaining markdown, parses lines
 function cleanText(s){
   return s
+    .replace(/^#+\s*/,"")                                     // leading # markers
     .replace(/—/g,"-").replace(/–/g,"-").replace(/‒/g,"-")  // dashes
     .replace(/\*\*\*(.+?)\*\*\*/g,"$1").replace(/\*\*(.+?)\*\*/g,"$1") // bold/italic
-    .replace(/\*(.+?)\*/g,"$1").replace(/__(.+?)__/g,"$1").replace(/_(.+?)_/g,"$1");
+    .replace(/\*(.+?)\*/g,"$1").replace(/__(.+?)__/g,"$1").replace(/_(.+?)_/g,"$1")
+    .replace(/`/g,"");                                        // backticks
 }
 function parseMd(raw){
   const lines=[];
