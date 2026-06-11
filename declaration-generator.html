@@ -196,12 +196,26 @@ header{background:var(--dark);display:flex;align-items:center;padding:0 22px 0 0
   display:flex;align-items:center;gap:8px;min-width:200px}
 .toast.on{opacity:1}
 .toast.err{background:var(--red)}
+/* ── Admin Tabs ── */
+.admin-tabs{display:flex;border-bottom:2px solid var(--border);background:#f8fbfb}
+.admin-tab{flex:1;padding:11px 0;text-align:center;font-family:Arial,sans-serif;font-size:12px;font-weight:700;color:#888;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+.admin-tab.active{color:var(--teal2);border-bottom-color:var(--teal)}
+.admin-tab-pane{display:none}.admin-tab-pane.active{display:block}
+/* Log table */
+.log-tbl{width:100%;border-collapse:collapse;font-family:Arial,sans-serif;font-size:12px}
+.log-tbl th{background:var(--xlight);color:var(--mid);font-weight:700;padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);white-space:nowrap}
+.log-tbl td{padding:8px 10px;border-bottom:1px solid #f0f7f7;color:#333;vertical-align:top}
+.log-tbl tr:hover td{background:#f8fdfc}
+.log-tbl .log-office{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700;background:var(--xlight);color:var(--mid)}
+.log-tbl .log-type{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700;background:#e8f9f8;color:var(--teal2)}
+.log-empty{text-align:center;padding:32px;color:#aaa;font-family:Arial,sans-serif;font-size:13px}
 /* ── Admin Modal ── */
 .admin-overlay{position:fixed;inset:0;background:rgba(1,46,68,.55);z-index:1100;
   display:none;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
 .admin-overlay.open{display:flex}
-.admin-modal{background:#fff;border-radius:10px;width:420px;max-width:94vw;
-  box-shadow:0 8px 40px rgba(1,46,68,.3);overflow:hidden}
+.admin-modal{background:#fff;border-radius:10px;width:720px;max-width:96vw;
+  box-shadow:0 8px 40px rgba(1,46,68,.3);overflow:hidden;max-height:90vh;display:flex;flex-direction:column}
+.admin-mbody{overflow-y:auto;flex:1}
 .admin-mhdr{background:linear-gradient(135deg,var(--dark),var(--mid));padding:18px 22px;
   display:flex;align-items:center;gap:12px}
 .admin-mhdr svg{color:rgba(255,255,255,.7)}
@@ -444,31 +458,50 @@ header{background:var(--dark);display:flex;align-items:center;padding:0 22px 0 0
       </div>
       <!-- Settings (shown after PIN) -->
       <div class="admin-settings" id="admin-settings">
-        <div class="admin-setting-row">
-          <h4>Test Data</h4>
-          <p style="font-size:12px;color:#666;font-family:Arial,sans-serif;margin-bottom:10px">Pre-fills the entire questionnaire with a demo case (Maria Elena Gutierrez) so you can compare AI providers side-by-side.</p>
-          <button onclick="loadDemoData()" style="background:var(--teal);color:#fff;border:none;border-radius:6px;padding:9px 18px;cursor:pointer;font-family:Arial,sans-serif;font-size:13px;font-weight:600;width:100%">Load Demo Case &amp; Close</button>
+        <div class="admin-tabs">
+          <div class="admin-tab active" id="tab-settings" onclick="switchAdminTab('settings')">Settings</div>
+          <div class="admin-tab" id="tab-log" onclick="switchAdminTab('log')">Declaration Log</div>
         </div>
-        <div class="admin-setting-row">
-          <h4>AI Provider</h4>
-          <div class="provider-toggle" style="grid-template-columns:1fr 1fr 1fr">
-            <div class="prov-opt" id="prov-claude" onclick="setProvider('claude')">
-              <div class="prov-badge" style="background:#f0eaff;color:#6b3fa0">Anthropic</div>
-              <div class="prov-opt-name">Claude Opus 4</div>
-              <div class="prov-opt-sub">claude-opus-4-6 &middot; Most capable</div>
-            </div>
-            <div class="prov-opt" id="prov-oa" onclick="setProvider('openai')">
-              <div class="prov-badge oa">OpenAI</div>
-              <div class="prov-opt-name">ChatGPT GPT-4o</div>
-              <div class="prov-opt-sub">gpt-4o &middot; High quality</div>
-            </div>
-            <div class="prov-opt" id="prov-ds" onclick="setProvider('deepseek')">
-              <div class="prov-badge ds">DeepSeek</div>
-              <div class="prov-opt-name">DeepSeek V3</div>
-              <div class="prov-opt-sub">deepseek-chat &middot; Fast &amp; efficient</div>
-            </div>
+        <!-- Settings tab -->
+        <div class="admin-tab-pane active" id="tabpane-settings">
+          <div class="admin-setting-row">
+            <h4>Test Data</h4>
+            <p style="font-size:12px;color:#666;font-family:Arial,sans-serif;margin-bottom:10px">Pre-fills the entire questionnaire with a demo case (Maria Elena Gutierrez) so you can compare AI providers side-by-side.</p>
+            <button onclick="loadDemoData()" style="background:var(--teal);color:#fff;border:none;border-radius:6px;padding:9px 18px;cursor:pointer;font-family:Arial,sans-serif;font-size:13px;font-weight:600;width:100%">Load Demo Case &amp; Close</button>
           </div>
-          <div class="admin-active-label" id="admin-active-label"></div>
+          <div class="admin-setting-row">
+            <h4>AI Provider</h4>
+            <div class="provider-toggle" style="grid-template-columns:1fr 1fr 1fr">
+              <div class="prov-opt" id="prov-claude" onclick="setProvider('claude')">
+                <div class="prov-badge" style="background:#f0eaff;color:#6b3fa0">Anthropic</div>
+                <div class="prov-opt-name">Claude Opus 4</div>
+                <div class="prov-opt-sub">claude-opus-4-6 &middot; Most capable</div>
+              </div>
+              <div class="prov-opt" id="prov-oa" onclick="setProvider('openai')">
+                <div class="prov-badge oa">OpenAI</div>
+                <div class="prov-opt-name">ChatGPT GPT-4o</div>
+                <div class="prov-opt-sub">gpt-4o &middot; High quality</div>
+              </div>
+              <div class="prov-opt" id="prov-ds" onclick="setProvider('deepseek')">
+                <div class="prov-badge ds">DeepSeek</div>
+                <div class="prov-opt-name">DeepSeek V3</div>
+                <div class="prov-opt-sub">deepseek-chat &middot; Fast &amp; efficient</div>
+              </div>
+            </div>
+            <div class="admin-active-label" id="admin-active-label"></div>
+          </div>
+        </div>
+        <!-- Declaration Log tab -->
+        <div class="admin-tab-pane" id="tabpane-log">
+          <div style="padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)">
+            <span style="font-family:Arial,sans-serif;font-size:12px;color:#666" id="log-summary">Declarations generated across all offices</span>
+            <button onclick="loadDeclLog()" style="background:var(--teal);color:#fff;border:none;border-radius:5px;padding:6px 14px;cursor:pointer;font-family:Arial,sans-serif;font-size:12px;font-weight:600">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>Refresh
+            </button>
+          </div>
+          <div id="log-body" style="padding:8px 0">
+            <div class="log-empty">Click Refresh to load declaration history</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1632,8 +1665,54 @@ function checkAdminPin(){
 }
 function showAdminSettings(){
   document.getElementById("admin-pin-wrap").style.display="none";
-  document.getElementById("admin-settings").style.display="flex";
+  document.getElementById("admin-settings").style.display="block";
   refreshProviderUI();
+  switchAdminTab("settings");
+}
+function switchAdminTab(tab){
+  ["settings","log"].forEach(t=>{
+    document.getElementById("tab-"+t).classList.toggle("active",t===tab);
+    document.getElementById("tabpane-"+t).classList.toggle("active",t===tab);
+  });
+  if(tab==="log") loadDeclLog();
+}
+async function loadDeclLog(){
+  const body=document.getElementById("log-body");
+  const summary=document.getElementById("log-summary");
+  body.innerHTML='<div class="log-empty">Loading…</div>';
+  try{
+    const results=await Promise.allSettled(
+      OFFICES.map(o=>atReq("GET",o.baseId,"Declaration Log",null,null)
+        .then(data=>(data.records||[]).map(r=>({...r.fields,_office:o.name,_oid:o.id})))
+        .catch(()=>[])
+      )
+    );
+    let rows=[];
+    results.forEach(r=>{if(r.status==="fulfilled") rows=rows.concat(r.value);});
+    rows.sort((a,b)=>(b.Timestamp||"").localeCompare(a.Timestamp||""));
+    summary.textContent=rows.length+" declaration"+(rows.length!==1?"s":"")+" across all offices";
+    if(!rows.length){body.innerHTML='<div class="log-empty">No declarations logged yet</div>';return;}
+    const offColors={bronx:"#e0f2fe",woodland:"#dcfce7",harlem:"#fef9c3",stonemt:"#ede9fe",collpark:"#ffe4e6"};
+    const typeColors={vawa:"#fce7f3",asylum:"#e0f2fe"};
+    const fmt=ts=>{if(!ts)return"—";const d=new Date(ts);return isNaN(d)?"—":d.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})+" "+d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});};
+    let html='<table class="log-tbl"><thead><tr><th>Date</th><th>Client</th><th>Office</th><th>Type</th><th>Words</th></tr></thead><tbody>';
+    rows.forEach(r=>{
+      const oc=offColors[r._oid]||"#f0f9ff";
+      const tc=typeColors[(r["Declaration Type"]||"").toLowerCase()]||"#f3f4f6";
+      html+=`<tr>
+        <td style="color:#555;white-space:nowrap">${fmt(r.Timestamp)}</td>
+        <td style="font-weight:600">${r["Client Name"]||"—"}</td>
+        <td><span class="log-office" style="background:${oc}">${r._office}</span></td>
+        <td><span class="log-type" style="background:${tc}">${r["Declaration Type"]||"—"}</span></td>
+        <td style="color:#888">${r["Word Count"]||"—"}</td>
+      </tr>`;
+    });
+    html+="</tbody></table>";
+    body.innerHTML=html;
+  }catch(e){
+    body.innerHTML='<div class="log-empty">Failed to load log. Please try again.</div>';
+    console.warn("loadDeclLog error",e);
+  }
 }
 function setProvider(p){
   aiProvider=p;
