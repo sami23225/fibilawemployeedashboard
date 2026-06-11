@@ -672,6 +672,7 @@ async function prefillFromIntake(fullRecord){
   const lang=f["Send Reminder- Spanish"]==="Yes"?"Spanish":f["Send Reminder- French"]==="Yes"?"French":f["Send Reminder- English"]==="Yes"?"English":"";
   // Immigration status: use CASE STATUS as best available proxy
   const immstat=f["CASE STATUS"]||"";
+  const aNum=f["A-Number"]||"";
   if(dob){setFv("A_dob",dob);filled.push("date of birth");}
   if(pob){setFv("A_cob",pob);filled.push("country of birth");}
   if(citizenship){setFv("A_citizen",citizenship);filled.push("citizenship");}
@@ -679,6 +680,7 @@ async function prefillFromIntake(fullRecord){
   if(email){setFv("A_email",email);filled.push("email");}
   if(lang){setFv("A_language",lang);filled.push("language");}
   if(immstat){setFv("A_immstat",immstat);filled.push("immigration status");}
+  if(aNum){const el=document.getElementById("A_anumber");if(el&&!el.value){el.value="A-"+aNum;filled.push("A-Number");}}
   // Fetch full intake record for additional fields
   const intakeLinks=f["Client Intake Information"];
   if(Array.isArray(intakeLinks)&&intakeLinks.length&&selOffice){
