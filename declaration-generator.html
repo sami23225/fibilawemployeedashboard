@@ -434,6 +434,11 @@ header{background:var(--dark);display:flex;align-items:center;padding:0 22px 0 0
       <!-- Settings (shown after PIN) -->
       <div class="admin-settings" id="admin-settings">
         <div class="admin-setting-row">
+          <h4>Test Data</h4>
+          <p style="font-size:12px;color:#666;font-family:Arial,sans-serif;margin-bottom:10px">Pre-fills the entire questionnaire with a demo case (Maria Elena Gutierrez) so you can compare AI providers side-by-side.</p>
+          <button onclick="loadDemoData()" style="background:var(--teal);color:#fff;border:none;border-radius:6px;padding:9px 18px;cursor:pointer;font-family:Arial,sans-serif;font-size:13px;font-weight:600;width:100%">Load Demo Case &amp; Close</button>
+        </div>
+        <div class="admin-setting-row">
           <h4>AI Provider</h4>
           <div class="provider-toggle">
             <div class="prov-opt" id="prov-ds" onclick="setProvider('deepseek')">
@@ -1349,6 +1354,100 @@ function refreshProviderUI(){
   document.getElementById("prov-oa").classList.toggle("active",aiProvider==="openai");
   document.getElementById("admin-active-label").textContent=
     "Active: "+(aiProvider==="openai"?"ChatGPT GPT-4o":"DeepSeek V3");
+}
+
+// ── Demo Data Loader ──────────────────────────────────────────────
+function loadDemoData(){
+  renderQ();
+  const sv=(id,v)=>{const e=document.getElementById(id);if(e)e.value=v;};
+  const syn=(nm,v,cond)=>{const r=document.querySelector(`input[name="${nm}"][value="${v}"]`);if(r){r.checked=true;if(cond)tcond(cond,v);}};
+  // A — Client
+  sv("A_fullname","Maria Elena Gutierrez");
+  sv("A_othernames","Maria Reyes (maiden name)");
+  sv("A_dob","1985-03-15");
+  sv("A_cob","Mexico");
+  sv("A_citizen","Mexico");
+  sv("A_immstat","Undocumented / No current legal status");
+  sv("A_address","123 Maplewood Avenue, Bronx, NY 10456");
+  sv("A_phone","718-555-0123");
+  sv("A_email","maria.gutierrez@example.com");
+  sv("A_language","Spanish");
+  // B — Abuser
+  sv("B_aname","Carlos Miguel Gutierrez");
+  sv("B_aaliases","Carlos M. Gutierrez");
+  sv("B_adob","1980-07-04");
+  sv("B_acob","United States");
+  sv("B_astat","U.S. Citizen");
+  sv("B_rel","Spouse (married to abuser)");
+  sv("B_met","We met in Mexico City in 2008 at a community festival through mutual friends. We dated for two years before he proposed in 2010.");
+  sv("B_married","We married on June 15, 2010 in Puebla, Mexico in a civil ceremony. We relocated to the United States in September 2011.");
+  sv("B_priormar","Neither of us had been previously married.");
+  syn("B_uscyn","Yes","B_uscdet");
+  sv("B_uscdet","Carlos showed me his U.S. passport on multiple occasions. His parents confirmed he was born in New York City and is a lifelong U.S. citizen.");
+  sv("B_how","Carlos was born in New York City, New York to U.S. citizen parents. He has held U.S. citizenship by birth since 1980.");
+  // C — Residence
+  const cT=document.querySelector("#C_addrs-t");
+  if(cT&&cT.rows[1]){const r=cT.rows[1];r.cells[0].querySelector("input").value="123 Maplewood Avenue, Bronx, NY 10456";r.cells[1].querySelector("input").value="2011-09-01";r.cells[3].querySelector("input").value="Carlos Gutierrez";}
+  sv("C_proof","Joint lease agreement, Con Edison and Verizon utility bills in both names, joint bank account statements, children's school enrollment records listing both parents at this address.");
+  // D — Moral character
+  syn("D1","No");syn("D2","No");syn("D3","No");
+  syn("D4","Yes","D4d");sv("D4d","Entered near Laredo, Texas in September 2011 without inspection, traveling with my husband Carlos who arranged the crossing.");
+  syn("D5","No");
+  // E — Abuse
+  sv("E_start","The abuse began in early 2012, about six months after we arrived in the United States. The first incident occurred when Carlos threw a ceramic plate at me after he said dinner was too salty. The plate struck the wall beside my head. He apologized the next day with flowers and promised it would never happen again.");
+  sv("E_escal","The abuse gradually worsened each year. What began as throwing objects progressed to pushing and shoving, and by 2015 escalated to hitting, punching, and choking. By 2018-2019, the attacks were severe enough to require medical attention.");
+  sv("E_freq","Weekly, sometimes multiple times per week during periods of work stress or when Carlos had been drinking.");
+  sv("E_types","Physical violence including hitting, punching, and choking. Emotional abuse through constant insults and degradation. Psychological manipulation through gaslighting. Financial control by restricting my access to money. Immigration-based threats to prevent me from seeking help.");
+  syn("E_phys","Yes","E_physd");
+  sv("E_physd","On January 14, 2019, Carlos punched me repeatedly in the face and choked me until I nearly lost consciousness. I had a black eye and severe bruising on my neck. My neighbor Rosa Mendez saw me leaving the apartment the following morning with visible injuries. I sought treatment at Lincoln Hospital the next day.");
+  sv("E_physo","In 2016, Carlos slapped me and pulled my hair so violently that I had bald patches for weeks. In November 2018, he threw me against the kitchen wall, causing a hairline fracture in my left wrist which I treated at an urgent care clinic.");
+  syn("E_hosp","Yes","E_hospd");
+  sv("E_hospd","Lincoln Hospital Emergency Room, January 15, 2019. The attending physician documented facial bruising and neck contusions consistent with strangulation. I was treated and released. I did not disclose the cause at the time due to fear.");
+  sv("E_insult","Carlos regularly called me stupid, worthless, and useless. He told me I was nothing without him and that no one would believe an undocumented immigrant over a U.S. citizen. He humiliated me in front of our children, telling them their mother was a burden who contributed nothing.");
+  sv("E_ctrl","Carlos controlled all finances and gave me a small weekly allowance, demanding receipts for every purchase. He forbade me from leaving the apartment without his permission and monitored all my phone calls. He cancelled my phone plan so I could not contact my family in Mexico.");
+  sv("E_threats","Carlos threatened to kill me if I ever tried to leave him. He stated he would take our children to Mexico and I would never see them again. He also threatened to destroy my Mexican passport and call immigration authorities to have me deported.");
+  sv("E_psych","I suffered from severe depression and chronic anxiety. I was unable to sleep, lost significant weight, and lived in constant fear. I became completely isolated because Carlos monitored all communications. I believed I had no value and no options.");
+  syn("E_imm","Yes","E_immd");sv("E_immd","Carlos told me repeatedly that if I called the police, he would call ICE and I would be deported and jailed. He said that as an undocumented person I had no rights and no one would help me. This threat kept me from seeking help for years.");
+  syn("E_ictrl","Yes","E_ictrld");sv("E_ictrld","Carlos refused to help me obtain any legal immigration status and used my undocumented status as a constant source of control, threatening deportation to justify restricting my movements, work, and communications.");
+  syn("E_docs","Yes","E_docsd");sv("E_docsd","Carlos confiscated my Mexican passport in 2013 and kept it locked in his car. He told me he would give it to immigration or destroy it if I tried to leave.");
+  syn("E_sex","No");
+  // F — Children
+  const fT=document.querySelector("#F_kids-t");
+  if(fT&&fT.rows[1]){const r=fT.rows[1];r.cells[0].querySelector("input").value="Sofia Gutierrez";r.cells[1].querySelector("input").value="2012-08-20";r.cells[2].querySelector("input").value="Mexico";r.cells[3].querySelector("input").value="Daughter";}
+  addRow("F_kids-t",4,1);
+  const fT2=document.querySelector("#F_kids-t");
+  if(fT2&&fT2.rows[2]){const r=fT2.rows[2];r.cells[0].querySelector("input").value="Miguel Gutierrez";r.cells[1].querySelector("input").value="2014-11-05";r.cells[2].querySelector("input").value="United States";r.cells[3].querySelector("input").value="Son";}
+  syn("F1","Yes","F1d");sv("F1d","Carlos slapped Sofia on two occasions when she tried to intervene during his attacks on me. He grabbed her by the arm and shoved her out of the room.");
+  sv("F2","Both children witnessed numerous incidents of abuse. Sofia developed nightmares and began refusing school. Miguel became withdrawn and his teacher reported behavioral changes and aggression toward other students.");
+  syn("F3","Yes","F3d");sv("F3d","Carlos threatened to take both children to Mexico and hide them with family if I tried to leave. He also threatened to call Child Protective Services and report me as an unfit mother.");
+  // G — Help sought
+  syn("G1","Yes","G1d");sv("G1d","I called 911 on March 3, 2020 after Carlos attacked me in front of the children. Officers responded and interviewed us separately. Carlos was calm and convincing. No report was filed and officers left without taking action.");
+  syn("G2","No");syn("G3","No");
+  syn("G4","Yes","G4d");sv("G4d","Bronx Domestic Violence Hotline, February 2021. Stayed at the associated shelter for approximately two weeks.");
+  syn("G5","Yes","G5d");sv("G5d","Maria Santos, Licensed Clinical Social Worker at Bronx Legal Services, beginning April 2021 to present.");
+  sv("G6","I stayed because I was terrified he would take my children to Mexico. I also feared deportation and genuinely believed I had no legal rights in this country. I had no income, no savings, no support network, and no documents. Cultural and religious pressure played a role as well - in my community leaving a marriage carries deep shame. I still loved him early on and believed his repeated promises to change.");
+  // H — Evidence
+  const hT=document.querySelector("#H_wit-t");
+  if(hT&&hT.rows[1]){const r=hT.rows[1];r.cells[0].querySelector("input").value="Rosa Mendez";r.cells[1].querySelector("input").value="Neighbor";r.cells[2].querySelector("input").value="718-555-0456";r.cells[3].querySelector("input").value="Saw Maria leaving apartment with facial injuries on January 15, 2019";}
+  ["Medical records / ER records / injury photographs","Text messages, emails, or voicemails from abuser","Witness letters or affidavits","Proof of joint residence","Proof of abuser USC/LPR status"].forEach(v=>{const cb=document.querySelector(`input[name="H_ev"][value="${v}"]`);if(cb)cb.checked=true;});
+  sv("H_other","Photographs of injuries taken by the DV shelter on February 3, 2021. Children's school behavioral incident reports noting changes coinciding with periods of abuse.");
+  // I — Separation
+  syn("I1","No");
+  sv("I2","I left in March 2021 after Carlos attacked me in the presence of both children. My daughter Sofia, then eight years old, grabbed my arm and begged me to make him stop. In that moment I understood that staying was destroying my children. I took the children to a neighbor's apartment and called the DV hotline that night.");
+  syn("I3","Yes","I3d");sv("I3d","I returned to Carlos twice. The first time, in 2019, he promised counseling and threatened to call ICE if I did not come back. The second time, in 2020, I returned out of fear for what he might do to the children in my absence.");
+  syn("I4","Yes","I4d");sv("I4d","Filed for divorce in Bronx County Family Court, June 2021. Case No. BX-2021-D-4892. Currently pending final hearing.");
+  sv("I5","Carlos continues to send threatening text messages from unknown numbers approximately twice per month. He has driven past my current residence on at least two occasions, which has been reported to my attorney.");
+  sv("I6","Currently residing with my maternal aunt, Carmen Reyes, at a confidential address in the Bronx, New York. My two children reside with me.");
+  // J — Relief
+  sv("J1","I am filing for VAWA because I deserve to live without fear, and so do my children. I endured nine years of abuse because I believed I had no options. Now I understand that I have rights and I am exercising them. I want to become self-sufficient, raise my children in safety, and contribute to my community.");
+  sv("J2","If forced to return to Mexico, I would have no support network, no income, and no protection. My daughter Sofia has grown up in the United States and knows no other home. My son Miguel is a U.S. citizen. I also fear that Carlos's family in Mexico could locate and harm us at his direction.");
+  sv("J3","I plan to obtain work authorization and become a certified nursing assistant to care for elderly and ill members of my community. I want my children to complete their education, attend college, and build productive careers. I want to give them the future they deserve.");
+  sv("J4","I have spent nine years in fear but have never stopped trying to be a good mother and a good person. I have maintained a clean record, raised two children under extremely difficult circumstances, and found the courage to finally seek help. I ask USCIS to consider the totality of what I have endured and grant me this protection.");
+  // Open all sections
+  QS.forEach(sec=>{const el=document.getElementById("qs-"+sec.id);if(el&&!el.classList.contains("open")){el.classList.add("open");const a=document.getElementById("qa-"+sec.id);if(a)a.innerHTML="&#9660;"}});
+  closeAdmin();
+  toast("Demo case loaded — all fields filled");
+  setTimeout(()=>document.getElementById("qbody").scrollIntoView({behavior:"smooth"}),200);
 }
 
 // ── Toast ─────────────────────────────────────────────────────────
