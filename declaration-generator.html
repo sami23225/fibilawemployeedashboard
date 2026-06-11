@@ -667,10 +667,18 @@ async function prefillFromIntake(fullRecord){
   const pob=lv("POB (from Client Intake Information)");
   const citizenship=lv("Citizenship (from Client Intake Information)");
   const addr=[lv("Address (from Client Intake Information)"),lv("City (from Client Intake Information)"),lv("State (from Client Intake Information)"),lv("Zip (from Client Intake Information)")].filter(Boolean).join(", ");
+  const email=lv("E-mail (from Client Intake Information)");
+  // Language: use Send Reminder flags as proxy
+  const lang=f["Send Reminder- Spanish"]==="Yes"?"Spanish":f["Send Reminder- French"]==="Yes"?"French":f["Send Reminder- English"]==="Yes"?"English":"";
+  // Immigration status: use CASE STATUS as best available proxy
+  const immstat=f["CASE STATUS"]||"";
   if(dob){setFv("A_dob",dob);filled.push("date of birth");}
   if(pob){setFv("A_cob",pob);filled.push("country of birth");}
   if(citizenship){setFv("A_citizen",citizenship);filled.push("citizenship");}
   if(addr){setFv("A_address",addr);filled.push("address");}
+  if(email){setFv("A_email",email);filled.push("email");}
+  if(lang){setFv("A_language",lang);filled.push("language");}
+  if(immstat){setFv("A_immstat",immstat);filled.push("immigration status");}
   // Fetch full intake record for additional fields
   const intakeLinks=f["Client Intake Information"];
   if(Array.isArray(intakeLinks)&&intakeLinks.length&&selOffice){
@@ -683,6 +691,8 @@ async function prefillFromIntake(fullRecord){
       const relatives=fi["Relatives in"]||"";
       const criminal=fi["Criminal arrests or charges"]||"";
       const removal=fi["Exclusion/Removal/Deportation"]||"";
+      const intakeEmail=fi["E-mail"]||"";
+      if(intakeEmail){setFv("A_email",intakeEmail);}
       // US entries → Asylum entry fields
       if(usEntries){setFv("A_entrymethod",usEntries);filled.push("US entries");}
       // Family → Asylum family field
