@@ -390,7 +390,7 @@ header{background:var(--dark);display:flex;align-items:center;padding:0 22px 0 0
       <div class="wc-row"><span id="wc">0 words</span><span>Edit freely &mdash; changes auto-save</span></div>
       <div style="margin-top:12px;padding:12px 16px;background:#fffbe6;border:1.5px solid #f5c842;border-radius:6px;display:flex;align-items:flex-start;gap:10px;font-family:Arial,sans-serif;font-size:13px;color:#7a5c00;line-height:1.5">
         <svg style="flex-shrink:0;margin-top:1px" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4a017" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        <span><strong>Important:</strong> Please review this declaration thoroughly before downloading or sharing with the client. Verify all names, dates, facts, and details are accurate and complete.</span>
+        <span><strong>Important:</strong> Please review this declaration thoroughly. Verify all names, dates, facts, and details are accurate and complete.</span>
       </div>
     </div>
   </div>
@@ -1218,7 +1218,7 @@ async function generate(){
     setStep(5);
     saveCloudDraft();
     logDeclaration(text);
-    stat.textContent="Done — please review carefully before downloading.";
+    stat.textContent="Done — please review carefully.";
     toast("Declaration generated");
   }catch(e){
     stat.textContent="Error: "+e.message;
