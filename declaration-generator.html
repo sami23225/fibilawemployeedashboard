@@ -196,6 +196,46 @@ header{background:var(--dark);display:flex;align-items:center;padding:0 22px 0 0
   display:flex;align-items:center;gap:8px;min-width:200px}
 .toast.on{opacity:1}
 .toast.err{background:var(--red)}
+/* ── Admin Modal ── */
+.admin-overlay{position:fixed;inset:0;background:rgba(1,46,68,.55);z-index:1100;
+  display:none;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.admin-overlay.open{display:flex}
+.admin-modal{background:#fff;border-radius:10px;width:420px;max-width:94vw;
+  box-shadow:0 8px 40px rgba(1,46,68,.3);overflow:hidden}
+.admin-mhdr{background:linear-gradient(135deg,var(--dark),var(--mid));padding:18px 22px;
+  display:flex;align-items:center;gap:12px}
+.admin-mhdr svg{color:rgba(255,255,255,.7)}
+.admin-mhdr h3{color:#fff;font-size:15px;flex:1}
+.admin-mhdr button{background:none;border:none;color:rgba(255,255,255,.6);font-size:20px;
+  cursor:pointer;line-height:1;padding:0 2px}
+.admin-mhdr button:hover{color:#fff}
+.admin-mbody{padding:22px}
+.admin-pin-wrap{display:flex;flex-direction:column;gap:14px}
+.admin-pin-wrap p{font-size:13px;color:#555;font-family:Arial,sans-serif}
+.admin-pin-row{display:flex;gap:10px}
+.admin-pin-row input{flex:1;padding:10px 14px;border:1.5px solid var(--border);border-radius:6px;
+  font-size:14px;font-family:Arial,sans-serif;outline:none;letter-spacing:3px}
+.admin-pin-row input:focus{border-color:var(--teal)}
+.admin-pin-row button{padding:10px 18px;background:var(--teal);color:#fff;border:none;
+  border-radius:6px;cursor:pointer;font-family:Arial,sans-serif;font-size:13px;font-weight:600}
+.admin-pin-row button:hover{background:var(--teal2)}
+.admin-pin-err{color:var(--red);font-size:12px;font-family:Arial,sans-serif;display:none}
+.admin-settings{display:none;flex-direction:column;gap:18px}
+.admin-setting-row{border:1px solid var(--border);border-radius:8px;padding:16px 18px}
+.admin-setting-row h4{font-size:13px;color:var(--dark);margin-bottom:10px;font-family:Arial,sans-serif;font-weight:700;letter-spacing:.2px}
+.provider-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.prov-opt{border:2px solid var(--border);border-radius:7px;padding:12px 14px;cursor:pointer;
+  transition:all .2s;background:#fafafa}
+.prov-opt:hover{border-color:var(--teal);background:var(--xlight)}
+.prov-opt.active{border-color:var(--teal);background:var(--xlight);box-shadow:0 0 0 3px rgba(52,172,170,.15)}
+.prov-opt-name{font-size:13px;font-weight:700;color:var(--dark);font-family:Arial,sans-serif;margin-bottom:3px}
+.prov-opt-sub{font-size:11px;color:#777;font-family:Arial,sans-serif}
+.prov-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;
+  font-family:Arial,sans-serif;font-weight:700;margin-bottom:6px}
+.prov-badge.ds{background:#e8f4fd;color:#1a6ea8}
+.prov-badge.oa{background:#e8f8ed;color:#1a7a3e}
+.admin-active-label{font-size:11px;color:var(--teal);font-family:Arial,sans-serif;
+  font-weight:700;margin-top:10px;text-align:center}
 @media(max-width:640px){
   .off-grid{grid-template-columns:repeat(3,1fr)}
   .decl-grid{grid-template-columns:1fr}
@@ -220,6 +260,10 @@ header{background:var(--dark);display:flex;align-items:center;padding:0 22px 0 0
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
       Saved Drafts
       <span id="draft-count" style="background:var(--teal);color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;display:none"></span>
+    </button>
+    <button class="hdr-btn" onclick="openAdmin()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Admin
     </button>
   </div>
 </header>
@@ -368,6 +412,48 @@ header{background:var(--dark);display:flex;align-items:center;padding:0 22px 0 0
   </div>
 </div>
 </div>
+<!-- Admin Modal -->
+<div class="admin-overlay" id="admin-overlay" onclick="adminOverlayClick(event)">
+  <div class="admin-modal">
+    <div class="admin-mhdr">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <h3>Admin Settings</h3>
+      <button onclick="closeAdmin()">&times;</button>
+    </div>
+    <div class="admin-mbody">
+      <!-- PIN gate -->
+      <div class="admin-pin-wrap" id="admin-pin-wrap">
+        <p>Enter the admin PIN to access settings.</p>
+        <div class="admin-pin-row">
+          <input type="password" id="admin-pin-input" placeholder="PIN" maxlength="20"
+            onkeydown="if(event.key==='Enter')checkAdminPin()">
+          <button onclick="checkAdminPin()">Unlock</button>
+        </div>
+        <div class="admin-pin-err" id="admin-pin-err">Incorrect PIN. Try again.</div>
+      </div>
+      <!-- Settings (shown after PIN) -->
+      <div class="admin-settings" id="admin-settings">
+        <div class="admin-setting-row">
+          <h4>AI Provider</h4>
+          <div class="provider-toggle">
+            <div class="prov-opt" id="prov-ds" onclick="setProvider('deepseek')">
+              <div class="prov-badge ds">DeepSeek</div>
+              <div class="prov-opt-name">DeepSeek V3</div>
+              <div class="prov-opt-sub">deepseek-chat &middot; Fast &amp; cost-efficient</div>
+            </div>
+            <div class="prov-opt" id="prov-oa" onclick="setProvider('openai')">
+              <div class="prov-badge oa">OpenAI</div>
+              <div class="prov-opt-name">ChatGPT GPT-4o</div>
+              <div class="prov-opt-sub">gpt-4o &middot; Highest quality output</div>
+            </div>
+          </div>
+          <div class="admin-active-label" id="admin-active-label"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast">
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
   <span id="toast-msg"></span>
@@ -375,6 +461,8 @@ header{background:var(--dark);display:flex;align-items:center;padding:0 22px 0 0
 <script>
 const AT_TOKEN = "patOAyEdjEbm4u2" + "dD.6f53165fbc70c722787dada24d18211a01c39f75cf99eb55e49f160080d4ca39";
 const DS_KEY   = "sk-88759f71b448" + "4551b7de027e2cc21064";
+const OA_KEY   = "sk-proj-YwJDkY4VlY7g2b-n3uwDVAbpR29yi6PaqcNK_j-q2icDIgWYjvJBs7PEgE8cZvP9UI" + "MXGN8AWoT3BlbkFJufG-HWkaaGZxwS5nt1IdhXLWS2C474h9q6r7pAEKpm-J9XxIG8jSNedBI_vTTXXtOEqz0RtcUA";
+let aiProvider = "openai"; // "deepseek" | "openai" — toggled in Admin panel only
 const AT_BASE_TABLE = "tbld2XGAtTlPCXedQ";
 const DRAFTS_TBL = "Declaration Drafts";
 const OFFICES = [
@@ -1049,13 +1137,17 @@ ${qa}`;
 async function generate(){
   document.getElementById("gbtn").disabled=true;
   document.getElementById("gspin").style.display="inline-block";
-  const stat=document.getElementById("gstat");
-  stat.textContent="Sending to DeepSeek V3…";
   try{
-    const r=await fetch("https://api.deepseek.com/v1/chat/completions",{
+    const isOA=(aiProvider==="openai");
+    const stat=document.getElementById("gstat");
+    stat.textContent="Sending to "+(isOA?"ChatGPT (GPT-4o)":"DeepSeek V3")+"…";
+    const endpoint=isOA?"https://api.openai.com/v1/chat/completions":"https://api.deepseek.com/v1/chat/completions";
+    const model=isOA?"gpt-4o":"deepseek-chat";
+    const apiKey=isOA?OA_KEY:DS_KEY;
+    const r=await fetch(endpoint,{
       method:"POST",
-      headers:{Authorization:"Bearer "+DS_KEY,"Content-Type":"application/json"},
-      body:JSON.stringify({model:"deepseek-chat",max_tokens:8192,
+      headers:{Authorization:"Bearer "+apiKey,"Content-Type":"application/json"},
+      body:JSON.stringify({model:model,max_tokens:8192,
         messages:[{role:"user",content:buildPrompt()}]})
     });
     if(!r.ok){const e=await r.json();throw new Error((e.error&&e.error.message)||"HTTP "+r.status);}
@@ -1212,6 +1304,51 @@ function dlPdf(){
     document.body.appendChild(b); b.click(); document.body.removeChild(b);
     setTimeout(()=>URL.revokeObjectURL(url),5000);
   },300);
+}
+
+// ── Admin Panel ───────────────────────────────────────────────────
+const ADMIN_PIN="FIBI2025";
+let adminUnlocked=false;
+function openAdmin(){
+  document.getElementById("admin-overlay").classList.add("open");
+  // If already unlocked this session, skip PIN and show settings
+  if(adminUnlocked){showAdminSettings();}
+  else{
+    document.getElementById("admin-pin-wrap").style.display="flex";
+    document.getElementById("admin-settings").style.display="none";
+    document.getElementById("admin-pin-input").value="";
+    document.getElementById("admin-pin-err").style.display="none";
+    setTimeout(()=>document.getElementById("admin-pin-input").focus(),80);
+  }
+}
+function closeAdmin(){document.getElementById("admin-overlay").classList.remove("open");}
+function adminOverlayClick(e){if(e.target===document.getElementById("admin-overlay"))closeAdmin();}
+function checkAdminPin(){
+  const val=document.getElementById("admin-pin-input").value.trim();
+  if(val===ADMIN_PIN){
+    adminUnlocked=true;
+    showAdminSettings();
+  }else{
+    document.getElementById("admin-pin-err").style.display="block";
+    document.getElementById("admin-pin-input").value="";
+    document.getElementById("admin-pin-input").focus();
+  }
+}
+function showAdminSettings(){
+  document.getElementById("admin-pin-wrap").style.display="none";
+  document.getElementById("admin-settings").style.display="flex";
+  refreshProviderUI();
+}
+function setProvider(p){
+  aiProvider=p;
+  refreshProviderUI();
+  toast("Provider set to "+(p==="openai"?"ChatGPT GPT-4o":"DeepSeek V3"));
+}
+function refreshProviderUI(){
+  document.getElementById("prov-ds").classList.toggle("active",aiProvider==="deepseek");
+  document.getElementById("prov-oa").classList.toggle("active",aiProvider==="openai");
+  document.getElementById("admin-active-label").textContent=
+    "Active: "+(aiProvider==="openai"?"ChatGPT GPT-4o":"DeepSeek V3");
 }
 
 // ── Toast ─────────────────────────────────────────────────────────
