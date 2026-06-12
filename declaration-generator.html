@@ -368,10 +368,10 @@ header{background:var(--dark);display:flex;align-items:center;padding:0 22px 0 0
         <div class="dt-name">Marriage Bona Fides</div><div class="dt-sub">Third-Party Supporting Declaration</div>
         <span class="badge b-av">Available</span>
       </div>
-      <div class="dtc locked">
-        <div class="dt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
-        <div class="dt-name">U Visa</div><div class="dt-sub">Crime victim declaration</div>
-        <span class="badge b-cs">Coming Soon</span>
+      <div class="dtc" id="dt-uvisa" onclick="pickDecl('uvisa')">
+        <div class="dt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="dt-name">U Visa</div><div class="dt-sub">Crime Victim Declaration (I-918)</div>
+        <span class="badge b-av">Available</span>
       </div>
       <div class="dtc locked">
         <div class="dt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
@@ -803,6 +803,7 @@ function getQS(){
   if(selDecl==="waiver")   return QS_WAIVER;
   if(selDecl==="fiance")   return QS_FIANCE;
   if(selDecl==="marriage") return QS_MARRIAGE;
+  if(selDecl==="uvisa")    return QS_UVISA;
   return QS;
 }
 const DECL_TITLES={
@@ -812,6 +813,7 @@ const DECL_TITLES={
   waiver:  "Extreme Hardship Questionnaire",
   fiance:  "Fiancée Visa Questionnaire",
   marriage:"Marriage Bona Fides Questionnaire",
+  uvisa:   "U Visa Questionnaire",
 };
 function pickDecl(t){
   selDecl=t;
@@ -1242,6 +1244,89 @@ const QS_ASYLUM=[
   ]},
 ];
 
+// ── U Visa (U Nonimmigrant Status — I-918) ──────────────────────────────
+const QS_UVISA=[
+  {id:"A",title:"A — Personal Background",fields:[
+    {id:"A_fullname",     label:"Full Legal Name",                                    t:"text",hint:"First / Middle / Last"},
+    {id:"A_dob",          label:"Date of Birth",                                      t:"date"},
+    {id:"A_cob",          label:"Country of Birth",                                   t:"text"},
+    {id:"A_language",     label:"Native Language",                                    t:"text"},
+    {id:"A_usentry",      label:"Date of Entry into the United States",               t:"date"},
+    {id:"A_immstat",      label:"Current Immigration Status",                         t:"text"},
+    {id:"A_anumber",      label:"A-Number (if any)",                                  t:"text"},
+    {id:"A_kids",         label:"Do you have children?",                              t:"yn",cond:"A_kidstbl"},
+    {id:"A_kidstbl",      label:"Children",                                           t:"childtbl",iscond:true},
+    {id:"A_priortrauma",  label:"Before the crime, did you experience any prior violence or trauma in your life?",t:"ta",rows:3,hint:"Family violence, prior abuse, medical history — include if relevant"},
+  ]},
+  {id:"B",title:"B — The Crime",fields:[
+    {id:"B_crimetype",    label:"Type of qualifying crime",                           t:"select",
+      opts:["Domestic Violence / Battering","Sexual Assault / Rape","Trafficking (Sex or Labor)","Stalking","Kidnapping / Abduction","Assault (Felonious)","Robbery / Extortion","False Imprisonment","Murder / Attempted Murder","Manslaughter","Torture","Witness Tampering / Obstruction","Other Qualifying Crime"]},
+    {id:"B_crimeother",   label:"If 'Other', describe the crime",                    t:"text"},
+    {id:"B_crimedate",    label:"Date of the crime (or approximate date/period)",    t:"text"},
+    {id:"B_crimeloc",     label:"Location where the crime occurred",                 t:"text",hint:"City, state"},
+    {id:"B_victimtype",   label:"Are you a direct or indirect victim?",              t:"select",opts:["Direct victim (crime happened to me)","Indirect victim (family member of murder/manslaughter victim)"]},
+    {id:"B_indirect",     label:"If indirect victim: name and relationship of primary victim, and what happened to them",t:"ta",rows:3,iscond:false},
+    {id:"B_perpetrator",  label:"Who committed the crime?",                          t:"text",hint:"Relationship to you, e.g. boyfriend, employer, stranger"},
+    {id:"B_perpstatus",   label:"Immigration or citizenship status of perpetrator (if known)",t:"text"},
+  ]},
+  {id:"C",title:"C — Your Relationship with the Perpetrator (if applicable)",fields:[
+    {id:"C_howmet",       label:"How, when, and where did you first meet the perpetrator?",t:"ta",rows:3},
+    {id:"C_reltype",      label:"What was the nature of your relationship?",         t:"ta",rows:2,hint:"E.g. romantic partner, employer, family member, stranger"},
+    {id:"C_relduration",  label:"How long were you in this relationship before the crime began?",t:"text"},
+    {id:"C_earlyred",     label:"Were there early warning signs or concerning behavior? Describe.",t:"ta",rows:3},
+    {id:"C_control",      label:"Did the perpetrator try to control, isolate, or manipulate you? Describe.",t:"ta",rows:3},
+  ]},
+  {id:"D",title:"D — What Happened: The Crime &amp; Abuse",fields:[
+    {id:"D_first",        label:"Describe the first incident — what happened, where, and when",t:"ta",rows:5},
+    {id:"D_injuries1",    label:"Physical injuries from the first incident",          t:"ta",rows:2,hint:"Bruises, broken bones, cuts, etc."},
+    {id:"D_medical1",     label:"Did you receive medical treatment?",                 t:"yn",cond:"D_medical1d"},
+    {id:"D_medical1d",    label:"Where did you receive treatment and what was done?", t:"ta",iscond:true,rows:2},
+    {id:"D_worst",        label:"Describe the worst incident",                        t:"ta",rows:5},
+    {id:"D_worstinjuries",label:"Injuries from the worst incident",                   t:"ta",rows:2},
+    {id:"D_last",         label:"Describe the most recent / last incident",           t:"ta",rows:4},
+    {id:"D_threats",      label:"Were you ever threatened? Describe the threats and how they made you feel.",t:"ta",rows:3},
+    {id:"D_sexual",       label:"Was there any sexual violence? (describe only what you are comfortable sharing — this is optional)",t:"ta",rows:3},
+    {id:"D_other",        label:"Any other incidents, harassment, or harm not described above",t:"ta",rows:3},
+  ]},
+  {id:"E",title:"E — Reporting to Law Enforcement",fields:[
+    {id:"E_reported",     label:"Did you report the crime to police or law enforcement?",t:"yn",cond:"E_reportedd"},
+    {id:"E_reportedd",    label:"When did you first report, and to which agency?",    t:"ta",iscond:true,rows:2},
+    {id:"E_whyyou",       label:"Who called the police — you or someone else?",       t:"text"},
+    {id:"E_whatyousaid",  label:"What did you tell the police when they came?",       t:"ta",rows:3},
+    {id:"E_policeaction", label:"What did the police do after you reported? (arrests made, reports taken, etc.)",t:"ta",rows:3},
+    {id:"E_statement",    label:"Did you give a signed statement or be photographed by police?",t:"yn"},
+    {id:"E_court",        label:"Were you asked to testify in court or appear at any proceedings?",t:"yn",cond:"E_courtd"},
+    {id:"E_courtd",       label:"Describe what happened in court — who was there, what you said, how you felt",t:"ta",iscond:true,rows:4},
+    {id:"E_outcome",      label:"What was the outcome? (Was the perpetrator arrested, charged, convicted, deported?)",t:"ta",rows:2},
+    {id:"E_agency",       label:"Which agency signed your I-918 Supplement B certification?",t:"text",hint:"Police dept, DA office, FBI, etc."},
+    {id:"E_whynotreport", label:"If you did not report, or delayed reporting — explain why",t:"ta",rows:3,hint:"Fear, language barrier, immigration concerns, perpetrator threats, etc."},
+  ]},
+  {id:"F",title:"F — Your Cooperation with Law Enforcement",fields:[
+    {id:"F_howhelped",    label:"Describe all the ways you helped law enforcement with the investigation or prosecution",t:"ta",rows:5,hint:"Gave statements, identified perpetrator, testified, provided evidence, answered calls, attended meetings"},
+    {id:"F_ongoing",      label:"Are you still cooperating with law enforcement?",   t:"yn"},
+    {id:"F_fear",         label:"Were you afraid to cooperate? How did you overcome that fear?",t:"ta",rows:3},
+    {id:"F_perpthreats",  label:"Did the perpetrator or anyone else threaten you to stop you from cooperating? Describe.",t:"ta",rows:3},
+  ]},
+  {id:"G",title:"G — Substantial Physical &amp; Mental Harm",fields:[
+    {id:"G_physical",     label:"Describe all physical injuries you suffered — injuries, recovery, lasting effects",t:"ta",rows:4},
+    {id:"G_mental",       label:"Describe how the crime has affected you mentally and emotionally",t:"ta",rows:5,hint:"Fear, anxiety, PTSD, nightmares, depression, trouble sleeping, flashbacks"},
+    {id:"G_therapy",      label:"Have you seen a therapist, counselor, or doctor for the emotional impact?",t:"yn",cond:"G_therapyd"},
+    {id:"G_therapyd",     label:"Who have you seen and what were you told?",          t:"ta",iscond:true,rows:2},
+    {id:"G_dailylife",    label:"How has the crime changed your daily life, relationships, and sense of safety?",t:"ta",rows:4},
+    {id:"G_ongoing",      label:"Are you still experiencing effects of the crime today? Describe.",t:"ta",rows:3},
+  ]},
+  {id:"H",title:"H — Your Life in the US &amp; Goals",fields:[
+    {id:"H_employed",     label:"Are you currently employed?",                        t:"yn",cond:"H_employedd"},
+    {id:"H_employedd",    label:"Describe your work",                                 t:"ta",iscond:true,rows:2},
+    {id:"H_community",    label:"Describe your community involvement, religious community, or organizations",t:"ta",rows:3},
+    {id:"H_education",    label:"Have you taken any classes or education in the US?", t:"ta",rows:2},
+    {id:"H_criminal",     label:"Have you ever been arrested or had any trouble with police or immigration?",t:"yn",cond:"H_criminald"},
+    {id:"H_criminald",    label:"Explain the circumstances",                           t:"ta",iscond:true,rows:3},
+    {id:"H_goals",        label:"What are your goals if you are allowed to stay in the United States?",t:"ta",rows:4},
+    {id:"H_return",       label:"What would happen to you and your children if you were forced to return to your home country?",t:"ta",rows:4},
+  ]},
+];
+
 // ── Cancellation of Removal — Exceptional & Extremely Unusual Hardship ──
 const QS_CANCEL=[
   {id:"A",title:"A — Personal Background",fields:[
@@ -1632,6 +1717,7 @@ function buildPrompt(){
   if(selDecl==="waiver")   return buildWaiverPrompt();
   if(selDecl==="fiance")   return buildFiancePrompt();
   if(selDecl==="marriage") return buildMarriagePrompt();
+  if(selDecl==="uvisa")    return buildUVisaPrompt();
   // default: VAWA
   const fd=collectFD();
   const cn=selClient?selClient.name:(fd.A_fullname||"the client");
@@ -1740,6 +1826,28 @@ The declaration must: (1) introduce who the declarant is and their relationship 
 DECLARANT: ${declarant}
 HUSBAND: ${husband}
 WIFE: ${wife}
+
+QUESTIONNAIRE RESPONSES:
+${qa}`;
+}
+function buildUVisaPrompt(){
+  const fd=collectFD();
+  const cn=selClient?selClient.name:(fd.A_fullname||"the client");
+  const crime=fd.B_crimetype||"a qualifying crime";
+  const qa=buildQA(QS_UVISA);
+  return `You are a professional immigration attorney at FIBI Law Firm. Write a complete, compelling personal declaration in support of a petition for U Nonimmigrant Status (U Visa, Form I-918) for a victim of crime.
+
+${FMT_RULES}
+- Write entirely in first person from the client's perspective
+- Approximately 1800-2500 words
+- The tone should feel genuine and personal — in the client's own voice, not formulaic legal language
+
+The declaration must establish all four U Visa eligibility requirements: (1) the client is a victim of a qualifying criminal activity, (2) the client suffered substantial physical or mental abuse as a direct or proximate result of the crime, (3) the client has, is, or is likely to be helpful to law enforcement in the detection, investigation, prosecution, conviction, or sentencing of the perpetrator, and (4) the criminal activity violated US law or occurred in the US.
+
+Structure the declaration to cover: personal background and life before the crime; description of the crime with specific dates, locations, and details (focusing on the first, worst, and most recent incidents); the client's cooperation with law enforcement including what they said, what they did, and any court proceedings; the substantial physical and mental harm suffered and its ongoing effects; and the client's life in the US, community ties, and goals for the future. Where relevant, include why the client was initially afraid to report and how they overcame that fear.
+
+CLIENT: ${cn}
+QUALIFYING CRIME: ${crime}
 
 QUESTIONNAIRE RESPONSES:
 ${qa}`;
@@ -1866,8 +1974,9 @@ function dlDocx(){
     waiver:  "DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF APPLICATION FOR WAIVER OF GROUNDS OF INADMISSIBILITY",
     fiance:  "DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF K-1 FIANCEE VISA PETITION",
     marriage:"DECLARATION OF "+(selClient?selClient.name:cn).toUpperCase()+" IN SUPPORT OF BONA FIDES OF MARRIAGE",
+    uvisa:   "DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF PETITION FOR U NONIMMIGRANT STATUS",
   };
-  const DECL_SUFFIXES={vawa:"_VAWA",asylum:"_Asylum",cancel:"_Cancellation",waiver:"_Waiver",fiance:"_Fiance",marriage:"_Marriage"};
+  const DECL_SUFFIXES={vawa:"_VAWA",asylum:"_Asylum",cancel:"_Cancellation",waiver:"_Waiver",fiance:"_Fiance",marriage:"_Marriage",uvisa:"_UVisa"};
   const title=DECL_DOC_TITLES[selDecl]||DECL_DOC_TITLES.vawa;
   const safe=cn.replace(/[^a-zA-Z0-9 ]/g,"").replace(/\s+/g,"_")+(DECL_SUFFIXES[selDecl]||"_Declaration");
   let body=`<w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="28"/></w:rPr><w:t>${xd(title)}</w:t></w:r></w:p><w:p/>`;
@@ -1907,8 +2016,9 @@ function dlPdf(){
     waiver:  "DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF APPLICATION FOR WAIVER OF GROUNDS OF INADMISSIBILITY",
     fiance:  "DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF K-1 FIANCEE VISA PETITION",
     marriage:"DECLARATION OF "+(selClient?selClient.name:cn).toUpperCase()+" IN SUPPORT OF BONA FIDES OF MARRIAGE",
+    uvisa:   "DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF PETITION FOR U NONIMMIGRANT STATUS",
   };
-  const DECL_SUFFIXES={vawa:"_VAWA",asylum:"_Asylum",cancel:"_Cancellation",waiver:"_Waiver",fiance:"_Fiance",marriage:"_Marriage"};
+  const DECL_SUFFIXES={vawa:"_VAWA",asylum:"_Asylum",cancel:"_Cancellation",waiver:"_Waiver",fiance:"_Fiance",marriage:"_Marriage",uvisa:"_UVisa"};
   const title=DECL_DOC_TITLES[selDecl]||DECL_DOC_TITLES.vawa;
   const safe=cn.replace(/[^a-zA-Z0-9 ]/g,"").replace(/\s+/g,"_")+(DECL_SUFFIXES[selDecl]||"_Declaration");
   const {jsPDF}=window.jspdf;
