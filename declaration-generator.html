@@ -348,9 +348,34 @@ header{background:var(--dark);display:flex;align-items:center;padding:0 22px 0 0
         <div class="dt-name">Asylum</div><div class="dt-sub">Personal Declaration (I-589)</div>
         <span class="badge b-av">Available</span>
       </div>
+      <div class="dtc" id="dt-cancel" onclick="pickDecl('cancel')">
+        <div class="dt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="dt-name">Cancellation of Removal</div><div class="dt-sub">Exceptional Hardship to QR</div>
+        <span class="badge b-av">Available</span>
+      </div>
+      <div class="dtc" id="dt-waiver" onclick="pickDecl('waiver')">
+        <div class="dt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg></div>
+        <div class="dt-name">Extreme Hardship</div><div class="dt-sub">Waiver Cases (I-601/I-601A)</div>
+        <span class="badge b-av">Available</span>
+      </div>
+      <div class="dtc" id="dt-fiance" onclick="pickDecl('fiance')">
+        <div class="dt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div class="dt-name">Fianc&eacute;e Visa</div><div class="dt-sub">K-1 Visa Declaration</div>
+        <span class="badge b-av">Available</span>
+      </div>
+      <div class="dtc" id="dt-marriage" onclick="pickDecl('marriage')">
+        <div class="dt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/><path d="M15 8a4 4 0 0 1-6 3.46"/></svg></div>
+        <div class="dt-name">Marriage Bona Fides</div><div class="dt-sub">Third-Party Supporting Declaration</div>
+        <span class="badge b-av">Available</span>
+      </div>
       <div class="dtc locked">
         <div class="dt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
         <div class="dt-name">U Visa</div><div class="dt-sub">Crime victim declaration</div>
+        <span class="badge b-cs">Coming Soon</span>
+      </div>
+      <div class="dtc locked">
+        <div class="dt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+        <div class="dt-name">RFE Response</div><div class="dt-sub">Request for Evidence reply</div>
         <span class="badge b-cs">Coming Soon</span>
       </div>
     </div>
@@ -772,13 +797,28 @@ function setFormLocked(locked){
   document.getElementById("gbtn").disabled=locked;
   if(!locked&&selClient) lockNameField(selClient.name);
 }
-function getQS(){return selDecl==="asylum"?QS_ASYLUM:QS;}
+function getQS(){
+  if(selDecl==="asylum")   return QS_ASYLUM;
+  if(selDecl==="cancel")   return QS_CANCEL;
+  if(selDecl==="waiver")   return QS_WAIVER;
+  if(selDecl==="fiance")   return QS_FIANCE;
+  if(selDecl==="marriage") return QS_MARRIAGE;
+  return QS;
+}
+const DECL_TITLES={
+  vawa:    "VAWA Questionnaire",
+  asylum:  "Asylum Questionnaire",
+  cancel:  "Cancellation of Removal Questionnaire",
+  waiver:  "Extreme Hardship Questionnaire",
+  fiance:  "Fiancée Visa Questionnaire",
+  marriage:"Marriage Bona Fides Questionnaire",
+};
 function pickDecl(t){
   selDecl=t;
   document.querySelectorAll(".dtc:not(.locked)").forEach(e=>e.classList.remove("sel"));
   document.getElementById("dt-"+t).classList.add("sel");
   const title=document.getElementById("qcard-title");
-  if(title) title.textContent=t==="asylum"?"Asylum Questionnaire":"VAWA Questionnaire";
+  if(title) title.textContent=DECL_TITLES[t]||"Questionnaire";
   renderQ();
 }
 
@@ -1202,6 +1242,233 @@ const QS_ASYLUM=[
   ]},
 ];
 
+// ── Cancellation of Removal — Exceptional & Extremely Unusual Hardship ──
+const QS_CANCEL=[
+  {id:"A",title:"A — Personal Background",fields:[
+    {id:"A_fullname",     label:"Full Legal Name",                                    t:"text",hint:"First / Middle / Last"},
+    {id:"A_dob",          label:"Date of Birth",                                      t:"date"},
+    {id:"A_cob",          label:"Country of Birth",                                   t:"text"},
+    {id:"A_usentry",      label:"Date of Entry into the United States",               t:"date"},
+    {id:"A_entrymethod",  label:"How did you enter the US?",                          t:"text",hint:"Visa type, port of entry, border crossing"},
+    {id:"A_immstat",      label:"Current Immigration Status",                         t:"text"},
+    {id:"A_address",      label:"Current US Address",                                 t:"text"},
+    {id:"A_anumber",      label:"A-Number (if any)",                                  t:"text"},
+  ]},
+  {id:"B",title:"B — Your Life in the United States",fields:[
+    {id:"B_employed",     label:"Are you currently employed?",                        t:"yn",cond:"B_employedd"},
+    {id:"B_employedd",    label:"Describe your employment history in the US",         t:"ta",iscond:true,rows:3,hint:"Employer, type of work, how long"},
+    {id:"B_education",    label:"Describe any education or training in the US",       t:"ta",rows:2},
+    {id:"B_community",    label:"Describe your community ties, organizations, or volunteer work",t:"ta",rows:3},
+    {id:"B_property",     label:"Do you own property or a business in the US?",       t:"ta",hint:"Describe or leave blank if no"},
+    {id:"B_taxes",        label:"Have you filed US income taxes? Briefly describe.",  t:"ta",rows:2},
+    {id:"B_criminal",     label:"Do you have any criminal record?",                   t:"yn",cond:"B_criminald"},
+    {id:"B_criminald",    label:"Explain the circumstances",                           t:"ta",iscond:true,rows:3},
+  ]},
+  {id:"C",title:"C — Your Qualifying Relative",fields:[
+    {id:"C_qrname",       label:"Name of Qualifying Relative",                        t:"text"},
+    {id:"C_qrrel",        label:"Relationship to You",                                t:"select",opts:["Spouse (US Citizen)","Spouse (LPR)","Child (US Citizen)","Child (LPR)","Parent (US Citizen)","Parent (LPR)"]},
+    {id:"C_qrdob",        label:"Qualifying Relative's Date of Birth",                t:"date"},
+    {id:"C_qrstatus",     label:"Qualifying Relative's Immigration Status",           t:"text",hint:"US Citizen, LPR, etc."},
+    {id:"C_qrusentry",    label:"How long has the qualifying relative lived in the US?",t:"text"},
+    {id:"C_qrotherfam",   label:"Does the qualifying relative have other close family in the US?",t:"ta",rows:2},
+    {id:"C_qrfinancial",  label:"Is the qualifying relative financially dependent on you?",t:"yn",cond:"C_qrfinanciald"},
+    {id:"C_qrfinanciald", label:"Describe the financial dependence",                  t:"ta",iscond:true,rows:3},
+  ]},
+  {id:"D",title:"D — Qualifying Relative's Health",fields:[
+    {id:"D_health",       label:"Does the qualifying relative have any medical or mental health conditions?",t:"yn",cond:"D_healthd"},
+    {id:"D_healthd",      label:"Describe the condition(s), treatment, and impact on daily life",t:"ta",iscond:true,rows:4},
+    {id:"D_doctors",      label:"Doctors, hospitals, or clinics involved in their care",t:"ta",rows:2},
+    {id:"D_meds",         label:"Medications or ongoing treatment",                   t:"ta",rows:2},
+    {id:"D_mental",       label:"Describe any emotional or psychological needs of the qualifying relative",t:"ta",rows:3},
+  ]},
+  {id:"E",title:"E — Qualifying Relative's Ties &amp; Life in the US",fields:[
+    {id:"E_school",       label:"Is the qualifying relative currently in school?",    t:"yn",cond:"E_schoold"},
+    {id:"E_schoold",      label:"Describe their schooling",                            t:"ta",iscond:true,rows:2},
+    {id:"E_qrwork",       label:"Describe the qualifying relative's employment",       t:"ta",rows:2},
+    {id:"E_qrsupport",    label:"Who supports the qualifying relative day-to-day?",    t:"ta",rows:2},
+    {id:"E_qrlanguage",   label:"Does the qualifying relative speak a language other than English?",t:"text"},
+    {id:"E_qrotherkids",  label:"Are there other children in the household? Names and ages.",t:"ta",rows:2},
+  ]},
+  {id:"F",title:"F — Financial Interdependence",fields:[
+    {id:"F_income",       label:"What is your approximate monthly income?",           t:"text"},
+    {id:"F_expenses",     label:"Describe your household's monthly expenses",         t:"ta",rows:3},
+    {id:"F_support",      label:"Who else, if anyone, contributes to household income?",t:"ta"},
+    {id:"F_lossimpact",   label:"What would happen financially if you were removed?", t:"ta",rows:3},
+  ]},
+  {id:"G",title:"G — Impact of Removal on Qualifying Relative",fields:[
+    {id:"G_daily",        label:"How would your removal affect the qualifying relative's daily life?",t:"ta",rows:4},
+    {id:"G_childcare",    label:"Who would provide childcare or eldercare in your absence?",t:"ta",rows:2},
+    {id:"G_emotional",    label:"What would be the emotional and psychological impact on the qualifying relative?",t:"ta",rows:4},
+    {id:"G_other",        label:"Any other specific impact you want to highlight",     t:"ta",rows:3},
+  ]},
+  {id:"H",title:"H — Why Qualifying Relative Cannot Relocate",fields:[
+    {id:"H_wouldfollow",  label:"Would the qualifying relative consider moving to your home country?",t:"yn",cond:"H_whynot"},
+    {id:"H_whynot",       label:"If no, explain all reasons why the qualifying relative cannot or should not relocate",t:"ta",iscond:true,rows:4,hint:"Language barriers, safety, medical care, education, employment, other family"},
+    {id:"H_country",      label:"Describe conditions in your home country that would make life difficult for your qualifying relative",t:"ta",rows:4},
+    {id:"H_visited",      label:"Has the qualifying relative ever visited your home country?",t:"yn"},
+  ]},
+  {id:"I",title:"I — Additional Hardship Factors",fields:[
+    {id:"I_extra",        label:"Are there any other exceptional or unusual circumstances?",t:"ta",rows:4},
+    {id:"I_length",       label:"How long have you lived in the US and what have you built here?",t:"ta",rows:3},
+    {id:"I_closing",      label:"In your own words, why should you be allowed to remain in the US?",t:"ta",rows:4},
+  ]},
+];
+
+// ── Extreme Hardship Declaration (I-601 / I-601A Waiver) ────────────────
+const QS_WAIVER=[
+  {id:"A",title:"A — Personal Background",fields:[
+    {id:"A_fullname",     label:"Full Legal Name",                                    t:"text",hint:"First / Middle / Last"},
+    {id:"A_dob",          label:"Date of Birth",                                      t:"date"},
+    {id:"A_cob",          label:"Country of Birth",                                   t:"text"},
+    {id:"A_citizen",      label:"Country of Citizenship",                             t:"text"},
+    {id:"A_anumber",      label:"A-Number (if any)",                                  t:"text"},
+  ]},
+  {id:"B",title:"B — Immigration History",fields:[
+    {id:"B_usentry",      label:"Date of Entry into the US",                          t:"date"},
+    {id:"B_entrymethod",  label:"How did you enter the US?",                          t:"text"},
+    {id:"B_unlawful",     label:"Describe your period of unlawful presence or overstay",t:"ta",rows:3},
+    {id:"B_grounds",      label:"What ground(s) of inadmissibility apply?",           t:"select",
+      opts:["Unlawful Presence (3-year bar)","Unlawful Presence (10-year bar)","Prior Removal Order","Misrepresentation","Criminal Ground","Other"]},
+    {id:"B_groundsdetail",label:"Describe the circumstances in detail",               t:"ta",rows:3},
+    {id:"B_priorremoval", label:"Have you ever been ordered removed or deported?",    t:"yn",cond:"B_priorremovald"},
+    {id:"B_priorremovald",label:"Explain",                                             t:"ta",iscond:true,rows:2},
+  ]},
+  {id:"C",title:"C — Your Qualifying Relative",fields:[
+    {id:"C_qrname",       label:"Name of Qualifying Relative",                        t:"text"},
+    {id:"C_qrrel",        label:"Relationship to You",                                t:"select",opts:["US Citizen Spouse","US Citizen Parent","LPR Spouse","LPR Parent"]},
+    {id:"C_qrdob",        label:"Qualifying Relative's Date of Birth",                t:"date"},
+    {id:"C_qrstatus",     label:"Qualifying Relative's Immigration Status",           t:"text"},
+    {id:"C_qraddress",    label:"Qualifying Relative's Current Address",              t:"text"},
+    {id:"C_qryearsinUS",  label:"How long has the qualifying relative lived in the US?",t:"text"},
+  ]},
+  {id:"D",title:"D — Your Relationship with the Qualifying Relative",fields:[
+    {id:"D_howmet",       label:"How and when did you meet?",                         t:"ta",rows:3},
+    {id:"D_marrieddate",  label:"When were you married? (if applicable)",             t:"date"},
+    {id:"D_kidstogether", label:"Do you have children together?",                     t:"yn",cond:"D_kidstogetherlist"},
+    {id:"D_kidstogetherlist",label:"List children's names and ages",                  t:"ta",iscond:true},
+    {id:"D_rellength",    label:"How long have you been together?",                   t:"text"},
+    {id:"D_separation",   label:"Have you already experienced periods of separation? Describe impact.",t:"ta",rows:3},
+  ]},
+  {id:"E",title:"E — Qualifying Relative's Ties to the US",fields:[
+    {id:"E_qremployment", label:"Describe the qualifying relative's employment",       t:"ta",rows:3},
+    {id:"E_qreducation",  label:"Describe the qualifying relative's education",        t:"ta",rows:2},
+    {id:"E_qrhealth",     label:"Does the qualifying relative have health issues?",   t:"yn",cond:"E_qrhealthd"},
+    {id:"E_qrhealthd",    label:"Describe health conditions, treatment, and impact",   t:"ta",iscond:true,rows:3},
+    {id:"E_qrfamily",     label:"Other family members of QR in the US",               t:"ta",rows:2},
+    {id:"E_qrassets",     label:"Property, assets, or business owned by QR in the US",t:"ta",rows:2},
+  ]},
+  {id:"F",title:"F — Financial Hardship",fields:[
+    {id:"F_income",       label:"Combined household income",                          t:"text"},
+    {id:"F_expenses",     label:"Monthly household expenses",                         t:"ta",rows:3},
+    {id:"F_dependency",   label:"Is the qualifying relative financially dependent on you?",t:"ta",rows:3},
+    {id:"F_lossimpact",   label:"What would the financial impact be if you had to leave the US?",t:"ta",rows:3},
+    {id:"F_debt",         label:"Any shared debt, mortgage, or financial obligations?",t:"ta",rows:2},
+  ]},
+  {id:"G",title:"G — Emotional &amp; Psychological Hardship",fields:[
+    {id:"G_impact",       label:"What would the emotional impact on the qualifying relative be if you are separated?",t:"ta",rows:4},
+    {id:"G_mental",       label:"Does the qualifying relative have any mental health history or diagnosis?",t:"yn",cond:"G_mentald"},
+    {id:"G_mentald",      label:"Describe",                                            t:"ta",iscond:true,rows:3},
+    {id:"G_children",     label:"How would separation affect any children?",          t:"ta",rows:3},
+    {id:"G_role",         label:"What role do you play in the family's daily life?",  t:"ta",rows:3},
+  ]},
+  {id:"H",title:"H — Conditions in Your Home Country",fields:[
+    {id:"H_qrtravel",     label:"Would the qualifying relative consider living in your home country with you?",t:"yn",cond:"H_qrtraveld"},
+    {id:"H_qrtraveld",    label:"If no, explain all reasons why",                      t:"ta",iscond:true,rows:3},
+    {id:"H_country",      label:"Describe living conditions in your home country (safety, healthcare, education)",t:"ta",rows:4},
+    {id:"H_language",     label:"Does the qualifying relative speak the language of your home country?",t:"yn"},
+    {id:"H_qrvisited",    label:"Has the qualifying relative ever visited your home country? Describe.",t:"ta",rows:2},
+  ]},
+  {id:"I",title:"I — Other Hardship Factors",fields:[
+    {id:"I_extra",        label:"Any other extraordinary circumstances or hardship",   t:"ta",rows:4},
+    {id:"I_reform",       label:"Have you demonstrated rehabilitation, good moral character, or positive contributions to society?",t:"ta",rows:3},
+    {id:"I_closing",      label:"In your own words, why should this waiver be granted?",t:"ta",rows:4},
+  ]},
+];
+
+// ── Fiancée Visa (K-1) Declaration ──────────────────────────────────────
+const QS_FIANCE=[
+  {id:"A",title:"A — About You (Petitioner)",fields:[
+    {id:"A_fullname",     label:"Your Full Legal Name (Petitioner)",                  t:"text",hint:"First / Middle / Last"},
+    {id:"A_dob",          label:"Your Date of Birth",                                 t:"date"},
+    {id:"A_address",      label:"Your Current US Address",                            t:"text"},
+    {id:"A_citizen",      label:"Your US Citizenship Status",                         t:"text",hint:"US Citizen / LPR"},
+    {id:"A_priormarriage",label:"Have you been previously married?",                  t:"yn",cond:"A_priormarriaged"},
+    {id:"A_priormarriaged",label:"Explain prior marriage(s) and how they ended",      t:"ta",iscond:true,rows:3},
+    {id:"A_priorpetition",label:"Have you previously filed a K-1 petition for anyone?",t:"yn",cond:"A_priorpetitiond"},
+    {id:"A_priorpetitiond",label:"Provide details",                                   t:"ta",iscond:true,rows:2},
+  ]},
+  {id:"B",title:"B — About Your Fianc&eacute;e / Fianc&eacute;",fields:[
+    {id:"B_finame",       label:"Fiancée/Fiancé's Full Legal Name",                   t:"text"},
+    {id:"B_fidob",        label:"Fiancée/Fiancé's Date of Birth",                     t:"date"},
+    {id:"B_ficountry",    label:"Fiancée/Fiancé's Country of Citizenship",            t:"text"},
+    {id:"B_ficurrentloc", label:"Fiancée/Fiancé's Current Location (City, Country)", t:"text"},
+    {id:"B_fipriormarriage",label:"Has your fiancée/fiancé been previously married?", t:"yn",cond:"B_fipriormarriagedesc"},
+    {id:"B_fipriormarriagedesc",label:"Explain prior marriage(s) and how they ended", t:"ta",iscond:true,rows:3},
+  ]},
+  {id:"C",title:"C — How You Met",fields:[
+    {id:"C_howmet",       label:"How did you and your fiancée/fiancé first meet?",    t:"ta",rows:4,hint:"When, where, and the circumstances of your first meeting"},
+    {id:"C_firstmeet",    label:"Date of your first in-person meeting",               t:"date"},
+    {id:"C_meetloc",      label:"Location of first in-person meeting",                t:"text"},
+    {id:"C_firstimpress", label:"Describe your first impression and early connection", t:"ta",rows:3},
+  ]},
+  {id:"D",title:"D — Your Relationship History",fields:[
+    {id:"D_together",     label:"When did you officially become a couple?",           t:"text"},
+    {id:"D_communicate",  label:"How do you communicate when apart?",                  t:"ta",rows:2,hint:"Calls, video calls, messaging, frequency"},
+    {id:"D_visits",       label:"Describe all in-person visits since you met (dates, locations, duration)",t:"ta",rows:5},
+    {id:"D_expenses",     label:"Who paid for the visits and travel?",                t:"ta",rows:2},
+    {id:"D_together2",    label:"Describe activities and experiences you have shared together",t:"ta",rows:4},
+    {id:"D_evidence",     label:"What evidence do you have of your ongoing relationship?",t:"ta",rows:3,hint:"Photos, messages, call records, gifts, shared plans"},
+  ]},
+  {id:"E",title:"E — Your Intent to Marry",fields:[
+    {id:"E_proposal",     label:"Describe the proposal — who proposed, when, where, and how",t:"ta",rows:3},
+    {id:"E_timeline",     label:"When do you intend to marry after your fiancée/fiancé arrives in the US?",t:"text"},
+    {id:"E_plans",        label:"Do you have any wedding plans underway? Describe.",  t:"ta",rows:3},
+    {id:"E_barriers",     label:"Have there been any obstacles to marrying sooner? Explain.",t:"ta",rows:2},
+  ]},
+  {id:"F",title:"F — Your Future Together",fields:[
+    {id:"F_home",         label:"Where will you live together after marriage?",       t:"text"},
+    {id:"F_livewith",     label:"With whom will you be living?",                      t:"ta",rows:2},
+    {id:"F_goals",        label:"What are your long-term goals and plans as a couple?",t:"ta",rows:4},
+    {id:"F_whytogether",  label:"In your own words, describe why you want to build a life with this person",t:"ta",rows:5},
+  ]},
+];
+
+// ── Marriage Bona Fides — Third-Party Supporting Declaration ────────────
+const QS_MARRIAGE=[
+  {id:"A",title:"A — About You (Declarant)",fields:[
+    {id:"A_fullname",     label:"Your Full Name",                                     t:"text",hint:"The person writing this declaration"},
+    {id:"A_dob",          label:"Your Date of Birth",                                 t:"date"},
+    {id:"A_address",      label:"Your Address",                                       t:"text"},
+    {id:"A_occupation",   label:"Your Occupation",                                    t:"text"},
+    {id:"A_howknow",      label:"How do you know the couple?",                        t:"ta",rows:3,hint:"E.g. friend, family member, colleague, neighbor"},
+    {id:"A_howlong",      label:"How long have you known them?",                      t:"text"},
+  ]},
+  {id:"B",title:"B — About the Couple",fields:[
+    {id:"B_husband",      label:"Husband's Full Name",                                t:"text"},
+    {id:"B_wife",         label:"Wife's Full Name",                                   t:"text"},
+    {id:"B_howknowh",     label:"How do you know the husband specifically?",          t:"ta",rows:2},
+    {id:"B_howknoww",     label:"How do you know the wife specifically?",             t:"ta",rows:2},
+    {id:"B_firstsaw",     label:"When did you first observe them as a couple?",       t:"text"},
+    {id:"B_marrieddate",  label:"When were they married? (if known)",                 t:"date"},
+  ]},
+  {id:"C",title:"C — What You Have Observed",fields:[
+    {id:"C_occasions",    label:"List specific occasions when you have seen them together",t:"ta",rows:5,hint:"Dates, events, gatherings, family occasions, holidays"},
+    {id:"C_behavior",     label:"Describe how they act toward each other when you observe them",t:"ta",rows:4},
+    {id:"C_home",         label:"Have you visited their shared home? Describe.",      t:"ta",rows:3},
+    {id:"C_communication",label:"Do they communicate regularly? What do you observe about their communication?",t:"ta",rows:3},
+  ]},
+  {id:"D",title:"D — Evidence of Genuine Relationship",fields:[
+    {id:"D_sharedlife",   label:"Describe shared life aspects you are aware of",      t:"ta",rows:4,hint:"Finances, household, childcare, property, decisions together"},
+    {id:"D_children",     label:"Do they have children together? Describe.",          t:"ta",rows:2},
+    {id:"D_support",      label:"Have you observed them supporting each other through challenges?",t:"ta",rows:3},
+    {id:"D_otherwitness", label:"Are there others who can also attest to their relationship?",t:"ta",rows:2},
+  ]},
+  {id:"E",title:"E — Your Assessment",fields:[
+    {id:"E_belief",       label:"Why do you believe this is a genuine marriage?",     t:"ta",rows:5},
+    {id:"E_anything",     label:"Is there anything else you would like to add?",      t:"ta",rows:3},
+  ]},
+];
+
 function renderQ(){
   const body=document.getElementById("qbody");
   const alpha="ABCDEFGHIJ";
@@ -1350,23 +1617,30 @@ function buildQA(qs){
   });
   return qa;
 }
+const FMT_RULES=`CRITICAL FORMATTING RULES — follow these exactly:
+- Use ONLY plain text — absolutely NO markdown symbols whatsoever
+- Section headers must be formatted exactly like: "1. INTRODUCTION AND PERSONAL BACKGROUND" — a number, period, space, then ALL CAPS title
+- Do NOT use pound signs (#), asterisks (*), underscores (_), tildes, backticks, or any other markdown
+- Do NOT use em dashes (—) or en dashes (–) anywhere — use a regular hyphen (-) or a comma instead
+- Each section header must be on its own line with a blank line before and after it
+- Body paragraphs are plain prose, no bullet points, no bold, no italics
+- Do NOT include a signature block or certification`;
+
 function buildPrompt(){
-  if(selDecl==="asylum") return buildAsylumPrompt();
+  if(selDecl==="asylum")   return buildAsylumPrompt();
+  if(selDecl==="cancel")   return buildCancelPrompt();
+  if(selDecl==="waiver")   return buildWaiverPrompt();
+  if(selDecl==="fiance")   return buildFiancePrompt();
+  if(selDecl==="marriage") return buildMarriagePrompt();
+  // default: VAWA
   const fd=collectFD();
   const cn=selClient?selClient.name:(fd.A_fullname||"the client");
   const ab=fd.B_aname||"the abuser";
   const qa=buildQA(QS);
   return `You are a professional immigration paralegal at FIBI Law Firm. Write a complete, compelling VAWA self-petition personal declaration for this client.
 
-CRITICAL FORMATTING RULES — follow these exactly:
+${FMT_RULES}
 - Write entirely in first person from the client's perspective
-- Use ONLY plain text — absolutely NO markdown symbols whatsoever
-- Section headers must be formatted exactly like: "1. INTRODUCTION AND PERSONAL BACKGROUND" — a number, period, space, then ALL CAPS title — nothing else before or after
-- Do NOT use pound signs (#), asterisks (*), underscores (_), tildes, backticks, or any other markdown
-- Do NOT use em dashes (—) or en dashes (–) anywhere — use a regular hyphen (-) or a comma instead
-- Each section header must be on its own line with a blank line before and after it
-- Body paragraphs are plain prose, no bullet points, no bold, no italics
-- Do NOT include a signature block or certification
 - Approximately 1800-2500 words
 
 CLIENT: ${cn}
@@ -1381,20 +1655,91 @@ function buildAsylumPrompt(){
   const qa=buildQA(QS_ASYLUM);
   return `You are a professional immigration attorney at FIBI Law Firm. Write a complete, compelling personal declaration in support of an application for asylum for this client.
 
-CRITICAL FORMATTING RULES — follow these exactly:
+${FMT_RULES}
 - Write entirely in first person from the client's perspective
-- Use ONLY plain text — absolutely NO markdown symbols whatsoever
-- Section headers must be formatted exactly like: "1. INTRODUCTION AND PERSONAL BACKGROUND" — a number, period, space, then ALL CAPS title — nothing else before or after
-- Do NOT use pound signs (#), asterisks (*), underscores (_), tildes, backticks, or any other markdown
-- Do NOT use em dashes (—) or en dashes (–) anywhere — use a regular hyphen (-) or a comma instead
-- Each section header must be on its own line with a blank line before and after it
-- Body paragraphs are plain prose, no bullet points, no bold, no italics
-- Do NOT include a signature block or certification
 - Approximately 2000-2800 words
 
 The declaration must establish: (1) the client's personal background and life in their home country, (2) the basis of persecution (religion, political opinion, race, nationality, or social group), (3) specific incidents of harm or threats with dates and details, (4) why authorities could not protect them, (5) why internal relocation was not possible, (6) fear of return, and (7) their life and goals in the United States.
 
 CLIENT: ${cn}
+
+QUESTIONNAIRE RESPONSES:
+${qa}`;
+}
+function buildCancelPrompt(){
+  const fd=collectFD();
+  const cn=selClient?selClient.name:(fd.A_fullname||"the client");
+  const qr=fd.C_qrname||"the qualifying relative";
+  const qa=buildQA(QS_CANCEL);
+  return `You are a professional immigration attorney at FIBI Law Firm. Write a complete, compelling personal declaration for a Cancellation of Removal case. The declaration must establish exceptional and extremely unusual hardship to the qualifying relative if the applicant is removed from the United States.
+
+${FMT_RULES}
+- Write entirely in first person from the client's perspective
+- Approximately 1800-2500 words
+
+The declaration must cover: (1) the applicant's personal background and ties to the US, (2) the qualifying relative's background and dependency on the applicant, (3) the qualifying relative's specific medical, educational, emotional, and financial needs, (4) the severe impact of removal on the qualifying relative, (5) why the qualifying relative cannot relocate to the home country, and (6) why the hardship is exceptional and extremely unusual beyond the typical hardship of removal.
+
+CLIENT: ${cn}
+QUALIFYING RELATIVE: ${qr}
+
+QUESTIONNAIRE RESPONSES:
+${qa}`;
+}
+function buildWaiverPrompt(){
+  const fd=collectFD();
+  const cn=selClient?selClient.name:(fd.A_fullname||"the client");
+  const qr=fd.C_qrname||"the qualifying relative";
+  const qa=buildQA(QS_WAIVER);
+  return `You are a professional immigration attorney at FIBI Law Firm. Write a complete, compelling personal declaration in support of an I-601/I-601A waiver application. The declaration must establish extreme hardship to the qualifying relative (a US citizen or LPR spouse or parent) if the waiver is denied.
+
+${FMT_RULES}
+- Write entirely in first person from the client's perspective
+- Approximately 1800-2500 words
+
+The declaration must cover: (1) the applicant's background and immigration history, (2) the nature of the relationship with the qualifying relative, (3) the qualifying relative's deep ties to the US and inability to relocate, (4) the financial hardship if the applicant is kept outside the US, (5) the emotional and psychological hardship on the qualifying relative and any children, (6) country conditions that would make it unreasonable for the qualifying relative to follow, and (7) any other factors showing that denial would result in extreme hardship.
+
+CLIENT: ${cn}
+QUALIFYING RELATIVE: ${qr}
+
+QUESTIONNAIRE RESPONSES:
+${qa}`;
+}
+function buildFiancePrompt(){
+  const fd=collectFD();
+  const cn=selClient?selClient.name:(fd.A_fullname||"the client");
+  const fi=fd.B_finame||"the fiancée/fiancé";
+  const qa=buildQA(QS_FIANCE);
+  return `You are a professional immigration attorney at FIBI Law Firm. Write a complete, compelling personal declaration in support of a K-1 Fiancée Visa (I-129F) petition. The declaration must establish that the petitioner and beneficiary have a genuine, bona fide relationship and a sincere intent to marry within 90 days of the beneficiary's arrival in the United States.
+
+${FMT_RULES}
+- Write entirely in first person from the petitioner's perspective
+- Approximately 1500-2000 words
+
+The declaration must cover: (1) how and when the couple met, (2) the history and development of their relationship, (3) in-person meetings with dates and locations (required by USCIS), (4) ongoing communication and connection, (5) a genuine proposal and clear intent to marry, and (6) future plans together. The writing should feel genuine and personal, not formulaic.
+
+PETITIONER: ${cn}
+FIANCEE/FIANCE: ${fi}
+
+QUESTIONNAIRE RESPONSES:
+${qa}`;
+}
+function buildMarriagePrompt(){
+  const fd=collectFD();
+  const declarant=selClient?selClient.name:(fd.A_fullname||"the declarant");
+  const husband=fd.B_husband||"the husband";
+  const wife=fd.B_wife||"the wife";
+  const qa=buildQA(QS_MARRIAGE);
+  return `You are a professional immigration attorney at FIBI Law Firm. Write a complete, compelling third-party supporting declaration attesting to the bona fides of a marriage for immigration purposes.
+
+${FMT_RULES}
+- Write entirely in first person from the DECLARANT's perspective (the person supporting the couple, NOT the couple themselves)
+- Approximately 1000-1500 words
+
+The declaration must: (1) introduce who the declarant is and their relationship to the couple, (2) describe specific occasions when the declarant observed the couple together, (3) provide concrete observations of the couple's genuine relationship, (4) describe evidence of shared life (home, finances, children, mutual support), and (5) state clearly and convincingly why the declarant believes the marriage is genuine. Use specific details, names, dates, and events — avoid vague generalities.
+
+DECLARANT: ${declarant}
+HUSBAND: ${husband}
+WIFE: ${wife}
 
 QUESTIONNAIRE RESPONSES:
 ${qa}`;
@@ -1514,8 +1859,17 @@ function dlDocx(){
   const t=document.getElementById("decl-out").value;
   if(!t){toast("No declaration yet","err");return;}
   const cn=selClient?selClient.name:"Client";
-  const title=selDecl==="asylum"?"DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF APPLICATION FOR ASYLUM AND WITHHOLDING OF REMOVAL":"DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF VAWA SELF-PETITION";
-  const safe=cn.replace(/[^a-zA-Z0-9 ]/g,"").replace(/\s+/g,"_")+(selDecl==="asylum"?"_Asylum":"_VAWA");
+  const DECL_DOC_TITLES={
+    vawa:    "DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF VAWA SELF-PETITION",
+    asylum:  "DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF APPLICATION FOR ASYLUM AND WITHHOLDING OF REMOVAL",
+    cancel:  "DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF APPLICATION FOR CANCELLATION OF REMOVAL",
+    waiver:  "DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF APPLICATION FOR WAIVER OF GROUNDS OF INADMISSIBILITY",
+    fiance:  "DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF K-1 FIANCEE VISA PETITION",
+    marriage:"DECLARATION OF "+(selClient?selClient.name:cn).toUpperCase()+" IN SUPPORT OF BONA FIDES OF MARRIAGE",
+  };
+  const DECL_SUFFIXES={vawa:"_VAWA",asylum:"_Asylum",cancel:"_Cancellation",waiver:"_Waiver",fiance:"_Fiance",marriage:"_Marriage"};
+  const title=DECL_DOC_TITLES[selDecl]||DECL_DOC_TITLES.vawa;
+  const safe=cn.replace(/[^a-zA-Z0-9 ]/g,"").replace(/\s+/g,"_")+(DECL_SUFFIXES[selDecl]||"_Declaration");
   let body=`<w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="28"/></w:rPr><w:t>${xd(title)}</w:t></w:r></w:p><w:p/>`;
   parseMd(t).forEach(({text,level,bold,hr})=>{
     if(hr){body+="<w:p/>";return;}
@@ -1546,8 +1900,17 @@ function dlPdf(){
   const t=document.getElementById("decl-out").value;
   if(!t){toast("No declaration yet","err");return;}
   const cn=selClient?selClient.name:"Client";
-  const title=selDecl==="asylum"?"DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF APPLICATION FOR ASYLUM AND WITHHOLDING OF REMOVAL":"DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF VAWA SELF-PETITION";
-  const safe=cn.replace(/[^a-zA-Z0-9 ]/g,"").replace(/\s+/g,"_")+(selDecl==="asylum"?"_Asylum":"_VAWA");
+  const DECL_DOC_TITLES={
+    vawa:    "DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF VAWA SELF-PETITION",
+    asylum:  "DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF APPLICATION FOR ASYLUM AND WITHHOLDING OF REMOVAL",
+    cancel:  "DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF APPLICATION FOR CANCELLATION OF REMOVAL",
+    waiver:  "DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF APPLICATION FOR WAIVER OF GROUNDS OF INADMISSIBILITY",
+    fiance:  "DECLARATION OF "+cn.toUpperCase()+" IN SUPPORT OF K-1 FIANCEE VISA PETITION",
+    marriage:"DECLARATION OF "+(selClient?selClient.name:cn).toUpperCase()+" IN SUPPORT OF BONA FIDES OF MARRIAGE",
+  };
+  const DECL_SUFFIXES={vawa:"_VAWA",asylum:"_Asylum",cancel:"_Cancellation",waiver:"_Waiver",fiance:"_Fiance",marriage:"_Marriage"};
+  const title=DECL_DOC_TITLES[selDecl]||DECL_DOC_TITLES.vawa;
+  const safe=cn.replace(/[^a-zA-Z0-9 ]/g,"").replace(/\s+/g,"_")+(DECL_SUFFIXES[selDecl]||"_Declaration");
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF({orientation:"portrait",unit:"in",format:[8.5,11]});
   const L=1.0,W=6.5;let y=1.0;
