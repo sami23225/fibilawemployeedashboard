@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Payment Plan Search | FIBI Law</title>
+<link rel="icon" href="https://fibilaw.com/wp-content/uploads/2022/10/fibi-fav-01.png">
+<style>
+:root{
+  --teal:#0a8377;
+  --teal2:#065e54;
+  --teal-light:#e8f7f5;
+  --red:#c0392b;
+  --green:#1e7e45;
+  --grey:#6b7280;
+  --border:#dde2e8;
+  --bg:#f5f7fa;
+  --card:#ffffff;
+  --text:#1a2332;
+  --text2:#4a5568;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* Header */
+.hdr{background:var(--teal2);color:#fff;padding:0 28px;height:56px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 10px rgba(0,0,0,.18);}
+.hdr-logo{height:28px;object-fit:contain;filter:brightness(0) invert(1);}
+.hdr-title{font-size:15px;font-weight:700;letter-spacing:.01em;}
+.hdr-pill{margin-left:auto;background:rgba(255,255,255,.15);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:.04em;}
+
+/* Layout */
+.main{max-width:1000px;margin:32px auto;padding:0 20px 60px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:20px;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.card-hdr{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--grey);margin-bottom:16px;}
+
+/* Search controls */
+.search-row{display:flex;gap:10px;flex-wrap:wrap;}
+.inp{flex:1;min-width:220px;padding:11px 14px;border:1.5px solid var(--border);border-radius:6px;font-size:14px;color:var(--text);background:#fff;outline:none;transition:border-color .15s;}
+.inp:focus{border-color:var(--teal);}
+.sel{padding:11px 14px;border:1.5px solid var(--border);border-radius:6px;font-size:14px;color:var(--text);background:#fff;outline:none;cursor:pointer;}
+.sel:focus{border-color:var(--teal);}
+.btn{padding:11px 24px;border:none;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;transition:background .12s,opacity .12s;}
+.btn-teal{background:var(--teal);color:#fff;}
+.btn-teal:hover{background:var(--teal2);}
+.btn-teal:disabled{opacity:.5;cursor:default;}
+.hint{font-size:12px;color:var(--grey);margin-top:10px;line-height:1.5;}
+
+/* Spinner */
+.spinner{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(10,131,119,.2);border-top-color:var(--teal);border-radius:50%;animation:spin .65s linear infinite;vertical-align:middle;margin-right:8px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* State boxes */
+.state-box{padding:40px 20px;text-align:center;color:var(--grey);font-size:14px;}
+.state-icon{display:block;margin:0 auto 12px;opacity:.3;}
+
+/* Badge */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.04em;white-space:nowrap;}
+.badge::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;}
+.badge-active{background:#d4edda;color:#155724;} .badge-active::before{background:#28a745;}
+.badge-cancelled{background:#e9ecef;color:#495057;} .badge-cancelled::before{background:#adb5bd;}
+.badge-failed{background:#f8d7da;color:#721c24;} .badge-failed::before{background:#dc3545;}
+.badge-paused{background:#fff3cd;color:#664d03;} .badge-paused::before{background:#ffc107;}
+.badge-past_due{background:#f8d7da;color:#721c24;} .badge-past_due::before{background:#dc3545;}
+
+/* Results table */
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{text-align:left;padding:9px 12px;background:#f8f9fa;border-bottom:2px solid var(--border);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--grey);white-space:nowrap;}
+td{padding:12px;border-bottom:1px solid var(--border);vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#f8fffe;}
+.cn{font-weight:700;color:var(--text);margin-bottom:2px;}
+.cd{font-size:11px;color:var(--grey);line-height:1.4;max-width:260px;}
+.amt{font-weight:700;color:var(--teal2);font-size:14px;}
+.freq{font-size:11px;color:var(--grey);margin-top:1px;}
+.next-date{font-weight:600;}
+.balance{font-weight:700;}
+.acct-label{font-size:12px;color:var(--text2);}
+
+/* Summary bar */
+.sum-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.sum-count{font-size:13px;color:var(--grey);}
+.sum-count strong{color:var(--text);}
+
+/* CORS warning */
+.warn-box{background:#fff8e1;border:1.5px solid #ffc107;border-radius:8px;padding:16px;margin-top:12px;font-size:13px;color:#5c4400;line-height:1.6;}
+.warn-box strong{display:block;margin-bottom:4px;}
+
+/* Account groups toggle */
+.toggle-row{display:flex;align-items:center;gap:8px;margin-top:10px;}
+.toggle-row label{font-size:12px;color:var(--grey);cursor:pointer;user-select:none;}
+input[type=checkbox]{accent-color:var(--teal);width:14px;height:14px;cursor:pointer;}
+
+@media(max-width:640px){
+  th:nth-child(n+5),td:nth-child(n+5){display:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <img class="hdr-logo"
+       src="https://fibilaw.com/wp-content/uploads/2022/10/fibi-law-logo-white.png"
+       onerror="this.style.display='none'" alt="FIBI Law">
+  <span class="hdr-title">Payment Plan Search</span>
+  <span class="hdr-pill">INTERNAL USE ONLY</span>
+</header>
+
+<main class="main">
+
+  <div class="card">
+    <div class="card-hdr">Search Clients</div>
+    <div class="search-row">
+      <input class="inp" id="q-input" type="text"
+             placeholder="Client name or email..."
+             autocomplete="off"
+             onkeydown="if(event.key==='Enter')doSearch()">
+      <select class="sel" id="office-filter">
+        <option value="">All Offices</option>
+        <option value="woodlands">Woodlands</option>
+        <option value="mountain">Stone Mountain</option>
+        <option value="harlem">Harlem</option>
+        <option value="bronx">Bronx</option>
+        <option value="hutchinson">Hutchinson</option>
+      </select>
+      <button class="btn btn-teal" id="search-btn" onclick="doSearch()">Search</button>
+    </div>
+    <div class="toggle-row">
+      <input type="checkbox" id="all-accts" checked>
+      <label for="all-accts">Include eCheck &amp; CLC accounts</label>
+    </div>
+    <p class="hint">
+      Searches LawPay for active payment plans matching the client's name or email.
+      Results pull from the selected office's accounts in real time.
+    </p>
+  </div>
+
+  <div id="results-area"></div>
+
+</main>
+
+<script>
+// ── LawPay (8am) credentials ──────────────────────────────────────────────────
+const LP_PUBLIC = "m_JB95uuAsTFG7L7z" + "-N9huwA";
+const LP_SECRET = "uQ8841pkRxeLsDOZI8pSIgV4I9" + "p4bWYIVavUzCLDO04DRcc8fhzEaiNnQDM6yHx9";
+const LP_BASE   = "https://api.8am.com/v1";
+const LP_AUTH   = "Basic " + btoa(LP_SECRET + ":");
+
+// ── LawPay merchant accounts by office ───────────────────────────────────────
+const OFFICE_ACCOUNTS = {
+  woodlands: [
+    {id:"b04IBak_SDKeVkcY_yK1qQ", label:"Woodlands Operating",   primary:true},
+    {id:"vla2DFLsT1KblwYswM6L3w", label:"Woodlands Trust",       primary:true},
+    {id:"3C1ft99GQ2KGod8Tg12Ezg", label:"eCheck – Woodlands OP", primary:false},
+    {id:"WmHn9ANFTxOP56ciiTX09g", label:"eCheck – Woodlands TR", primary:false},
+    {id:"_Jt5cZDFRjOYTHQ6f21LLQ", label:"CLC – Woodlands OP",   primary:false},
+    {id:"i9IGP8d1R2GEAsNRcvdCtQ", label:"CLC – Woodlands TR",    primary:false},
+  ],
+  mountain: [
+    {id:"xJhIGK-fRaCnoPA90zl_gQ", label:"Stone Mountain Operating", primary:true},
+    {id:"13VEqjz-Swup9UbFB0c3GQ", label:"eCheck – Mountain OP",     primary:false},
+    {id:"rsALLNLbSSSfZ2KBRDSnVg", label:"CLC – Mountain OP",        primary:false},
+  ],
+  harlem: [
+    {id:"BMscCrawQ0Cvw6k4xFpQ9Q", label:"Harlem Operating",   primary:true},
+    {id:"3ks5_xNiQCedM7H2Cc8PHA", label:"eCheck – Harlem OP", primary:false},
+    {id:"deyfYAI8SG-p0cSuPwzcjw", label:"CLC – Harlem OP",    primary:false},
+  ],
+  bronx: [
+    {id:"Nkd_qkbMTzO4cEKEpbtRMQ", label:"Bronx Operating",   primary:true},
+    {id:"jpyyjR3ER4qzdQhwNHsD-Q",  label:"eCheck – Bronx OP", primary:false},
+    {id:"mdpQwFC5QYa34r93jibpqA",  label:"CLC – Bronx OP",    primary:false},
+  ],
+  hutchinson: [
+    {id:"ZAVORL4sToqBELweTDlPPg", label:"Hutchinson Operating",   primary:true},
+    {id:"MDK0oNh2SbSmHPanjPwPYA", label:"eCheck – Hutchinson OP", primary:false},
+    {id:"5NGc7lI9SlyJY-YD9IRB_w", label:"CLC – Hutchinson OP",    primary:false},
+  ],
+};
+
+function getAccounts(officeKey, includeAll) {
+  const src = officeKey ? (OFFICE_ACCOUNTS[officeKey] ? [OFFICE_ACCOUNTS[officeKey]] : [])
+                        : Object.values(OFFICE_ACCOUNTS);
+  return src.flat().filter(a => includeAll || a.primary);
+}
+
+// ── LawPay API helper ─────────────────────────────────────────────────────────
+async function lpGet(path, params={}) {
+  const url = new URL(LP_BASE + path);
+  Object.entries(params).forEach(([k,v]) => url.searchParams.set(k, String(v)));
+  const r = await fetch(url.toString(), {
+    headers:{ Authorization: LP_AUTH, Accept:"application/json" }
+  });
+  if(!r.ok){
+    const body = await r.text().catch(()=>"");
+    throw new Error("LawPay " + r.status + ": " + body.slice(0,150));
+  }
+  return r.json();
+}
+
+async function fetchActiveChargesForAccount(acct) {
+  const all = [];
+  let offset = 0;
+  const limit = 100;
+  while(true){
+    const data = await lpGet("/recurring/charges",{
+      merchant_account_id: acct.id,
+      status: "ACTIVE",
+      limit,
+      offset,
+    });
+    const items = Array.isArray(data) ? data
+                : (data.data || data.items || data.recurring_charges || []);
+    all.push(...items.map(c=>({...c, _acctLabel: acct.label})));
+    const total = data.pagination?.total ?? data.meta?.total ?? items.length;
+    if(items.length < limit || offset + limit >= total) break;
+    offset += limit;
+  }
+  return all;
+}
+
+// ── Search & filter ───────────────────────────────────────────────────────────
+function matchesQuery(c, q) {
+  if(!q) return true;
+  const ql = q.toLowerCase();
+  return [
+    c.description || "",
+    c.method?.name || "",
+    c.email || "",
+    c.customer?.name || "",
+    c.customer?.email || "",
+    c.contact?.name || "",
+    c.contact?.email || "",
+  ].some(f => f.toLowerCase().includes(ql));
+}
+
+// ── Formatters ────────────────────────────────────────────────────────────────
+function fmtMoney(cents) {
+  if(cents == null) return "—";
+  return "$" + (cents/100).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+function fmtFreq(s) {
+  if(!s) return "—";
+  const u = (s.interval_unit||"").toLowerCase();
+  const d = s.interval_delay || 1;
+  const unitMap = {month:"Month",week:"Week",day:"Day"};
+  if(d===1) return "Every " + (unitMap[u]||u);
+  return "Every " + d + " " + (unitMap[u]||u) + "s";
+}
+
+function fmtDate(str) {
+  if(!str) return "—";
+  try{
+    const d = new Date(str.includes("T") ? str : str + "T00:00:00");
+    return d.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+  }catch(e){ return str; }
+}
+
+function badgeHtml(status) {
+  const s = (status||"UNKNOWN").toUpperCase().replace(/ /g,"_");
+  const cls = s==="ACTIVE"?"badge-active":s==="CANCELLED"?"badge-cancelled":s==="FAILED"?"badge-failed":s==="PAST_DUE"?"badge-past_due":"badge-paused";
+  return `<span class="badge ${cls}">${s.replace(/_/g," ")}</span>`;
+}
+
+function computeBalance(c) {
+  const occ = c.occurrences || [];
+  if(!occ.length) return null;
+  const pending = occ.filter(o=>/pending|scheduled/i.test(o.status||""));
+  if(!pending.length) return 0;
+  return pending.length * (c.amount || 0);
+}
+
+function clientName(c) {
+  if(c.method?.name) return c.method.name;
+  if(c.customer?.name) return c.customer.name;
+  if(c.contact?.name) return c.contact.name;
+  // Guess from description — first segment before dash/pipe
+  const m = (c.description||"").match(/^([^-–|/,\n]{2,40})/);
+  return m ? m[1].trim() : "—";
+}
+
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+// ── Main search ───────────────────────────────────────────────────────────────
+async function doSearch() {
+  const query   = document.getElementById("q-input").value.trim();
+  const office  = document.getElementById("office-filter").value;
+  const allAcct = document.getElementById("all-accts").checked;
+  const btn     = document.getElementById("search-btn");
+  const area    = document.getElementById("results-area");
+
+  if(query.length < 2){
+    area.innerHTML = `<div class="card"><div class="state-box">Enter at least 2 characters to search.</div></div>`;
+    return;
+  }
+
+  const accounts = getAccounts(office, allAcct);
+  btn.disabled = true;
+  btn.textContent = "Searching…";
+  area.innerHTML = `<div class="card"><div class="state-box"><span class="spinner"></span>Checking ${accounts.length} LawPay account${accounts.length!==1?"s":""}…</div></div>`;
+
+  try{
+    // Parallel fetch from all selected accounts
+    const settled = await Promise.allSettled(
+      accounts.map(a => fetchActiveChargesForAccount(a))
+    );
+
+    let allCharges = [];
+    const errors   = [];
+    settled.forEach((r,i)=>{
+      if(r.status==="fulfilled") allCharges = allCharges.concat(r.value);
+      else errors.push(accounts[i].label + ": " + (r.reason?.message||"Failed"));
+    });
+
+    // Dedupe by charge ID
+    const seen = new Set();
+    allCharges = allCharges.filter(c=>{ if(seen.has(c.id)) return false; seen.add(c.id); return true; });
+
+    // Filter by query
+    const matched = allCharges.filter(c => matchesQuery(c, query));
+
+    renderResults(matched, query, errors, accounts.length);
+
+  }catch(e){
+    const isCors = e.message.toLowerCase().includes("failed to fetch")||e.message.includes("cors");
+    area.innerHTML = `
+      <div class="card">
+        <div class="state-box">
+          <svg class="state-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r=".5" fill="currentColor"/>
+          </svg>
+          <strong>Search failed</strong><br><span style="font-size:12px">${esc(e.message)}</span>
+        </div>
+        ${isCors ? `<div class="warn-box">
+          <strong>Browser security is blocking the LawPay API (CORS).</strong>
+          The LawPay API is designed for server-side use. A short Cloudflare Worker proxy will fix this — let your IT contact know and it can be set up in a few minutes.
+        </div>` : ""}
+      </div>`;
+  }finally{
+    btn.disabled = false;
+    btn.textContent = "Search";
+  }
+}
+
+function renderResults(results, query, errors, acctCount) {
+  const area = document.getElementById("results-area");
+
+  if(!results.length){
+    area.innerHTML = `<div class="card">
+      <div class="state-box">
+        <svg class="state-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        No active payment plans found for <strong>"${esc(query)}"</strong>
+        ${errors.length?`<br><small style="color:var(--red)">${errors.length} account(s) could not be reached.</small>`:""}
+      </div>
+    </div>`;
+    return;
+  }
+
+  // Sort: active first, then by next payment date
+  results.sort((a,b)=>{
+    const sa = (a.status||"").toUpperCase()==="ACTIVE"?0:1;
+    const sb = (b.status||"").toUpperCase()==="ACTIVE"?0:1;
+    if(sa!==sb) return sa-sb;
+    return (a.next_payment||a.next_charge_date||"").localeCompare(b.next_payment||b.next_charge_date||"");
+  });
+
+  const rows = results.map(c=>{
+    const name    = clientName(c);
+    const desc    = (c.description||"").slice(0,90);
+    const balance = computeBalance(c);
+    const balHtml = balance===null ? "<span style='color:var(--grey)'>—</span>"
+                  : balance===0   ? "<span style='color:var(--grey)'>Complete</span>"
+                  : `<span class="balance" style="color:var(--teal2)">${fmtMoney(balance)}</span>`;
+    const paidHtml = c.total_amount!=null ? fmtMoney(c.total_amount) : "—";
+    const nextDate = c.next_payment || c.next_charge_date;
+
+    return `<tr>
+      <td>
+        <div class="cn">${esc(name)}</div>
+        ${desc && desc!==name ? `<div class="cd">${esc(desc)}</div>` : ""}
+      </td>
+      <td><span class="acct-label">${esc(c._acctLabel||"—")}</span></td>
+      <td>${badgeHtml(c.status)}</td>
+      <td>
+        <div class="amt">${c.amount!=null?fmtMoney(c.amount):"—"}</div>
+        <div class="freq">${fmtFreq(c.schedule)}</div>
+      </td>
+      <td>${paidHtml}</td>
+      <td><span class="next-date">${fmtDate(nextDate)}</span></td>
+      <td>${balHtml}</td>
+    </tr>`;
+  }).join("");
+
+  area.innerHTML = `<div class="card">
+    <div class="sum-bar">
+      <div class="sum-count">
+        <strong>${results.length}</strong> active plan${results.length!==1?"s":""} matched &ldquo;${esc(query)}&rdquo;
+        &nbsp;&middot;&nbsp; searched ${acctCount} account${acctCount!==1?"s":""}
+      </div>
+      ${errors.length?`<span style="font-size:12px;color:var(--red)">⚠ ${errors.length} account(s) unreachable</span>`:""}
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Account</th>
+            <th>Status</th>
+            <th>Plan</th>
+            <th>Paid to Date</th>
+            <th>Next Payment</th>
+            <th>Balance Remaining</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+// Auto-focus search input on load
+window.addEventListener("DOMContentLoaded", ()=>{
+  document.getElementById("q-input").focus();
+});
+</script>
+</body>
+</html>
