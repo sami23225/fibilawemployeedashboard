@@ -298,8 +298,8 @@ function renderTable(){
     // Fix 1: Email/phone display — show blank if null/empty/N/A/undefined
     var emailVal=cleanContact(r.email);
     var phoneVal=cleanContact(r.phone);
-    var emailHtml=emailVal?'<div style="font-size:12px">'+esc(emailVal)+'</div>':'';
-    var phoneHtml=phoneVal?'<div class="td-sub">'+esc(phoneVal)+'</div>':'';
+    var emailHtml=emailVal?'<div style="font-size:12px"><a href="mailto:'+esc(emailVal)+'" style="color:var(--teal);text-decoration:none">'+esc(emailVal)+'</a></div>':'';
+    var phoneHtml=phoneVal?'<div class="td-sub"><a href="tel:'+phoneVal.replace(/[^+\d]/g,'')+'" style="color:var(--navy-mid);text-decoration:none">'+esc(phoneVal)+'</a></div>':'';
     var contactCell=(emailHtml||phoneHtml)?(emailHtml+phoneHtml):'<span style="color:#e5e7eb;font-size:11px">&mdash;</span>';
 
     var tr=document.createElement('tr');
