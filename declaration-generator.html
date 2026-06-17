@@ -1019,7 +1019,7 @@ async function resumeDraft(dOrStr){
   document.getElementById("cli-name").textContent=d.clientName;
   document.getElementById("cli-meta").textContent=d.officeName+" · "+(d.declType==="asylum"?"Asylum":"VAWA");
   document.getElementById("cli-panel").style.display="block";
-  try{restoreFD(JSON.parse(d.formData));}catch(e){}
+  try{const fd=JSON.parse(d.formData||"{}");restoreFD(fd);lastAnswers=fd;try{sessionStorage.setItem("fibi_lastAnswers",JSON.stringify(fd));}catch(e){};}catch(e){}
   if(d.generatedText){
     document.getElementById("decl-out").value=d.generatedText;
     document.getElementById("outsec").style.display="block";
@@ -1918,7 +1918,7 @@ QUESTIONNAIRE RESPONSES:
 ${qa}`;
 }
 async function generate(){
-  lastAnswers=collectFD();
+  lastAnswers=collectFD();try{sessionStorage.setItem("fibi_lastAnswers",JSON.stringify(lastAnswers));}catch(e){}
   document.getElementById("gbtn").disabled=true;
   document.getElementById("gspin").style.display="inline-block";
   try{
@@ -2438,6 +2438,7 @@ function toast(msg,type){
 // ── Init ──────────────────────────────────────────────────────────
 renderOffices();
 renderQ();
+try{const sa=sessionStorage.getItem("fibi_lastAnswers");if(sa){lastAnswers=JSON.parse(sa);const btn=document.getElementById("edit-ans-btn");if(btn)btn.style.display="inline-flex";}}catch(e){}
 setStep(1);
 loadAllDrafts();
 </script>
