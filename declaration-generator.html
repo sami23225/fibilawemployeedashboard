@@ -1011,25 +1011,39 @@ function toggleDraftPanel(){
 }
 async function resumeDraft(dOrStr){
   const d=typeof dOrStr==="string"?JSON.parse(dOrStr):dOrStr;
+
+  // ── 1. Set office directly — no pickOffice() call (that would
+  //        fetch all clients, call clearClient, and reset to step 1)
   const off=OFFICES.find(o=>o.id===d.officeId);
   if(!off){toast("Office not found for this draft","err");return;}
-  // Load the office (this also loads client list)
-  if(!selOffice||selOffice.id!==off.id) await pickOffice(off.id);
-  // Restore client state (clearClient was called inside pickOffice, so re-set here)
+  selOffice=off;
+  document.querySelectorAll(".off-card").forEach(e=>e.classList.remove("sel"));
+  const oc=document.getElementById("off-"+off.id);
+  if(oc) oc.classList.add("sel");
+
+  // ── 2. Set client directly
   selClient={id:d.clientRecId||d.clientName,name:d.clientName,anumber:"",email:"",phone:"",caseType:""};
   currentDraftId=d.id;currentDraftBaseId=d.baseId;
   document.getElementById("cli-name").textContent=d.clientName;
   document.getElementById("cli-meta").textContent=
     d.officeName+" · "+(DECL_TITLES[d.declType]||d.declType||"VAWA").replace(" Questionnaire","");
   document.getElementById("cli-panel").style.display="block";
-  // Unlock the form (pickOffice → clearClient locked it)
   setFormLocked(false);
   lockNameField(d.clientName);
-  // Set declaration type and re-render questionnaire for the right type
-  if(d.declType && d.declType!==selDecl) pickDecl(d.declType);
-  // Restore form answers AFTER questionnaire HTML is rendered
-  try{const fd=JSON.parse(d.formData||"{}");restoreFD(fd);lastAnswers=fd;try{sessionStorage.setItem("fibi_lastAnswers",JSON.stringify(fd));}catch(e){};}catch(e){}
-  // Show generated text if saved, otherwise go to questionnaire
+
+  // ── 3. Set declaration type + re-render questionnaire
+  if(d.declType) pickDecl(d.declType);
+
+  // ── 4. Restore form answers (after questionnaire is rendered)
+  try{
+    const fd=JSON.parse(d.formData||"{}");
+    restoreFD(fd);
+    lastAnswers=fd;
+    try{sessionStorage.setItem("fibi_lastAnswers",JSON.stringify(fd));}catch(e){}
+  }catch(e){}
+
+  // ── 5. Show declaration or questionnaire and scroll to it
+  document.getElementById("draft-panel").classList.remove("open");
   if(d.generatedText&&d.generatedText.length>20){
     document.getElementById("decl-out").value=d.generatedText;
     document.getElementById("outsec").style.display="block";
@@ -1038,24 +1052,36 @@ async function resumeDraft(dOrStr){
     document.getElementById("copy-btn").style.display="inline-flex";
     document.getElementById("edit-ans-btn").style.display="inline-flex";
     wcUpdate();setStep(5);
-    setTimeout(()=>document.getElementById("outsec").scrollIntoView({behavior:"smooth",block:"start"}),250);
+    setTimeout(()=>document.getElementById("outsec").scrollIntoView({behavior:"smooth",block:"start"}),150);
   }else{
     setStep(3);
-    setTimeout(()=>document.getElementById("qbody").scrollIntoView({behavior:"smooth",block:"start"}),250);
+    setTimeout(()=>document.getElementById("qbody").scrollIntoView({behavior:"smooth",block:"start"}),150);
   }
-  document.getElementById("del-btn").style.display="inline-flex";
-  document.getElementById("draft-panel").classList.remove("open");
-  // Open all questionnaire sections for review
+
+  // ── 6. Open all questionnaire sections so answers are visible
   getQS().forEach(s=>{
     const sec=document.getElementById("qs-"+s.id);
     const ar=document.getElementById("qa-"+s.id);
     if(sec&&!sec.classList.contains("open")) sec.classList.add("open");
     if(ar) ar.innerHTML="&#9660;";
   });
+
+  document.getElementById("del-btn").style.display="inline-flex";
   const stat=document.getElementById("as-stat");
   stat.className="saved";
   stat.innerHTML='<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Draft loaded';
   toast("Draft loaded: "+d.clientName);
+
+  // ── 7. Load client list in background so search still works
+  if(!allClients.length){
+    fetchAllClients(selOffice.baseId).then(list=>{
+      allClients=list;
+      const cs=document.getElementById("csearch");
+      if(cs){cs.disabled=false;cs.placeholder="Search "+selOffice.name+" clients ("+list.length+" loaded)…";}
+      const sc=document.getElementById("s-count");
+      if(sc) sc.textContent=list.length;
+    }).catch(()=>{});
+  }
 }
 async function deleteCurrentDraft(){
   if(!currentDraftId||!currentDraftBaseId) return;
