@@ -1012,15 +1012,25 @@ function toggleDraftPanel(){
 async function resumeDraft(dOrStr){
   const d=typeof dOrStr==="string"?JSON.parse(dOrStr):dOrStr;
   const off=OFFICES.find(o=>o.id===d.officeId);
-  if(!off) return;
+  if(!off){toast("Office not found for this draft","err");return;}
+  // Load the office (this also loads client list)
   if(!selOffice||selOffice.id!==off.id) await pickOffice(off.id);
+  // Restore client state (clearClient was called inside pickOffice, so re-set here)
   selClient={id:d.clientRecId||d.clientName,name:d.clientName,anumber:"",email:"",phone:"",caseType:""};
   currentDraftId=d.id;currentDraftBaseId=d.baseId;
   document.getElementById("cli-name").textContent=d.clientName;
-  document.getElementById("cli-meta").textContent=d.officeName+" · "+(d.declType==="asylum"?"Asylum":"VAWA");
+  document.getElementById("cli-meta").textContent=
+    d.officeName+" · "+(DECL_TITLES[d.declType]||d.declType||"VAWA").replace(" Questionnaire","");
   document.getElementById("cli-panel").style.display="block";
+  // Unlock the form (pickOffice → clearClient locked it)
+  setFormLocked(false);
+  lockNameField(d.clientName);
+  // Set declaration type and re-render questionnaire for the right type
+  if(d.declType && d.declType!==selDecl) pickDecl(d.declType);
+  // Restore form answers AFTER questionnaire HTML is rendered
   try{const fd=JSON.parse(d.formData||"{}");restoreFD(fd);lastAnswers=fd;try{sessionStorage.setItem("fibi_lastAnswers",JSON.stringify(fd));}catch(e){};}catch(e){}
-  if(d.generatedText){
+  // Show generated text if saved, otherwise go to questionnaire
+  if(d.generatedText&&d.generatedText.length>20){
     document.getElementById("decl-out").value=d.generatedText;
     document.getElementById("outsec").style.display="block";
     document.getElementById("card5").style.display="block";
@@ -1028,15 +1038,19 @@ async function resumeDraft(dOrStr){
     document.getElementById("copy-btn").style.display="inline-flex";
     document.getElementById("edit-ans-btn").style.display="inline-flex";
     wcUpdate();setStep(5);
-  }else{setStep(3);}
+    setTimeout(()=>document.getElementById("outsec").scrollIntoView({behavior:"smooth",block:"start"}),250);
+  }else{
+    setStep(3);
+    setTimeout(()=>document.getElementById("qbody").scrollIntoView({behavior:"smooth",block:"start"}),250);
+  }
   document.getElementById("del-btn").style.display="inline-flex";
   document.getElementById("draft-panel").classList.remove("open");
-  QS.forEach(s=>{
+  // Open all questionnaire sections for review
+  getQS().forEach(s=>{
     const sec=document.getElementById("qs-"+s.id);
-    if(sec&&!sec.classList.contains("open")){
-      sec.classList.add("open");
-      document.getElementById("qa-"+s.id).innerHTML="&#9660;";
-    }
+    const ar=document.getElementById("qa-"+s.id);
+    if(sec&&!sec.classList.contains("open")) sec.classList.add("open");
+    if(ar) ar.innerHTML="&#9660;";
   });
   const stat=document.getElementById("as-stat");
   stat.className="saved";
