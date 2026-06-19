@@ -988,17 +988,24 @@ function renderDraftList(list){
     return;
   }
   empty.style.display="none";
+  // Store only the draft ID in onclick — look up full data from draftsCache
+  // (avoids 30k–70k char onclick attributes that break on click)
   body.innerHTML=list.map(d=>{
     const dt=d.updatedAt?new Date(d.updatedAt).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):"";
-    const enc=encodeURIComponent(JSON.stringify(d));
-    return `<div class="draft-item" onclick="resumeDraft(decodeURIComponent('${enc}'))">
+    const declLabel=(DECL_TITLES[d.declType]||d.declType||"VAWA").replace(" Questionnaire","");
+    return `<div class="draft-item" onclick="resumeDraftById('${xe(d.id)}')">
       <div>
         <div class="di-name">${xe(d.clientName)}</div>
-        <div class="di-meta">${xe(d.officeName)} &middot; ${xe(d.declType==="asylum"?"Asylum":"VAWA")}${d.hasText?' &middot; <span style="color:var(--green)">Generated</span>':"" }</div>
+        <div class="di-meta">${xe(d.officeName)} &middot; ${xe(declLabel)}${d.hasText?' &middot; <span style="color:var(--green)">&#10003; Draft ready</span>':"" }</div>
       </div>
       <div class="di-date">${dt}</div>
     </div>`;
   }).join("");
+}
+function resumeDraftById(id){
+  const d=draftsCache.find(x=>x.id===id);
+  if(!d){toast("Draft not found","err");return;}
+  resumeDraft(d);
 }
 function filterDrafts(q){
   const ql=q.toLowerCase();
