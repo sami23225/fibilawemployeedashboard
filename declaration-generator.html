@@ -602,6 +602,7 @@ function renderOffices(){
 async function pickOffice(id){
   selOffice = OFFICES.find(o=>o.id===id)||null;
   clearClient(true);
+  allClients=[];
   document.querySelectorAll(".off-card").forEach(e=>e.classList.remove("sel"));
   if(!selOffice) return;
   document.getElementById("off-"+id).classList.add("sel");
@@ -627,7 +628,7 @@ async function fetchAllClients(baseId){
   const fe=encodeURIComponent;
   let all=[], offset="";
   for(let pg=0;pg<10;pg++){
-    let url="https://api.airtable.com/v0/"+baseId+"/"+AT_BASE_TABLE
+    let url="https://api.airtable.com/v0/"+baseId+"/"+encodeURIComponent("Client Details")
       +"?pageSize=100"
       +(offset?"&offset="+fe(offset):"");
     const r=await fetch(url,{headers:{Authorization:"Bearer "+AT_TOKEN}});
