@@ -641,6 +641,10 @@ async function fetchAllClients(baseId){
   return all;
 }
 
+function clientName(f){
+  return (f["Client Name "]||f["Client Display Name"]||f["Client Name"]||
+    ((f["First Name"]||"")+" "+(f["Last Name"]||"")).trim()||"").trim();
+}
 function onSearch(v){
   clearTimeout(searchTmr);
   const sr=document.getElementById("sr");
@@ -651,10 +655,11 @@ function doSearch(q){
   const ql=q.toLowerCase().trim();
   const matches=allClients.filter(r=>{
     const f=r.fields;
-    const name=(f["Client Name"]||((f["First Name"]||"")+" "+(f["Last Name"]||"")).trim()||"").toLowerCase();
-    const anum=(f["A-Number"]||"").toLowerCase();
-    const email=(f["Email"]||"").toLowerCase();
-    return name.includes(ql)||anum.includes(ql)||email.includes(ql);
+    const name=clientName(f).toLowerCase();
+    const anum=String(f["A-Number"]||"").toLowerCase();
+    const email=String(f["Email"]||"").toLowerCase();
+    const phone=String(f["Number"]||"").toLowerCase();
+    return name.includes(ql)||anum.includes(ql)||email.includes(ql)||phone.includes(ql);
   }).slice(0,15);
   renderSR(matches);
 }
@@ -668,7 +673,7 @@ function renderSR(recs){
   sr.style.display="block";
   sr.innerHTML=recs.map((r,i)=>{
     const f=r.fields;
-    const name=f["Client Name"]||((f["First Name"]||"")+" "+(f["Last Name"]||"")).trim()||"Unknown";
+    const name=clientName(f)||"Unknown";
     const anum=f["A-Number"]?"A-"+f["A-Number"]:"";
     const stat=f["CASE STATUS"]||"";
     const rid=JSON.stringify({id:r.id,name,anumber:f["A-Number"]||"",email:f["Email"]||"",phone:f["Number"]||"",caseType:stat}).replace(/"/g,"&quot;");
